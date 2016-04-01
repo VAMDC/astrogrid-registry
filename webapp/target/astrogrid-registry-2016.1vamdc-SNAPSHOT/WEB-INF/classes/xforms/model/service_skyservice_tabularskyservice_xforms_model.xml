@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<div id="skyservicetabularskyDiv"
+	  xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+      xmlns:xforms="http://www.w3.org/2002/xforms"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xhtml="http://www.w3.org/1999/xhtml"
+      xmlns:vr="http://www.ivoa.net/xml/VOResource/v0.10"
+      xmlns:vs="http://www.ivoa.net/xml/VODataService/v0.5">
+
+<xforms:group class="outergroup">
+<xforms:repeat id="tableRepeat" nodeset="vs:table">
+<xforms:input ref="./@role">
+<xforms:label>Role:</xforms:label>
+</xforms:input>
+
+<xforms:input ref="./vs:name">
+<xforms:label>Name:</xforms:label>
+</xforms:input>
+
+<xforms:input ref="./vs:description">
+<xforms:label>Description:</xforms:label>
+</xforms:input>
+
+<xforms:group class="innergroup">
+<xforms:repeat id="columnRepeat" nodeset="./vs:column">
+<xforms:input ref="./vs:name">
+<xforms:label>Name:</xforms:label>
+</xforms:input>
+
+<xforms:input ref="vs:table/vs:column/vs:description">
+<xforms:label>Description:</xforms:label>
+</xforms:input>
+
+<!-- bind the arrayShap type and default is 1 -->
+<xforms:input ref="vs:table/vs:column/vs:datatype/@arraysize">
+<xforms:label>Data Type Array Size:</xforms:label>
+</xforms:input>
+
+<xforms:select1 ref="vs:table/vs:column/vs:datatype">
+<xforms:label>Data Type</xforms:label>
+<xforms:item>
+	<xforms:label>Boolean</xforms:label><xforms:value>boolean</xforms:value>
+</xforms:item>
+<xforms:item>
+	<xforms:label>Bit</xforms:label><xforms:value>bit</xforms:value>
+</xforms:item>
+<xforms:item>
+	<xforms:label>Unsigned Byte</xforms:label><xforms:value>unsignedByte</xforms:value>
+</xforms:item>
+<xforms:item>
+	<xforms:label>Short</xforms:label><xforms:value>short</xforms:value>
+</xforms:item>
+<xforms:item>
+	<xforms:label>Int</xforms:label><xforms:value>int</xforms:value>
+</xforms:item>
+<xforms:item>
+	<xforms:label>Long</xforms:label><xforms:value>long</xforms:value>
+</xforms:item>
+<xforms:item>
+	<xforms:label>Char</xforms:label><xforms:value>char</xforms:value>
+</xforms:item>
+<xforms:item>
+	<xforms:label>Unicode Char</xforms:label><xforms:value>unicodeChar</xforms:value>
+</xforms:item>
+<xforms:item>
+	<xforms:label>Float</xforms:label><xforms:value>float</xforms:value>
+</xforms:item>
+<xforms:item>
+	<xforms:label>Double</xforms:label><xforms:value>double</xforms:value>
+</xforms:item>
+<xforms:item>
+	<xforms:label>Float Complex</xforms:label><xforms:value>floatComplex</xforms:value>
+</xforms:item>
+<xforms:item>
+	<xforms:label>Double Complex</xforms:label><xforms:value>doubleComplex</xforms:value>
+</xforms:item>
+</xforms:select1>
+
+<xforms:input ref="./vs:unit">
+<xforms:label>Unit:</xforms:label>
+</xforms:input>
+
+<xforms:input ref="./vs:ucd">
+<xforms:label>UCD:</xforms:label>
+</xforms:input>
+</xforms:repeat>
+
+<xforms:trigger class="triggerbutton">
+  <xforms:label>Insert Column</xforms:label>
+    <xforms:insert ev:event="click" nodeset="./vs:column" at="index('columnRepeat')"
+      position="after"/>
+</xforms:trigger>
+
+<xforms:trigger class="triggerbutton">
+  <xforms:label>Remove Column</xforms:label>
+  <xforms:delete ev:event="click" nodeset="./vs:column"
+    at="index('columnRepeat')"/>
+</xforms:trigger>
+</xforms:group>
+
+</xforms:repeat>
+<xforms:trigger class="triggerbutton">
+  <xforms:label>Insert Table</xforms:label>
+    <xforms:insert ev:event="click" nodeset="vs:table" at="index('tableRepeat')"
+      position="after"/>
+</xforms:trigger>
+
+<xforms:trigger class="triggerbutton">
+  <xforms:label>Remove Table</xforms:label>
+  <xforms:delete ev:event="click" nodeset="vs:table"
+    at="index('TableRepeat')"/>
+</xforms:trigger>
+</xforms:group>
+</div>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VODescription
+  xmlns="http://www.ivoa.net/xml/VOResource/v0.9"
+  xmlns:vr="http://www.ivoa.net/xml/VOResource/v0.9"
+  xmlns:vc="http://www.ivoa.net/xml/VOCommunity/v0.2"
+  xmlns:vg="http://www.ivoa.net/xml/VORegistry/v0.2"
+  xmlns:vs="http://www.ivoa.net/xml/VODataService/v0.4"
+  xmlns:vt="http://www.ivoa.net/xml/VOTable/v0.1"
+  xmlns:cs="http://www.ivoa.net/xml/ConeSearch/v0.2"
+  xmlns:sia="http://www.ivoa.net/xml/SIA/v0.6"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.ivoa.net/xml/VOResource/v0.9
+                      http://www.ivoa.net/xml/VOResource/VOResource-v0.9.xsd
+                      http://www.ivoa.net/xml/VOCommunity/v0.2
+                      http://www.ivoa.net/xml/VOCommunity/VOCommunity-v0.2.xsd
+                      http://www.ivoa.net/xml/VORegistry/v0.2
+                      http://www.ivoa.net/xml/VORegistry/VORegistry-v0.2.xsd
+                      http://www.ivoa.net/xml/ConeSearch/v0.2
+                      http://www.ivoa.net/xml/ConeSearch/ConeSearch-v0.2.xsd
+                      http://www.ivoa.net/xml/SIA/v0.6
+                      http://www.ivoa.net/xml/SIA/SIA-v0.6.xsd">
+ <vr:Resource xsi:type="java:org.astrogrid.registry.beans.resource.registry.RegistryType">
+    <Identifier>
+      <AuthorityID>vm05.astrogrid.org</AuthorityID>
+      <ResourceKey>RegistryTest</ResourceKey>
+    </Identifier>
+    <Title>NCSA Astronomy Digital Image Library Query Form</Title>
+    <ShortName>ADIL</ShortName>
+    <Summary>
+      <Description>
+        This Web page allows users to interactively search the contents
+        of the ADIL.
+      </Description>
+      <ReferenceURL>http://adil.ncsa.uiuc.edu/</ReferenceURL>
+    </Summary>
+    <Type>Archive</Type>
+    <Curation>
+      <Publisher>
+       <Identifier>
+         <AuthorityID>adil.ncsa.uiuc.edu</AuthorityID>
+      <ResourceKey>ADIL</ResourceKey>
+       </Identifier>
+         <Title>NCSA Astronomy Digital Image Library</Title>
+      </Publisher>
+      <Contact>
+        <Name>Dr. Raymond Plante</Name>
+   <Email>rplante@ncsa.uiuc.edu</Email>
+      </Contact>
+      <Date>1994-09-01</Date>
+      <Creator>
+        <Name>Dr. Raymond Plante</Name>
+        <Logo>http://adil.ncsa.uiuc.edu/gifs/adilfooter.gif</Logo>
+      </Creator>
+      <Contributor>
+        <Name>Damien Guillaume</Name>
+      </Contributor>
+    </Curation>
+    <Subject>radio astronomy</Subject>
+    <Subject>data repositories</Subject>
+    <Subject>digital libraries</Subject>
+    <Subject>grid-based processing</Subject>
+    <ContentLevel>Research</ContentLevel>
+    <ContentLevel>University</ContentLevel>
+    <ContentLevel>Community College</ContentLevel>
+    <vg:ManagedAuthority>vm05.astrogrid.org</vg:ManagedAuthority>
+    <Interface>
+      <Invocation>WebBrowser</Invocation>
+      <AccessURL use="dir">http://adil.ncsa.uiuc.edu/QueryPage.html</AccessURL>
+    </Interface>
+  </vr:Resource>
+  </VODescription>

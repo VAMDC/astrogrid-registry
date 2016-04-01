@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VODescription
+  xmlns="http://www.ivoa.net/xml/VOResource/v0.9"
+  xmlns:vr="http://www.ivoa.net/xml/VOResource/v0.9"
+  xmlns:sia="http://www.ivoa.net/xml/SIA/v0.6"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+ <vr:Resource  updated="2004-11-20T15:34:22Z" status="active" xsi:type="vr:ServiceType">
+    <Identifier>
+      <AuthorityID>TESTAUTHORITY</AuthorityID>
+      <ResourceKey>INT-WFS.SIAP</ResourceKey>
+    </Identifier>
+    <Title>SIAP service for the INT wide-field survey</Title>
+    <Summary>
+      <Description>
+         A Simple Image Access Protocol service for the reduced images of the Isaac Newton Telescope wide-field survey.
+      </Description>
+      <ReferenceURL>http://wiki.astrogrid.org/bin/view/Astrogrid/IntWfsDataModel</ReferenceURL>
+    </Summary>
+    <Type>Archive</Type>
+    <Curation>
+      <Publisher>
+         <Title>Cambridge Astronomical Survey Unit</Title>
+      </Publisher> 
+      <Contact>
+          <Name>Guy Rixon</Name>
+          <Email>gtr@ast.cam.ac.uk</Email>
+      </Contact>
+      <Creator>
+        <Name>Guy Rixon</Name>
+      </Creator>
+    </Curation>
+     
+    <Subject>A Simple Image Access Protocol service for the reduced images of the Isaac Newton Telescope wide-field survey.</Subject>
+     
+     <!-- Details of what was implemented in the SIAP standard. -->
+     <sia:SimpleImageAccess>
+         <sia:ImageServiceType>Pointed</sia:ImageServiceType>
+         <sia:MaxQueryRegionSize>
+            <sia:long>360</sia:long>
+             <sia:lat>360</sia:lat>
+         </sia:MaxQueryRegionSize>
+         <sia:MaxImageExtent>
+           <sia:long>360</sia:long>
+           <sia:lat>360</sia:lat>
+         </sia:MaxImageExtent>
+         <sia:MaxImageSize>
+             <sia:long>4096</sia:long>
+             <sia:lat>4096</sia:lat>
+         </sia:MaxImageSize>
+         <sia:MaxFileSize>16800000</sia:MaxFileSize>
+         <sia:MaxRecords>15000</sia:MaxRecords>
+     </sia:SimpleImageAccess>
+     
+     <!-- Where to find the service -->
+     <Interface>
+         <Invocation>Extended</Invocation>
+         <AccessURL>http://archive.ast.cam.ac.uk/cgi-bin/wfs-siap/queryImage</AccessURL>
+     </Interface>
+     
+  </vr:Resource>
+</VODescription>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VODescription
+  xmlns="http://www.ivoa.net/xml/VOResource/v0.9"
+  xmlns:vr="http://www.ivoa.net/xml/VOResource/v0.9"
+  xmlns:vc="http://www.ivoa.net/xml/VOCommunity/v0.2"
+  xmlns:vg="http://www.ivoa.net/xml/VORegistry/v0.2"
+  xmlns:vs="http://www.ivoa.net/xml/VODataService/v0.4"
+  xmlns:vt="http://www.ivoa.net/xml/VOTable/v0.1"
+  xmlns:cs="http://www.ivoa.net/xml/ConeSearch/v0.2"
+  xmlns:sia="http://www.ivoa.net/xml/SIA/v0.6"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+ <vr:Resource xsi:type="vg:RegistryType"  updated="2004-11-20T15:34:22Z" status="active">
+    <Identifier>
+      <AuthorityID>someregistry</AuthorityID>
+      <ResourceKey>org.astrogrid.registry.RegistryService</ResourceKey>
+    </Identifier>
+    <Title>Astrogrid Full Registry</Title>
+    <Summary>
+      <Description>
+         The main Astrogrid publishing registry
+      </Description>
+      <ReferenceURL>http://www.astrogrid.org/maven/docs/snapshot/registry/index.html</ReferenceURL>
+    </Summary>
+    <Type>Archive</Type>
+    <Curation>
+      <Publisher>
+         <Title>Astrogrid</Title>
+      </Publisher>
+      <Contact>
+        <Name>Tony Linde</Name>
+       <Email>ael@star.le.ac.uk</Email>
+      </Contact>
+    </Curation>
+    <Interface>
+      <Invocation>WebService</Invocation>
+      <AccessURL use="full">http://localhost:8080/test.com</AccessURL>
+    </Interface>
+    <vg:ManagedAuthority>org.astrogrid</vg:ManagedAuthority>
+    <vg:ManagedAuthority>roe.ac.uk</vg:ManagedAuthority>
+  </vr:Resource>
+  </VODescription>

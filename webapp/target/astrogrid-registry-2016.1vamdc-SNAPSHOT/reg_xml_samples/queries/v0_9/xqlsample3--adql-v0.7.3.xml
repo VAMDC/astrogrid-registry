@@ -1,0 +1,20 @@
+<Select  xmlns="http://adql.ivoa.net/v0.73"   xmlns:vr="http://www.ivoa.net/xml/VOResource/v0.9">
+   <SelectionList>
+      <All />
+   </SelectionList>
+   <From>
+      <Table Name="Registry" Alias="t"/>
+   </From>
+   <Where>
+         <And>
+      <Compare Comparison="=">
+         <Column Name="Resource/vr:Identifier/vr:AuthorityID"/>
+         <Atom><String>astrogrid.org</String></Atom>
+      </Compare>
+      <Compare Comparison="=">
+         <Column Name="vr:Resource/vr:Identifier/vr:ResourceKey"/>
+         <Atom><String>mySpace</String></Atom>
+      </Compare>
+      </And>
+   </Where>
+</Select>

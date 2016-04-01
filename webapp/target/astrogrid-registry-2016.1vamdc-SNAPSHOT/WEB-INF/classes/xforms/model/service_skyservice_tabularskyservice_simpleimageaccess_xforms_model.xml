@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<div id="skyservicesiaDiv"
+	  xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+      xmlns:xforms="http://www.w3.org/2002/xforms"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xhtml="http://www.w3.org/1999/xhtml"
+      xmlns:vr="http://www.ivoa.net/xml/VOResource/v0.10"
+      xmlns:vs="http://www.ivoa.net/xml/VODataService/v0.5"
+      xmlns:sia="http://www.ivoa.net/xml/SIA/v0.7">
+
+<xforms:group class="outergroup">
+<xforms:label>SIA Capability</xforms:label>
+<xforms:input ref="sia:capability/@standardID">
+<xforms:label>Standard ID:</xforms:label>
+</xforms:input>
+
+<xforms:input ref="sia:capability/@standardURL">
+<xforms:label>Standard URL:</xforms:label>
+</xforms:input>
+
+<xforms:select1 ref="sia:capability/sia:imageServiceType">
+<xforms:label>Image Service Type</xforms:label>
+
+<xforms:item>
+	<xforms:label>Cutout</xforms:label><xforms:value>Cutout</xforms:value>
+</xforms:item>
+<xforms:item>
+	<xforms:label>Mosaic</xforms:label><xforms:value>Mosaic</xforms:value>
+</xforms:item>
+<xforms:item>
+	<xforms:label>Atlas</xforms:label><xforms:value>Atlas</xforms:value>
+</xforms:item>
+<xforms:item>
+	<xforms:label>Pointed</xforms:label><xforms:value>Pointed</xforms:value>
+</xforms:item>
+
+</xforms:select1>
+
+<!-- needs to be float -->
+<xforms:input ref="sia:capability/maxQueryRegionSize/long">
+<xforms:label>Max Longitude Size:</xforms:label>
+</xforms:input>
+
+<!-- needs to be float -->
+<xforms:input ref="sia:capability/maxQueryRegionSize/lat">
+<xforms:label>Max Latitude Size:</xforms:label>
+</xforms:input>
+
+<!-- needs to be float -->
+<xforms:input ref="sia:capability/maxImageExtent/long">
+<xforms:label>Max Longitude Size:</xforms:label>
+</xforms:input>
+
+<!-- needs to be float -->
+<xforms:input ref="sia:capability/maxImageExtent/lat">
+<xforms:label>Max Latitude Size:</xforms:label>
+</xforms:input>
+
+<!-- needs to be int -->
+<xforms:input ref="sia:capability/maxImageSize/long">
+<xforms:label>Max Longitude Size:</xforms:label>
+</xforms:input>
+
+<!-- needs to be int -->
+<xforms:input ref="sia:capability/maxImageSize/lat">
+<xforms:label>Max Latitude Size:</xforms:label>
+</xforms:input>
+
+<!-- needs to be int -->
+<xforms:input ref="sia:capability/maxFileSize">
+<xforms:label>Max Latitude Size:</xforms:label>
+</xforms:input>
+
+<!-- needs to be int -->
+<xforms:input ref="sia:capability/maxRecords">
+<xforms:label>Max Latitude Size:</xforms:label>
+</xforms:input>
+</xforms:group>
+</div>

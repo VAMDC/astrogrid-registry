@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ri:VOResources xmlns:ri="http://www.ivoa.net/xml/RegistryInterface/v1.0" 
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" from="1" more="false" numberReturned="1">
+<ri:Resource xsi:type="vr:Organisation" status="active"
+          created="2000-01-01T09:00:00" updated="2000-01-01T09:00:00"
+          xmlns:vr="http://www.ivoa.net/xml/VOResource/v1.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <validationLevel validatedBy="ivo://nvo.ncsa/registry"> 2 </validationLevel>
+    <title>   NCSA Radio Astronomy Imaging   </title>
+    <shortName>   NCSA-RAI   </shortName>
+    <identifier>ivo://invalid/entry</identifier>
+    <curation>
+      <publisher ivo-id="ivo://ncsa.uiuc/NCSA">
+        NCSA Radio Astronomy Imaging
+      </publisher>
+      <creator>
+        <name>   Dr. Richard Crutcher   </name>
+        <logo>
+          http://rai.ncsa.uiuc.edu/rai.jpg
+        </logo>
+      </creator>
+      <date>   1993-01-01   </date>
+      <contact>
+        <name>   Dr. Raymond Plante   </name>
+	<email>   rplante@ncsa.uiuc.edu   </email>
+      </contact>
+    </curation>
+    <content>
+      <subject>   radio astronomy   </subject>
+      <subject>   data repositories   </subject>
+      <subject>   digital libraries   </subject>
+      <subject>   grid-based processing   </subject>
+      <description>
+        The Radio Astronomy Imaging Group is focused on applying
+        high-performance computing to astronomical research.  Our
+        projects include the NCSA Astronomy Digital Image Library, 
+        the BIMA Data Archive, the BIMA Image Pipeline, and AIPS++.  
+      </description>
+      <referenceURL>  http://rai.ncsa.uiuc.edu/  </referenceURL>
+      <type>   Organisation   </type>
+      <contentLevel>   Research   </contentLevel>
+    </content>
+
+    <facility>   Berkeley-Illinois-Maryland Array (BIMA)   </facility>
+    <facility>
+       Combined Array for Research in Millimeter Astronomy (CARMA)
+    </facility>
+</ri:Resource>
+</ri:VOResources>

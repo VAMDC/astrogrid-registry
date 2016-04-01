@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project>
+  <body>
+   <breadcrumbs>
+  <item  name="Registry Webapp" href="${astrogrid_doc_URL_root}/p/registry/${project.version}/webapp" />
+  </breadcrumbs>
+    <menu name="Administrator Reference">  	
+   	   <item name="Installation/Requirements" href="installation.html"/>    	
+    </menu>
+     <menu ref="reports"/>
+  </body>
+</project>

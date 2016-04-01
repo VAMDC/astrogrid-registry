@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+
+  <properties>
+    <title>Page Title</title>
+    <author email="paul.harrison@manchester.ac.uk">Paul Harrison</author>
+  </properties>
+ <body>
+        
+	<p>
+		A Registry common library used for the client and server pieces of the Registry.  Normally common methods they both need or share a couple of examples are looking in a Document (DOM)
+		for a particular identifier or validating Registry Resources.
+
+	</p>
+	<section name="Builds">
+		<p>
+			The registry allows you to build at the top level or at it's sub-project level.  
+			Here are the mvn goals for maven 2:
+			<ul>
+				<li>clean - cleans out and removes all previous builds.</li>
+				<li>install - compiles, runs unit tests and installs a local jar to your repository as well as the target directory.</li>
+				<li>site - builds and deploys a local site information about this project.</li>
+			</ul> <br />
+			Here are the maven goals for building the registry for maven 1:
+			<ul>
+				<li>astrogrid-clean - cleans out and removes all previous builds.</li>
+				<li>astrogrid-install-snapshot - Builds all the necessry jar and war files.</li>
+				<li>astrogrid-deploy-snapshot - Builds and deploys the snapshot onto the repository.</li>
+				<li>astrogrid-deploy-site - Generates reports and documents to be deployed on the site repository.</li>
+			</ul>
+		</p>
+	</section>
+		
+ </body>
+</document>

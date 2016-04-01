@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vr:VODescription 
+xmlns="http://www.ivoa.net/xml/CEAService/v0.1" 
+xmlns:ceab="http://www.astrogrid.org/schema/CommonExecutionArchitectureBase/v1" 
+xmlns:ceapd="http://www.astrogrid.org/schema/AGParameterDefinition/v1" 
+xmlns:vm="http://www.ivoa.net/xml/VOMetadata/v0.1" 
+xmlns:vr="http://www.ivoa.net/xml/VOResource/v0.9" 
+xmlns:vt="http://www.ivoa.net/xml/VOTable/v1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <vr:Resource xsi:type="CeaApplicationType"  updated="2004-11-20T15:34:22Z" status="active">
+                <vr:Identifier>
+                        <vr:AuthorityID>someauth</vr:AuthorityID>
+                        <vr:ResourceKey>testdsa</vr:ResourceKey>
+                </vr:Identifier>
+                <vr:Title>TemplateEntry</vr:Title>
+                <vr:ShortName>TemplateEntry</vr:ShortName>
+                <vr:Summary>
+                        <vr:Description>This is part of the astrogrid CEA.</vr:Description>
+                        <vr:ReferenceURL>http://www.astrogrid.org/maven/docs/@VERSION@/applications/</vr:ReferenceURL>
+                </vr:Summary>
+                <vr:Type>Other</vr:Type>
+                <vr:Curation>
+                        <vr:Publisher>
+                                <vr:Title>Astrogrid</vr:Title>
+                                <vr:Description>blah blab</vr:Description>
+                                <vr:ReferenceURL>http://www.astrogrid.org/</vr:ReferenceURL>
+                        </vr:Publisher>
+                        <vr:Contact>
+                                <vr:Name>Paul Harrison</vr:Name>
+                                <vr:Email>pah@jb.man.ac.uk</vr:Email>
+                        </vr:Contact>
+                        <vr:Date>2004-03-26</vr:Date>
+                        <vr:Creator>
+                                <vr:Name>Astrogrid</vr:Name>
+                                <vr:Logo>??</vr:Logo>
+                        </vr:Creator>
+                        <vr:Version>Iteration 5</vr:Version>
+                </vr:Curation>
+                <vr:Subject>???</vr:Subject>
+    <ApplicationDefinition>
+      <Parameters>
+        <ParameterDefinition name="Query" type="ADQL">
+          <ns2:UI_Name xmlns:ns2="http://www.astrogrid.org/schema/AGParameterDefinition/v1">Query</ns2:UI_Name>
+          <ns3:UI_Description xmlns:ns3="http://www.astrogrid.org/schema/AGParameterDefinition/v1">Astronomy Data Query Language that defines the search criteria</ns3:UI_Description>
+          <ns4:UCD xmlns:ns4="http://www.astrogrid.org/schema/AGParameterDefinition/v1"></ns4:UCD>
+          <ns5:DefaultValue xmlns:ns5="http://www.astrogrid.org/schema/AGParameterDefinition/v1"></ns5:DefaultValue>
+          <ns6:Units xmlns:ns6="http://www.astrogrid.org/schema/AGParameterDefinition/v1"></ns6:Units>
+        </ParameterDefinition>
+        <ParameterDefinition name="Result" type="text">
+          <ns7:UI_Name xmlns:ns7="http://www.astrogrid.org/schema/AGParameterDefinition/v1">Result</ns7:UI_Name>
+          <ns8:UI_Description xmlns:ns8="http://www.astrogrid.org/schema/AGParameterDefinition/v1">Query results</ns8:UI_Description>
+          <ns9:UCD xmlns:ns9="http://www.astrogrid.org/schema/AGParameterDefinition/v1"></ns9:UCD>
+          <ns10:DefaultValue xmlns:ns10="http://www.astrogrid.org/schema/AGParameterDefinition/v1"></ns10:DefaultValue>
+          <ns11:Units xmlns:ns11="http://www.astrogrid.org/schema/AGParameterDefinition/v1"></ns11:Units>
+        </ParameterDefinition>
+        <ParameterDefinition name="DEC" type="Dec">
+          <ns12:UI_Name xmlns:ns12="http://www.astrogrid.org/schema/AGParameterDefinition/v1">DEC</ns12:UI_Name>
+          <ns13:UI_Description xmlns:ns13="http://www.astrogrid.org/schema/AGParameterDefinition/v1">Declination of cone</ns13:UI_Description>
+          <ns14:UCD xmlns:ns14="http://www.astrogrid.org/schema/AGParameterDefinition/v1"></ns14:UCD>
+          <ns15:DefaultValue xmlns:ns15="http://www.astrogrid.org/schema/AGParameterDefinition/v1"></ns15:DefaultValue>
+          <ns16:Units xmlns:ns16="http://www.astrogrid.org/schema/AGParameterDefinition/v1"></ns16:Units>
+        </ParameterDefinition>
+        <ParameterDefinition name="Format" type="text">
+          <ns17:UI_Name xmlns:ns17="http://www.astrogrid.org/schema/AGParameterDefinition/v1">Format</ns17:UI_Name>
+          <ns18:UI_Description xmlns:ns18="http://www.astrogrid.org/schema/AGParameterDefinition/v1">How the results are to be returned. VOTABLE or CSV for now</ns18:UI_Description>
+          <ns19:UCD xmlns:ns19="http://www.astrogrid.org/schema/AGParameterDefinition/v1"></ns19:UCD>
+          <ns20:DefaultValue xmlns:ns20="http://www.astrogrid.org/schema/AGParameterDefinition/v1">VOTABLE</ns20:DefaultValue>
+          <ns21:Units xmlns:ns21="http://www.astrogrid.org/schema/AGParameterDefinition/v1"></ns21:Units>
+        </ParameterDefinition>
+        <ParameterDefinition name="RA" type="RA">
+          <ns22:UI_Name xmlns:ns22="http://www.astrogrid.org/schema/AGParameterDefinition/v1">RA</ns22:UI_Name>
+          <ns23:UI_Description xmlns:ns23="http://www.astrogrid.org/schema/AGParameterDefinition/v1">Right-Ascension of cone</ns23:UI_Description>
+          <ns24:UCD xmlns:ns24="http://www.astrogrid.org/schema/AGParameterDefinition/v1"></ns24:UCD>
+          <ns25:DefaultValue xmlns:ns25="http://www.astrogrid.org/schema/AGParameterDefinition/v1"></ns25:DefaultValue>
+          <ns26:Units xmlns:ns26="http://www.astrogrid.org/schema/AGParameterDefinition/v1"></ns26:Units>
+        </ParameterDefinition>
+        <ParameterDefinition name="Radius" type="double">
+          <ns27:UI_Name xmlns:ns27="http://www.astrogrid.org/schema/AGParameterDefinition/v1">Radius</ns27:UI_Name>
+          <ns28:UI_Description xmlns:ns28="http://www.astrogrid.org/schema/AGParameterDefinition/v1">Radius of cone</ns28:UI_Description>
+          <ns29:UCD xmlns:ns29="http://www.astrogrid.org/schema/AGParameterDefinition/v1"></ns29:UCD>
+          <ns30:DefaultValue xmlns:ns30="http://www.astrogrid.org/schema/AGParameterDefinition/v1"></ns30:DefaultValue>
+          <ns31:Units xmlns:ns31="http://www.astrogrid.org/schema/AGParameterDefinition/v1"></ns31:Units>
+        </ParameterDefinition>
+
+      </Parameters>
+      <Interfaces>
+        <ns33:Interface name="adql" xmlns:ns33="http://www.astrogrid.org/schema/CommonExecutionArchitectureBase/v1">
+          <ns33:input>
+            <ns33:pref ref="Format" />
+            <ns33:pref ref="Query" />
+          </ns33:input>
+          <ns33:output>
+            <ns33:pref ref="Result" />
+          </ns33:output>
+        </ns33:Interface>
+        <ns32:Interface name="cone" xmlns:ns32="http://www.astrogrid.org/schema/CommonExecutionArchitectureBase/v1">
+          <ns32:input>
+            <ns32:pref ref="Format" />
+            <ns32:pref ref="RA" />
+            <ns32:pref ref="DEC" />
+            <ns32:pref ref="Radius" />
+          </ns32:input>
+          <ns32:output>
+            <ns32:pref ref="Result" />
+          </ns32:output>
+        </ns32:Interface>
+      </Interfaces>
+    </ApplicationDefinition>
+  </vr:Resource>
+</vr:VODescription>

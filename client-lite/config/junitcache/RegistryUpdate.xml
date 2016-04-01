@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VODescription
+  xmlns="http://www.ivoa.net/xml/VOResource/v0.9"
+  xmlns:vr="http://www.ivoa.net/xml/VOResource/v0.9"
+  xmlns:vc="http://www.ivoa.net/xml/VOCommunity/v0.2"
+  xmlns:vg="http://www.ivoa.net/xml/VORegistry/v0.2"
+  xmlns:vs="http://www.ivoa.net/xml/VODataService/v0.4"
+  xmlns:vt="http://www.ivoa.net/xml/VOTable/v0.1"
+  xmlns:cs="http://www.ivoa.net/xml/ConeSearch/v0.2"
+  xmlns:sia="http://www.ivoa.net/xml/SIA/v0.6"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.ivoa.net/xml/VOResource/v0.9
+                      http://www.ivoa.net/xml/VOResource/VOResource-v0.9.xsd
+                      http://www.ivoa.net/xml/VOCommunity/v0.2
+                      http://www.ivoa.net/xml/VOCommunity/VOCommunity-v0.2.xsd
+                      http://www.ivoa.net/xml/VORegistry/v0.2
+                      http://www.ivoa.net/xml/VORegistry/VORegistry-v0.2.xsd
+                      http://www.ivoa.net/xml/ConeSearch/v0.2
+                      http://www.ivoa.net/xml/ConeSearch/ConeSearch-v0.2.xsd
+                      http://www.ivoa.net/xml/SIA/v0.6
+                      http://www.ivoa.net/xml/SIA/SIA-v0.6.xsd">
+ <vr:Resource xsi:type="RegistryType">
+    <Identifier>
+      <AuthorityID>org.astrogrid.test.mssl</AuthorityID>
+      <ResourceKey>mssl/registry</ResourceKey>
+    </Identifier>
+    <Title>Astrogrid MSSL Registry</Title>
+    <Summary>
+      <Description>
+      	This is the Astrogrid MSSL main registry currently holding datate for MSSL, Cambridge Community, and Edinburgh-ROE Myspace.
+      </Description>
+      <ReferenceURL>http://mssl.ucl.ac.uk/</ReferenceURL>
+    </Summary>
+    <Type>Archive</Type>
+    <Curation>
+      <Publisher>
+         <Title>MSSL Registry</Title>
+      </Publisher>
+      <Contact>
+        <Name>Kevin Benson</Name>
+	    <Email>kmb@mssl.ucl.ac.uk</Email>
+      </Contact>
+    </Curation>
+    <vg:ManagedAuthority>org.astrogrid.test.roe</vg:ManagedAuthority>
+    <vg:ManagedAuthority>org.astrogrid.test.codon</vg:ManagedAuthority>
+    <vg:ManagedAuthority>org.astrogrid.test.cam</vg:ManagedAuthority>
+    <vg:ManagedAuthority>org.astrogrid.test.mssl</vg:ManagedAuthority>
+    <Interface>
+      <Invocation>WebService</Invocation>
+      <AccessURL use="full">http://msslxy.mssl.ucl.ac.uk:8080/astrogrid-registry-webapp/services/RegistryHarvest?wsdl</AccessURL>
+    </Interface>
+  </vr:Resource>
+  </VODescription>

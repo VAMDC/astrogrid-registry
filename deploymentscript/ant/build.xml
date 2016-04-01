@@ -1,0 +1,213 @@
+<project name="install" default="info" basedir=".">
+	<property file="default.properties"/>
+	<property name="registry.temporary.dir" value="registry-tmp"/>
+	<property name="registry.war" value="${maven.local.repo}/${astrogrid.groupId}/wars/${registry.war.name}"/>
+	<property name="local.registry.war" value="${basedir}/registry.war"/>
+
+		
+	
+	<!--Public Targets-->
+
+	<target name="save-config" description="Save this configuration for future use">
+		<echo>Saving configuration</echo>
+        <input addProperty="input.saveProperties.file" defaultvalue="${user.home}/.registry-installer.properties">
+            Enter a file name for saving your current settings
+        </input>
+        <echoproperties destfile="${input.saveProperties.file}" prefix="input." description="This file can then be reused for hands-free operation"/>
+    	<property name="properties.saved" value="true"/>
+    </target>
+	
+	<target name="load-config" description="Load a previously saved configuration">
+		<echo>Loading saved configuration</echo>
+    	<input addProperty="input.loadProperties.file" defaultvalue="${user.home}/registry-installer.properties">
+            Enter the filename of your previously saved settings
+        </input>
+    	<property file="${input.loadProperties.file}"/>
+    </target>
+
+	<target name="install" description="Install an AstroGrid registry" depends="info,checkTomcat, download, deploy">
+	        <echo>The registry has been successfully installed.</echo>
+	    	<property name="registry.installed" value="true"/>
+    </target>		
+	
+	<target name="register" description="Self-register this registry" depends="info,define-custom-tasks, get-registry-keys,set-context-path">
+		<echo>Registering the registry with itself</echo>
+		<input addproperty="input.reg.title" defaultvalue="A registry">Enter a title for the registry</input>
+		<input addproperty="input.reg.contact.name" defaultvalue="Kevin Benson">Enter a contact name for the registry</input>
+		<input addproperty="input.reg.contact.email" defaultvalue="kmb@mssl.foo.bar">Enter a contact email for the registry</input>			
+		
+		<property name="astrogrid.registry.update.endpoint" value="${input.registry.public.url}/${astrogrid.registry.update.offset}"/>
+		<echo>Self registering under authority ${input.registry.regauthority} with endpoint ${astrogrid.registry.update.endpoint}...</echo>
+
+		<tempfile property="registry.regentry10"/>
+		<filterset id="regfilter">
+            <filter token="REGISTRY_AUTHID"   value="${input.registry.regauthority}"/>
+            <filter token="reg.amend.oaipublish.0.1" value="${input.registry.public.url}/OAIHandlerv0_1"/>
+            <filter token="TITLE" value="${input.reg.title}"/>
+        	<filter token="CONTACT_NAME" value="${input.reg.contact.name}"/>            	
+        	<filter token="CONTACT_EMAIL" value="${input.reg.contact.email}"/>            				
+        </filterset>
+
+
+		<copy file="registryentries/ARegistryv10.xml" tofile="${registry.regentry10}">
+			<filterset refid="regfilter"/>
+		</copy>
+
+		<echo>Waiting ...</echo><!-- for ${astrogrid.registry.update.endpoint} to become available</echo-->
+		<sleep seconds="10"/>
+    	<waitfor maxwait="60" maxwaitunit="second" checkevery="10" checkeveryunit="second">
+    	    <http url="${astrogrid.registry.update.endpoint}"/>
+    	</waitfor> 
+		<register-entry registry="${astrogrid.registry.update.endpoint}" data="${registry.regentry10}"/>		
+		<property name="registry.registered" value="true"/>
+	</target>
+	
+	<target name="add-authid" description="Add a managed authority ID" depends="info,define-custom-tasks, set-context-path">
+		<echo>Adding another managed authority</echo>
+		<input addproperty="input.reg.managedauthority" defaultvalue="org.astrogrid">What is the additional authority you wish to manage?</input>
+		<input addproperty="input.reg.managedauthority.title" defaultvalue="Astrogrid Standard Authority">Enter a title for the authority</input>
+		<input addproperty="input.reg.managedauthority.shorttitle" defaultvalue="AG-AT-ST">Enter a short title for the authority</input>		
+		<input addproperty="input.reg.contact.name" defaultvalue="Kevin Benson">Enter a contact name for the registry entry</input>
+		<input addproperty="input.reg.contact.email" defaultvalue="kmb@mssl.foo.bar">Enter a contact email for the registry entry</input>			
+		
+		<property name="astrogrid.registry.update.endpoint" value="${input.registry.public.url}/${astrogrid.registry.update.offset}"/>
+		<echo>Registering authority ${input.reg.managedauthority} with endpoint ${astrogrid.registry.update.endpoint}...</echo>
+
+		<tempfile property="authority.regentry10"/>
+		<filterset id="authfilter">
+            <filter token="TITLE"   value="${input.reg.managedauthority.title}"/>
+            <filter token="SHORTNAME"   value="${input.reg.managedauthority.shorttitle}"/>
+            <filter token="AUTHID" value="${input.reg.managedauthority}"/>
+        	<filter token="CONTACT_NAME" value="${input.reg.contact.name}"/>            	
+        	<filter token="CONTACT_EMAIL" value="${input.reg.contact.email}"/>            				
+        </filterset>
+
+		
+		<copy file="registryentries/AstrogridStandardAuthorityv10.xml" tofile="${authority.regentry10}">
+			<filterset refid="authfilter"/>
+		</copy>
+
+		<echo>Waiting...</echo><!-- for ${astrogrid.registry.update.endpoint} to become available</echo-->
+		<sleep seconds="10"/>
+    	<waitfor maxwait="60" maxwaitunit="second" checkevery="10" checkeveryunit="second">
+    	    <http url="${astrogrid.registry.update.endpoint}"/>
+    	</waitfor> 
+		<register-entry registry="${astrogrid.registry.update.endpoint}" data="${authority.regentry10}"/>
+	</target>
+	
+	<target name="remove" description="Remove an existing AstroGrid registry" depends="info, checkTomcat,  undeploy">
+    	<sleep seconds="10" description="Allow Tomcat to catch up"/>
+        <echo>The registry has been successfully removed</echo>
+    	<property name="registry.uninstalled" value="true"/>
+	</target>
+	
+	<target name="install-and-register" description="convenience target for AGINAB" depends="install,register"/>
+	
+	
+	<!--Private Targets -->
+
+	<target name="info">
+		<echo>This is the AstroGrid Registry Installer</echo>
+	</target>
+	
+		
+    <target name="checkTomcat" depends="fail-if-no-tomcat,get-tomcat-url">
+        <input addProperty="input.tomcat.manager.user" defaultvalue="tomcat"> Please enter the Tomcat manager username </input>
+        <input addProperty="input.tomcat.manager.pass" defaultvalue="tomcat"> Please enter the Tomcat manager password </input>
+        <echo>Attempting to contact Tomcat Manager...</echo>
+        <tempfile property="page.check"/>
+        <property name="tomcat.manager.url" value="${input.tomcat.url}/manager"/>
+        <get src="${tomcat.manager.url}" dest="${page.check}" username="${input.tomcat.manager.user}" password="${input.tomcat.manager.pass}"/>
+        <echo>...OK</echo>
+    </target>
+	
+	<target name="get-tomcat-url">
+		<input addProperty="input.tomcat.url" defaultvalue="http://127.0.0.1:8080">Please enter the URL of Tomcat on your system </input>
+	</target>
+
+	<target name="fail-if-no-tomcat">
+		<input addProperty="input.tomcat.present" validargs="continue,abort">Ensure Tomcat is running on your target system with the Manager app enabled.</input>
+        <condition property="tomcat.present.true">
+	            <equals arg1="${input.tomcat.present}" arg2="continue"/>
+        </condition>
+        <fail message="Please start Tomcat and retry the installation" unless="tomcat.present.true"/>
+	</target>
+	
+    <target name="download" unless="offline">
+        <echo>Downloading registry software....this may take some time...</echo>
+        <mkdir dir="${maven.local.repo}/${astrogrid.groupId}/wars/"/>
+        <property name="continueifnodownload" value="false"/>
+        <!--normlly stop here, if we can't download-->
+        <get src="${astrogrid.repo}/${astrogrid.groupId}/wars/${registry.war.name}" dest="${registry.war}" verbose="true" usetimestamp="true" 
+            ignoreerrors="${continueifnodownload}"/>
+    </target>
+	
+    <target name="deploy" depends="define-custom-tasks,createTmpDir,checkTomcat,download,update-war,set-context-path">
+        <tomcat-deploy update="true" url="${tomcat.manager.url}" username="${input.tomcat.manager.user}" password="${input.tomcat.manager.pass}" 
+            path="${input.registry.contextpath}" war="${local.registry.war}" />
+    </target>
+	
+	<target name="set-context-path" depends="get-tomcat-url">
+		<input addproperty="input.registry.contextpath" defaultvalue="/astrogrid-registry">Please enter the context path on the webserver for registry</input>
+        <!--This could be overriden if youre proyxing via another machine-->
+		<input addproperty="input.registry.public.url" defaultvalue="${input.tomcat.url}${input.registry.contextpath}">Is this the correct public URL for the registry? Please amend if you a using a proxy</input>
+        <!--property name="input.registry.public.url" value="${input.tomcat.url}${input.registry.contextpath}"/-->
+	</target>
+	
+    <target name="undeploy" depends="define-custom-tasks,checkTomcat,set-context-path">
+        <tomcat-remove url="${tomcat.manager.url}" username="${input.tomcat.manager.user}" password="${input.tomcat.manager.pass}" 
+            path="${input.registry.contextpath}"  />
+    </target>   
+
+    <target name="update-war" depends="download, set-context-path, get-registry-keys">
+        <filterset id="myfilter">
+            <filter token="REGISTRY_AUTHID"   value="${input.registry.regauthority}"/>
+            <filter token="REGISTRY_WEBAPP" value="${input.registry.contextpath}"/>
+            <filter token="reg.amend.oaipublish.0.1" value="${input.registry.public.url}/OAIHandlerv0_1"/>
+        </filterset>
+    	<echo>This registry is being installed with the following settings:</echo>
+    	<echo>AuthId: ${input.registry.regauthority}</echo>
+    	<echo>Webapp: ${input.registry.contextpath}</echo>
+    	<echo>Public URL: ${input.registry.public.url}</echo>    		
+        <copy todir="${registry.temporary.dir}/context-filtered">
+            <filterset refid="myfilter"/>
+            <fileset dir="context" />
+        </copy>
+        <copy file="${registry.war}" tofile="${local.registry.war}"/>
+    	<!--update the context.xml-->
+        <war update="yes" destfile="${local.registry.war}">
+            <metainf dir="${registry.temporary.dir}/context-filtered" />
+        </war>
+    </target>
+
+	<target name="get-registry-keys">
+		<input addproperty="input.registry.regauthority" defaultvalue="org.astrogrid.localhost">Please enter the Authority ID for this registry</input>
+	</target>
+
+
+	    
+  
+    	
+	    
+    <target name="createTmpDir">
+    	<delete dir="${registry.temporary.dir}"/>
+        <mkdir dir="${registry.temporary.dir}"/>
+    </target>
+ 
+	<!-- The reason for making these optional is that they might be already
+	     set by an enclosing Maven script-->
+	<target name="define-custom-tasks" unless="custom.tasks.defined">
+		<!-- Configure the custom Ant tasks for the Manager application -->
+	    <taskdef name="tomcat-deploy" classname="org.apache.catalina.ant.DeployTask" />
+	    <taskdef name="tomcat-install" classname="org.apache.catalina.ant.InstallTask" />
+	    <taskdef name="tomcat-list" classname="org.apache.catalina.ant.ListTask" />
+	    <taskdef name="tomcat-reload" classname="org.apache.catalina.ant.ReloadTask" />
+	    <taskdef name="tomcat-remove" classname="org.apache.catalina.ant.RemoveTask" />
+	    <taskdef name="tomcat-resources" classname="org.apache.catalina.ant.ResourcesTask" />
+	    <taskdef name="tomcat-roles" classname="org.apache.catalina.ant.RolesTask" />
+	    <taskdef name="tomcat-start" classname="org.apache.catalina.ant.StartTask" />
+	    <taskdef name="tomcat-stop" classname="org.apache.catalina.ant.StopTask" />
+	    <taskdef name="tomcat-undeploy" classname="org.apache.catalina.ant.UndeployTask" />
+	    <taskdef name="register-entry" classname="org.astrogrid.deployment.RegistryLoaderTask"/>		
+	</target>
+</project>

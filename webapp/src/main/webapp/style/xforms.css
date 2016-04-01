@@ -1,0 +1,393 @@
+.Disabled {
+	color: #ADAEAE;
+	background-color: transparent;
+	border: none;  
+	-moz-user-select: none; 
+}
+
+
+input[type="text"], input[type="password"] {
+	border: 1px #000000 solid;
+	margin: 1px;
+	padding: 2px;
+	width:200px;
+	font-family: Verdana, Arial; font-size: 12px;
+}
+
+input[type="text"].Selected, input[type="password"].Selected {
+	border: 2px solid #3C79B1;
+	padding: 2px;
+	margin: 0px;
+	width:200px;
+}
+
+input[type="text"].Disabled, input[type="password"].Disabled {
+	color: #ADAEAE;
+	background-color: #E1E1E1;
+	border: 1px solid #ADAEAE;  
+	-moz-user-select: none; 
+}
+
+input[type="radio"], input[type="checkbox"] {
+	border: none;
+	width:20px;
+
+}
+
+input[type="radio"].Selected, input[type="checkbox"].Selected  {
+	border: none;
+	width:20px;
+}
+
+input[type="radio"].Disabled, input[type="checkbox"].Disabled  {
+	border: none;
+	width:20px;
+	-moz-user-select: none; 
+}
+
+.output {
+	margin: 0px;
+	padding: 6px;
+}
+
+img {
+	border: none;
+}
+
+
+span {
+	padding-right: 5px;
+}
+
+
+textarea {
+	border: 1px #000000 solid;
+	padding:2px;
+	margin:1px;
+	font-family: Verdana, Arial; font-size: 12px;
+	width: 200px; height: 100px;
+}
+
+textarea.Selected {
+	border: 2px solid #3C79B1;
+	padding:2px;
+	margin:0px;
+	font-family: Verdana, Arial; font-size: 12px;
+	width: 200px; height: 100px;
+}
+
+
+textarea.Disabled {
+	background-color : transparent;
+	border: 1px #cccccc solid;
+	font-family: Verdana, Arial; font-size: 12px;
+	width: 200px; height: 100px;
+}
+
+
+label {
+	font-weight: bold;
+	padding: 0px;
+	padding-top: 6px;
+	border: none;
+	float:left;
+	width: 200px;
+	height: auto;
+}
+
+.control {
+	clear: both;
+	margin: 0px;
+	padding-top : 5px;
+	padding-bottom : 5px;
+	border: none;
+}
+
+.controlmargin {
+	margin-left: 200px;
+	border: none;
+}
+
+.model {
+	padding: 3px;
+	border: none;
+}
+
+
+.hide {
+	display:none;
+}
+
+.show {
+	display:inherit;
+}
+
+span {
+	cursor : default;
+}
+
+span.output {
+	cursor : default;
+}
+
+#saveButton {
+	float: none;
+}
+
+
+
+a.helpLink {
+	color:				black;
+	text-decoration:	none;
+	cursor:				help;
+}
+
+a.helpLink:hover {
+	color:				black;
+	text-decoration:	none;
+
+}
+
+.help-tooltip {
+	position:	absolute;
+	width:		250px;
+	border:		1px Solid WindowFrame;
+	background:	Infobackground;
+	color:		InfoText;
+	font:		StatusBar;
+	font:		Status-Bar;
+	padding:	3px;
+	z-index:	10000;
+}
+
+.help-tooltip a,
+.help-tooltip a:hover {
+	color:		blue !important;
+	background:	none;
+}
+
+div.invalid {
+	background-color : transparent;
+	background-image: url(../img/invalid.png);
+  	background-repeat: no-repeat;
+  	margin:1px;
+  	padding:0px;
+  	width:12px;
+  	height: 12px;
+	display:inline;
+}
+
+div.required {
+	background-color : transparent;
+	background-image: url(../img/asterisk.png);
+ 	background-position: 1px 1px;
+  	background-repeat: no-repeat;
+  	margin:1px;
+  	padding:0px;
+  	width:12px;
+  	height: 12px;
+	display:inline;
+}
+
+div.required span, div.invalid span {
+	visibility:hidden;
+	font-size:10px;
+}
+
+.handle {
+	position: absolute;
+	width:				31px;
+	height:				14px;
+	background-image:	url("handle.horizontal.png");
+	background-repeat: no-repeat;
+}
+
+.horizontal {
+	position:			relative;
+	width: 200px;
+	height: 27px;
+	border: none;
+}
+.line {
+	position:			absolute;
+	font-size:			0.01mm;
+	overflow:			hidden;
+	border:				1px solid rgb(90,97,90);
+	background:			rgb(189,190,189);
+}
+
+.line div {
+	width:		1px;
+	height:		1px;
+	border: 1px solid;
+	border-color: 	rgb(230,230,230) rgb(189,190,189) rgb(189,190,189) rgb(230,230,230);
+}
+
+input.Invalid {
+	border: 1px solid red;
+}
+
+fieldset.Disabled {
+	border: 1px solid #cccccc;
+	padding: 4px;
+	margin: 4px;
+}
+
+fieldset {
+	color: #000000;
+	border: 1px solid #000000;
+	padding: 4px;
+	margin: 4px;
+}
+
+fieldset.legendDisabled {
+	color: #cccccc;
+	padding: 4px;
+}
+
+
+#debugDiv {
+	position:absolute;
+	color: #000000;
+	border: 1px solid #000000;
+	background-color: #ffffff;
+	width: 470px;
+	height: 800px;
+	top: 20px;
+	left: 500px;
+	padding:0px;
+	margin: 0px;
+	font-family: Verdana, Helvetica, Arial, sans-serif;
+}
+
+#debugEvents {
+	font-size: 11px;
+	border: none;
+	width: auto;
+	height: 300px;
+	border: #000000 dotted 1px;
+	overflow: auto;
+	margin: 2px;
+}
+
+#debugLog, #debugExp {
+	font-size: 11px;
+	border: none;
+	width: auto;
+	height:120px;
+	border: #000000 dotted 1px;
+	overflow: auto;
+	margin: 2px;
+}
+
+.Log {
+	color: #000000;
+	font-weight: bold;
+	padding: 3px;
+	border-bottom: #cccccc dotted 1px;
+	margin: 2px;
+}
+
+.infoLog {
+	color: blue;
+	font-weight: bold;
+	padding: 3px;
+	border-bottom: #cccccc dotted 1px;
+	margin: 2px;
+}
+
+.errorLog {
+	color: red;
+	font-weight: bold;
+	padding: 3px;
+	border-bottom: #cccccc dotted 1px;
+	margin: 2px;
+}
+
+.noticeLog {
+	color: green;
+	font-weight: bold;
+	padding: 3px;
+	border-bottom: #cccccc dotted 1px;
+	margin: 2px;
+}
+
+.exceptionLog {
+	color: yellow;
+	font-weight: bold;
+	padding: 3px;
+	border-bottom: #cccccc dotted 1px;
+	margin: 2px;
+}
+
+.element {
+	color:			blue;
+	padding-left:	16px;
+}
+
+.elementname {
+	color:	DarkRed;	
+}
+
+.attribname {
+	color:	red;
+}
+
+.attribvalue {
+	color:	blue;
+}
+
+.text {
+	color:			WindowText;
+	padding-left:	16px;
+}
+
+.cdata-content {
+	color:			WindowText;
+	font-family:	Courier New;
+	white-space:	pre;
+	display:		block;
+	border-left:	1px solid Gray;
+	padding-left:	16px;
+}
+
+.comment {
+	color:			blue;
+	padding-left:	16px;
+}
+
+.doctype {
+	color:			blue;
+	padding-left:	16px;
+}
+
+.comment-content {
+	white-space:	pre;
+	font-family:	Courier New;
+	color:			Gray;
+	display:		block;
+}
+
+/* added */
+input:focus {
+	border: 2px solid #3C79B1;
+}
+
+table.repeat  {	border: solid 1px black; border-collapse: collapse; }
+
+table.repeat tr { border: solid 1px black; border-collapse: collapse; margin: 0px; }
+table.repeat tr:focus { border: solid 1px blue; border-collapse: collapse; margin: 0px; }
+
+table.repeat th { border: solid 1px black; border-collapse: collapse; margin: 0px; background-color: #cccccc}
+table.repeat td { border: solid 1px black; border-collapse: collapse; margin: 0px; padding: 2px;}
+
+*.repeat label {
+	font-weight: bold;
+	color: black;
+	margin: 0px;
+	padding: 0px;
+	border: none;
+	float: none;
+	width: 100%;
+	font-family: Verdana, Arial, Helvelica; font-size: 12px;
+}

@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--+
+    |
+    | Maven build tasks for the AstroGrid Registry client.
+    |
+    +-->
+<project
+    xmlns:core="jelly:core"
+    xmlns:maven="jelly:maven"
+    xmlns:ant="jelly:ant"
+    xmlns:util="jelly:util"
+    xmlns:log="jelly:log"
+    xmlns:define="jelly:define"
+    xmlns:artifact="artifact"    
+    xmlns:deploy="deploy"
+	default="astrogrid-install-snapshot"		
+    >
+
+    <!--+
+        | Primary goals are :
+        |     clean
+        |     install-artifact
+        |     install-snapshot
+        |     site
+        +-->
+
+    <!--+
+        | Debug info ....
+        +-->
+    <goal name="info">
+        <ant:echo message="Build directory : ${maven.build.dir}"/>
+        <ant:echo message="Build artifact  : ${pom.artifactId}"/>
+        <ant:echo message="Build version   : ${pom.currentVersion}"/>
+    </goal>
+    
+
+    <!--+
+        | Import our plugin goals from our parent project.
+        | Looks like this gets included anyway ...
+        | Possibly because our project inherits from ../maven.project.xml ?
+        | Maven : Any more unexpected suprises !?
+    <core:import inherit="true" file="${maven.build.dir}/../../maven/maven.xml"/>
+        +-->
+
+    <!--+
+        | Reactor goals.
+        | These are just placeholder targets for the reactor to call.
+        +-->
+
+    <!--+
+        | Clean our build target.
+        | (required as a target goal for the reactor)
+        +-->
+    <preGoal name="clean">
+        <ant:echo message="Build artifact  : ${pom.artifactId}"/>
+        <ant:echo message="Build version   : ${pom.currentVersion}"/>
+        <ant:echo message="Build directory : ${maven.build.dir}"/>
+        <ant:echo message="Cleaning build target ...."/>
+    </preGoal>
+
+    <!--+
+        | Build and install our artifact jar.
+        +-->
+    <goal name="astrogrid-install-artifact">
+        <ant:echo message="Build artifact  : ${pom.artifactId}"/>
+        <ant:echo message="Build version   : ${pom.currentVersion}"/>
+        <ant:echo message="Build directory : ${maven.build.dir}"/>
+        <!--+
+            | Build our artifact jar.
+            +-->
+        <attainGoal name="jar:jar"/>
+        <!--+
+            | Install our artifact jar.
+            +-->
+		<artifact:install
+			artifact="${maven.build.dir}/${maven.final.name}.jar"
+			project="${pom}"
+			type="jar"
+			/>
+    </goal>
+    
+    <!--+
+        | Build and deploy our artifact jar.
+        +-->
+    <goal name="astrogrid-deploy-artifact">
+        <ant:echo message="Build artifact  : ${pom.artifactId}"/>
+        <ant:echo message="Build version   : ${pom.currentVersion}"/>
+        <ant:echo message="Build directory : ${maven.build.dir}"/>
+        <!--+
+            | Create our artifact jar.
+            +-->
+        <attainGoal name="astrogrid-install-artifact"/>
+        <!--+
+            | Deploy our artifact jar.
+            +-->
+		<artifact:deploy
+			artifact="${maven.build.dir}/${maven.final.name}.jar"
+			project="${pom}"
+			type="jar"
+			/>
+    </goal>
+    
+
+	   <!--+
+	        | Build and install our snapshot jar(s).
+	        +-->
+	    <goal name="astrogrid-install-snapshot">
+	        <ant:echo message="Build artifact  : ${pom.artifactId}"/>
+	        <ant:echo message="Build version   : ${pom.currentVersion}"/>
+	        <ant:echo message="Build directory : ${maven.build.dir}"/>
+	        <!--+
+	            | Create our snapshot name.
+	            +-->
+	        <maven:snapshot project="${pom}"/>
+	        <core:set var="maven.final.name" value="${snapshotSignature}"/>
+	        <!--+
+	            | Build our snapshot jar.
+	            +-->
+	        <attainGoal name="jar:jar"/>
+	        <!--+
+	            | Install our snapshot jar(s).
+	            +-->
+			<artifact:install-snapshot
+				artifact="${maven.build.dir}/${maven.final.name}.jar"
+				project="${pom}"
+				type="jar"
+				/>
+	    </goal>
+
+ 
+ <goal name="astrogrid-deploy-snapshot">
+     <ant:echo message="Build artifact  : ${pom.artifactId}"/>
+     <ant:echo message="Build version   : ${pom.currentVersion}"/>
+     <ant:echo message="Build directory : ${maven.build.dir}"/>
+     <ant:echo message="Deploying snapshot artifact ...."/>
+ 
+     <!--+
+         | Create our snapshot jar.
+         +-->
+     <attainGoal name="astrogrid-install-snapshot"/>
+     <!--+
+         | Deploy our snapshot jar(s).
+         +-->
+		<artifact:deploy-snapshot
+			artifact="${maven.build.dir}/${maven.final.name}.jar"
+			project="${pom}"
+			type="jar"
+			/>
+
+	</goal>
+ 
+
+    <!--+
+        | Build our project website.
+        | (required as a target goal for the reactor)
+        +-->
+    <preGoal name="site">
+        <ant:echo message="Build artifact  : ${pom.artifactId}"/>
+        <ant:echo message="Build version   : ${pom.currentVersion}"/>
+        <ant:echo message="Build directory : ${maven.build.dir}"/>
+        <ant:echo message="Building project site ...."/>
+    </preGoal>
+
+    <!--+
+        | Generate a clover report for our project.
+        | (required as a target goal for the reactor)
+        +-->
+    <goal name="clover-report">
+        <ant:echo message="Build artifact  : ${pom.artifactId}"/>
+        <ant:echo message="Build version   : ${pom.currentVersion}"/>
+        <ant:echo message="Build directory : ${maven.build.dir}"/>
+        <ant:echo message="Generating clover report ...."/>
+        <attainGoal name="maven-clover-plugin:report"/>
+    </goal>
+
+    <!--+
+        | Project goals.
+        | These are the main project goals.
+        +-->
+
+    <!--+
+        | Prepare the files for the jar goal.
+        | Adds the generated WSDL files into the jar META-INF.
+        +-->
+    <preGoal name="jar:jar">
+        <ant:echo message=""/>
+        <ant:echo message="Artifact : ${pom.artifactId}"/>
+        <ant:echo message="Preparing for jar:jar ...."/>
+          <!--+
+            | Create the META-INF directory.
+            +-->
+        <ant:mkdir dir="${maven.build.dest}/META-INF"/>
+        <ant:mkdir dir="${maven.build.dest}/META-INF/wsdl"/>
+        <!--+
+            | Copy our WSDL service descriptions.
+            +-->
+        <ant:copy verbose="false" todir="${maven.build.dest}/META-INF/wsdl">
+            <ant:fileset dir="${maven.src.dir}/wsdl">
+                <include name="**/*.wsdl"/>
+            </ant:fileset>
+        </ant:copy>
+    </preGoal>
+    
+	<postGoal name="test:compile">
+		<!--
+			Come back to this later
+    	<set var="org.astrogrid.config.filename" value="file:///c:/config.prop"/>
+    	<set var="maven.junit.sysproperties">org.astrogrid.config.filename</set>
+    	-->
+	</postGoal>   
+	
+	<goal name="deploy-artifact">
+	  <attainGoal name="jar:deploy"/>
+	</goal>
+	 
+     
+
+</project>

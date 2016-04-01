@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="UTF-8"?><web-app>
+  <display-name>Astrogrid Registry</display-name>
+
+    <context-param>
+      <param-name>properties</param-name>
+      <param-value>astrogrid.properties</param-value>
+      <description>
+        The astrogrid.properties file containing other data pairs that normally do not
+        need to be changed.
+      </description>
+    </context-param>
+
+    <filter>
+        <filter-name>IPFilter</filter-name>
+        <filter-class>org.astrogrid.registry.server.http.filters.RestrictFilter</filter-class>       
+    </filter>
+    
+  <filter>
+        <filter-name>IPFilterUpdate</filter-name>
+        <filter-class>org.astrogrid.registry.server.http.filters.RestrictFilterUpdate</filter-class>       
+    </filter>    
+
+
+
+    <filter>
+        <filter-name>ContractsQueryFilterv1_0</filter-name>
+        <filter-class>org.astrogrid.contracts.http.filters.ContractsFilter</filter-class>
+         <init-param>
+            <param-name>wsdlFile</param-name>
+            <param-value>schema/registry/RegistrySearch/v1.0/RegistrySearch.wsdl</param-value>
+         </init-param>        
+    </filter>
+
+    <filter>
+        <filter-name>ContractsUpdateFilter</filter-name>
+        <filter-class>org.astrogrid.contracts.http.filters.ContractsFilter</filter-class>
+         <init-param>
+            <param-name>wsdlFile</param-name>
+            <param-value>schema/registry/RegistryUpdate/v1.0/RegistryUpdate.wsdl</param-value>
+         </init-param>        
+    </filter>
+
+    
+
+    <filter>
+        <filter-name>ContractsPublishFilterv1_0</filter-name>
+        <filter-class>org.astrogrid.contracts.http.filters.ContractsFilter</filter-class>
+         <init-param>
+            <param-name>wsdlFile</param-name>
+            <param-value>schema/registry/RegistryPublish/v1.0/RegistryPublish.wsdl</param-value>
+         </init-param>        
+    </filter>
+
+    <filter-mapping>
+        <filter-name>IPFilter</filter-name>
+		<url-pattern>/webdav/*</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>IPFilter</filter-name>
+		<url-pattern>/xmlrp*</url-pattern>
+    </filter-mapping>
+    
+	<filter-mapping>
+        <filter-name>IPFilterUpdate</filter-name>
+		<url-pattern>/services/RegistryUpdat*</url-pattern>
+    </filter-mapping>    
+
+  
+    <filter-mapping>
+        <filter-name>ContractsQueryFilterv1_0</filter-name>
+		<url-pattern>/services/RegistryQueryv1_0</url-pattern>
+    </filter-mapping>
+    
+
+    <filter-mapping>
+        <filter-name>ContractsPublishFilterv1_0</filter-name>
+		<url-pattern>/services/RegistryHarvestv1_0</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>ContractsUpdateFilter</filter-name>
+		<url-pattern>/services/RegistryUpdat*</url-pattern>
+    </filter-mapping>
+
+
+    <!-- Servlet for explicit initialisation of log4j.
+    -->
+    <servlet>
+        <servlet-name>log4j-init</servlet-name>
+        <servlet-class>org.astrogrid.registry.server.http.servlets.Log4jInit</servlet-class>
+        <init-param>
+            <param-name>log4j-init-file</param-name>
+            <param-value>log4j.xml</param-value>
+        </init-param>
+        <init-param>
+            <param-name>log4j-init-file-registry</param-name>
+            <param-value>log4j_registry.xml</param-value>
+        </init-param>
+		<!--
+		  Change below value otherwise it will try to create a directory registry/logs in your webapp.
+		-->
+		<init-param>
+	        <param-name>logdirectory</param-name>
+        	<param-value>/</param-value>
+      	</init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+<!-- RpcServlet provides XML-RPC access to eXist -->
+    <servlet>
+        <servlet-name>org.exist.xmlrpc.RpcServlet</servlet-name>
+        <servlet-class>org.exist.xmlrpc.RpcServlet</servlet-class>
+    </servlet>
+    
+    
+    <servlet>
+    	<servlet-name>XFireServlet</servlet-name>
+    	<servlet-class>org.astrogrid.registry.server.http.servlets.SoapServlet</servlet-class>
+  	</servlet>
+  	
+	
+	<servlet>
+		<servlet-name>EnvironmentServlet</servlet-name>
+   		<servlet-class>org.astrogrid.common.j2ee.environment.EnvironmentServlet</servlet-class>
+		<init-param>
+			<param-name>next.resource</param-name>
+			<param-value>/admin/environment-apply.jsp</param-value>
+		</init-param>   		
+   		<load-on-startup>1</load-on-startup>	
+	</servlet>
+
+	<servlet>
+   		<servlet-name>RegistryHarvest1_0</servlet-name>
+   		<servlet-class>org.astrogrid.registry.server.http.servlets.HarvestDaemon</servlet-class>
+     	<init-param>
+        <param-name>registry_contract_version</param-name>
+         <param-value>1.0</param-value>
+      	</init-param>
+   		<load-on-startup>200</load-on-startup>
+	</servlet>
+
+	<servlet>
+   		<servlet-name>ExistDatabaseManager</servlet-name>
+   		<servlet-class>org.astrogrid.xmldb.client.http.servlets.eXist.ExistDatabaseManager</servlet-class>
+		<init-param>
+	        <param-name>configuration</param-name>
+        	<param-value>conf.xml</param-value>
+      	</init-param>
+       	<init-param>
+        	<param-name>basedir</param-name>
+         	<param-value>WEB-INF/</param-value>
+       	</init-param>
+   		<load-on-startup>100</load-on-startup>
+	</servlet>
+
+    <servlet>
+        <servlet-name>WebDAVServlet</servlet-name>
+        <servlet-class>org.exist.http.servlets.WebDAVServlet</servlet-class>
+        <init-param>
+            <param-name>authentication</param-name>
+            <param-value>basic</param-value>
+        </init-param>
+    </servlet>
+   
+ 
+
+    <servlet>
+      <servlet-name>OAIHandlerv1_0</servlet-name>
+      <description>
+        This servlet processes OAI verbs.
+
+        The initialization parameter names for this servlet are the
+        "servlet path" that will be received by this servlet (after the
+        filename extension is removed).  The corresponding value is the
+        name of the action class that will be used to process this request.
+      </description>
+      <servlet-class>astrogrid.registry.oai.OAIHandler</servlet-class>
+     <init-param>
+        <param-name>registry_contract_version</param-name>
+         <param-value>1.0</param-value>
+      </init-param>
+    </servlet>
+    
+    <servlet>
+        <servlet-name>DublinCoreServlet</servlet-name>
+        <description>Updates a resource's Dublin-core metadata in respons to a form.</description>
+        <servlet-class>org.astrogrid.registry.registration.DublinCoreServlet</servlet-class>
+    </servlet>
+    
+    <servlet>
+        <servlet-name>NewIdentifierServlet</servlet-name>
+        <description>Validates a new IVORN and creates a new resource.</description>
+        <servlet-class>org.astrogrid.registry.registration.NewIdentifierServlet</servlet-class>
+    </servlet>
+    
+    <servlet>
+        <servlet-name>VOSICaptureServlet</servlet-name>
+        <description>Gets service metadata from the service via VOSI and adds it to a registration.</description>
+        <servlet-class>org.astrogrid.registry.registration.VOSICaptureServlet</servlet-class>
+    </servlet>
+    
+    <servlet>
+        <servlet-name>CoverageServlet</servlet-name>
+        <servlet-class>org.astrogrid.registry.registration.CoverageServlet</servlet-class>
+    </servlet>
+    
+    <servlet>
+      <servlet-name>TreeServlet</servlet-name>
+      <description>Provides a browesable tree-view of the registry.</description>
+      <servlet-class>astrogrid.registry.tree.TreeServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>DublinCoreServlet</servlet-name>
+        <url-pattern>/registration/DublinCore</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>NewIdentifierServlet</servlet-name>
+        <url-pattern>/registration/NewIdentifier</url-pattern>
+    </servlet-mapping>
+
+
+	<servlet-mapping>
+   		<servlet-name>RegistryHarvest1_0</servlet-name>
+   		<url-pattern>/RegistryHarvest1_0</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+   		<servlet-name>EnvironmentServlet</servlet-name>
+   		<url-pattern>/admin/EnvironmentServlet</url-pattern>
+	</servlet-mapping>
+	
+
+    <servlet-mapping>
+        <servlet-name>WebDAVServlet</servlet-name>
+        <url-pattern>/webdav/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>XFireServlet</servlet-name>
+        <url-pattern>/servlet/SoapServlet</url-pattern>
+    </servlet-mapping>
+    
+	<servlet-mapping>
+        <servlet-name>XFireServlet</servlet-name>
+        <url-pattern>/services/*</url-pattern>
+    </servlet-mapping>    
+
+<!--
+    <servlet-mapping>
+        <servlet-name>XFireServlet</servlet-name>
+        <url-pattern>/services/RegistryQuer*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>XFireAdminServlet</servlet-name>
+        <url-pattern>/services/RegistryAdmi*</url-pattern>
+    </servlet-mapping>
+    
+  <servlet-mapping>
+        <servlet-name>XFireAdminServlet</servlet-name>
+        <url-pattern>/services/RegistryUpdat*</url-pattern>
+    </servlet-mapping>    
+    -->
+
+    
+
+    <servlet-mapping>
+      <servlet-name>OAIHandlerv1_0</servlet-name>
+      <url-pattern>/OAIHandlerv1_0</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>OAIHandlerv1_0</servlet-name>
+        <url-pattern>/servlet/OAIHandlerv1_0</url-pattern>
+    </servlet-mapping>
+    
+
+    <!-- Define where the XMLRPC servlet listens -->
+      <servlet-mapping>
+          <servlet-name>org.exist.xmlrpc.RpcServlet</servlet-name>
+          <url-pattern>/xmlrpc</url-pattern>
+      </servlet-mapping>
+
+    <servlet-mapping>
+      <servlet-name>TreeServlet</servlet-name>
+      <url-pattern>/tree/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+      <servlet-name>TreeServlet</servlet-name>
+      <url-pattern>/main/tree/*</url-pattern>
+    </servlet-mapping>
+
+  <!-- various MIME type mappings ====================================== -->
+
+    <servlet-mapping>
+        <servlet-name>VOSICaptureServlet</servlet-name>
+        <url-pattern>/registration/ServiceMetadata</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CoverageServlet</servlet-name>
+        <url-pattern>/registration/Coverage</url-pattern>
+    </servlet-mapping>
+    <mime-mapping>
+        <extension>css</extension>
+        <mime-type>text/css</mime-type>
+    </mime-mapping>
+
+    <mime-mapping>
+        <extension>xml</extension>
+        <mime-type>text/xml</mime-type>
+    </mime-mapping>
+
+    <mime-mapping>
+        <extension>xsl</extension>
+        <mime-type>text/xml</mime-type>
+    </mime-mapping>
+
+    <mime-mapping>
+        <extension>xconf</extension>
+        <mime-type>text/xml</mime-type>
+    </mime-mapping>
+
+    <mime-mapping>
+        <extension>xmap</extension>
+        <mime-type>text/xml</mime-type>
+    </mime-mapping>
+
+    <mime-mapping>
+        <extension>ent</extension>
+        <mime-type>text/plain</mime-type>
+    </mime-mapping>
+
+    <mime-mapping>
+        <extension>grm</extension>
+        <mime-type>text/plain</mime-type>
+    </mime-mapping>
+
+    <!-- currently the W3C havent settled on a media type for WSDL;
+    http://www.w3.org/TR/2003/WD-wsdl12-20030303/#ietf-draft
+    for now we go with the basic 'it's XML' response -->
+  <mime-mapping>
+    <extension>wsdl</extension>
+     <mime-type>text/xml</mime-type>
+  </mime-mapping>
+  
+  <mime-mapping>
+    <extension>xsd</extension>
+    <mime-type>text/xml</mime-type>
+  </mime-mapping>
+
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>registry_index.html</welcome-file>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.jws</welcome-file>
+  </welcome-file-list>
+
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name/>
+      <url-pattern>/admin/*</url-pattern>
+    </web-resource-collection>
+   	<web-resource-collection>
+    	<web-resource-name/>
+      	<url-pattern>/registration/*</url-pattern>
+    </web-resource-collection>    
+    <auth-constraint>
+      <role-name>manager</role-name>
+    </auth-constraint>
+  </security-constraint>
+  
+  <security-constraint>
+  	<web-resource-collection>
+    	<web-resource-name/>
+      	<url-pattern>/admin/*</url-pattern>
+    </web-resource-collection>    
+   	<web-resource-collection>
+    	<web-resource-name/>
+      	<url-pattern>/registration/*</url-pattern>
+    </web-resource-collection>     
+    <auth-constraint>      
+    	<role-name>agWebAdminUser</role-name>
+    </auth-constraint>
+  </security-constraint>
+  
+    <security-constraint>
+  	<web-resource-collection>
+    	<web-resource-name/>
+      	<url-pattern>/admin/*</url-pattern>
+    </web-resource-collection>    
+   	<web-resource-collection>
+    	<web-resource-name/>
+      	<url-pattern>/registration/*</url-pattern>
+    </web-resource-collection>    
+    <auth-constraint>      
+    	<role-name>astro.admin</role-name>
+    </auth-constraint>
+  </security-constraint>
+   
+  <login-config>
+    <auth-method>BASIC</auth-method>
+    <realm-name>AstroGrid</realm-name>
+  </login-config>
+
+  <security-role>
+    <role-name>manager</role-name>
+  </security-role>
+  
+	<security-role>
+    	<role-name>agWebAdminUser</role-name>
+  	</security-role>
+  	
+  	<security-role>
+    	<role-name>astro.admin</role-name>
+  	</security-role>
+
+	<env-entry>
+		<description>The Main Authority ID for this Registry (Authority ID used for the Registry type). The identifier of a namespace under the control of a single naming Authority.  Typically a domain name ex: uk.ac.le.star, mssl.ucl.ac.uk</description>
+		<env-entry-name>reg.amend.authorityid</env-entry-name>
+		<env-entry-value>org.changethis</env-entry-value>
+		<env-entry-type>java.lang.String</env-entry-type>
+	</env-entry>
+
+	<env-entry>
+		<description>
+			The XMLDB server location url. By default it is set to use the internal eXist db.  
+			You may set it to xmldb:exist://host:port/exist/xmlrpc for external eXist db. e.g. xmldb:exist://localhost:6080/exist/xmlrpc.  
+			In general you can switch to another db but this is untested read configuration page from your context on that.</description>
+		<env-entry-name>xmldb.uri</env-entry-name>
+		<env-entry-value>xmldb:exist://</env-entry-value>
+		<env-entry-type>java.lang.String</env-entry-type>
+	</env-entry>
+
+	<env-entry>
+		<description>The XMLDB driver to be the registered xml database.</description>
+		<env-entry-name>xmldb.driver</env-entry-name>
+		<env-entry-value>org.exist.xmldb.DatabaseImpl</env-entry-value>
+		<env-entry-type>java.lang.String</env-entry-type>
+	</env-entry>
+
+	<env-entry>
+		<description>The user used to create Resources or collections in the xmldb database, and startup/shutdown the internal eXist database if it is internally being ran.</description>
+		<env-entry-name>xmldb.admin.user</env-entry-name>
+		<env-entry-value>admin</env-entry-value>
+		<env-entry-type>java.lang.String</env-entry-type>
+	</env-entry>
+
+	<env-entry>
+		<description>The admin password used to create Resources or collections in the xmldb database, and startup/shutdown the internal eXist database if it is internally being ran.</description>
+		<env-entry-name>xmldb.admin.password</env-entry-name>
+		<env-entry-value/>
+		<env-entry-type>java.lang.String</env-entry-type>
+	</env-entry>
+
+	<env-entry>
+		<description>The user used to query Resources.</description>
+		<env-entry-name>xmldb.query.user</env-entry-name>
+		<env-entry-value/>
+		<env-entry-type>java.lang.String</env-entry-type>
+	</env-entry>
+
+	<env-entry>
+		<description>The query password used to query Resources.</description>
+		<env-entry-name>xmldb.query.password</env-entry-name>
+		<env-entry-value/>
+		<env-entry-type>java.lang.String</env-entry-type>
+	</env-entry>
+
+	<env-entry>
+		<description>The maximum number of results to return from queries for ADQL and Keyword Search only.</description>
+		<env-entry-name>reg.amend.returncount</env-entry-name>
+		<env-entry-value>200</env-entry-value>
+		<env-entry-type>java.lang.String</env-entry-type>
+	</env-entry>
+
+	<env-entry>
+		<description>Does this registry need to do harvesting.</description>
+		<env-entry-name>reg.amend.harvest</env-entry-name>
+		<env-entry-value>false</env-entry-value>
+		<env-entry-type>java.lang.String</env-entry-type>
+	</env-entry>
+	
+	<env-entry>
+		<description>Restrict to only certain IPAddresses for particular important/vital locations.  Currently WebDav and DB Client GUI. WARNING: if using Apache proxy do not put the machines ip address here or anybody can get access via the proxy, use direct tomcat url only.  Should be a comma seperated list of ip addresses (you may use wildcards/expressions). e.g. 127.0.0.1,128.0.0.1,129.*</description>
+		<env-entry-name>reg.custom.restrict.ipaddresses</env-entry-name>
+		<env-entry-value>127.0.0.1</env-entry-value>
+		<env-entry-type>java.lang.String</env-entry-type>
+	</env-entry>	
+
+	<env-entry>
+		<description>Restrict to only certain IPAddresses for doing Adds/Updates of Registry entries via the Update Web service call. WARNING: if using Apache proxy do not put the machines ip address here or anybody can get access via the proxy, use direct tomcat url only.  Should be a comma seperated list of ip addresses (you may use wildcards/expressions). e.g. 127.0.0.1,128.0.0.1,129.*</description>
+		<env-entry-name>reg.custom.restrict.ipaddresses.updates</env-entry-name>
+		<env-entry-value>127.0.0.1</env-entry-value>
+		<env-entry-type>java.lang.String</env-entry-type>
+	</env-entry>	
+
+
+
+	<env-entry>
+		<description>The url to the oai publishing url for 1.0 (contract version) hence 1.0 resources, default is set to astrogrid servlet change if your context is not astrogrid-registry.</description>
+		<env-entry-name>reg.amend.oaipublish.1.0</env-entry-name>
+		<env-entry-value>http://localhost:8080/astrogrid-registry/OAIHandlerv1_0</env-entry-value>
+		<env-entry-type>java.lang.String</env-entry-type>
+	</env-entry>
+
+
+	<env-entry>
+		<description>Default Contract used for queries if it cannot be determined via endpoint, request or the JSP pages.</description>
+		<env-entry-name>reg.custom.query.defaultContractVersion</env-entry-name>
+		<env-entry-value>1.0</env-entry-value>
+		<env-entry-type>java.lang.String</env-entry-type>
+	</env-entry>
+	
+	<env-entry>
+		<description>Point to another exist configuration file on your disk hence a different data directory as well.  (only for internal db use).  This might be handly if you want to use the internal database, but not have the configuration file and data directory of eXist db with the war file so undeploying/updating wars will not lose data. Also use if servlet container does not unpack war file.</description>
+		<env-entry-name>reg.custom.exist.configuration</env-entry-name>
+		<env-entry-value/>
+		<env-entry-type>java.lang.String</env-entry-type>
+	</env-entry>
+
+	<env-entry>
+		<description>Advise to change. Directory where logs will be written to (will create a directory called registry_logs and place logs there), if "/" (default) it will try to find a catalina.home and use its logs directory, if that fails tries to use the webapp context path, finally user.dir will be attempted.</description>
+		<env-entry-name>reg.custom.loggingdirectory</env-entry-name>
+		<env-entry-value>/</env-entry-value>
+		<env-entry-type>java.lang.String</env-entry-type>
+	</env-entry>
+
+	<env-entry>
+		<description>Number of hours between harvest (if harvest is enabled)</description>
+		<env-entry-name>reg.custom.harvest.interval_hours</env-entry-name>
+		<env-entry-value>2</env-entry-value>
+		<env-entry-type>java.lang.String</env-entry-type>
+	</env-entry>
+
+	<env-entry>
+		<description>Used for the Identify verb in OAI.  The repository Name.</description>
+		<env-entry-name>reg.amend.identify.repositoryName</env-entry-name>
+		<env-entry-value>Astrogrid Full Repository</env-entry-value>
+		<env-entry-type>java.lang.String</env-entry-type>
+	</env-entry>
+
+	<env-entry>
+		<description>Used for the Identify verb in OAI.  The administration Email of this OAI repository.</description>
+		<env-entry-name>reg.amend.identify.adminEmail</env-entry-name>
+		<env-entry-value>mailto:ktn@star.le.ac.uk</env-entry-value>
+		<env-entry-type>java.lang.String</env-entry-type>
+	</env-entry>
+	
+	<env-entry>
+		<description>The user used to query Resources.</description>
+		<env-entry-name>reg.custom.projectname</env-entry-name>
+		<env-entry-value>ag</env-entry-value>
+		<env-entry-type>java.lang.String</env-entry-type>
+	</env-entry>
+	
+
+	<env-entry>
+		<description>Used for the Identify verb in OAI.  The earliest date stamp for records/metadata being published.</description>
+		<env-entry-name>reg.custom.identify.earliestDatestamp</env-entry-name>
+		<env-entry-value>1950-03-03T22:14:22</env-entry-value>
+		<env-entry-type>java.lang.String</env-entry-type>
+	</env-entry>
+
+</web-app>

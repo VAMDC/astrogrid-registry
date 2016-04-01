@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--+
+    | Maven build tasks for the AstroGrid registry components.
+    |
+    | </cvs:log>
+    +-->
+<project
+    xmlns:core="jelly:core"
+    xmlns:maven="jelly:maven"
+    xmlns:ant="jelly:ant"
+    xmlns:util="jelly:util"
+    xmlns:log="jelly:log"
+    xmlns:define="jelly:define"
+    xmlns:deploy="deploy"
+	default="astrogrid-install-snapshot"
+    >
+
+ 
+
+</project>

@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--+
+    | Maven project description for the AstroGrid exist server components.
+    +-->
+<project
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="maven-project.xsd">
+    <!--+
+        | Extend the top level project descriptor.
+        +-->
+    <extend>${basedir}/../maven-base/project.xml</extend>
+	<currentVersion>${astrogrid.xmldb.version}</currentVersion>
+ 
+    <!--+
+        | The short name of the project.
+        | This is used when naming jars and distribution files.
+        +-->
+    <artifactId>astrogrid-xmldb-client</artifactId>
+
+    <!--+
+        | The full name of the project.
+        | This is used when generating JavaDoc titles.
+        +-->
+    <name>AstroGrid XMLDB</name>
+
+    <!--+
+        | The Java package name of the project.
+        | This value is used when generating JavaDoc.
+        +-->
+    <package>org.astrogrid.xmldb.client</package>
+
+    <!--+
+        | Optional.
+        | A detailed description of the project.
+        | This element is usually specified as CDATA to enable the use of HTML tags within the description.
+        | This description is used to generate the front page of the project's web site. 
+        +-->
+    <description>
+        <![CDATA[
+	<p>
+		This is a small lightweight client component for the XMLDB:API.  This coponent is to be used by other components for help
+    	on interaction with xml database currently only eXist.  It can interact with internal or
+    	external eXist db instances and in theory other XML databases such as BerkelyDB, X-Hive, Xindice, etc....  And has easy operation methods for getting QueryService, XUpdateService or general storage and retrieval 
+    	methods.  Currently only org.astrogrid.exist.xmldb.XMLDBFactory has all these methods available a few of the storage and retrieval methods should be moved out
+    	into other classes.
+	</p>
+	<section name="Builds">
+		<p>			
+			Here are the maven goals for building the this component.
+			<ul>
+				<li>clean - cleans out and removes all previous builds.</li>
+				<li>astrogrid-install-snapshot - Builds all the necessry jar and war files.</li>
+				<li>astrogrid-deploy-snapshot - Builds and deploys the snapshot onto the repository.</li>
+				<li>astrogrid-deploy-site - Generates reports and documents to be deployed on the site repository.</li>
+				<li>generate-castor - generates the castor objects.  This is automatically done though because it is done
+				as a pre-goal to java:compile.</li>				
+			</ul>
+		</p>
+	</section>
+		]]>
+</description>
+
+    <!--+
+        | A short description of the project.
+        | The short description should be limited to a single line.
+        +-->
+    <shortDescription>xmldb client side component.</shortDescription>
+
+    <!--+
+        | The external dependencies required to build and test the project.
+        +-->
+    <dependencies>
+
+        
+
+       <!-- Removing trying to straigten up these depends
+    	
+            <dependency>
+                <groupId>exist</groupId>
+                <artifactId>exist</artifactId>
+    	        <version>1.0b2</version>
+                <type>jar</type>
+                <url>http://www.astrogrid.org/</url>
+            </dependency>
+    	
+        <dependency>
+            <groupId>exist</groupId>
+            <artifactId>exist-optional</artifactId>
+	        <version>1.0b2</version>
+            <type>jar</type>
+            <url>http://www.astrogrid.org/</url>
+        </dependency>
+
+        <dependency>
+            <groupId>exist</groupId>
+            <artifactId>jakarta-oro</artifactId>
+	        <version>2.0.8</version>
+            <type>jar</type>
+            <url>http://www.astrogrid.org/</url>
+        </dependency>
+    	
+        <dependency>
+            <groupId>exist</groupId>
+            <artifactId>xml-commons-resolver</artifactId>
+	        <version>1.1</version>
+            <type>jar</type>
+            <url>http://www.astrogrid.org/</url>
+        </dependency>
+    	
+            <dependency>
+                <groupId>exist</groupId>
+                <artifactId>commons-pool</artifactId>
+    	        <version>1.1</version>
+                <type>jar</type>
+                <url>http://www.astrogrid.org/</url>
+            </dependency>
+    	
+    	
+        <dependency>
+            <groupId>exist</groupId>
+            <artifactId>antlr</artifactId>
+            <type>jar</type>
+        	<jar>antlr.jar</jar>
+            <url>http://www.astrogrid.org/</url>
+        </dependency>
+    	
+            <dependency>
+                <groupId>exist</groupId>
+                <artifactId>xmlrpc</artifactId>
+    	        <version>1.2-patched</version>
+                <type>jar</type>
+                <url>http://www.astrogrid.org/</url>
+            </dependency>
+       	
+        <dependency>
+            <groupId>exist</groupId>
+            <artifactId>xmldb</artifactId>
+            <type>jar</type>
+        	<jar>xmldb.jar</jar>
+            <url>http://www.astrogrid.org/</url>
+        </dependency>
+    	
+    	
+        <dependency>
+           <id>jaxrpc</id>
+           <version>unknown</version>
+           <jar>jaxrpc.jar</jar>
+        </dependency>
+-->
+        <dependency>
+            <groupId>org.astrogrid</groupId>
+            <artifactId>astrogrid-common</artifactId>
+	        <version>${astrogrid.common.version}</version>
+            <type>jar</type>
+            <url>http://www.astrogrid.org/</url>
+        </dependency>
+
+        <dependency>
+            <id>axis</id>
+            <version>1.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>xmlrpc</groupId>
+            <artifactId>xmlrpc</artifactId>
+	        <version>1.2-patched</version>
+            <type>jar</type>
+            <url>http://www.astrogrid.org/</url>
+            <properties>
+               	<war.bundle>true</war.bundle>
+          	</properties>            
+        </dependency>
+
+        <dependency>
+            <groupId>exist</groupId>
+            <artifactId>exist</artifactId>
+        	 <version>1.1.1-newcore</version>
+            <type>jar</type>
+            <url>http://www.astrogrid.org/</url>
+            <properties>
+               	<war.bundle>true</war.bundle>
+          	</properties>            
+        </dependency>
+	
+    	<dependency>
+        	<groupId>exist</groupId>
+	        <artifactId>exist-optional</artifactId>
+    		 <version>1.1.1-newcore</version>
+        	<type>jar</type>
+	        <url>http://www.astrogrid.org/</url>
+            <properties>
+               	<war.bundle>true</war.bundle>
+          	</properties>	        
+    	</dependency>
+
+    	<dependency>
+        	<groupId>exist</groupId>
+	        <artifactId>exist-modules</artifactId>
+    		 <version>1.1.1-newcore</version>
+        	<type>jar</type>
+	        <url>http://www.astrogrid.org/</url>
+            <properties>
+               	<war.bundle>true</war.bundle>
+          	</properties>	        
+    	</dependency>
+    	
+        	<dependency>
+            	<groupId>exist</groupId>
+    	        <artifactId>libreadline</artifactId>
+        	    <version>java-20030725</version>
+            	<type>jar</type>
+    	        <url>http://www.astrogrid.org/</url>
+            <properties>
+               	<war.bundle>true</war.bundle>
+          	</properties>    	        
+        	</dependency>
+    	
+    	
+    	<dependency>
+        	<groupId>jedit</groupId>
+	        <artifactId>jedit-syntax</artifactId>
+    	    <version>0.1-20031129</version>
+        	<type>jar</type>
+	        <url>http://www.astrogrid.org/</url>
+    	</dependency>
+    	
+        	<dependency>
+            	<groupId>jgroups</groupId>
+    	        <artifactId>jgroups</artifactId>
+        	    <version>2.2.6</version>
+            	<type>jar</type>
+    	        <url>http://www.astrogrid.org/</url>
+        	</dependency>
+
+<dependency>
+            	<groupId>xmldb-api</groupId>
+    	        <artifactId>xmldb</artifactId>
+    	        <type>jar</type>
+        		<version>20040708</version>
+            	<url>http://www.astrogrid.org/</url>
+    	    </dependency>   
+    	    
+        <dependency>
+           <id>jaxrpc</id>
+           <version>05102005</version>
+           <type>jar</type>
+        </dependency>
+
+        <dependency>
+            <artifactId>servletapi</artifactId>
+            <groupId>servletapi</groupId>
+            <version>2.3</version>
+        </dependency>
+        
+        <dependency>
+            <artifactId>commons-logging</artifactId>
+            <groupId>commons-logging</groupId>
+            <version>1.0.3</version>
+        </dependency>
+    	        
+    </dependencies>
+
+
+
+</project>

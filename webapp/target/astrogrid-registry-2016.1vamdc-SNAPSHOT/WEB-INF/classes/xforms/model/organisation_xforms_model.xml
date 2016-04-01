@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<div id="orgDiv"
+	  xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+      xmlns:xforms="http://www.w3.org/2002/xforms"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xhtml="http://www.w3.org/1999/xhtml"
+      xmlns:vr="http://www.ivoa.net/xml/VOResource/v0.10">
+
+<xforms:repeat id="facilityRepeat" nodeset="vr:facility">
+<xforms:input ref=".">
+<xforms:label>Facility:</xforms:label>
+</xforms:input>
+
+<xforms:input ref="./@ivo-id">
+<xforms:label>Facility Identifier:</xforms:label>
+</xforms:input>
+</xforms:repeat>
+
+<xforms:trigger class="triggerbutton">
+  <xforms:label>Insert Facility</xforms:label>
+    <xforms:insert ev:event="click" nodeset="vr:facility" at="index('facilityRepeat')" position="after"/>
+</xforms:trigger>
+
+<xforms:trigger class="triggerbutton">
+  <xforms:label>Remove Facility</xforms:label>
+  <xforms:delete ev:event="click" nodeset="vr:facility" at="index('facilityRepeat')"/>
+</xforms:trigger>
+
+<xforms:repeat id="instrumentRepeat" nodeset="vr:instrument">
+<xforms:input ref=".">
+<xforms:label>Instrument:</xforms:label>
+</xforms:input>
+
+<xforms:input ref="./@ivo-id">
+<xforms:label>Instrument Identifier:</xforms:label>
+</xforms:input>
+</xforms:repeat>
+
+<xforms:trigger class="triggerbutton">
+  <xforms:label>Insert Instrument</xforms:label>
+    <xforms:insert ev:event="click" nodeset="vr:instrument" at="index('instrumentRepeat')" position="after"/>
+</xforms:trigger>
+
+<xforms:trigger class="triggerbutton">
+  <xforms:label>Remove Instrument</xforms:label>
+  <xforms:delete ev:event="click" nodeset="vr:instrument" at="index('instrumentRepeat')"/>
+</xforms:trigger>
+
+
+</div>

@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--+
+    | Maven build tasks for the AstroGrid registry webapp.
+    |
+    +-->
+<project
+    xmlns:core="jelly:core"
+    xmlns:maven="jelly:maven"
+    xmlns:ant="jelly:ant"
+    xmlns:util="jelly:util"
+    xmlns:log="jelly:log"
+    xmlns:define="jelly:define"
+    xmlns:deploy="deploy"
+    xmlns:artifact="artifact">
+	
+	<property name="webapp.docs" location="${basedir}/target/webapp-docs" />	
+
+    <!--+
+        | Primary goals are :
+        |     clean
+        |     install-artifact
+        |     install-snapshot
+        |     site
+        +-->
+
+    <!--+
+        | Debug info ....
+        +-->
+    <goal name="info">
+        <ant:echo message="Build directory : ${maven.build.dir}"/>
+        <ant:echo message="Build dest directory : ${maven.build.dest}"/>
+        <ant:echo message="Build test dest directory : ${maven.test.dest}"/>
+        <ant:echo message="JUnit test directory : ${maven.junit.dir}"/>    	
+        <ant:echo message="Build artifact  : ${pom.artifactId}"/>
+        <ant:echo message="Build version   : ${pom.currentVersion}"/>
+    </goal>
+
+    <!--+
+        | Import our plugin goals from our parent project.
+        | Looks like this gets included anyway ...
+        | Possibly because our project inherits from ../maven.project.xml ?
+        | Maven : Any more unexpected suprises !?
+    <core:import inherit="true" file="${maven.build.dir}/../../maven/maven.xml"/>
+        +-->
+
+    <!--+
+        | Reactor goals.
+        | These are just placeholder targets for the reactor to call.
+        +-->
+
+    <!--+
+        | Clean our build target.
+        | (required as a target goal for the reactor)
+        +-->
+    <preGoal name="clean">
+        <ant:echo message="Build artifact  : ${pom.artifactId}"/>
+        <ant:echo message="Build version   : ${pom.currentVersion}"/>
+        <ant:echo message="Build directory : ${maven.build.dir}"/>
+        <ant:echo message="Cleaning build target ...."/>
+    </preGoal>
+
+    <!--+
+        | Build and install our component war.
+        | (required as a target goal for the reactor)
+        +-->
+    <goal name="astrogrid-install-artifact">
+        <ant:echo message="Build artifact  : ${pom.artifactId}"/>
+        <ant:echo message="Build version   : ${pom.currentVersion}"/>
+        <ant:echo message="Build directory : ${maven.build.dir}"/>
+        <ant:echo message="Building component artifact ...."/>
+    	<attainGoal name="war:war"/>
+    	<!--+
+           | Rename our war to include the version.
+        +-->
+        <ant:move
+          file="${maven.build.dir}/${maven.war.final.name}"
+          toFile="${maven.build.dir}/${maven.final.name}.war"
+         />
+         <!--+
+           | Install our artifact war.
+         +-->
+ 		<artifact:install
+ 		artifact="${maven.build.dir}/${maven.final.name}.war"
+ 		project="${pom}"
+ 		type="war"
+ 		/>
+    </goal>
+    
+    <!--+
+        | Build and deploy our artifact war.
+        +-->
+    <goal name="astrogrid-deploy-artifact">
+        <ant:echo message="Build artifact  : ${pom.artifactId}"/>
+        <ant:echo message="Build version   : ${pom.currentVersion}"/>
+        <ant:echo message="Build directory : ${maven.build.dir}"/>
+        <!--+
+            | Create our artifact war.
+            +-->
+        <attainGoal name="astrogrid-install-artifact"/>
+        <!--+
+            | Deploy our artifact war.
+            +-->
+		<artifact:deploy
+			artifact="${maven.build.dir}/${maven.final.name}.war"
+			project="${pom}"
+			type="war"
+			/>
+    </goal>
+    
+
+    <!--+
+        | Build and install our snapshot war.
+        | (required as a target goal for the reactor)
+        +-->
+    <goal name="astrogrid-install-snapshot">
+        <ant:echo message="Build artifact  : ${pom.artifactId}"/>
+        <ant:echo message="Build version   : ${pom.currentVersion}"/>
+        <ant:echo message="Build directory : ${maven.build.dir}"/>
+        <ant:echo message="Building snapshot artifact ...."/>
+    	
+        <!--+
+            | Create our snapshot name.
+            +-->
+        <maven:snapshot project="${pom}"/>
+        <core:set var="maven.final.name" value="${snapshotSignature}"/>
+        <!--+
+            | Build our snapshot war.
+            +-->
+        <attainGoal name="war:war"/>
+        <!--+
+            | Rename our war to include the version.
+            +-->
+        <ant:move
+            file="${maven.build.dir}/${maven.war.final.name}"
+            toFile="${maven.build.dir}/${maven.final.name}.war"
+            />
+        <!--+
+            | Install our snapshot war(s).
+            +-->
+        <artifact:install-snapshot
+            artifact="${maven.build.dir}/${maven.final.name}.war"
+            project="${pom}"
+            type="war"
+            />
+        	
+    	
+    	<!--
+        <attainGoal name="war:install-snapshot"/>
+        -->
+      <!--+
+         | Create the war file.
+      <attainGoal name="war:war"/>
+         +-->
+      <!--+
+         | The rest is basically copy-paste from jar:deploy-snapshot.
+      <maven:snapshot project="${pom}"/>
+      <core:set var="artifactFile" value="${pom.artifactId}.war"/>
+      <core:set var="snapshotFile" value="${pom.artifactId}-${snapshotVersion}.war"/>
+      <ant:move file="${maven.build.dir}/${artifactFile}" toFile="${maven.build.dir}/${snapshotFile}"/>
+      <ant:property name="jardir__" value="${maven.repo.local}/${pom.artifactDirectory}/jars"/>
+      <ant:mkdir dir="${jardir__}"/>
+      <ant:copy
+         file="${maven.build.dir}/${artifactFile}"
+         tofile="${jardir__}/${pom.artifactId}-SNAPSHOT.jar"
+         overwrite="true"
+         />
+      <ant:copy
+         file="${maven.build.dir}/${artifactFile}"
+         tofile="${jardir__}/${maven.final.name}.jar"
+         />
+         +-->
+    </goal>
+
+    <!--+
+        | Build and deploy our snapshot war(s).
+        +-->
+    <goal name="astrogrid-deploy-snapshot">
+        <ant:echo message="Build artifact  : ${pom.artifactId}"/>
+        <ant:echo message="Build version   : ${pom.currentVersion}"/>
+        <ant:echo message="Build directory : ${maven.build.dir}"/>
+        <!--+
+            | Create our snapshot war.
+            +-->
+        <attainGoal name="astrogrid-install-snapshot"/>
+        <!--+
+            | Deploy our snapshot war(s).
+
+		<artifact:deploy-snapshot
+			artifact="${maven.build.dir}/${maven.final.name}.war"
+			project="${pom}"
+			type="war"
+			/>
+            +-->			
+		<artifact:deploy-snapshot
+			artifact="${maven.build.dir}/${maven.final.name}.war"
+			project="${pom}"
+			type="war"
+			/>
+    </goal>
+    
+
+    <!--+
+        | Build our project website.
+        | (required as a target goal for the reactor)
+        +-->
+    <preGoal name="site">
+        <ant:echo message="Build artifact  : ${pom.artifactId}"/>
+        <ant:echo message="Build version   : ${pom.currentVersion}"/>
+        <ant:echo message="Build directory : ${maven.build.dir}"/>
+        <ant:echo message="Building project site ...."/>
+    </preGoal>
+	
+	<goal name="tt">
+		<echo>${maven.build.dir}/${pom.artifactId}</echo>
+	</goal>
+
+
+    <!--+
+        | Project goals.
+        | These are the main project goals.
+        +-->
+
+    <!--+
+        | Initialise the webapp files.
+        +-->
+    <preGoal name="war:init">
+        <ant:echo message=""/>
+        <ant:echo message="Artifact : ${pom.artifactId}"/>
+        <ant:echo message="Pre-processing for webapp task"/>
+        <attainGoal name="site-webapp"/>
+        <!--<attainGoal name="init.axis"/>
+        <ant:echo message="Modifying war:webapp location"/>
+        <ant:echo message="  Before : ${pom.getPluginContext('maven-war-plugin').getVariable('maven.war.webapp.dir')}"/>
+        <core:expr value="${pom.getPluginContext('maven-war-plugin').setVariable('maven.war.webapp.dir', axisDir)}"/>
+        <ant:echo message="  After  : ${pom.getPluginContext('maven-war-plugin').getVariable('maven.war.webapp.dir')}"/>
+        -->
+    </preGoal>
+
+    <!--+
+        | Post-process our webapp.
+        +-->    
+    <postGoal name="war:webapp">
+
+    	<!--
+	<preGoal name="war:webapp">	
+	    <attainGoal name="init.axis"/>	
+	    -->
+        <ant:echo message=""/>
+        <ant:echo message="Artifact : ${pom.artifactId}"/>
+        <ant:echo message="Post-processing for webapp task"/>
+
+        <!--+
+            | Initialise our paths.
+            +-->
+        <attainGoal name="init.paths"/>
+    	
+    	<!--
+        <core:set var="contractJarIdent" value="${pom.groupId}:astrogrid-contracts"/>
+        <core:forEach var="artifact" items="${pom.getArtifacts()}">
+            <core:if test="${artifact.getDependency().getId().equals(contractJarIdent)}">
+                <ant:echo message="Found contracts jar"/>
+                <ant:echo message="Name     : ${artifact.getName()}"/>
+                <ant:echo message="Path     : ${artifact.getPath()}"/>
+                <core:set var="contractJarPath" value="${artifact.getPath()}"/>
+            </core:if>
+        </core:forEach>
+    	-->
+    	
+        <!--+
+            | Locate our registry server jar.
+            +-->
+        <core:set var="serverJarIdent" value="${pom.groupId}:astrogrid-registry-server"/>
+        <core:forEach var="artifact" items="${pom.getArtifacts()}">
+            <core:if test="${artifact.getDependency().getId().equals(serverJarIdent)}">
+                <ant:echo message="Found registry server jar"/>
+                <ant:echo message="Name     : ${artifact.getName()}"/>
+                <ant:echo message="Path     : ${artifact.getPath()}"/>
+                <core:set var="serverJarPath" value="${artifact.getPath()}"/>
+            </core:if>
+        </core:forEach>
+        <!--+
+            | Unpack our service WSDD files.
+            +-->
+        <ant:unzip
+            src="${serverJarPath}"
+            dest="${tempDir}">
+            <patternset>
+                <include name="wsdd/*.wsdd"/>
+                <include name="xsl/*.xsl"/>            	
+            </patternset>
+        </ant:unzip>
+    	<!--
+        <ant:copy toDir="${wsddDir}" flatten="true">
+            <fileset dir="${tempDir}">
+                <include name="**/*.wsdd"/>
+            </fileset>
+        </ant:copy>
+    	-->
+    	
+        <ant:copy verbose="false" todir="${pom.getPluginContext('maven-war-plugin').getVariable('maven.war.webapp.dir')}/WEB-INF/classes/xsl" overwrite="false">
+        	<fileset dir="${tempDir}/xsl">        
+            </fileset>
+        </ant:copy>
+
+	    <!--    	
+        <ant:unzip
+            src="${contractJarPath}"
+            dest="${tempDir}">
+            <patternset>
+                <include name="schema/**"/>
+            </patternset>
+        </ant:unzip>
+
+        <ant:copy verbose="false" todir="${axisDir}/schema" overwrite="false">
+        	<fileset dir="${tempDir}/schema">
+            </fileset>
+        </ant:copy>
+        -->
+    	
+        <ant:copy verbose="false" todir="${pom.getPluginContext('maven-war-plugin').getVariable('maven.war.webapp.dir')}/docs" overwrite="false">
+        	<fileset dir="${webapp.docs}">
+            </fileset>
+        </ant:copy>
+    	
+    	<!--
+        <ant:mkdir dir="${axisDir}/WEB-INF/classes"/>
+        <ant:copy verbose="false"
+         file="${basedir}/log4j.properties"
+         todir="${axisDir}/WEB-INF/classes"
+         overwrite="true"
+         />
+        -->
+        <!--+
+            | Initialise our classpaths.
+    
+        <attainGoal name="init.classpath"/>
+        +-->        
+        <!--+
+            | Deploy our Query service.
+           
+        <ant:echo message="Deploying Registry Query WebService"/>
+        <ant:java classname="org.apache.axis.utils.Admin"
+            dir="${axisDir}/WEB-INF"
+            classpathref="maven.dependency.classpath"
+            fork="true"
+            >
+            <arg value="server"/>
+            <arg value="${wsddDir}/querydeploy.wsdd"/>
+        </ant:java>
+         +-->
+        <!--+
+            | Deploy our Registry Admin WebService.
+            
+        <ant:echo message="Deploying Registry Admin WebService"/>
+        <ant:java classname="org.apache.axis.utils.Admin"
+            dir="${axisDir}/WEB-INF"
+            classpathref="maven.dependency.classpath"
+            fork="true"
+            >
+            <arg value="server"/>
+            <arg value="${wsddDir}/adminquerydeploy.wsdd"/>
+        </ant:java>
+        +-->
+
+    	<!--
+        <ant:copy verbose="false" todir="${maven.build.dir}/${pom.artifactId}" overwrite="false">
+            <ant:fileset dir="${axisDir}">
+            </ant:fileset>
+        </ant:copy>
+	    </preGoal>		
+	    -->
+    </postGoal>
+	
+    <preGoal name="test:test">
+        <ant:echo message=""/>
+        <ant:echo message="Artifact : ${pom.artifactId}"/>
+        <ant:echo message="Preparing services for tests"/>
+            <ant:echo message="Build test dest directory : ${maven.test.dest}"/>    	
+        <!--+
+            | Check the JUnit test settings.
+            +-->
+        <ant:echo message=""/>
+        <ant:echo message="JUnit fork VM - ${maven.junit.fork}"/>
+        <ant:echo message="JUnit test directory : ${maven.junit.dir}"/>
+        <ant:echo message="Maven classes directory : ${maven.junit.dir}"/>
+    </preGoal>
+	
+	<goal name="site-webapp"
+	        description="generate webapp docs to a temp direcotry, for inclusion later in webapp - work around for a bug that stops build">
+
+	        <echo> generating webapp site into ${webapp.docs}" </echo>
+	        <!-- first merge two doc sets - site xdocs take precendence  -->
+	        <property name="tmp.docs" location="${basedir}/target/webapp-docs-src" />
+	        <mkdir dir="${tmp.docs}" />
+		<!--
+	        <copy todir="${tmp.docs}">
+	                <fileset dir="${basedir}/site-xdocs" />
+	        </copy>
+	    -->
+	        <copy overwrite="false" todir="${tmp.docs}">
+	                <fileset dir="${basedir}/xdocs" />
+	        </copy>
+	        <!-- now copy in schema and stuff extracted by grab-schema-->
+			<!--
+	        <copy overwrite="false" todir="${tmp.docs}">
+	                <fileset dir="${working.dir}" />
+	        </copy>
+			-->
+	        <core:set var="maven.docs.dest" value="${webapp.docs}" />
+	        <core:set var="maven.docs.src" value="${tmp.docs}" />
+	        <core:set var="maven.xdoc.poweredby.title" value="Provided by Astrogrid" />
+	        <core:set var="maven.xdoc.poweredby.url" value="http://www.astrogrid.org" />
+	        <core:set var="maven.xdoc.poweredby.image" value="http://www.astrogrid.org/images/AGlogo" />
+	        <core:set var="maven.ui.banner.background" value="#FF0000" />
+	        <core:set var="maven.ui.banner.foreground" value="#000000" />
+	        <mkdir dir="${webapp.docs}" />
+	        <!-- <attainGoal name="site:generate" /> -->
+
+	        <attainGoal name="xdoc:generate-from-pom" />
+
+		    <!--
+	        <attainGoal name="javadoc:generate" />
+	        -->
+	        <!--<attainGoal name="maven-jxr-plugin:report" /> - seems to fail at the moment. odd -->
+			
+	        <attainGoal name="xdoc" />
+	        
+
+	        <!-- todo - sort out custom navigation bit -->
+
+	</goal>
+
+	
+	
+
+</project>

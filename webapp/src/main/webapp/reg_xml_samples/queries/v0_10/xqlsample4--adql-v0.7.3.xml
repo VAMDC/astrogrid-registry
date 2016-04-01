@@ -1,0 +1,14 @@
+<Select  xmlns="http://adql.ivoa.net/v0.73"  xmlns:vr="http://www.ivoa.net/xml/VOResource/v0.10">
+   <SelectionList>
+      <All />
+   </SelectionList>
+   <From>
+      <Table Name="SPECTRA" Alias="t"/>
+   </From>
+   <Where>
+      <Compare Comparison="&gt;">
+         <Column Name="vr:Resource/sia:SimpleImageAccess/sia:MaxQueryRegionSize/sia:long"/>
+         <Atom><Real>11</Real></Atom>
+      </Compare>
+   </Where>
+</Select>

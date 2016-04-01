@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<div id="datacollectionDiv"
+	  xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+      xmlns:xforms="http://www.w3.org/2002/xforms/cr"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xhtml="http://www.w3.org/1999/xhtml"
+      xmlns:vr="http://www.ivoa.net/xml/VOResource/v0.10"
+      xmlns:vs="http://www.ivoa.net/xml/VODataService/v0.5">
+
+<xforms:repeat nodeset="vs:facility" id="facilityRepeat">
+	<xforms:input ref=".">
+	<xforms:label>Facility:</xforms:label>
+	</xforms:input>
+	
+	<xforms:input ref="./@ivo-id">
+	<xforms:label>Facility Identifier:</xforms:label>
+	</xforms:input>
+</xforms:repeat>
+
+<xforms:trigger class="triggerbutton">
+  <xforms:label>Insert Facility</xforms:label>
+    <xforms:insert ev:event="click" nodeset="vs:facility" at="index('facilityRepeat')" position="after"/>
+</xforms:trigger>
+
+<xforms:trigger class="triggerbutton">
+  <xforms:label>Remove Facility</xforms:label>
+  <xforms:delete ev:event="click" nodeset="vs:facility" at="index('facilityRepeat')"/>
+</xforms:trigger>
+
+<xforms:repeat nodeset="vs:instrument" id="instrumentRepeat">
+	<xforms:input ref=".">
+	<xforms:label>Instrument:</xforms:label>
+	</xforms:input>
+	
+	<xforms:input ref="./@ivo-id">
+	<xforms:label>Instrument Identifier:</xforms:label>
+	</xforms:input>
+</xforms:repeat>
+	
+	<xforms:trigger class="triggerbutton">
+	  <xforms:label>Insert Instrument</xforms:label>
+	    <xforms:insert ev:event="click" nodeset="vs:instrument" at="index('instrumentRepeat')"
+	      position="after"/>
+	</xforms:trigger>
+	
+	<xforms:trigger class="triggerbutton">
+	  <xforms:label>Remove Instrument</xforms:label>
+	  <xforms:delete ev:event="click" nodeset="vs:instrument"
+	    at="index('instrumentRepeat')"/>
+	</xforms:trigger>
+
+
+<!-- put group coverage -->
+<xforms:group  class="outergroup">
+<xforms:label>Coverage</xforms:label>
+
+<xforms:group class="innergroup">
+<xforms:label>Region</xforms:label>
+
+<xforms:repeat nodeset="vs:coverage/vs:spatial/vs:region" id="regionRepeat">
+	<xforms:select1 ref="./@xsi:type">
+	<xforms:label>Region Type</xforms:label>
+	<xforms:item>
+		<xforms:label>All Sky</xforms:label><xforms:value>AllSky</xforms:value>
+	</xforms:item>
+	<xforms:item>
+		<xforms:label>Coordinate Range</xforms:label><xforms:value>CoordRange</xforms:value>
+	</xforms:item>
+	<xforms:item>
+		<xforms:label>Circle Region</xforms:label><xforms:value>CircleRegion</xforms:value>
+	</xforms:item>
+	
+	</xforms:select1>
+	
+	<!-- coordframe goes with CoordRange and Circle Region -->
+	
+	<!-- need to add more later -->
+	<xforms:select1 ref="./vs:coordFrame">
+	<xforms:label>Coordinate Frame</xforms:label>
+	
+	<xforms:item>
+		<xforms:label>International Celestial Reference System</xforms:label><xforms:value>ICRS</xforms:value>
+	</xforms:item>
+	<xforms:item>
+		<xforms:label>FK5</xforms:label><xforms:value>FK5</xforms:value>
+	</xforms:item>
+	<xforms:item>
+		<xforms:label>FK4</xforms:label><xforms:value>FK4</xforms:value>
+	</xforms:item>
+	<xforms:item>
+		<xforms:label>Ecliptic Coordinates</xforms:label><xforms:value>ECL</xforms:value>
+	</xforms:item>
+	<xforms:item>
+		<xforms:label>Galactic Coordinates</xforms:label><xforms:value>GAL</xforms:value>
+	</xforms:item>
+	<xforms:item>
+		<xforms:label>Super-Galactic Coordinates</xforms:label><xforms:value>SGAL</xforms:value>
+	</xforms:item>
+	</xforms:select1>
+	
+	<!-- bind as xs:double -->
+	<xforms:input ref="./vs:long/vs:min">
+	<xforms:label>Longitude Minimum (For Coordinate Range Regions):</xforms:label>
+	</xforms:input>
+	
+	<!-- bind as xs:double -->
+	<xforms:input ref="./vs:long/vs:max">
+	<xforms:label>Longitude Maximum (For Coordinate Range Regions):</xforms:label>
+	</xforms:input>
+	
+	<!-- bind as xs:double -->
+	<xforms:input ref="./vs:lat/vs:min">
+	<xforms:label>Latitude Minimum (For Coordinate Range Regions):</xforms:label>
+	</xforms:input>
+	
+	<!-- bind as xs:double -->
+	<xforms:input ref="./vs:lat/vs:max">
+	<xforms:label>Latitude Maximum (For Coordinate Range Regions):</xforms:label>
+	</xforms:input>
+	
+	<!-- bind as xs:float -->
+	<xforms:input ref="./vs:radius">
+		<xforms:label>Radius (For Circle Range Regions):</xforms:label>
+	</xforms:input>
+	
+	<!-- bind as xs:double -->
+	<xforms:input ref="./vs:center/vs:long">
+	<xforms:label>Longitude (For Circle Range Regions):</xforms:label>
+	</xforms:input>
+	
+	<!-- bind as xs:double -->
+	<xforms:input ref="./vs:center/vs:lat">
+	<xforms:label>Latitude (For Circle Range Regions):</xforms:label>
+	</xforms:input>
+</xforms:repeat>
+
+<xforms:trigger class="triggerbutton">
+  <xforms:label>Insert Region</xforms:label>
+    <xforms:insert ev:event="click" nodeset="vs:coverage/vs:spatial/vs:region" at="index('regionRepeat')" position="after"/>
+</xforms:trigger>
+
+<xforms:trigger class="triggerbutton">
+  <xforms:label>Remove Region</xforms:label>
+  <xforms:delete ev:event="click" nodeset="vs:coverage/vs:spatial/vs:region" at="index('regionRepeat')"/>
+</xforms:trigger>
+
+
+<!-- bind as xs:float -->
+<xforms:input ref="vs:coverage/vs:spatial/vs:resolution">
+<xforms:label>Resolution:</xforms:label>
+</xforms:input>
+
+<!-- bind as xs:float -->
+<xforms:input ref="vs:coverage/vs:spatial/vs:regionOfRegard">
+	<xforms:label>Region of Regard:</xforms:label>
+</xforms:input>
+</xforms:group>
+
+<xforms:group class="innergroup">
+<xforms:label>Spectral</xforms:label>
+
+<!-- go back and add more -->
+<xforms:repeat nodeset="vs:coverage/vs:spectral/vs:waveband" id="wavebandRepeat">
+	<xforms:select1 ref=".">
+	<xforms:label>Spectral Waveband</xforms:label>
+	
+	<xforms:item>
+		<xforms:label>Radio</xforms:label><xforms:value>Radio</xforms:value>
+	</xforms:item>
+	<xforms:item>
+		<xforms:label>Millimeter</xforms:label><xforms:value>Millimeter</xforms:value>
+	</xforms:item>
+	<xforms:item>
+		<xforms:label>Infrared</xforms:label><xforms:value>Infrared</xforms:value>
+	</xforms:item>
+	<xforms:item>
+		<xforms:label>Optical</xforms:label><xforms:value>Optical</xforms:value>
+	</xforms:item>
+	<xforms:item>
+		<xforms:label>UV</xforms:label><xforms:value>UV</xforms:value>
+	</xforms:item>
+	<xforms:item>
+		<xforms:label>EUV</xforms:label><xforms:value>EUV</xforms:value>
+	</xforms:item>
+	<xforms:item>
+		<xforms:label>X-ray</xforms:label><xforms:value>X-ray</xforms:value>
+	</xforms:item>
+	<xforms:item>
+		<xforms:label>Gamma-ray</xforms:label><xforms:value>Gamma-ray</xforms:value>
+	</xforms:item>	
+	</xforms:select1>
+</xforms:repeat>
+
+<xforms:trigger class="triggerbutton">
+  <xforms:label>Insert WaveBand</xforms:label>
+    <xforms:insert ev:event="click" nodeset="vs:coverage/vs:spectral/vs:waveband" at="index('regionRepeat')" position="after"/>
+</xforms:trigger>
+
+<xforms:trigger class="triggerbutton">
+  <xforms:label>Remove WaveBand</xforms:label>
+  <xforms:delete ev:event="click" nodeset="vs:coverage/vs:spectral/vs:waveband" at="index('regionRepeat')"/>
+</xforms:trigger>
+
+
+<!-- bind as xs:float -->
+<xforms:input ref="vs:coverage/vs:spectral/vs:range/vs:min">
+	<xforms:label>Minimum Range:</xforms:label>
+</xforms:input>
+
+<!-- bind as xs:float -->
+<xforms:input ref="vs:coverage/vs:spectral/vs:range/vs:max">
+	<xforms:label>Maximum Range:</xforms:label>
+</xforms:input>
+
+<!-- bind as xs:float -->
+<xforms:input ref="vs:coverage/vs:spectral/vs:resolution">
+	<xforms:label>Spectral Resolution:</xforms:label>
+</xforms:input>
+
+</xforms:group>
+
+<xforms:group class="innergroup">
+<xforms:label>Temporal</xforms:label>
+
+<!-- bind as xs:date -->
+<xforms:input ref="vs:coverage/vs:temporal/vs:startTime">
+	<xforms:label>Start Time:</xforms:label>
+</xforms:input>
+
+<xforms:input ref="vs:coverage/vs:temporal/vs:endTime">
+	<xforms:label>End Time:</xforms:label>
+</xforms:input>
+
+<!-- bind as xs:float -->
+<xforms:input ref="vs:coverage/vs:temporal/vs:resolution">
+	<xforms:label>Temporal Resolution:</xforms:label>
+</xforms:input>
+</xforms:group>
+
+</xforms:group>
+
+<!-- end of coverage group-->
+
+<!-- the format -->
+<xforms:repeat id="formatRepeat" nodeset="vs:format">
+	<xforms:input ref=".">
+	<xforms:label>Format:</xforms:label>
+	</xforms:input>
+	
+	<!-- todo put default as false or make sure instance empty one is false -->
+	<xforms:select1 ref="./@isMIMEType">
+	<xforms:label>Format is Mime Type</xforms:label>
+	
+	<xforms:item>
+		<xforms:label>True</xforms:label><xforms:value>true</xforms:value>
+	</xforms:item>
+	<xforms:item>
+		<xforms:label>False</xforms:label><xforms:value>false</xforms:value>
+	</xforms:item>
+	
+	</xforms:select1>
+</xforms:repeat>
+
+<xforms:trigger class="triggerbutton">
+  <xforms:label>Insert Format</xforms:label>
+    <xforms:insert ev:event="click" nodeset="vs:format" at="index('formatRepeat')"
+      position="after"/>
+</xforms:trigger>
+
+<xforms:trigger class="triggerbutton">
+  <xforms:label>Remove Format</xforms:label>
+  <xforms:delete ev:event="click" nodeset="vs:format"
+    at="index('formatRepeat')"/>
+</xforms:trigger>
+
+<xforms:repeat id="rightsRepeat" nodeset="vs:rights">
+	<xforms:select1 ref=".">
+	<xforms:label>Rights</xforms:label>
+	<xforms:item>
+		<xforms:label>Public</xforms:label><xforms:value>public</xforms:value>
+	</xforms:item>
+	<xforms:item>
+		<xforms:label>Secure</xforms:label><xforms:value>secure</xforms:value>
+	</xforms:item>
+	<xforms:item>
+		<xforms:label>Proprietary</xforms:label><xforms:value>proprietary</xforms:value>
+	</xforms:item>
+	</xforms:select1>
+</xforms:repeat>
+
+<xforms:trigger class="triggerbutton">
+  <xforms:label>Insert Rights</xforms:label>
+    <xforms:insert ev:event="click" nodeset="vs:rights" at="index('rightsRepeat')"
+      position="after"/>
+</xforms:trigger>
+
+<xforms:trigger class="triggerbutton">
+  <xforms:label>Remove Rights</xforms:label>
+  <xforms:delete ev:event="click" nodeset="vs:rights"
+    at="index('rightsRepeat')"/>
+</xforms:trigger>
+
+<xforms:input ref="vs:accessURL">
+<xforms:label>Access URL:</xforms:label>
+</xforms:input>
+
+<xforms:select1 ref="vs:accessURL/@use">
+<xforms:label>Access URL Use</xforms:label>
+<xforms:item>
+	<xforms:label>Full</xforms:label><xforms:value>full</xforms:value>
+</xforms:item>
+<xforms:item>
+	<xforms:label>Base</xforms:label><xforms:value>base</xforms:value>
+</xforms:item>
+<xforms:item>
+	<xforms:label>Dir</xforms:label><xforms:value>dir</xforms:value>
+</xforms:item>
+
+</xforms:select1>
+
+</div>

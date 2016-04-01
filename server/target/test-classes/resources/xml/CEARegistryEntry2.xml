@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Paul Harrison (Contractor) -->
+<VODescription xmlns="http://www.ivoa.net/xml/VOResource/v0.9" xmlns:vr="http://www.ivoa.net/xml/VOResource/v0.9" xmlns:vg="http://www.ivoa.net/xml/VORegistry/v0.2" xmlns:vt="http://www.ivoa.net/xml/VOTable/v0.1" xmlns:cea="http://www.ivoa.net/xml/CEAService/v0.1" xmlns:ceab="http://www.astrogrid.org/schema/CommonExecutionArchitectureBase/v1" xmlns:agpd="http://www.astrogrid.org/schema/AGParameterDefinition/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ivoa.net/xml/CEAService/v0.1
+\\pahlaptop\work\astrogrid\src\workflow-objects\schema\VOCEA.xsd">
+	<cea:CeaApplication>
+		<Identifier>
+			<vr:AuthorityID>astrogrid.org</vr:AuthorityID>
+			<vr:ResourceKey>SExtractor</vr:ResourceKey>
+		</Identifier>
+		<Title>SExtractor Application</Title>
+		<ShortName>SExtractor</ShortName>
+		<Summary>
+			<vr:Description>Sextractor</vr:Description>
+			<vr:ReferenceURL>http://www.astrogrid.org/maven/docs/snapshot/applications/</vr:ReferenceURL>
+		</Summary>
+		<Curation>
+			<vr:Publisher>
+				<vr:Title>Astrogrid</vr:Title>
+			</vr:Publisher>
+			<vr:Contact>
+				<vr:Name>Paul Harrison</vr:Name>
+				<Email>pah@jb.man.ac.uk</Email>
+			</vr:Contact>
+		</Curation>
+		<cea:ApplicationDefinition>
+			<cea:Parameters>
+				<cea:ParameterDefinition name="DetectionImage" type="FileReference">
+					<agpd:UI_Name>Detection Image</agpd:UI_Name>
+					<agpd:UI_Description>The image that is used to detect sources. Basic position, shape and size informtaion is derived from this image</agpd:UI_Description>
+				</cea:ParameterDefinition>
+				<cea:ParameterDefinition name="PhotoImage" type="FileReference">
+					<agpd:UI_Name>Measurement Image</agpd:UI_Name>
+					<agpd:UI_Description>The Image that is used to measure photometric parameters</agpd:UI_Description>
+				</cea:ParameterDefinition>
+				<cea:ParameterDefinition name="config_file" type="FileReference">
+					<agpd:UI_Name>Configuration File</agpd:UI_Name>
+					<agpd:UI_Description>File containing the main configuration parameters for SExtractor</agpd:UI_Description>
+				</cea:ParameterDefinition>
+				<cea:ParameterDefinition name="PARAMETERS_NAME" type="FileReference">
+					<agpd:UI_Name>Parameter File</agpd:UI_Name>
+					<agpd:UI_Description>A File containing the list of catalogue paramters that should be computed</agpd:UI_Description>
+				</cea:ParameterDefinition>
+				<cea:ParameterDefinition name="CATALOG_NAME" type="MySpace_FileReference">
+					<agpd:UI_Name>Derived output catalogue</agpd:UI_Name>
+					<agpd:UI_Description>The catalogue of images derived from the input images</agpd:UI_Description>
+				</cea:ParameterDefinition>
+			</cea:Parameters>
+			<cea:Interfaces>
+				<ceab:Interface name="Simple">
+					<ceab:input>
+						<ceab:pref ref="DetectionImage"/>
+						<ceab:pref ref="PhotoImage"/>
+						<ceab:pref ref="config_file"/>
+						<ceab:pref ref="PARAMETERS_NAME"/>
+					</ceab:input>
+					<ceab:output>
+						<ceab:pref ref="CATALOG_NAME"/>
+					</ceab:output>
+				</ceab:Interface>
+			</cea:Interfaces>
+		</cea:ApplicationDefinition>
+	</cea:CeaApplication>
+	<cea:CeaApplication>
+		<Identifier>
+			<vr:AuthorityID>astrogrid.org</vr:AuthorityID>
+			<vr:ResourceKey>HyperZ</vr:ResourceKey>
+		</Identifier>
+		<Title>HyperZ Application</Title>
+		<ShortName>HyperZ</ShortName>
+		<Summary>
+			<vr:Description>HyperZ</vr:Description>
+			<vr:ReferenceURL>http://www.astrogrid.org/maven/docs/snapshot/applications/</vr:ReferenceURL>
+		</Summary>
+		<Curation>
+			<vr:Publisher>
+				<vr:Title>Astrogrid</vr:Title>
+			</vr:Publisher>
+			<vr:Contact>
+				<vr:Name>Paul Harrison</vr:Name>
+				<Email>pah@jb.man.ac.uk</Email>
+			</vr:Contact>
+		</Curation>
+		<cea:ApplicationDefinition>
+			<cea:Parameters>
+				<cea:ParameterDefinition name="config_file" type="FileReference">
+					<agpd:UI_Name>Configuration File</agpd:UI_Name>
+					<agpd:UI_Description>A HyperZ configuration file</agpd:UI_Description>
+				</cea:ParameterDefinition>
+				<cea:ParameterDefinition name="input_catalog" type="MySpace_FileReference">
+					<agpd:UI_Name>Magnitude Catalogue</agpd:UI_Name>
+					<agpd:UI_Description>The input catalogue of measured magnitude</agpd:UI_Description>
+				</cea:ParameterDefinition>
+				<cea:ParameterDefinition name="output_catalog" type="MySpace_FileReference">
+					<agpd:UI_Name>Redshift Catalogue</agpd:UI_Name>
+					<agpd:UI_Description>The catalogue of estimated redshifts</agpd:UI_Description>
+				</cea:ParameterDefinition>
+			</cea:Parameters>
+			<cea:Interfaces>
+				<ceab:Interface name="simple">
+					<ceab:input>
+						<ceab:pref ref="config_file"/>
+						<ceab:pref ref="input_catalog"/>
+					</ceab:input>
+					<ceab:output>
+						<ceab:pref ref="output_catalog"/>
+					</ceab:output>
+				</ceab:Interface>
+			</cea:Interfaces>
+		</cea:ApplicationDefinition>
+	</cea:CeaApplication>
+	<cea:CeaApplication>
+		<Identifier>
+			<vr:AuthorityID>astrogrid.org</vr:AuthorityID>
+			<vr:ResourceKey>CrossMatcher</vr:ResourceKey>
+		</Identifier>
+		<Title>Crossmatcher Application</Title>
+		<ShortName>CrossMatcher</ShortName>
+		<Summary>
+			<vr:Description>CrossMatcher</vr:Description>
+			<vr:ReferenceURL>http://www.astrogrid.org/maven/docs/snapshot/applications/</vr:ReferenceURL>
+		</Summary>
+		<Curation>
+			<vr:Publisher>
+				<vr:Title>Astrogrid</vr:Title>
+			</vr:Publisher>
+			<vr:Contact>
+				<vr:Name>Paul Harrison</vr:Name>
+				<Email>pah@jb.man.ac.uk</Email>
+			</vr:Contact>
+		</Curation>
+		<cea:ApplicationDefinition>
+			<cea:Parameters>
+				<cea:ParameterDefinition name="targets" type="MySpace_VOTableReference">
+					<agpd:UI_Name>Target votable</agpd:UI_Name>
+					<agpd:UI_Description>The VOTable file containing the target sources</agpd:UI_Description>
+				</cea:ParameterDefinition>
+				<cea:ParameterDefinition name="matches" type="MySpace_VOTableReference">
+					<agpd:UI_Name>Match VOTable</agpd:UI_Name>
+					<agpd:UI_Description>The VOTable file containing the sources to match</agpd:UI_Description>
+				</cea:ParameterDefinition>
+				<cea:ParameterDefinition name="merged_output" type="MySpace_VOTableReference">
+					<agpd:UI_Name>Resulting VOTable</agpd:UI_Name>
+					<agpd:UI_Description>The VOTable file containing result of the match</agpd:UI_Description>
+				</cea:ParameterDefinition>
+				<cea:ParameterDefinition name="matchRadius" type="double">
+					<agpd:UI_Name>Match Radius</agpd:UI_Name>
+					<agpd:UI_Description>??</agpd:UI_Description>
+				</cea:ParameterDefinition>
+				<cea:ParameterDefinition name="radMax" type="double">
+					<agpd:UI_Name>Maximum search radius</agpd:UI_Name>
+					<agpd:UI_Description>??</agpd:UI_Description>
+				</cea:ParameterDefinition>
+				<cea:ParameterDefinition name="output" type="string">
+					<agpd:UI_Name>output type</agpd:UI_Name>
+					<agpd:UI_Description>This can be one of HTML VOTable of Ascii, with the default being VOTable</agpd:UI_Description>
+					<agpd:DefaultValue>VOTable</agpd:DefaultValue>
+				</cea:ParameterDefinition>
+				<cea:ParameterDefinition name="maxMatches" type="integer">
+					<agpd:UI_Name>maximum number of matches per target</agpd:UI_Name>
+					<agpd:UI_Description>maximum number of matches per target</agpd:UI_Description>
+				</cea:ParameterDefinition>
+			</cea:Parameters>
+			<cea:Interfaces>
+				<ceab:Interface name="simple">
+					<ceab:input>
+						<ceab:pref ref="targets" maxoccurs="0"/>
+						<ceab:pref ref="matches" maxoccurs="0"/>
+					</ceab:input>
+					<ceab:output>
+						<ceab:pref ref="merged_output"/>
+					</ceab:output>
+				</ceab:Interface>
+			</cea:Interfaces>
+		</cea:ApplicationDefinition>
+	</cea:CeaApplication>
+	<cea:CeaService>
+		<Identifier>
+			<AuthorityID>astrogrid.org</AuthorityID>
+			<ResourceKey>CommandLineExecutionController/1</ResourceKey>
+		</Identifier>
+		<Title>CommandLineExecutionController</Title>
+		<ShortName>CLEC1</ShortName>
+		<Summary>
+			<Description>Run command line applications     </Description>
+			<ReferenceURL>http://www.astrogrid.org/maven/docs/snapshot/applications</ReferenceURL>
+		</Summary>
+		<Curation>
+			<Publisher>
+				<Title>Astrogrid</Title>
+			</Publisher>
+			<Contact>
+				<Name>Paul Harrison</Name>
+				<Email>pah@jb.man.ac.uk</Email>
+			</Contact>
+			<Date>2004-02-02</Date>
+			<Creator>
+				<Name>Paul Harrison</Name>
+			</Creator>
+			<Contributor>
+				<Name>Noel Winstanley</Name>
+			</Contributor>
+			<Contributor>
+				<Name>Jeff Lusted</Name>
+			</Contributor>
+		</Curation>
+		<Subject>Common Execution Architecture</Subject>
+		<Interface>
+			<Invocation>WebService</Invocation>
+			<Description>This is the application controller</Description>
+			<AccessURL use="full">http://vm05.astrogrid.org:8080/astrogrid-applications/services/ApplicationControllerService</AccessURL>
+		</Interface>
+		<cea:ManagedApplications>
+			<cea:ApplicationReference>
+				<vr:AuthorityID>astrogrid.org</vr:AuthorityID>
+				<vr:ResourceKey>HyperZ</vr:ResourceKey>
+			</cea:ApplicationReference>
+			<cea:ApplicationReference>
+				<vr:AuthorityID>astrogrid.org</vr:AuthorityID>
+				<vr:ResourceKey>CrossMatcher</vr:ResourceKey>
+			</cea:ApplicationReference>
+		</cea:ManagedApplications>
+	</cea:CeaService>
+	<cea:CeaService>
+		<Identifier>
+			<AuthorityID>astrogrid.org</AuthorityID>
+			<ResourceKey>CommandLineExecutionController/2</ResourceKey>
+		</Identifier>
+		<Title>CommandLineExecutionController</Title>
+		<ShortName>CLEC2</ShortName>
+		<Summary>
+			<Description>Run command line applications     </Description>
+			<ReferenceURL>http://www.astrogrid.org/maven/docs/snapshot/applications</ReferenceURL>
+		</Summary>
+		<Curation>
+			<Publisher>
+				<Title>Astrogrid</Title>
+			</Publisher>
+			<Contact>
+				<Name>Paul Harrison</Name>
+				<Email>pah@jb.man.ac.uk</Email>
+			</Contact>
+			<Date>2004-02-02</Date>
+			<Creator>
+				<Name>Paul Harrison</Name>
+			</Creator>
+			<Contributor>
+				<Name>Noel Winstanley</Name>
+			</Contributor>
+			<Contributor>
+				<Name>Jeff Lusted</Name>
+			</Contributor>
+		</Curation>
+		<Subject>Common Execution Architecture</Subject>
+		<Interface>
+			<Invocation>WebService</Invocation>
+			<Description>This is the application controller</Description>
+			<AccessURL use="full">http://astrogrid.jb.man.ac.uk:8080/astrogrid-applications/services/ApplicationControllerService</AccessURL>
+		</Interface>
+		<cea:ManagedApplications>
+			<cea:ApplicationReference>
+				<vr:AuthorityID>astrogrid.org</vr:AuthorityID>
+				<vr:ResourceKey>SExtractor</vr:ResourceKey>
+			</cea:ApplicationReference>
+			<cea:ApplicationReference>
+				<vr:AuthorityID>astrogrid.org</vr:AuthorityID>
+				<vr:ResourceKey>HyperZ</vr:ResourceKey>
+			</cea:ApplicationReference>
+			<cea:ApplicationReference>
+				<vr:AuthorityID>astrogrid.org</vr:AuthorityID>
+				<vr:ResourceKey>CrossMatcher</vr:ResourceKey>
+			</cea:ApplicationReference>
+		</cea:ManagedApplications>
+	</cea:CeaService>
+</VODescription>

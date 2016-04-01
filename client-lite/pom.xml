@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>astrogrid-registry-client-lite</artifactId>
+  <name>AstroGrid Registry Client</name>
+    <parent>
+      <artifactId>astrogrid-registry-base</artifactId>
+      <groupId>org.astrogrid</groupId>
+      <version>2016.1vamdc-SNAPSHOT</version>
+  </parent>
+  
+  <description>
+		The Registry Client library purpose is to give the users a delegate to go by
+		and to interact with a Registry.  Most components in Astrogrid tend to use the delegate
+		for query purposes to look up a particular resource or possibly do an xquery but usually to 
+		look up a particular resource and to discover the endpoint of a particular service.  The delegate
+		implements all the ivoa standard query interface along with a few helpful methods that are typically
+		ran on the query.
+	</description>
+  <scm>
+    <connection>scm:cvs:pserver:anoncvs@cvs.astrogrid.org:/devel:astrogrid/registry/client</connection>
+    <developerConnection>scm:cvs:ext:${maven.username}@cvs.astrogrid.org:/devel:astrogrid/registry/client</developerConnection>
+  </scm>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <systemProperties>
+            <regtest.basedir>${basedir}/target/test-classes/xml</regtest.basedir>
+          </systemProperties>
+          <includes>
+            <include>**/*Test.java</include>
+          </includes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <dependencies>
+    <dependency>
+      <groupId>org.astrogrid</groupId>
+      <artifactId>astrogrid-registry-common</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.astrogrid</groupId>
+      <artifactId>astrogrid-common</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.astrogrid</groupId>
+      <artifactId>astrogrid-pal-oldquery</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.astrogrid</groupId>
+      <artifactId>astrogrid-xml</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.astrogrid</groupId>
+      <artifactId>astrogrid-utils</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>axis</groupId>
+      <artifactId>axis</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>xmlunit</groupId>
+      <artifactId>xmlunit</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>commons-collections</groupId>
+      <artifactId>commons-collections</artifactId>
+    </dependency>
+  </dependencies>
+ <url>${astrogrid_doc_URL_root}/p/registry/${project.version}/client</url>
+   <distributionManagement>
+    <site>
+      <id>agsite</id>   <!-- this is the desired layout of the site and - will have to be repeated in the  projects unfortunately until fixes to http://jira.codehaus.org/browse/MNG-2915 are available  -->
+      <name>Default Site</name>
+      <url>${astrogrid_doc_server_root}/p/registry/${project.version}/client</url>
+     </site>
+  </distributionManagement>
+</project>

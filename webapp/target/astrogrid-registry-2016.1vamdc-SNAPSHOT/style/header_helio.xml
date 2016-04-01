@@ -1,0 +1,33 @@
+<div id='banner'>
+<link href="css/alarge.css" rel="alternate stylesheet" type="text/css" media="screen" title="alarge"/>
+<link href="css/amedium.css" rel="alternate stylesheet" type="text/css" media="screen" title="amedium"/>
+<link href="css/asmall.css" rel="alternate stylesheet" type="text/css" media="screen" title="asmall"/>
+<script src="style/styleswitcher.js" type="text/javascript"></script>
+    <table border='0' width='100%' cellpadding='8' cellspacing='0'><tr>
+      <td>
+         <a href='http://www.helio-vo.eu/'>
+         <img border='0' alt='Helio' src='img/helio_logo4_sm.jpg' align='left'></img>
+         </a>
+      </td>
+      <td>
+        <div id="buttons">
+         <a href="#" id="alarge" class="btnicon" title="Change text size to large " onclick="setActiveStyleSheet('alarge'); return false;">
+         <font size="4">A</font>
+         </a>
+         <a href="#" id="amedium" class="btnicon" title="Change text size to normal " onclick="setActiveStyleSheet('amedium'); return false;">
+         <font size="2">A</font>
+         </a>
+         <a href="#" id="asmall" class="btnicon" title="Change text size to small " onclick="setActiveStyleSheet('asmall'); return false;">
+         <font size="1">A</font>
+         </a>
+		</div>
+      </td>
+   </tr></table>
+  <div id="breadcrumbs">
+  <div class='xleft'>Helio Registry</div>
+  <div class='xright'>
+    <a href='http://www.helio-vo.eu/'>Helio</a>
+  </div>
+  <div class='clear'></div> <!-- switch off left right stuff -->
+  </div>
+</div>

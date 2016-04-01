@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="urn:org.astrogrid.registry" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="urn:org.astrogrid.registry" xmlns:intf="urn:org.astrogrid.registry" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+   <wsdl:message name="fullNodeQueryResponse">
+
+      <wsdl:part name="fullNodeQueryReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="submitQueryRequest">
+
+      <wsdl:part name="in0" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="fullNodeQueryRequest">
+
+      <wsdl:part name="in0" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="submitQueryResponse">
+
+      <wsdl:part name="submitQueryReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="RegistryInterface">
+
+      <wsdl:operation name="submitQuery" parameterOrder="in0">
+
+         <wsdl:input message="impl:submitQueryRequest" name="submitQueryRequest"/>
+
+         <wsdl:output message="impl:submitQueryResponse" name="submitQueryResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="fullNodeQuery" parameterOrder="in0">
+
+         <wsdl:input message="impl:fullNodeQueryRequest" name="fullNodeQueryRequest"/>
+
+         <wsdl:output message="impl:fullNodeQueryResponse" name="fullNodeQueryResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="RegistrySoapBinding" type="impl:RegistryInterface">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="submitQuery">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="submitQueryRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:org.astrogrid.registry" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="submitQueryResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:org.astrogrid.registry" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="fullNodeQuery">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="fullNodeQueryRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:org.astrogrid.registry" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="fullNodeQueryResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:org.astrogrid.registry" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="RegistryInterfaceService">
+
+      <wsdl:port binding="impl:RegistrySoapBinding" name="Registry">
+
+         <wsdlsoap:address location="http://localhost:8080/axis/services/Registry"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

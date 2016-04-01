@@ -1,0 +1,8 @@
+<query>
+	<selectionSequence>
+		<selection item="searchElements" itemOp="EQ" value="Resource"/>
+		<selectionOp op="$and$"/>
+		<selection item="vr:Identifier/vr:AuthorityID" itemOp="EQ"
+                   value="org.astrogrid.localhost"/>
+	</selectionSequence>
+</query>

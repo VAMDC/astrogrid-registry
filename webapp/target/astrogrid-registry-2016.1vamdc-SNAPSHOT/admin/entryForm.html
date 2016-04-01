@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+   "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html>
+
+<head>
+<title>AstroGrid Registry: register a resource</title>
+
+</head>
+
+<body>
+<h1>Add/Update Entry</h1>
+<p>
+Enter the VOResource in the text area below and press the [Submit] button to add it to the registry.  If the Resource
+already exists, it will be updated.
+</p>
+
+Upload from a local file:
+<form enctype="multipart/form-data" method="post" action="addResourceEntry.jsp">
+<input type="file" name="docfile" />
+<input type="hidden" name="addFromFile" value="true" />
+<input type="submit" name="uploadFromFile" value="upload" />
+</form>
+<br />
+Upload from a url:
+<form method="post" action="addResourceEntry.jsp">
+<input type="text" name="docurl" />
+<input type="hidden" name="addFromURL" value="true" />
+<input type="submit" name="uploadFromURL" value="upload" />
+</form>
+
+Upload from text:<br />
+<form action="addResourceEntry.jsp" method="post">
+<input type="hidden" name="addFromText" value="true" />
+<p>
+<textarea name="Resource" rows="30" cols="90"></textarea>
+</p>
+<p>
+<input type="submit" name="button" value="Submit"/>
+</p>
+</form>
+<hr/>
+<p>
+Here are example templates that you can download and place into the text area above.
+These templates follow v0.9 of the IVOA's specification for resource metadata.
+</p>
+<dl>
+<dt>A basic service defined:</dt>
+<dd><a href="MySpace.xml">Basic Service defined for Myspace</a></dd>
+<dt>A basic SIAP service:</dt>
+<dd><a href="INT-WFS-SIAP.xml">SIAP service for INT WFS</a></dd>
+<dt>An example of a CEA service and associated code</dt>
+<dd><a href="6dFRegistryEntry.xml">6df datacenter CEA application entry</a></dd>
+<dd><a href="6dfServiceRegistryEntry.xml">6df datacenter CEA service entry</a></dd>
+</dl>
+<p>
+To deifine other Authority ids to be managed by this registry, add a basic authority type.
+</p>
+<dl>
+<dt>A basic authority defined:</dt>
+<dd><a href="AuthorityTypev0_9.xml">Basic Authority defined</a></dd>
+</dl>
+
+</body>
+</html>

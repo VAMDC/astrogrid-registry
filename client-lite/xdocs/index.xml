@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+
+  <properties>
+    <title>Page Title</title>
+    <author email="paul.harrison@manchester.ac.uk">Paul Harrison</author>
+  </properties>
+ <body>
+ <section>
+ 	<p>
+		The Registry Client library purpose is to give the users a delegate to go by
+		and to interact with a Registry.  Most components in Astrogrid tend to use the delegate
+		for query purposes to look up a particular resource or possibly do an xquery but usually to 
+		look up a particular resource and to discover the endpoint of a particular service.  The delegate
+		implements all the ivoa standard query interface along with a few helpful methods that are typically
+		ran on the query.
+	</p>
+	</section>
+	<section name="Builds">
+		<p>
+			The registry allows you to build at the top level or at it's sub-project level.  
+			Here are the mvn goals for maven 2:
+			<ul>
+				<li>clean - cleans out and removes all previous builds.</li>
+				<li>install - compiles, runs unit tests and installs a local jar to your repository as well as the target directory.</li>
+				<li>site - builds and deploys a local site information about this project.</li>
+			</ul> <br />
+			Here are the maven goals for building the registry for maven 1:
+			<ul>
+				<li>astrogrid-clean - cleans out and removes all previous builds.</li>
+				<li>astrogrid-install-snapshot - Builds all the necessry jar and war files.</li>
+				<li>astrogrid-deploy-snapshot - Builds and deploys the snapshot onto the repository.</li>
+				<li>astrogrid-deploy-site - Generates reports and documents to be deployed on the site repository.</li>
+			</ul>
+		</p>
+	</section>
+	<section name="Deployment/Installation">
+		<p>
+			It is expected that this jar will be bundled with another component usually a 
+			webapp (war file).  There is no seperate 
+			installation just for the client itself.  After the build, a jar
+			file is produced in the "target" directory.  When ever it is 
+			bundled with another component certain properties must be set this can be set in a 
+			properties file named 'astrogrid.properties' on your class path or you can set the properties manually via
+			Property object or JNDI key/value here are the properties that must be set:			
+			<ul>
+				<li>org.astrogrid.registry.query.endpoint - primary query soap endpoint.</li>
+				<li>org.astrogrid.registry.query.altendpoint - alternate query soap endpoint.</li>
+				<li>org.astrogrid.registry.admin.endpoint - administration endpoint for updates.</li>
+				<li>return.soapbody - default is false but can be useful to set to true to get all the xml information because how the soap comes back  you might
+				only get the first xml element after the soap response. Setting to true will be the whole soap information such as XQuerySearchResponse element not just its children.</li>
+			</ul>
+		</p>
+	</section>
+	<section name="How to Use for Other Components">
+		<p>
+		Once the configuration is complete and ready for another component
+		to use.  It may use the various delegates with the delegate factory.
+		<br /><strong>The Query:</strong><br />
+		Instantiate with: 
+		org.astrogrid.registry.client.query.v1_0.RegistryService rs = org.astrogrid.registry.client.RegistryDelegateFactory.createQueryv1_0()
+		<br />From there you have access to all the delegate methods 
+		mentioned below for the Query section.  It is of course advisable to
+		use import statements at the top of your code to make things easier.
+		</p>	
+	</section>
+	<section name="Delegate - Helper methods to the Interface">
+		<p>
+			This section is a quick description of what delegate methods can be used for
+			other components to take advantage of. This is not necessarily the actual web
+			service interface methods on the server side registry.
+			<br />
+			<strong>First the Query:</strong>
+			<ul>
+				<li>xquerySearch - submit an xquery to the registry see ivoa schemas for structure and examples to help build an xquery.</li>
+				<li>getResourceByIdentifier - returns a Document DOM object of this one resource entry. Other similiar overloaded methods are here for certain capabilities, and versions.</li>
+				<li>getEndPointByIdentifier - returns a string which is a endpoint of a Service. Other similiar overloaded methods are here for certain capabilities, and versions.</li>
+				<li>getIdentity - returns a Document DOM object of just the registry resource entry currently being pointed at.</li>
+    			<li>search - A query based on ADQL.</li>
+    			<li>keywordSearch - A query based on keywords.</li>
+			</ul>
+			<strong>The Update:</strong>
+			<ul>
+				<li>update(Document or string) - updates or inserts a resource entries in the registry given one or more Resources.</li>
+				<li>updateFromUrl(URL url) - same as above just a url reference.</li>
+				<li>updateFromFile(File fi) - same as above just a file reference.</li>
+			</ul>
+		</p>
+	</section>
+ 
+ 
+ </body>
+</document>

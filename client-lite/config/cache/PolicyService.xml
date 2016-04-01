@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VODescription
+  xmlns="http://www.ivoa.net/xml/VOResource/v0.9"
+  xmlns:vr="http://www.ivoa.net/xml/VOResource/v0.9"
+  xmlns:vc="http://www.ivoa.net/xml/VOCommunity/v0.2"
+  xmlns:vg="http://www.ivoa.net/xml/VORegistry/v0.2"
+  xmlns:vs="http://www.ivoa.net/xml/VODataService/v0.4"
+  xmlns:vt="http://www.ivoa.net/xml/VOTable/v0.1"
+  xmlns:cs="http://www.ivoa.net/xml/ConeSearch/v0.2"
+  xmlns:sia="http://www.ivoa.net/xml/SIA/v0.6"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.ivoa.net/xml/VOResource/v0.9
+                      http://www.ivoa.net/xml/VOResource/VOResource-v0.9.xsd
+                      http://www.ivoa.net/xml/VOCommunity/v0.2
+                      http://www.ivoa.net/xml/VOCommunity/VOCommunity-v0.2.xsd
+                      http://www.ivoa.net/xml/VORegistry/v0.2
+                      http://www.ivoa.net/xml/VORegistry/VORegistry-v0.2.xsd
+                      http://www.ivoa.net/xml/ConeSearch/v0.2
+                      http://www.ivoa.net/xml/ConeSearch/ConeSearch-v0.2.xsd
+                      http://www.ivoa.net/xml/SIA/v0.6
+                      http://www.ivoa.net/xml/SIA/SIA-v0.6.xsd">
+ <vr:Resource xsi:type="ServiceType">
+    <Identifier>
+      <AuthorityID>vm06.astrogrid.org</AuthorityID>
+      <ResourceKey>PolicyService/4_1</ResourceKey>
+    </Identifier>
+    <Title>Authentication Service</Title>
+    <ShortName>Authenticate</ShortName>
+    <Summary>
+      <Description>
+         Authenticate a particular token and authenticate users.
+      </Description>
+      <ReferenceURL>http://www.astrogrid.org/maven/docs/snapshot/community</ReferenceURL>
+    </Summary>
+    <RelatedResource>
+       <Relationship>related-to</Relationship>
+       <RelatedTo>
+          <Identifier>
+            <AuthorityID>vm06.astrogrid.org</AuthorityID>
+            <ResourceKey>PolicyManager/4_1</ResourceKey>
+          </Identifier>
+        <Title>Policy Manager SErvice</Title>
+       </RelatedTo>
+    </RelatedResource>
+    <Curation>
+      <Publisher>
+         <Title>Service test publisher</Title>
+      </Publisher>    
+      <Contact>
+        <Name>Dave Morris</Name>
+      	<Email>dave@ast.cam.ac.uk</Email>
+      </Contact>
+      <Date>2004-02-02</Date>
+      <Creator>
+        <Name>Kevin Benson</Name>
+      </Creator>
+      <Contributor>
+        <Name>Dave Morris</Name>
+      </Contributor>
+      <Contributor>
+        <Name>Guy Rixon</Name>
+      </Contributor>           
+      <Contributor>
+        <Name>Brian McIlwrath</Name>
+      </Contributor>     
+      <Contributor>
+        <Name>Paul Harrison</Name>
+      </Contributor>       
+    </Curation>
+    <Subject>Community Services</Subject>
+    <Interface>
+      <Invocation>WebService</Invocation>
+      <AccessURL use="full">http://vm06.astrogrid.org:8080/astrogrid-community/services/PolicyService?wsdl</AccessURL>
+    </Interface>
+  </vr:Resource>
+</VODescription>

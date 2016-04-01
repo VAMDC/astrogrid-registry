@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ri:VOResources xmlns:ri="http://www.ivoa.net/xml/RegistryInterface/v1.0" 
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" from="1" more="false" numberReturned="1">
+<ri:Resource status="active" created="2005-01-01T09:00:00" updated="2000-01-01T09:00:00"
+		  xmlns:vg="http://www.ivoa.net/xml/VORegistry/v1.0"
+          xmlns:vr="http://www.ivoa.net/xml/VOResource/v1.0"
+          xsi:type="vg:Registry">
+
+    <title>NCSA NVO Publishing Registry</title>
+    <shortName>RAI registry</shortName>
+    <identifier>ivo://new.registry/registry</identifier>
+
+    <curation>
+      <publisher ivo-id="ivo://rai.ncsa/RAI">
+         NCSA Radio Astronomy Imaging
+      </publisher>
+      <creator>
+        <name>Ramon Williamson</name>
+        <logo>http://rai.ncsa.uiuc.edu/rai.jpg</logo>
+      </creator>
+      <date>2003-01-01</date>
+      <contact>
+        <name>Ramon Williamson</name>
+	<email>rai@ncsa.uiuc.edu</email>
+      </contact>
+    </curation>
+
+    <content>
+      <subject>data repositories</subject>
+      <subject>digital libraries</subject>
+      <description>
+         This registry provides a simple interface for data providers
+         who wish to register a handful of resources. 
+      </description>
+      <referenceURL>http://nvo.ncsa.uiuc.edu/nvoregistration.html</referenceURL>
+      <type>Registry</type>
+      <contentLevel>Research</contentLevel>
+    </content>
+
+    <capability xsi:type="vg:Harvest"
+                standardID="ivo://ivoa.net/std/Registry">
+
+       <!-- the v1.0 version -->
+       <interface xsi:type="vg:OAIHTTP" role="std" version="1.0">
+          <accessURL> http://nvo.ncsa.uiuc.edu/cgi-bin/nvo/rih-v1.pl</accessURL>
+       </interface>
+
+       <!-- the pre-v1.0 version (returning VOResource v0.10) -->
+       <interface xsi:type="vg:OAIHTTP" role="std" version="0.8">
+          <accessURL> http://nvo.ncsa.uiuc.edu/cgi-bin/nvo/oai.pl </accessURL>
+       </interface>
+
+       <maxRecords>0</maxRecords>
+
+    </capability>
+
+    <capability xsi:type="vg:Search"
+                standardID="ivo://ivoa.net/std/Registry">
+
+       <!-- the v1.0 version -->
+       <interface xsi:type="vr:WebService" role="std" version="1.0">
+         <accessURL> http://nvo.ncsa.uiuc.edu/cgi-bin/nvo/ris-v1.pl </accessURL>
+       </interface>
+
+       <!-- the pre-v1.0 version (returning VOResource v0.10) -->
+       <interface xsi:type="vr:WebService" role="std" version="0.8">
+         <accessURL> http://nvo.ncsa.uiuc.edu/cgi-bin/nvo/search.pl </accessURL>
+       </interface>
+
+       <maxRecords>0</maxRecords>
+       <extensionSearchSupport>full</extensionSearchSupport>
+       <optionalProtocol>XQuery</optionalProtocol>
+
+    </capability>
+
+    <full>false</full>
+
+    <managedAuthority>new.registry</managedAuthority>
+    <managedAuthority>new.registry.1</managedAuthority>    
+</ri:Resource>
+</ri:VOResources>

@@ -1,0 +1,7 @@
+<query>
+	<selectionSequence>
+		<selection item="searchElements" itemOp="EQ" value="Resource"/>
+		<selectionOp op="$and$"/>
+		<selection item="AuthorityID" itemOp="CONTAINS" value="astr"/>
+	</selectionSequence>
+</query>

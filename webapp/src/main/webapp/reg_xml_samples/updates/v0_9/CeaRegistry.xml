@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VODescription xmlns:cea="http://www.ivoa.net/xml/CEAService/v0.1"
+xmlns="http://www.ivoa.net/xml/VOResource/v0.9"
+xmlns:ceapd="http://www.astrogrid.org/schema/AGParameterDefinition/v1"
+xmlns:ceab="http://www.astrogrid.org/schema/CommonExecutionArchitectureBase/v1"
+xmlns:vm="http://www.ivoa.net/xml/VOMetadata/v0.1"
+xmlns:vt="http://www.ivoa.net/xml/VOTable/v0.1"
+xmlns:vr="http://www.ivoa.net/xml/VOResource/v0.9"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Resource  updated="2004-11-20Z" status="active" 
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="cea:CeaApplicationType">
+                <Identifier>
+                        <AuthorityID>someauth</AuthorityID>
+                        <ResourceKey>CallMakeMPEGFitsImages</ResourceKey>
+                </Identifier>
+                <Title>Make MPEG from Fits Images</Title>
+                <ShortName>MakeMPEGFitsImages</ShortName>
+                <Summary>
+                        <Description>This shell script uses IDL to convert a 3-D array to an MPEG file.</Description>
+                        <ReferenceURL>
+                                http://www.astrogrid.org/maven/build/applications/</ReferenceURL>
+                </Summary>
+                <Type>Other</Type>
+                <Curation>
+                        <Publisher>
+                                <Title>Astrogrid</Title>
+                                <Description>blah blab</Description>
+                                <ReferenceURL>http://www.astrogrid.org/</ReferenceURL>
+                        </Publisher>
+                        <Contact>
+                                <Name>Paul Harrison</Name>
+                                <Email>pah@jb.man.ac.uk</Email>
+                        </Contact>
+                        <Date role="representative">2004-03-26</Date>
+                        <Creator>
+                                <Name>Astrogrid</Name>
+                                <Logo>??</Logo>
+                        </Creator>
+                        <Version>Iteration 6</Version>
+                </Curation>
+                <Subject>???</Subject>
+                <cea:ApplicationDefinition>
+                        <cea:Parameters>
+                                <cea:ParameterDefinition name="InputFiles" type="FITS">
+                                        <ceapd:DefaultValue>InputFiles</ceapd:DefaultValue>
+                                        <ceapd:UI_Description >
+                                                FITS images used to create a solar movie (repeatable parameter)
+                                        </ceapd:UI_Description>
+                                </cea:ParameterDefinition>
+                                <cea:ParameterDefinition name="OutputFile" type="binary">
+                                        <ceapd:DefaultValue>OutputFile</ceapd:DefaultValue>
+                                        <ceapd:UI_Description >
+                                                Solar movie MPEG file created from fits images.
+                                        </ceapd:UI_Description>
+                                </cea:ParameterDefinition>
+                        </cea:Parameters>
+                        <cea:Interfaces>
+                                <ceab:Interface name="Simple">
+                                        <ceab:input>
+                                                <ceab:pref ref="InputFiles"/>
+                                        </ceab:input>
+                                        <ceab:output>
+                                                <ceab:pref ref="OutputFile"/>
+                                        </ceab:output>
+                                </ceab:Interface>
+                        </cea:Interfaces>
+                </cea:ApplicationDefinition>
+        </Resource>
+        <Resource  updated="2004-11-20Z" status="active" xsi:type="cea:CeaApplicationType"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <Identifier>
+                        <AuthorityID>someauth</AuthorityID>
+                        <ResourceKey>CallMakeMPEGDataCube</ResourceKey>
+                </Identifier>
+                <Title>Make MPEG from Data Cube</Title>
+                <ShortName>MakeMPEGDataCube</ShortName>
+                <Summary>
+                        <Description>This shell script uses IDL to convert a 3-D array to an MPEG file.</Description>
+                        <ReferenceURL>
+                                http://www.astrogrid.org/maven/build/applications/</ReferenceURL>
+                </Summary>
+                <Type>Other</Type>
+                <Curation>
+                        <Publisher>
+                                <Title>Astrogrid</Title>
+                                <Description>blah blab</Description>
+                                <ReferenceURL>http://www.astrogrid.org/</ReferenceURL>
+                        </Publisher>
+                        <Contact>
+                                <Name>Paul Harrison</Name>
+                                <Email>pah@jb.man.ac.uk</Email>
+                        </Contact>
+                        <Date role="representative">2004-03-26</Date>
+                        <Creator>
+                                <Name>Astrogrid</Name>
+                                <Logo>??</Logo>
+                        </Creator>
+                        <Version>Iteration 6</Version>
+                </Curation>
+                <Subject>???</Subject>
+                <cea:ApplicationDefinition>
+                        <cea:Parameters>
+                                <cea:ParameterDefinition name="InputFile" type="FITS">
+                                        <ceapd:DefaultValue>InputFile</ceapd:DefaultValue>
+                                        <ceapd:UI_Description >
+                                                Binary IDL .sav file containing a
+                                                datacube.
+                                        </ceapd:UI_Description>
+                                </cea:ParameterDefinition>
+                                <cea:ParameterDefinition name="ArrayName"
+                                        type="text">
+                                        <ceapd:DefaultValue>ArrayName</ceapd:DefaultValue>
+                                        <ceapd:UI_Description >
+                                                Name of the 3-D array inside the datacube restore file
+                                                to save as an MPEG
+                                        </ceapd:UI_Description>
+                                </cea:ParameterDefinition>
+                                <cea:ParameterDefinition name="OutputFile"
+                                        type="binary">
+                                        <ceapd:DefaultValue>OutputFile</ceapd:DefaultValue>
+                                        <ceapd:UI_Description >
+                                                Solar movie MPEG file created from fits images.
+                                        </ceapd:UI_Description>
+                                </cea:ParameterDefinition>
+                        </cea:Parameters>
+                        <cea:Interfaces>
+                                <ceab:Interface name="Simple">
+                                        <ceab:input>
+                                                <ceab:pref ref="InputFile" />
+                                                <ceab:pref ref="ArrayName"/>
+                                        </ceab:input>
+                                        <ceab:output>
+                                                <ceab:pref ref="OutputFile"/>
+                                        </ceab:output>
+                                </ceab:Interface>
+                        </cea:Interfaces>
+                </cea:ApplicationDefinition>
+        </Resource>
+        <Resource  updated="2004-11-20Z" status="active" xsi:type="cea:CeaServiceType"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <Identifier>
+                        <AuthorityID>someauth</AuthorityID>
+                        <ResourceKey>msslxy-cea</ResourceKey>
+                </Identifier>
+                <Title>TemplateEntry</Title>
+                <ShortName>TemplateEntry</ShortName>
+                <Summary>
+                        <Description>This is part of the astrogrid CEA.</Description>
+                        <ReferenceURL>
+                                http://www.astrogrid.org/maven/build/applications/</ReferenceURL>
+                </Summary>
+                <Type>Other</Type>
+                <Curation>
+                        <Publisher>
+                                <Title>Astrogrid</Title>
+                                <Description>blah blab</Description>
+                                <ReferenceURL>http://www.astrogrid.org/</ReferenceURL>
+                        </Publisher>
+                        <Contact>
+                                <Name>Paul Harrison</Name>
+                                <Email>pah@jb.man.ac.uk</Email>
+                        </Contact>
+                        <Date role="representative">2004-03-26</Date>
+                        <Creator>
+                                <Name>Astrogrid</Name>
+                                <Logo>??</Logo>
+                        </Creator>
+                        <Version>Iteration 6</Version>
+                </Curation>
+                <Subject>???</Subject>
+                <Capability>
+                        <StandardURL>
+                                http://www.astrogrid.org/maven/build/applications/</StandardURL>
+                        <StandardID>
+                                <AuthorityID>astrogrid.og</AuthorityID>
+                                <ResourceKey>CommonExecutionArchitucture</ResourceKey>
+                        </StandardID>
+                </Capability>
+                <Interface>
+                        <Invocation>WebService</Invocation>
+                        <!-- nww set to localhost commandline for now - needs to  be set to mssl as an external service really -->
+                        <AccessURL use="base">http://msslxy.mssl.ucl.ac.uk:8080/astrogrid-cea-commandline-SNAPSHOT/services/CommonExecutionConnectorService</AccessURL>
+                </Interface>
+                <cea:ManagedApplications>
+                        <cea:ApplicationReference>
+                                <AuthorityID>someauth</AuthorityID>
+                                <ResourceKey>CallMakeMPEGFitsImages</ResourceKey>
+                        </cea:ApplicationReference>
+                        <cea:ApplicationReference>
+                                <AuthorityID>someauth</AuthorityID>
+                                <ResourceKey>CallMakeMPEGDataCube</ResourceKey>
+                        </cea:ApplicationReference>
+                </cea:ManagedApplications>
+        </Resource>
+</VODescription>

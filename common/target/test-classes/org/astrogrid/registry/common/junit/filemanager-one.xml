@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VODescription
+  xmlns="http://www.ivoa.net/xml/VOResource/v0.9"
+  xmlns:vr="http://www.ivoa.net/xml/VOResource/v0.9"
+  xmlns:vc="http://www.ivoa.net/xml/VOCommunity/v0.2"
+  xmlns:vg="http://www.ivoa.net/xml/VORegistry/v0.2"
+  xmlns:vs="http://www.ivoa.net/xml/VODataService/v0.4"
+  xmlns:vt="http://www.ivoa.net/xml/VOTable/v0.1"
+  xmlns:cs="http://www.ivoa.net/xml/ConeSearch/v0.2"
+  xmlns:sia="http://www.ivoa.net/xml/SIA/v0.6"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.ivoa.net/xml/VOResource/v0.9
+                      http://www.ivoa.net/xml/VOResource/VOResource-v0.9.xsd
+                      http://www.ivoa.net/xml/VOCommunity/v0.2
+                      http://www.ivoa.net/xml/VOCommunity/VOCommunity-v0.2.xsd
+                      http://www.ivoa.net/xml/VORegistry/v0.2
+                      http://www.ivoa.net/xml/VORegistry/VORegistry-v0.2.xsd
+                      http://www.ivoa.net/xml/ConeSearch/v0.2
+                      http://www.ivoa.net/xml/ConeSearch/ConeSearch-v0.2.xsd
+                      http://www.ivoa.net/xml/SIA/v0.6
+                      http://www.ivoa.net/xml/SIA/SIA-v0.6.xsd">
+ <vr:Resource xsi:type="ServiceType">
+    <Identifier>
+      <AuthorityID>TESTAUTHORITY</AuthorityID>
+      <ResourceKey>filemanager-one</ResourceKey>
+    </Identifier>
+    <Title>FileManager Service Entry</Title>
+    <Summary>
+      <Description>
+         VoStore FileManager service.
+      </Description>
+      <ReferenceURL>http://www.astrogrid.org/maven/docs/snapshot/filestore</ReferenceURL>
+    </Summary>
+    <Type>Archive</Type>
+    <Curation>
+      <Publisher>
+         <Title>FileManager Service</Title>
+      </Publisher>    
+      <Contact>
+        <Name>Dave Morris</Name>
+        <Email>dave@ast.cam.ac.uk</Email>
+      </Contact>
+      <Creator>
+        <Name>Kevin Benson</Name>
+      </Creator>
+      <Contributor>
+        <Name>Dave Morris</Name>
+      </Contributor>
+      <Contributor>
+        <Name>Martin Hill</Name>
+      </Contributor>     
+      <Contributor>
+        <Name>Clive Davenhall</Name>
+      </Contributor>       
+    </Curation>
+    <Subject>Users VOSpace</Subject>
+    <Interface>
+      <Invocation>WebService</Invocation>
+      <AccessURL use="base">@TOMCATROOT@/astrogrid-filemanager-one-@VERSION@/services/FileManager</AccessURL>
+    </Interface>
+  </vr:Resource>
+</VODescription>

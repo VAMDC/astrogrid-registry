@@ -1,0 +1,5 @@
+<query>
+	<selectionSequence>
+		<selection item="searchElements" itemOp="EQ" value="Registry"/>
+	</selectionSequence>
+</query>

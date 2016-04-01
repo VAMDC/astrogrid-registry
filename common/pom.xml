@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>astrogrid-registry-common</artifactId>
+  <name>AstroGrid Registry Common</name>
+    <parent>
+      <artifactId>astrogrid-registry-base</artifactId>
+      <groupId>org.astrogrid</groupId>
+      <version>2016.1vamdc-SNAPSHOT</version>
+  </parent>
+  
+  <description>
+		A Registry common library used for the client and server pieces of the Registry.  Normally common methods they both need or share a couple of examples are looking in a Document (DOM)
+		for a particular identifier or validating Registry Resources.  See the 'Dependencies' link for information of which libraries it depends on.
+	</description>
+  <scm>
+    <connection>scm:cvs:pserver:anoncvs@cvs.astrogrid.org:/devel:astrogrid/registry/common</connection>
+    <developerConnection>scm:cvs:ext:${maven.username}@cvs.astrogrid.org:/devel:astrogrid/registry/common</developerConnection>
+  </scm>
+  <build>
+    <testResources>
+      <testResource>
+        <directory>${basedir}/src/test/java</directory>
+        <includes>
+          <include>**/*.xml</include>
+        </includes>
+      </testResource>
+    </testResources>
+  </build>
+  
+  <dependencies>
+     <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.astrogrid</groupId>
+      <artifactId>astrogrid-common</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>xerces</groupId>
+      <artifactId>xercesImpl</artifactId>
+      <version>2.11.0</version>
+    </dependency>
+    <dependency>
+      <groupId>xml-apis</groupId>
+      <artifactId>xml-apis</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>axis</groupId>
+      <artifactId>axis</artifactId>
+    </dependency>
+   <dependency>
+      <groupId>org.astrogrid</groupId>
+      <artifactId>astrogrid-contracts</artifactId>
+    </dependency>
+  </dependencies>
+  
+</project>

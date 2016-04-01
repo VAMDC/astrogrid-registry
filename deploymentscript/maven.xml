@@ -1,0 +1,56 @@
+<?xml version="1.0" ?>
+<project xmlns:j="jelly:core" xmlns:maven="jelly:maven" xmlns:ant="jelly:ant" 
+    xmlns:deploy="deploy" xmlns:util="jelly:util" xmlns:doc="doc">
+ 
+ <preGoal name="java:jar-resources">
+  	<filter token="VERSION" value="${pom.currentVersion}"/>
+ </preGoal>
+ 
+     <!--+
+        | Build and install our artifact 
+        +-->
+    <goal name="astrogrid-install-artifact">
+    	<attainGoal name="jar:install"/>
+    </goal>
+
+    <!--+
+        | Build and install our snapshot 
+        +-->
+    <goal name="astrogrid-install-snapshot">
+        	<attainGoal name="jar:install-snapshot"/>
+    </goal>
+
+    <!--+
+        | Build and deploy our artifact 
+        +-->
+    <goal name="astrogrid-deploy-artifact">
+        	<attainGoal name="jar:deploy"/>
+    </goal>
+
+    <!--+
+        | Build and deploy our snapshot 
+        +-->
+    <goal name="astrogrid-deploy-snapshot">
+        	<attainGoal name="jar:deploy-snapshot"/>
+    </goal>
+    <goal name="install" description="Use this goal to run the ant script" prereqs="override-input-task,jar">
+        <ant dir="${maven.build.dest}" target="install" >
+            <property name="custom.tasks.defined" value="yes"/>
+        </ant>
+    </goal>
+    <goal name="register" description="Use this goal to run the ant script" prereqs="override-input-task,jar">
+        <ant dir="${maven.build.dest}" target="register" >
+            <property name="custom.tasks.defined" value="yes"/>
+        </ant>
+    </goal>    
+    <goal name="override-input-task">
+        <echo>The Input Task in Ant 1.5.3 hangs when a property has already been set...overriding with that from Ant 1.6</echo>
+        <taskdef name="input" classname="org.apache.tools.ant1point6.taskdefs.Input" classpathref="maven.dependency.classpath"/>
+        <taskdef name="tomcat-deploy" classname="org.apache.catalina.ant.DeployTask" classpathref="maven.dependency.classpath"/>
+        <taskdef name="get" classname="org.apache.tools.ant1point6.taskdefs.Get" classpathref="maven.dependency.classpath"/>
+        <taskdef name="register-entry" classname="org.astrogrid.deployment.RegistryLoaderTask" classpathref="maven.dependency.classpath"/>
+        <property name="input.test" value="foo"/>
+        <input addProperty="input.test">If this has worked, execution should continue at this point</input>
+    </goal>
+
+</project>

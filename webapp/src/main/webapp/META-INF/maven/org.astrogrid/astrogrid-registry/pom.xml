@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>astrogrid-registry</artifactId>
+  <packaging>war</packaging>
+  <name>AstroGrid Registry web application</name>
+    <parent>
+      <artifactId>astrogrid-registry-base</artifactId>
+      <groupId>org.astrogrid</groupId>
+      <version>2009.1</version>
+  </parent>
+  <description>The deployable registry web application</description>
+  <scm>
+    <connection>scm:cvs:pserver:anoncvs@cvs.astrogrid.org:/devel:astrogrid/registry/webapp</connection>
+    <developerConnection>scm:cvs:ext:${maven.username}@cvs.astrogrid.org:/devel:astrogrid/registry/webapp</developerConnection>
+  </scm>
+  <build>
+    <sourceDirectory>src/webapp-java</sourceDirectory>
+    <testSourceDirectory>src/junit</testSourceDirectory>
+    <testResources>
+      <testResource>
+        <directory>${basedir}/src/junit</directory>
+        <includes>
+          <include>**/*.xml</include>
+          <include>**/*.properties</include>
+          <include>**/data</include>
+          <include>**/data/*</include>
+        </includes>
+      </testResource>
+    </testResources>
+ <!-- getting site generation to work for webapp
+There are some irritations
+* site.xml needs to be different to the site.xml for the documentation site - want different side links at a minimum -for webapp spscific functions
+* need to inherit differnt style
+* index.html will be automatically generated even if you have index.jsp for instance.
+ -->
+<plugins>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-site-plugin</artifactId>
+            <version>2.0</version>
+            <executions>
+                <execution> <!-- normal site preparation -->
+                <id>site</id>
+                    <goals><goal>site</goal></goals>
+                    <phase>site</phase>
+                </execution>
+                <execution>
+                <id>webappsite</id>
+                <goals><goal>site</goal></goals>
+                <phase>prepare-package</phase>
+                <configuration>
+                    <siteDirectory>${basedir}/src/webappsite</siteDirectory>
+                    <outputDirectory>${project.build.directory}/${project.build.finalName}</outputDirectory>
+                </configuration>
+                </execution>
+            </executions>
+         </plugin>
+     </plugins>
+  </build>
+  <dependencies>
+    <dependency>
+      <groupId>org.astrogrid</groupId>
+      <artifactId>astrogrid-common</artifactId>
+      <version>2009.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.astrogrid</groupId>
+      <artifactId>astrogrid-registry-common</artifactId>
+      <version>2009.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.astrogrid</groupId>
+      <artifactId>astrogrid-registry-client-lite</artifactId>
+      <version>2009.1</version>
+    </dependency>
+    <!-- 
+    <dependency>
+      <groupId>org.astrogrid</groupId>
+      <artifactId>astrogrid-utils</artifactId>
+      <version>2007.2ut</version>
+    </dependency>
+        <dependency>
+      <groupId>org.astrogrid</groupId>
+      <artifactId>astrogrid-pal-oldquery</artifactId>
+      <version>2007.2.05pl</version>
+    </dependency>
+        <dependency>
+      <groupId>xfire</groupId>
+      <artifactId>xfire-all</artifactId>
+      <version>1.2</version>
+    </dependency>
+        <dependency>
+      <groupId>org.astrogrid</groupId>
+      <artifactId>astrogrid-xml</artifactId>
+      <version>${astrogrid.xml.stable}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.astrogrid</groupId>
+      <artifactId>astrogrid-slinger-api</artifactId>
+      <version>${astrogrid.slinger.version}</version>
+    </dependency>
+    
+     -->
+    <dependency>
+      <groupId>org.astrogrid</groupId>
+      <artifactId>astrogrid-contracts</artifactId>
+      <version>2009.1-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.xfire</groupId>
+      <artifactId>xfire-all</artifactId>
+      <version>1.2</version>
+    </dependency>
+    
+
+	<dependency>
+      <groupId>net.sf.saxon</groupId>
+      <artifactId>saxon</artifactId>
+      <version>8.9</version>
+    </dependency>
+    <dependency>
+      <groupId>net.sf.saxon</groupId>
+      <artifactId>saxon-dom</artifactId>
+      <version>8.9</version>
+    </dependency>
+    <dependency>
+      <groupId>net.sf.saxon</groupId>
+      <artifactId>saxon-dom4j</artifactId>
+      <version>8.9</version>
+    </dependency>    
+    
+
+    <dependency>
+      <groupId>jdom</groupId>
+      <artifactId>jdom</artifactId>
+      <version>1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>wsdl4j</groupId>
+      <artifactId>wsdl4j</artifactId>
+      <version>1.5.2</version>
+    </dependency>
+    <dependency>
+      <groupId>axis</groupId>
+      <artifactId>axis</artifactId>
+      <version>1.3</version>
+    </dependency>
+    <dependency>
+      <groupId>stax</groupId>
+      <artifactId>stax-api</artifactId>
+      <version>1.0.1</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>woodstox</groupId>
+      <artifactId>wstx-asl</artifactId>
+      <version>2.0.6</version>
+    </dependency>
+    
+    
+    <dependency>
+      <groupId>com.sun.xml</groupId>
+      <artifactId>saaj-impl</artifactId>
+      <version>1.3</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>javax.xml.soap</groupId>
+      <artifactId>saaj-api</artifactId>
+      <version>1.3</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.astrogrid</groupId>
+      <artifactId>astrogrid-registry-server</artifactId>
+      <version>2009.1</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>commons-fileupload</groupId>
+      <artifactId>commons-fileupload</artifactId>
+      <version>1.0</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>commons-collections</groupId>
+      <artifactId>commons-collections</artifactId>
+      <version>3.0</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.astrogrid</groupId>
+      <artifactId>astrogrid-registry-client-lite</artifactId>
+      <version>${astrogrid_registry_version}</version>
+    </dependency>
+    
+<!-- 
+    <dependency>
+      <groupId>servletapi</groupId>
+      <artifactId>servletapi</artifactId>
+      <version>2.3</version>
+       <scope>provided</scope>
+    </dependency>
+-->
+
+ <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>           
+         
+         </dependency>
+     
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>xmlunit</groupId>
+      <artifactId>xmlunit</artifactId>
+      <version>1.0</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.astrogrid</groupId>
+      <artifactId>astrogrid-xmldb-client</artifactId>
+      <version>2007.2xml</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>1.0.4</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>commons-discovery</groupId>
+      <artifactId>commons-discovery</artifactId>
+      <version>0.2</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.14</version>
+    </dependency>
+    
+        <dependency>
+      <groupId>xml-apis</groupId>
+      <artifactId>xml-apis</artifactId>
+      <version>1.3.04</version>
+    </dependency>
+    
+     
+    <dependency>
+      <groupId>xmldb-api</groupId>
+      <artifactId>xmldb</artifactId>
+      <version>20040708</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>jline</groupId>
+      <artifactId>jline</artifactId>
+      <version>0.9.5</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>xalan</groupId>
+      <artifactId>xalan</artifactId>
+      <version>2.7.0</version>
+    </dependency>
+    
+    
+    <dependency>
+      <groupId>org.codehaus.fabric3.fabric3-db-exist</groupId>
+      <artifactId>sunxacml</artifactId>
+      <version>1.0</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>xerces</groupId>
+      <artifactId>xercesImpl</artifactId>
+      <version>2.8.1</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>exist</groupId>
+      <artifactId>exist</artifactId>
+      <version>1.1.1-newcore</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>exist</groupId>
+      <artifactId>exist-optional</artifactId>
+      <version>1.1.1-newcore</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>exist</groupId>
+      <artifactId>exist-modules</artifactId>
+      <version>1.1.1-newcore</version>
+    </dependency>
+    
+    <!-- 
+    <dependency>
+      <groupId>exist</groupId>
+      <artifactId>libreadline</artifactId>
+      <version>java-20030725</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>jedit</groupId>
+      <artifactId>jedit-syntax</artifactId>
+      <version>0.1-20031129</version>
+    </dependency>
+     -->
+    <dependency>
+      <groupId>jgroups</groupId>
+      <artifactId>jgroups-all</artifactId>
+      <version>2.2.6</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>commons-pool</groupId>
+      <artifactId>commons-pool</artifactId>
+      <version>1.2</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>excalibur-cli</groupId>
+      <artifactId>excalibur-cli</artifactId>
+      <version>1.0</version>
+    </dependency>
+    
+    
+    <dependency>
+      <groupId>antlr</groupId>
+      <artifactId>antlrall</artifactId>
+      <version>2.7.4</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>exist</groupId>
+      <artifactId>xmlrpc</artifactId>
+      <version>1.2-patched</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>jstl</groupId>
+      <artifactId>jstl</artifactId>
+      <version>1.1.2</version>
+    </dependency>
+    
+     <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring</artifactId>
+      <version>1.2.6</version>
+    </dependency>
+    
+    <!--
+    cant find yet 
+   
+        
+        <dependency>
+      <groupId>spring</groupId>
+      <artifactId>spring</artifactId>
+      <version>1.2.6</version>
+    </dependency>
+    
+     -->
+    <dependency>
+      <groupId>javax.activation</groupId>
+      <artifactId>activation</artifactId>
+      <version>1.1</version>
+    </dependency>
+
+        <dependency>
+      <groupId>xml-resolver</groupId>
+      <artifactId>xml-resolver</artifactId>
+      <version>1.1</version>
+    </dependency>
+     
+      <dependency>
+      <groupId>taglibs</groupId>
+      <artifactId>standard</artifactId>
+      <version>1.1.2</version>
+    </dependency>
+             <dependency>
+      <groupId>axis</groupId>
+      <artifactId>axis-jaxrpc</artifactId>
+      <version>1.3</version>
+    </dependency>
+     
+     <dependency>
+      <groupId>xalan</groupId>
+      <artifactId>serializer</artifactId>
+      <version>2.7.1</version>
+    </dependency>
+     <dependency>
+      <groupId>xalan</groupId>
+      <artifactId>serializer</artifactId>
+      <version>2.7.1</version>
+    </dependency>
+    <dependency>
+      <groupId>axis</groupId>
+      <artifactId>axis</artifactId>
+      <version>1.3</version>
+    </dependency>
+    
+  </dependencies>
+ <url>${astrogrid_doc_URL_root}/p/registry/${project.version}/webapp</url>
+   <distributionManagement>
+    <site>
+      <id>agsite</id>   <!-- this is the desired layout of the site and - will have to be repeated in the  projects unfortunately until fixes to http://jira.codehaus.org/browse/MNG-2915 are available  -->
+      <name>Default Site</name>
+      <url>${astrogrid_doc_server_root}/p/registry/${project.version}/webapp</url>
+     </site>
+  </distributionManagement>
+ </project>

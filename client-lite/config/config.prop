@@ -1,0 +1,27 @@
+
+
+#This next three lines determine your endpoint another words your Registry web service location.
+#This registry though is designed to not require a registry server.  You may desire to place identifiers
+#pointing to xml documents (conforming to the Resource schema) to be used.  Registry will use the config file
+#for information if the next three lines are commented out.
+#org.astrogrid.registry.admin.endpoint=http://localhost:8080/astrogrid-registry-webapp/services/RegistryAdmin
+#org.astrogrid.registry.harvest.endpoint=http://localhost:8080/astrogrid-registry-webapp/services/RegistryHarvest
+#org.astrogrid.registry.query.endpoint=http://localhost:8080/astrogrid-registry-webapp/services/Registry
+
+#This next line about dummy mode will go away soon, but is needed at the moment.
+org.astrogrid.registry.dummy.mode.on=false
+
+#dont worry about this next line it will also go away.
+org.astrogrid.registry.dummy.xml.url=C:\Development\eclipse\workspace\RegistryProj\astrogrid\registry\src\templates\client\DummyResourceTemplate.xml
+
+org.astrogrid.registry.version=0_9
+#when there is no endpoints defined it will try to use a cache which is just an identifier pointed to 
+#a resource xml file.  example is one below.  You will find the Myspace.xml in the cache directory in cvs.
+vm05.astrogrid.org/MyspaceManager=file:///C:/Development/temp/registry/cache/Myspace.xml
+
+#Used for junit tests.
+#org.astrogrid.registry.admin.junit.endpoint=http://stargrid1.bnsc.rl.ac.uk:8080/astrogrid-registry-webapp/services/RegistryAdmin
+#org.astrogrid.registry.harvest.junit.endpoint=http://stargrid1.bnsc.rl.ac.uk:8080/astrogrid-registry-webapp/services/RegistryHarvest
+#org.astrogrid.registry.query.junit.endpoint=http://msslxy.mssl.ucl.ac.uk:8080/astrogrid-registry-webapp/services/Registry
+#org.astrogrid.registry.query.junit.endpoint=http://localhost:8080/astrogrid-registry-webapp/services/Registry
+

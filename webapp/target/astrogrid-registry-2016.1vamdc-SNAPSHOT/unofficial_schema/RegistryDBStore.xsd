@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           elementFormDefault="qualified" 
+           xmlns:ri0_1="http://www.ivoa.net/xml/RegistryInterface/v0.1"           
+           xmlns:ri1_0="http://www.ivoa.net/xml/RegistryInterface/v1.0"
+           xmlns:agr="urn:astrogrid:schema:RegistryDBStoreResource:v1" 
+           targetNamespace="urn:astrogrid:schema:RegistryXMLDBStoreResource:v1" version="1.0">
+	<xs:annotation>
+		<xs:documentation> 
+			Small schema file that is used as a wrapper around the Registry Resource elements and is used
+			to be stored in the xml db.
+		</xs:documentation>
+	</xs:annotation>
+	
+	  <xs:import namespace="http://www.ivoa.net/xml/RegistryInterface/v0.1"
+   	schemaLocation="RegistryInterfaceUnofficial.xsd"/>
+   	
+   	<xs:import namespace="http://www.ivoa.net/xml/RegistryInterface/v1.0"
+   	schemaLocation="http://software.astrogrid.org/schema/registry/RegistryInterface/v1.0/RegistryInterface.xsd"/>
+	
+	<xs:element name="AstrogridResource">
+		<xs:annotation>
+			<xs:documentation>
+				
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+		      <xs:choice>
+		       <!--
+		       From the looks of things the way the ri0_10 is a subelement in the other schema.
+		       So I cannot actually use a reference to that element.  I will provide another schema
+		       in case users wish to connect via WebDav for use of validating with 0.10 resources.		       
+                  
+               -->
+               <xs:element ref="ri0_1:Resource" minOccurs="1" maxOccurs="1"/>
+               <xs:element ref="ri1_0:Resource" minOccurs="1" maxOccurs="1"/>
+             </xs:choice>
+		</xs:complexType>
+	</xs:element>
+	
+</xs:schema>

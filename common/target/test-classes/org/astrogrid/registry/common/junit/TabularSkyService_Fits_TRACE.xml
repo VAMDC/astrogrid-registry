@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VODescription
+  xmlns="http://www.ivoa.net/xml/VOResource/v0.9"
+  xmlns:vr="http://www.ivoa.net/xml/VOResource/v0.9"
+  xmlns:vc="http://www.ivoa.net/xml/VOCommunity/v0.2"
+  xmlns:vg="http://www.ivoa.net/xml/VORegistry/v0.2"
+  xmlns:vs="http://www.ivoa.net/xml/VODataService/v0.4"
+  xmlns:vt="http://www.ivoa.net/xml/VOTable/v0.1"
+  xmlns:cs="http://www.ivoa.net/xml/ConeSearch/v0.2"
+  xmlns:sia="http://www.ivoa.net/xml/SIA/v0.6"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.ivoa.net/xml/VOResource/v0.9
+                      http://www.ivoa.net/xml/VOResource/VOResource-v0.9.xsd
+                      http://www.ivoa.net/xml/VOCommunity/v0.2
+                      http://www.ivoa.net/xml/VOCommunity/VOCommunity-v0.2.xsd
+                      http://www.ivoa.net/xml/VORegistry/v0.2
+                      http://www.ivoa.net/xml/VORegistry/VORegistry-v0.2.xsd
+                      http://www.ivoa.net/xml/ConeSearch/v0.2
+                      http://www.ivoa.net/xml/ConeSearch/ConeSearch-v0.2.xsd
+                      http://www.ivoa.net/xml/SIA/v0.6
+                      http://www.ivoa.net/xml/SIA/SIA-v0.6.xsd">
+  <vr:Resource updated="2004-11-20T15:34:22Z" status="active" xsi:type="vs:TabularSkyServiceType">
+    <Identifier>
+      <AuthorityID>astrogrid.test</AuthorityID>
+      <ResourceKey>fits_trace</ResourceKey>
+    </Identifier>
+    <Title>Trace Instrument Fits</Title>
+    <ShortName>NOAA</ShortName>
+    <Summary>
+      <Description>
+      	Fits File information from the Trace instrument, mainly the PROG_RUN keyword is the most
+        important dealing with the event in time.
+      </Description>
+      <ReferenceURL>http://radiosun.ts.astro.it/sec/sec_ui.php</ReferenceURL>
+    </Summary>
+    <Type>Catalog</Type>
+    <Curation>
+      <Publisher>
+	      <Title>MSSL/UCL Mullard Space Science Laboratory</Title>
+      </Publisher>
+      <Contact>
+        <Name>Kevin Benson</Name>
+   		<Email>kmb@mssl.ucl.ac.uk</Email>
+      </Contact>
+      <Date>2004-07-08</Date>
+      <Creator>
+        <Name>Kevin Benson</Name>
+      </Creator>
+    </Curation>
+    <Subject>solar events</Subject>
+    <Subject>NOAA</Subject>
+    <ContentLevel>Research</ContentLevel>
+    <ContentLevel>University</ContentLevel>
+    <Interface>
+      <Invocation>WebService</Invocation>
+      <AccessURL use="base">@TOMCATROOT@/astrogrid-mySpace-@VERSION@/services/Manager</AccessURL>
+    </Interface>
+    <vs:Coverage>
+      <vs:Spatial>
+        <vs:AllSky/>
+   		<vs:RegionOfRegard>180</vs:RegionOfRegard>
+	</vs:Spatial>
+    <vs:Spectral>
+        <vs:Waveband>Radio</vs:Waveband>
+        <vs:Waveband>Millimeter</vs:Waveband>
+        <vs:Waveband>Infrared</vs:Waveband>
+        <vs:Waveband>Optical</vs:Waveband>
+        <vs:Waveband>UV</vs:Waveband>
+      </vs:Spectral>
+    </vs:Coverage>
+    <Table xmlns="http://www.ivoa.net/xml/VODataService/v0.4">
+       <vr:Name>fits_trace</vr:Name>
+       <Column>
+          <vr:Name>Keywords/PROG_RUN</vr:Name>
+          <vr:Description>Date and Time of the event.</vr:Description>
+          <DataType arraysize="*">char</DataType>
+       </Column>
+    </Table>
+  </vr:Resource>
+</VODescription>

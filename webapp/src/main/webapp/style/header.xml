@@ -1,0 +1,11 @@
+<%
+String projName = org.astrogrid.config.SimpleConfig.getSingleton().getString("reg.custom.projectname","ag");
+String fileN = "header_" + projName + ".xml";
+java.net.URL urlHeader =application.getResource("/style/" + fileN);
+java.io.BufferedReader br = new java.io.BufferedReader(new java.io.InputStreamReader(urlHeader.openStream()));
+String fileReadStr = null;
+while( (fileReadStr = br.readLine()) != null) {
+  out.write(fileReadStr);
+}
+br.close();
+%>

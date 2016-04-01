@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Paul Harrison (Contractor) -->
+<vr:VODescription 
+xmlns="http://www.ivoa.net/xml/CEAService/v0.1" 
+xmlns:vr="http://www.ivoa.net/xml/VOResource/v0.9" 
+xmlns:cea="http://www.ivoa.net/xml/CEAService/v0.1" 
+xmlns:ceab="http://www.astrogrid.org/schema/CommonExecutionArchitectureBase/v1" 
+xmlns:ceapd="http://www.astrogrid.org/schema/AGParameterDefinition/v1" 
+xmlns:vm="http://www.ivoa.net/xml/VOMetadata/v0.1" 
+xmlns:vt="http://www.ivoa.net/xml/VOTable/v1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+	<!--A Genuine SIAP service - Guy's recently announced INT WFS service at Cambridge-->
+	<vr:Resource  updated="2004-11-20Z" status="active" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="cea:CeaHttpApplicationType">
+		<vr:Identifier>
+			<vr:AuthorityID>TESTAUTHORITY</vr:AuthorityID>
+			<vr:ResourceKey>INTWideFieldSurveySIAP</vr:ResourceKey>
+		</vr:Identifier>
+		<vr:Title>Guy's INT Wide Field Survey SIAP service</vr:Title>
+		<vr:ShortName>INT WFS SIAP</vr:ShortName>
+		<vr:Summary>
+			<vr:Description>This is part of the astrogrid CEA.  It offers a CEA service to the INT WFS SIAP server at Cambridge</vr:Description>
+			<vr:ReferenceURL>http://www.astrogrid.org/maven/docs/@VERSION@/applications/</vr:ReferenceURL>
+		</vr:Summary>
+		<vr:Type>Other</vr:Type>
+		<vr:Curation>
+			<vr:Publisher>
+				<vr:Title>Astrogrid</vr:Title>
+				<vr:Description>blah blab</vr:Description>
+				<vr:ReferenceURL>http://www.astrogrid.org/</vr:ReferenceURL>
+			</vr:Publisher>
+			<vr:Contact>
+				<vr:Name>John Taylor</vr:Name>
+				<vr:Email>jdt@roe.ac.uk</vr:Email>
+			</vr:Contact>
+			<vr:Date role="representative">2004-03-26</vr:Date>
+			<vr:Creator>
+				<vr:Name>Astrogrid</vr:Name>
+				<vr:Logo>??</vr:Logo>
+			</vr:Creator>
+			<vr:Version>Iteration 6</vr:Version>
+		</vr:Curation>
+		<vr:Subject>???</vr:Subject>
+		<cea:ApplicationDefinition>
+			<cea:ApplicationKind>http</cea:ApplicationKind>
+			<cea:Parameters>
+				<cea:ParameterDefinition name="POS" type="text">
+					<ns1:UI_Name xmlns:ns1="http://www.astrogrid.org/schema/AGParameterDefinition/v1">Position</ns1:UI_Name>
+					<ns2:UI_Description xmlns:ns2="http://www.astrogrid.org/schema/AGParameterDefinition/v1">Comma separated position of centre of field RA,DEC in decimal degrees</ns2:UI_Description>
+					<ns4:Units xmlns:ns4="http://www.astrogrid.org/schema/AGParameterDefinition/v1">String</ns4:Units>
+					<!--???? maybe degrees?-->
+				</cea:ParameterDefinition>
+				<cea:ParameterDefinition name="SIZE" type="text">
+					<ns1:UI_Name xmlns:ns1="http://www.astrogrid.org/schema/AGParameterDefinition/v1">Size</ns1:UI_Name>
+					<ns2:UI_Description xmlns:ns2="http://www.astrogrid.org/schema/AGParameterDefinition/v1">Comma separated size of field RA,DEC in decimal degrees</ns2:UI_Description>
+					<ns4:Units xmlns:ns4="http://www.astrogrid.org/schema/AGParameterDefinition/v1">String</ns4:Units>
+				</cea:ParameterDefinition>
+				<cea:ParameterDefinition name="FORMAT" type="text">
+					<ns1:UI_Name xmlns:ns1="http://www.astrogrid.org/schema/AGParameterDefinition/v1">Format</ns1:UI_Name>
+					<ns2:UI_Description xmlns:ns2="http://www.astrogrid.org/schema/AGParameterDefinition/v1">e.g. image/fits - see SIAP definition</ns2:UI_Description>
+					<ns4:Units xmlns:ns4="http://www.astrogrid.org/schema/AGParameterDefinition/v1">String</ns4:Units>
+				</cea:ParameterDefinition>
+				<cea:ParameterDefinition name="IMAGES" type="text">
+					<!--actually a VOTABLE-->
+					<ns1:UI_Name xmlns:ns1="http://www.astrogrid.org/schema/AGParameterDefinition/v1">ImagesTable</ns1:UI_Name>
+					<ns2:UI_Description xmlns:ns2="http://www.astrogrid.org/schema/AGParameterDefinition/v1">A VOTable of images</ns2:UI_Description>
+					<ns4:Units xmlns:ns4="http://www.astrogrid.org/schema/AGParameterDefinition/v1">String</ns4:Units>
+				</cea:ParameterDefinition>
+			</cea:Parameters>
+			<cea:Interfaces>
+				<ns29:Interface name="Standard" xmlns:ns29="http://www.astrogrid.org/schema/CommonExecutionArchitectureBase/v1">
+					<ns29:input>
+						<ns29:pref ref="POS"/>
+						<ns29:pref ref="SIZE"/>
+						<ns29:pref ref="FORMAT"/>
+					</ns29:input>
+					<ns29:output>
+						<ns29:pref ref="IMAGES"/>
+					</ns29:output>
+				</ns29:Interface>
+			</cea:Interfaces>
+		</cea:ApplicationDefinition>
+		<cea:CeaHttpAdapterSetup>
+			<ceab:URL>http://archive.ast.cam.ac.uk/cgi-bin/wfs-siap/queryImage</ceab:URL>
+		</cea:CeaHttpAdapterSetup>
+	</vr:Resource>
+	<vr:Resource  updated="2004-11-20Z" status="active" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="cea:CeaHttpApplicationType">
+		<vr:Identifier>
+			<vr:AuthorityID>TESTAUTHORITY</vr:AuthorityID>
+			<vr:ResourceKey>CDS.XMatch</vr:ResourceKey>
+		</vr:Identifier>
+		<vr:Title>CDS Cross Match tool</vr:Title>
+		<vr:ShortName>CDSXMatch</vr:ShortName>
+		<vr:Summary>
+			<vr:Description>This is the web based version of the CDS XMatch Aladin plug-in</vr:Description>
+			<!--need to get this reference right...-->
+			<vr:ReferenceURL>http://cdsweb.u-strasbg.fr/cdsws.gml</vr:ReferenceURL>
+		</vr:Summary>
+		<vr:Type>Other</vr:Type>
+		<vr:Curation>
+			<vr:Publisher>
+				<vr:Title>CDS</vr:Title>
+				<vr:Description>Centre de Données astronomiques de Strasbourg</vr:Description>
+				<vr:ReferenceURL>http://cdsweb.u-strasbg.fr/</vr:ReferenceURL>
+			</vr:Publisher>
+			<vr:Contact>
+				<vr:Name>Françoise Genova</vr:Name>
+				<vr:Email>genova@astro.u-strasbg.fr</vr:Email>
+			</vr:Contact>
+		</vr:Curation>
+		<vr:Subject>???</vr:Subject>
+		<cea:ApplicationDefinition>
+			<cea:ApplicationKind>http</cea:ApplicationKind>
+			<cea:Parameters>
+				<cea:ParameterDefinition  name="seuils" type="text">
+					<ceapd:UI_Name>Thresholds</ceapd:UI_Name>
+					<ceapd:UI_Description>thresholds[2] contains the 2 extreme search radii in arcsec (separated by a comma)</ceapd:UI_Description>
+					<ceapd:Units>arcsec</ceapd:Units>
+				</cea:ParameterDefinition>
+				<cea:ParameterDefinition name="coordTab1" type="text">
+					<ceapd:UI_Name>Table1 Position Columns</ceapd:UI_Name>
+					<ceapd:UI_Description>arrays contaning indices of columns with position (e.g.{3,4} if RA and DEC are in columns 3 and 4 for Table1)</ceapd:UI_Description>
+				</cea:ParameterDefinition>
+				<cea:ParameterDefinition name="coordTab2" type="text">
+					<ceapd:UI_Name>Table2 Position Columns</ceapd:UI_Name>
+					<ceapd:UI_Description>arrays contaning indices of columns with position (e.g.{3,4} if RA and DEC are in columns 3 and 4 for Table1)</ceapd:UI_Description>
+				</cea:ParameterDefinition>
+				<cea:ParameterDefinition name="method" type="integer">
+					<ceapd:DefaultValue>1</ceapd:DefaultValue>
+					<ceapd:UI_Name>matching method</ceapd:UI_Name>
+					<ceapd:UI_Description>is one of {bestMatch=1, allMatch=2, noMatch=4}, or a combination (or'ed) of these (e.g. bestMatch and noMatch => 5) 
+</ceapd:UI_Description>
+				</cea:ParameterDefinition>
+				<cea:ParameterDefinition name="tab" type="VOTable">
+					<ceapd:UI_Name>Input VOTable</ceapd:UI_Name>
+					<ceapd:UI_Description>This VOTable file should contain two tables with the data to be cross matched</ceapd:UI_Description>
+				</cea:ParameterDefinition>
+				<cea:ParameterDefinition name="output" type="VOTable">
+					<ceapd:UI_Name>Output VOTable</ceapd:UI_Name>
+					<ceapd:UI_Description>The result of the cross match</ceapd:UI_Description>
+				</cea:ParameterDefinition>
+			</cea:Parameters>
+			<Interfaces>
+				<ceab:Interface name="simple">
+					<ceab:input>
+						<ceab:pref ref="coordTab1"/>
+						<ceab:pref ref="coordTab2"/>
+						<ceab:pref ref="method"/>
+						<ceab:pref ref="tab"/>
+					</ceab:input>
+					<ceab:output>
+						<ceab:pref ref="output"/>
+					</ceab:output>
+				</ceab:Interface>
+			</Interfaces>
+		</cea:ApplicationDefinition>
+		<cea:CeaHttpAdapterSetup>
+			<!--This needs to have the end point better adapted....-->
+			<ceab:URL>http://cdsws.u-strasbg.fr/xmatch/XMatchFrontend</ceab:URL>
+		</cea:CeaHttpAdapterSetup>
+	</vr:Resource>
+	<vr:Resource  updated="2004-11-20Z" status="active" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="cea:CeaServiceType">
+		<vr:Identifier>
+			<vr:AuthorityID>TESTAUTHORITY</vr:AuthorityID>
+			<vr:ResourceKey>RealHttpCEC</vr:ResourceKey>
+		</vr:Identifier>
+		<vr:Title>TestHttpCEC</vr:Title>
+		<vr:ShortName>TemplateEntry</vr:ShortName>
+		<vr:Summary>
+			<vr:Description>This is part of the astrogrid CEA.</vr:Description>
+			<vr:ReferenceURL>http://www.astrogrid.org/maven/docs/@VERSION@/applications/</vr:ReferenceURL>
+		</vr:Summary>
+		<vr:Type>Other</vr:Type>
+		<vr:Curation>
+			<vr:Publisher>
+				<vr:Title>Astrogrid</vr:Title>
+				<vr:Description>blah blab</vr:Description>
+				<vr:ReferenceURL>http://www.astrogrid.org/</vr:ReferenceURL>
+			</vr:Publisher>
+			<vr:Contact>
+				<vr:Name>John Taylor</vr:Name>
+				<vr:Email>jdt@roe.ac.uk</vr:Email>
+			</vr:Contact>
+			<vr:Date role="representative">2004-03-26</vr:Date>
+			<vr:Creator>
+				<vr:Name>Astrogrid</vr:Name>
+				<vr:Logo>??</vr:Logo>
+			</vr:Creator>
+			<vr:Version>Iteration 6</vr:Version>
+		</vr:Curation>
+		<vr:Subject>???</vr:Subject>
+		<vr:Capability>
+			<vr:StandardURL>http://www.astrogrid.org/maven/docs/@VERSION@/applications/</vr:StandardURL>
+			<vr:StandardID>
+				<vr:AuthorityID>astrogrid.og</vr:AuthorityID>
+				<vr:ResourceKey>CommonExecutionArchitucture</vr:ResourceKey>
+			</vr:StandardID>
+		</vr:Capability>
+		<vr:Interface>
+			<vr:Invocation>WebService</vr:Invocation>
+			<vr:AccessURL use="base">@TOMCATROOT@/astrogrid-cea-http-@VERSION@/services/CommonExecutionConnectorService</vr:AccessURL>
+		</vr:Interface>
+		<cea:ManagedApplications>
+			<cea:ApplicationReference>
+				<vr:AuthorityID>TESTAUTHORITY</vr:AuthorityID>
+				<vr:ResourceKey>INTWideFieldSurveySIAP</vr:ResourceKey>
+			</cea:ApplicationReference>
+			<ApplicationReference>
+				<vr:AuthorityID>TESTAUTHORITY</vr:AuthorityID>
+				<vr:ResourceKey>CDS.XMatch</vr:ResourceKey>
+			</ApplicationReference>
+		</cea:ManagedApplications>
+	</vr:Resource>
+</vr:VODescription>

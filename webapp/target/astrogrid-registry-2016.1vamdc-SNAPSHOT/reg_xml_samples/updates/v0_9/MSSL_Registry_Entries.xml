@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VODescription
+  xmlns="http://www.ivoa.net/xml/VOResource/v0.9"
+  xmlns:vr="http://www.ivoa.net/xml/VOResource/v0.9"
+  xmlns:vc="http://www.ivoa.net/xml/VOCommunity/v0.2"
+  xmlns:vg="http://www.ivoa.net/xml/VORegistry/v0.2"
+  xmlns:vs="http://www.ivoa.net/xml/VODataService/v0.4"
+  xmlns:cea="http://www.ivoa.net/xml/CEAService/v0.1"
+  xmlns:ceab="http://www.astrogrid.org/schema/CommonExecutionArchitectureBase/v1"
+  xmlns:ceapd="http://www.astrogrid.org/schema/AGParameterDefinition/v1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<vr:Resource  xsi:type="vg:AuthorityType" >
+    <Identifier>
+      <AuthorityID>astrogrid.mssl</AuthorityID>
+      <ResourceKey xsi:nil="true"/>
+    </Identifier>
+    <Title>Astrogrid Naming Authority</Title>
+    <ShortName>AG-NA</ShortName>
+    <Summary>
+      <Description>
+        This authority ID will be used to identify generic resources 
+   related to the Astrogrid consortium
+      </Description>
+      <ReferenceURL>http://www.astrogrid.org/</ReferenceURL>
+    </Summary>
+    <Curation>
+      <Publisher>
+         <Title>Astrogrid</Title>
+      </Publisher>
+       <Contact>
+        <Name>Tony Linde</Name>
+       <Email>ael@star.le.ac.uk</Email>
+      </Contact>
+     <Date>2003-08-30</Date>
+    </Curation>
+	<Subject>test</Subject>
+  </vr:Resource>
+        <vr:Resource xsi:type="cea:CeaApplicationType" xmlns="http://www.ivoa.net/xml/CEAService/v0.1">
+                <vr:Identifier>
+                        <vr:AuthorityID>astrogrid.mssl</vr:AuthorityID>
+                        <vr:ResourceKey>trace_dsa</vr:ResourceKey>
+                </vr:Identifier>
+                <vr:Title>CEA entry for the Trace Instrument Fits Catalogue</vr:Title>
+                <vr:ShortName>TemplateEntry</vr:ShortName>
+                <vr:Summary>
+                        <vr:Description>This is part of the astrogrid CEA.</vr:Description>
+                        <vr:ReferenceURL>http://www.astrogrid.org/maven/docs/snapshot/applications/</vr:ReferenceURL>
+                </vr:Summary>
+                <vr:Type>Other</vr:Type>
+                <vr:Curation>
+                        <vr:Publisher>
+                                <vr:Title>Astrogrid</vr:Title>
+                                <vr:Description>blah blab</vr:Description>
+                                <vr:ReferenceURL>http://www.astrogrid.org/</vr:ReferenceURL>
+                        </vr:Publisher>
+                        <vr:Contact>
+                                <vr:Name>Paul Harrison</vr:Name>
+                                <vr:Email>pah@jb.man.ac.uk</vr:Email>
+                        </vr:Contact>
+                        <vr:Date>2004-03-26</vr:Date>
+                        <vr:Creator>
+                                <vr:Name>Astrogrid</vr:Name>
+                                <vr:Logo>??</vr:Logo>
+                        </vr:Creator>
+                        <vr:Version>Iteration 5</vr:Version>
+                </vr:Curation>
+                <vr:Subject>???</vr:Subject>
+                <ApplicationDefinition  xmlns="http://www.ivoa.net/xml/CEAService/v0.1">
+                        <Parameters>
+                                <ParameterDefinition name="Query" type="ADQL">
+                                        <ceapd:DefaultValue>Query</ceapd:DefaultValue>
+                                        <ceapd:UI_Description>Astronomy Data Query Language that defines the search criteria</ceapd:UI_Description>
+                                </ParameterDefinition>
+                                <ParameterDefinition name="Format" type="text">
+                                        <ceapd:DefaultValue>VOTABLE</ceapd:DefaultValue>
+                                        <ceapd:UI_Description>How the results are to be returned.  VOTABLE or CSV for now</ceapd:UI_Description>
+                                </ParameterDefinition>
+                                <ParameterDefinition name="Result" type="anyURI">
+                                        <ceapd:UI_Description>Where the results will be sent to; eg, use IVORN (eg IVO://community/individual#path)</ceapd:UI_Description>
+                                </ParameterDefinition>
+                        </Parameters>
+                        <Interfaces>
+                                <ceab:Interface name="adql">
+                                        <ceab:input>
+                                                <ceab:pref ref="Query"/>
+                                                <ceab:pref ref="Format"/>
+                                        </ceab:input>
+                                        <ceab:output>
+                                                <ceab:pref ref="Result"/>
+                                        </ceab:output>
+                                </ceab:Interface>
+                        </Interfaces>
+                </ApplicationDefinition>
+        </vr:Resource>
+<vr:Resource xsi:type="cea:CeaServiceType" xmlns="http://www.ivoa.net/xml/CEAService/v0.1">
+                <vr:Identifier>
+                        <vr:AuthorityID>astrogrid.mssl</vr:AuthorityID>
+                        <vr:ResourceKey>trace_dsaservice</vr:ResourceKey>
+                </vr:Identifier>
+                <vr:Title>TemplateEntry</vr:Title>
+                <vr:ShortName>TemplateEntry</vr:ShortName>
+                <vr:Summary>
+                        <vr:Description>This is part of the astrogrid CEA.</vr:Description>
+                        <vr:ReferenceURL>http://www.astrogrid.org/maven/docs/snapshot/applications/</vr:ReferenceURL>
+                </vr:Summary>
+                <vr:Type>Other</vr:Type>
+                <vr:Curation>
+                        <vr:Publisher>
+                                <vr:Title>Astrogrid</vr:Title>
+                                <vr:Description>blah blab</vr:Description>
+                                <vr:ReferenceURL>http://www.astrogrid.org/</vr:ReferenceURL>
+                        </vr:Publisher>
+                        <vr:Contact>
+                                <vr:Name>Paul Harrison</vr:Name>
+                                <vr:Email>pah@jb.man.ac.uk</vr:Email>
+                        </vr:Contact>
+                        <vr:Date>2004-03-26</vr:Date>
+                        <vr:Creator>
+                                <vr:Name>Astrogrid</vr:Name>
+                                <vr:Logo>??</vr:Logo>
+                        </vr:Creator>
+                        <vr:Version>Iteration 5</vr:Version>
+                </vr:Curation>
+                <vr:Subject>???</vr:Subject>
+                <vr:Capability>
+                        <vr:StandardURL>http://www.astrogrid.org/maven/docs/snapshot/applications/</vr:StandardURL>
+                        <vr:StandardID>
+                                <vr:AuthorityID>astrogrid.org</vr:AuthorityID>
+                                <vr:ResourceKey>CommonExecutionArchitucture</vr:ResourceKey>
+                        </vr:StandardID>
+                </vr:Capability>
+                <vr:Interface>
+                        <vr:Invocation>WebService</vr:Invocation>
+                        <vr:AccessURL use="base">http://msslxy.mssl.ucl.ac.uk:8080/astrogrid-pal-MSSL/services/CommonExecutionConnectorService</vr:AccessURL>
+                </vr:Interface>
+                <cea:ManagedApplications  xmlns="http://www.ivoa.net/xml/CEAService/v0.1">
+                        <cea:ApplicationReference>
+                                <vr:AuthorityID>astrogrid.mssl</vr:AuthorityID>
+                                <vr:ResourceKey>trace_dsa</vr:ResourceKey>
+                        </cea:ApplicationReference>
+                </cea:ManagedApplications>
+        </vr:Resource>
+	<Resource status="active" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="cea:CeaApplicationType">
+                <Identifier>
+                        <AuthorityID>astrogrid.mssl</AuthorityID>
+                        <ResourceKey>CallMakeMPEGFitsImages</ResourceKey>
+                </Identifier>
+                <Title>Make MPEG from Fits Images</Title>
+                <ShortName>MakeMPEGFitsImages</ShortName>
+                <Summary>
+                        <Description>This shell script uses IDL to convert a 3-D array to an MPEG file.</Description>
+                        <ReferenceURL>
+                                http://www.astrogrid.org/maven/build/applications/</ReferenceURL>
+                </Summary>
+                <Type>Other</Type>
+                <Curation>
+                        <Publisher>
+                                <Title>Astrogrid</Title>
+                                <Description>blah blab</Description>
+                                <ReferenceURL>http://www.astrogrid.org/</ReferenceURL>
+                        </Publisher>
+                        <Contact>
+                                <Name>Paul Harrison</Name>
+                                <Email>pah@jb.man.ac.uk</Email>
+                        </Contact>
+                        <Date role="representative">2004-03-26</Date>
+                        <Creator>
+                                <Name>Astrogrid</Name>
+                                <Logo>??</Logo>
+                        </Creator>
+                        <Version>Iteration 6</Version>
+                </Curation>
+                <Subject>???</Subject>
+                <cea:ApplicationDefinition>
+                        <cea:Parameters>
+                                <cea:ParameterDefinition name="InputFiles" type="FITS">
+                                        <ceapd:DefaultValue>InputFiles</ceapd:DefaultValue>
+                                        <ceapd:UI_Description >
+                                                FITS images used to create a solar movie (repeatable parameter)
+                                        </ceapd:UI_Description>
+                                </cea:ParameterDefinition>
+                                <cea:ParameterDefinition name="OutputFile" type="binary">
+                                        <ceapd:DefaultValue>OutputFile</ceapd:DefaultValue>
+                                        <ceapd:UI_Description >
+                                                Solar movie MPEG file created from fits images.
+                                        </ceapd:UI_Description>
+                                </cea:ParameterDefinition>
+                        </cea:Parameters>
+                        <cea:Interfaces>
+                                <ceab:Interface name="Simple">
+                                        <ceab:input>
+                                                <ceab:pref ref="InputFiles"/>
+                                        </ceab:input>
+                                        <ceab:output>
+                                                <ceab:pref ref="OutputFile"/>
+                                        </ceab:output>
+                                </ceab:Interface>
+                        </cea:Interfaces>
+                </cea:ApplicationDefinition>
+        </Resource>
+        <Resource status="active" xsi:type="cea:CeaApplicationType"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <Identifier>
+                        <AuthorityID>astrogrid.mssl</AuthorityID>
+                        <ResourceKey>CallMakeMPEGDataCube</ResourceKey>
+                </Identifier>
+                <Title>Make MPEG from Data Cube</Title>
+                <ShortName>MakeMPEGDataCube</ShortName>
+                <Summary>
+                        <Description>This shell script uses IDL to convert a 3-D array to an MPEG file.</Description>
+                        <ReferenceURL>
+                                http://www.astrogrid.org/maven/build/applications/</ReferenceURL>
+                </Summary>
+                <Type>Other</Type>
+                <Curation>
+                        <Publisher>
+                                <Title>Astrogrid</Title>
+                                <Description>blah blab</Description>
+                                <ReferenceURL>http://www.astrogrid.org/</ReferenceURL>
+                        </Publisher>
+                        <Contact>
+                                <Name>Paul Harrison</Name>
+                                <Email>pah@jb.man.ac.uk</Email>
+                        </Contact>
+                        <Date role="representative">2004-03-26</Date>
+                        <Creator>
+                                <Name>Astrogrid</Name>
+                                <Logo>??</Logo>
+                        </Creator>
+                        <Version>Iteration 6</Version>
+                </Curation>
+                <Subject>???</Subject>
+                <cea:ApplicationDefinition>
+                        <cea:Parameters>
+                                <cea:ParameterDefinition name="InputFile" type="FITS">
+                                        <ceapd:DefaultValue>InputFile</ceapd:DefaultValue>
+                                        <ceapd:UI_Description >
+                                                Binary IDL .sav file containing a
+                                                datacube.
+                                        </ceapd:UI_Description>
+                                </cea:ParameterDefinition>
+                                <cea:ParameterDefinition name="ArrayName"
+                                        type="text">
+                                        <ceapd:DefaultValue>ArrayName</ceapd:DefaultValue>
+                                        <ceapd:UI_Description >
+                                                Name of the 3-D array inside the datacube restore file
+                                                to save as an MPEG
+                                        </ceapd:UI_Description>
+                                </cea:ParameterDefinition>
+                                <cea:ParameterDefinition name="OutputFile"
+                                        type="binary">
+                                        <ceapd:DefaultValue>OutputFile</ceapd:DefaultValue>
+                                        <ceapd:UI_Description >
+                                                Solar movie MPEG file created from fits images.
+                                        </ceapd:UI_Description>
+                                </cea:ParameterDefinition>
+                        </cea:Parameters>
+                        <cea:Interfaces>
+                                <ceab:Interface name="Simple">
+                                        <ceab:input>
+                                                <ceab:pref ref="InputFile" />
+                                                <ceab:pref ref="ArrayName"/>
+                                        </ceab:input>
+                                        <ceab:output>
+                                                <ceab:pref ref="OutputFile"/>
+                                        </ceab:output>
+                                </ceab:Interface>
+                        </cea:Interfaces>
+                </cea:ApplicationDefinition>
+        </Resource>
+        <Resource status="active" xsi:type="cea:CeaServiceType"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <Identifier>
+                        <AuthorityID>astrogrid.mssl</AuthorityID>
+                        <ResourceKey>msslxy-cea</ResourceKey>
+                </Identifier>
+                <Title>TemplateEntry</Title>
+                <ShortName>TemplateEntry</ShortName>
+                <Summary>
+                        <Description>This is part of the astrogrid CEA.</Description>
+                        <ReferenceURL>
+                                http://www.astrogrid.org/maven/build/applications/</ReferenceURL>
+                </Summary>
+                <Type>Other</Type>
+                <Curation>
+                        <Publisher>
+                                <Title>Astrogrid</Title>
+                                <Description>blah blab</Description>
+                                <ReferenceURL>http://www.astrogrid.org/</ReferenceURL>
+                        </Publisher>
+                        <Contact>
+                                <Name>Paul Harrison</Name>
+                                <Email>pah@jb.man.ac.uk</Email>
+                        </Contact>
+                        <Date role="representative">2004-03-26</Date>
+                        <Creator>
+                                <Name>Astrogrid</Name>
+                                <Logo>??</Logo>
+                        </Creator>
+                        <Version>Iteration 6</Version>
+                </Curation>
+                <Subject>???</Subject>
+                <Capability>
+                        <StandardURL>
+                                http://www.astrogrid.org/maven/build/applications/</StandardURL>
+                        <StandardID>
+                                <AuthorityID>astrogrid.og</AuthorityID>
+                                <ResourceKey>CommonExecutionArchitucture</ResourceKey>
+                        </StandardID>
+                </Capability>
+                <Interface>
+                        <Invocation>WebService</Invocation>
+                        <AccessURL use="base">http://msslxy.mssl.ucl.ac.uk:8080/astrogrid-cea-commandline-MSSL/services/CommonExecutionConnectorService</AccessURL>
+                </Interface>
+                <cea:ManagedApplications>
+                        <cea:ApplicationReference>
+                                <AuthorityID>astrogrid.mssl</AuthorityID>
+                                <ResourceKey>CallMakeMPEGFitsImages</ResourceKey>
+                        </cea:ApplicationReference>
+                        <cea:ApplicationReference>
+                                <AuthorityID>astrogrid.mssl</AuthorityID>
+                                <ResourceKey>CallMakeMPEGDataCube</ResourceKey>
+                        </cea:ApplicationReference>
+                </cea:ManagedApplications>
+        </Resource>
+<vr:Resource xsi:type="vs:TabularSkyServiceType">
+    <Identifier>
+      <AuthorityID>astrogrid.mssl</AuthorityID>
+      <ResourceKey>fits_trace</ResourceKey>
+    </Identifier>
+    <Title>Trace Instrument Fits</Title>
+    <ShortName>NOAA</ShortName>
+    <Summary>
+      <Description>
+      	Fits File information from the Trace instrument, mainly the PROG_RUN keyword is the most
+        important dealing with the event in time.
+      </Description>
+      <ReferenceURL>http://radiosun.ts.astro.it/sec/sec_ui.php</ReferenceURL>
+    </Summary>
+    <Type>Catalog</Type>
+    <Curation>
+      <Publisher>
+	      <Title>MSSL/UCL Mullard Space Science Laboratory</Title>
+      </Publisher>
+      <Contact>
+        <Name>Kevin Benson</Name>
+   		<Email>kmb@mssl.ucl.ac.uk</Email>
+      </Contact>
+      <Date>2004-07-08</Date>
+      <Creator>
+        <Name>Kevin Benson</Name>
+      </Creator>
+    </Curation>
+    <Subject>solar events</Subject>
+    <Subject>NOAA</Subject>
+    <ContentLevel>Research</ContentLevel>
+    <ContentLevel>University</ContentLevel>
+    <Interface>
+	    <Invocation>WebService</Invocation>
+        <AccessURL use="base">http://msslxy.mssl.ucl.ac.uk:8080/astrogrid-cea-commandline-MSSL/services/CommonExecutionConnectorService</AccessURL>
+    </Interface>	
+    <vs:Coverage>
+      <vs:Spatial>
+        <vs:AllSky/>
+   		<vs:RegionOfRegard>180</vs:RegionOfRegard>
+	</vs:Spatial>
+    <vs:Spectral>
+        <vs:Waveband>Radio</vs:Waveband>
+        <vs:Waveband>Millimeter</vs:Waveband>
+        <vs:Waveband>Infrared</vs:Waveband>
+        <vs:Waveband>Optical</vs:Waveband>
+        <vs:Waveband>UV</vs:Waveband>
+      </vs:Spectral>
+    </vs:Coverage>
+    <Table xmlns="http://www.ivoa.net/xml/VODataService/v0.4">
+       <vr:Name>fits_trace</vr:Name>
+       <Column>
+          <vr:Name>Keywords/PROG_RUN</vr:Name>
+          <vr:Description>Date and Time of the event.</vr:Description>
+          <DataType arraysize="*">char</DataType>
+       </Column>
+    </Table>
+  </vr:Resource>
+</VODescription>

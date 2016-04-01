@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vr:Resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+   xmlns:vr="http://www.ivoa.net/xml/VOResource/v0.10" 
+   xmlns:vg="http://www.ivoa.net/xml/VORegistry/v0.3" 
+   xmlns="http://www.ivoa.net/xml/VOResource/v0.10"
+   xsi:type="vg:Authority"  status="active">
+ <title></title>
+ <shortname></shortname>
+ <identifier>ivo://</identifier>
+ <curation>
+  <publisher ivo-id=""></publisher>
+  <creator>
+    <name ivo-id=""></name>
+    <logo></logo>
+  </creator>
+  <contributer ivo-id=""></contributer>
+  <date></date>  
+  <version></version>
+  <contact>
+   <name></name>
+   <address></address>
+   <email></email>
+   <telephone></telephone>
+  </contact>
+ </curation>
+ <content>
+  <subject></subject>
+  <description></description>
+  <source format=""></source>
+  <referenceURL></referenceURL>
+  <type></type>
+  <contentLevel></contentLevel>
+  <relationship>
+    <relationshipType></relationshipType>
+    <relatedResource ivo-id=""></relatedResource>
+  </relationship>
+ </content>
+ <vg:managingOrg ivo-id=""></vg:managingOrg>
+</vr:Resource>

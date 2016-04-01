@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project>
+  <body>
+   <breadcrumbs>
+  <item  name="Registry Home" href="${astrogrid_doc_URL_root}/p/registry/${project.version}/" />
+  </breadcrumbs>
+     <menu ref="modules"/>
+     <menu ref="reports"/>
+  </body>
+</project>

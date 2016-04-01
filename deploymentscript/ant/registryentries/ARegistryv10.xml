@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vor:VOResources
+   xmlns:vor="http://www.ivoa.net/xml/RegistryInterface/v0.1"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+   xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+   xmlns:vr="http://www.ivoa.net/xml/VOResource/v0.10" 
+   xmlns:vg="http://www.ivoa.net/xml/VORegistry/v0.3" 
+   xmlns="http://www.ivoa.net/xml/VOResource/v0.10">
+<vor:Resource xsi:type="vg:Registry"  updated="2004-11-20T15:34:22Z" status="active">
+ <title>@TITLE@</title>
+ <identifier>ivo://@REGISTRY_AUTHID@/org.astrogrid.registry.RegistryService</identifier>
+ <curation>
+  <publisher>Main Astrogrid Full Registry</publisher>
+  <contact>
+   <name>@CONTACT_NAME@</name>
+   <email>@CONTACT_EMAIL@</email>
+  </contact>
+ </curation>
+ <content>
+  <subject>registry</subject>
+  <description>Main Astrogrid Registry for the Full Registry.</description>
+  <referenceURL>http://www.ivoa.net/</referenceURL>
+  <type>Archive</type>
+ </content>
+    <interface xsi:type="WebBrowser">
+      <accessURL use="full">@reg.amend.oaipublish.0.10@</accessURL>
+    </interface> 
+   <vg:managedAuthority>@REGISTRY_AUTHID@</vg:managedAuthority>
+</vor:Resource>
+</vor:VOResources>

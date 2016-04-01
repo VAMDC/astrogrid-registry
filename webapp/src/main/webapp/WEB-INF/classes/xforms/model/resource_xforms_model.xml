@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<html xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+      xmlns:xforms="http://www.w3.org/2002/xforms/cr"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xhtml="http://www.w3.org/1999/xhtml"
+      xmlns:vr="http://www.ivoa.net/xml/VOResource/v0.10">
+<head>
+      <style type="text/css">
+         body { padding: 8pt; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 8pt; }
+
+         input::value {
+            display: block;
+            color: black;
+            border: 2px inset white;
+            padding: 1px;
+            margin-left: 2px;
+            width: 400px;
+         }
+
+         textarea::value {
+            display: block;
+            color: black;
+            border: 2px inset white;
+            padding: 1px;
+            margin-left: 2px;
+            background-color: #ffffe8;
+            white-space: pre;
+         }
+         output::value {
+            white-space: pre;
+         }
+
+         .fixed::value {
+            margin-left: 2px;
+            height: 100px;
+            overflow: auto;
+         }
+
+         label {
+            font-weight: normal;
+            margin-bottom: 3px;
+            margin-top: 0.75em;
+         }
+
+         .triggerbutton {
+           font-weight: bold;
+           width: 200px
+         }
+
+         input.required::value {
+           background-color:#DAE3FB;
+         }
+
+      .outergroup { padding: 1em; margin-bottom: 1em; background-color: #f4f4f4; border: 2px outset white; }
+      .innergroup { padding: 1em; margin-bottom: 1em; background-color: #BEB0F0; border: 2px outset white; }
+
+         label.required {
+            font-weight: bold;
+            color: #D4144A;
+            margin-bottom: 3px;
+            margin-top: 0.75em;
+         }
+      </style>
+
+
+<xforms:model id="model1" xmlns:xforms="http://www.w3.org/2002/xforms">
+<xforms:instance id="resinstance">
+</xforms:instance>
+
+<xforms:submission method="post" action="XFormsEditEntry.jsp" id="s00"/>
+
+
+<!--
+<xforms:bind nodeset="instance('resinstance')/vr:Resource/vr:title" required="true()"  />
+<xforms:bind ref="vr:curation/vr:publisher" required="true()"  />
+<xforms:bind ref="identifier" required="true()" type="vr:IdentifierURI" />
+<xforms:bind ref="vr:curation/vr:contact/vr:email" type="xsd:email"  />
+-->
+</xforms:model>
+
+</head>
+<body>
+<a href="../resourceHelp.jsp">Resource Help (pops open a new window)</a><br />
+
+<div id="resourceDiv">
+<xforms:select1 ref="@status">
+   <xforms:label>Status</xforms:label>
+   <xforms:item>
+      <xforms:label>Active</xforms:label><xforms:value>active</xforms:value>
+   </xforms:item>
+   <xforms:item>
+      <xforms:label>Inactive</xforms:label><xforms:value>inactive</xforms:value>
+   </xforms:item>
+   <xforms:item>
+      <xforms:label>Deleted</xforms:label><xforms:value>deleted</xforms:value>
+   </xforms:item>
+</xforms:select1>
+
+<xforms:input class="required" ref="vr:title">
+   <xforms:label class="required">Title:</xforms:label>
+</xforms:input>
+
+<xforms:input ref="vr:shortName">
+   <xforms:label>Short Name:</xforms:label>
+</xforms:input>
+
+<xforms:input class="required" ref="vr:identifier">
+   <xforms:label class="required">Identifier</xforms:label>
+</xforms:input>
+
+<xforms:group class="outergroup">
+<xforms:label>Curation</xforms:label>
+
+   <xforms:input class="required" ref="vr:curation/vr:publisher">
+      <xforms:label class="required">Publisher:</xforms:label>
+   </xforms:input>
+
+   <xforms:input ref="vr:curation/vr:publisher/@ivo-id">
+      <xforms:label>Publisher Identifier:</xforms:label>
+   </xforms:input>
+
+   <xforms:input ref="vr:curation/vr:creator/vr:name">
+      <xforms:label>Creator Name:</xforms:label>
+   </xforms:input>
+
+   <xforms:input ref="vr:curation/vr:creator/vr:name/@ivo-id">
+      <xforms:label>Creator Name Identifier:</xforms:label>
+   </xforms:input>
+
+   <xforms:input ref="vr:curation/vr:creator/vr:logo">
+      <xforms:label>Creator Logo:</xforms:label>
+   </xforms:input>
+
+   <xforms:repeat id="contributerRepeat" nodeset="vr:curation/vr:contributer" >
+      <xforms:input ref=".">
+         <xforms:label>Contributor:</xforms:label>
+      </xforms:input>
+      <xforms:input ref="./@ivo-id">
+         <xforms:label>Contributor Identifier:</xforms:label>
+      </xforms:input>
+   </xforms:repeat>
+
+<xforms:trigger class="triggerbutton">
+  <xforms:label>Insert Contributer</xforms:label>
+    <xforms:insert ev:event="click" nodeset="vr:curation/vr:contributer" at="index('contributerRepeat')" position="after"/>
+</xforms:trigger>
+
+<xforms:trigger  class="triggerbutton">
+  <xforms:label>Remove Contributer</xforms:label>
+  <xforms:delete ev:event="click" nodeset="vr:curation/vr:contributer" at="index('contributerRepeat')"/>
+</xforms:trigger>
+
+   <xforms:repeat id="curationDateRepeat" nodeset="vr:curation/vr:date" >
+      <xforms:input ref=".">
+         <xforms:label>Date:</xforms:label>
+      </xforms:input>
+   </xforms:repeat>
+
+<xforms:trigger class="triggerbutton">
+  <xforms:label>Insert Date</xforms:label>
+    <xforms:insert ev:event="click" nodeset="vr:curation/vr:date" at="index('curationDateRepeat')" position="after"/>
+</xforms:trigger>
+
+<xforms:trigger class="triggerbutton">
+  <xforms:label>Remove Date</xforms:label>
+  <xforms:delete ev:event="click" nodeset="vr:curation/vr:date" at="index('curationDateRepeat')"/>
+</xforms:trigger>
+
+      <xforms:input ref="vr:curation/vr:version">
+         <xforms:label>Version:</xforms:label>
+      </xforms:input>
+
+  <xforms:group  class="innergroup">
+  <xforms:label>Contact</xforms:label>
+
+   <xforms:input class="required" ref="vr:curation/vr:contact/vr:name">
+   <xforms:label class="required">Name:</xforms:label>
+   </xforms:input>
+
+   <xforms:input ref="vr:curation/vr:contact/vr:name/@ivo-id">
+   <xforms:label>Name Identifier:</xforms:label>
+   </xforms:input>
+
+   <xforms:input ref="vr:curation/vr:contact/vr:address">
+   <xforms:label>Address:</xforms:label>
+   </xforms:input>
+
+   <xforms:input ref="vr:curation/vr:contact/vr:email">
+   <xforms:label>Email:</xforms:label>
+   </xforms:input>
+
+   <xforms:input ref="vr:curation/vr:contact/vr:telephone">
+   <xforms:label>Telephone:</xforms:label>
+   </xforms:input>
+</xforms:group>
+
+</xforms:group>
+
+  <xforms:group  class="outergroup">
+  <xforms:label>Content</xforms:label>
+
+
+   <xforms:repeat id="subjectRepeat" nodeset="vr:content/vr:subject" >
+      <xforms:input ref=".">
+         <xforms:label>Subject:</xforms:label>
+      </xforms:input>
+   </xforms:repeat>
+
+<xforms:trigger class="triggerbutton">
+  <xforms:label>Insert Subject</xforms:label>
+    <xforms:insert ev:event="click" nodeset="vr:content/vr:subject" at="index('subjectRepeat')" position="after"/>
+</xforms:trigger>
+
+<xforms:trigger class="triggerbutton">
+  <xforms:label>Remove Subject</xforms:label>
+  <xforms:delete ev:event="click" nodeset="vr:content/vr:subject" at="index('subjectRepeat')"/>
+</xforms:trigger>
+
+
+   <xforms:input  class="required" ref="vr:content/vr:description">
+   <xforms:label class="required">Description:</xforms:label>
+   </xforms:input>
+
+   <xforms:input ref="vr:content/vr:source">
+   <xforms:label>Source:</xforms:label>
+   </xforms:input>
+
+   <xforms:input ref="vr:content/vr:source/@format">
+   <xforms:label>Source Format:</xforms:label>
+   </xforms:input>
+
+   <xforms:input ref="vr:content/vr:referenceURL">
+   <xforms:label>Reference URL:</xforms:label>
+   </xforms:input>
+
+   <xforms:select1 ref="vr:content/vr:type">
+   <xforms:label>Type</xforms:label>
+   <xforms:item>
+      <xforms:label>Archive</xforms:label><xforms:value>Archive</xforms:value>
+   </xforms:item>
+   <xforms:item>
+      <xforms:label>Bibliography</xforms:label><xforms:value>Bibliography</xforms:value>
+   </xforms:item>
+   <xforms:item>
+      <xforms:label>Catalog</xforms:label><xforms:value>Catalog</xforms:value>
+   </xforms:item>
+   <xforms:item>
+      <xforms:label>Other</xforms:label><xforms:value>Other</xforms:value>
+   </xforms:item>
+   <xforms:item>
+      <xforms:label>Journal</xforms:label><xforms:value>Journal</xforms:value>
+   </xforms:item>
+   <xforms:item>
+      <xforms:label>Library</xforms:label><xforms:value>Library</xforms:value>
+   </xforms:item>
+   <xforms:item>
+      <xforms:label>Simulation</xforms:label><xforms:value>Simulation</xforms:value>
+   </xforms:item>
+   <xforms:item>
+      <xforms:label>Survey</xforms:label><xforms:value>Survey</xforms:value>
+   </xforms:item>
+   <xforms:item>
+      <xforms:label>Transformation</xforms:label><xforms:value>Transformation</xforms:value>
+   </xforms:item>
+   <xforms:item>
+      <xforms:label>Education</xforms:label><xforms:value>Education</xforms:value>
+   </xforms:item>
+   <xforms:item>
+      <xforms:label>Outreach</xforms:label><xforms:value>Outreach</xforms:value>
+   </xforms:item>
+   <xforms:item>
+      <xforms:label>EPOResource</xforms:label><xforms:value>EPOResource</xforms:value>
+   </xforms:item>
+   <xforms:item>
+      <xforms:label>Animation</xforms:label><xforms:value>Animation</xforms:value>
+   </xforms:item>
+   <xforms:item>
+      <xforms:label>Artwork</xforms:label><xforms:value>Artwork</xforms:value>
+   </xforms:item>
+   <xforms:item>
+      <xforms:label>Background</xforms:label><xforms:value>Background</xforms:value>
+   </xforms:item>
+   <xforms:item>
+      <xforms:label>BasicData</xforms:label><xforms:value>BasicData</xforms:value>
+   </xforms:item>
+   <xforms:item>
+      <xforms:label>Historical</xforms:label><xforms:value>Historical</xforms:value>
+   </xforms:item>
+   <xforms:item>
+      <xforms:label>Photographic</xforms:label><xforms:value>Photographic</xforms:value>
+   </xforms:item>
+   <xforms:item>
+      <xforms:label>Organisation</xforms:label><xforms:value>Organisation</xforms:value>
+   </xforms:item>
+   <xforms:item>
+      <xforms:label>Project</xforms:label><xforms:value>Project</xforms:value>
+   </xforms:item>
+   <xforms:item>
+      <xforms:label>Registry</xforms:label><xforms:value>Registry</xforms:value>
+   </xforms:item>
+   </xforms:select1>
+
+
+   <xforms:repeat id="contentLevelRepeat" nodeset="vr:content/vr:contentLevel" >
+      <xforms:select1 ref=".">
+      <xforms:label>Content Level</xforms:label>
+      <xforms:item>
+         <xforms:label>General</xforms:label><xforms:value>General</xforms:value>
+      </xforms:item>
+      <xforms:item>
+         <xforms:label>Elementary Education</xforms:label><xforms:value>Elementary Education</xforms:value>
+      </xforms:item>
+      <xforms:item>
+         <xforms:label>Middle School Education</xforms:label><xforms:value>Middle School Education</xforms:value>
+      </xforms:item>
+      <xforms:item>
+         <xforms:label>Secondary Education</xforms:label><xforms:value>Secondary Education</xforms:value>
+      </xforms:item>
+      <xforms:item>
+         <xforms:label>Community College</xforms:label><xforms:value>Community College</xforms:value>
+      </xforms:item>
+      <xforms:item>
+         <xforms:label>University</xforms:label><xforms:value>University</xforms:value>
+      </xforms:item>
+      <xforms:item>
+         <xforms:label>Research</xforms:label><xforms:value>Research</xforms:value>
+      </xforms:item>
+      <xforms:item>
+         <xforms:label>Amateur</xforms:label><xforms:value>Amateur</xforms:value>
+      </xforms:item>
+      <xforms:item>
+         <xforms:label>Informal Education</xforms:label><xforms:value>Informal Education</xforms:value>
+      </xforms:item>
+      </xforms:select1>
+   </xforms:repeat>
+
+<xforms:trigger class="triggerbutton">
+  <xforms:label>Insert Content Level</xforms:label>
+    <xforms:insert ev:event="click" nodeset="vr:content/vr:contentLevel" at="index('contentLevelRepeat')"
+      position="after"/>
+</xforms:trigger>
+
+<xforms:trigger class="triggerbutton">
+  <xforms:label>Remove Content Level</xforms:label>
+  <xforms:delete ev:event="click" nodeset="vr:content/vr:contentLevel" at="index('contentLevelRepeat')"/>
+</xforms:trigger>
+
+<xforms:group class="innergroup">
+   <xforms:repeat id="relationShipRepeat" nodeset="vr:content/vr:relationship" >
+      <xforms:select1 ref="./vr:relationshipType">
+         <xforms:label>Relationship Type</xforms:label>
+            <xforms:item>
+               <xforms:label>Derived From</xforms:label><xforms:value>derived-from</xforms:value>
+            </xforms:item>
+            <xforms:item>
+               <xforms:label>Service For</xforms:label><xforms:value>service-for</xforms:value>
+            </xforms:item>
+            <xforms:item>
+               <xforms:label>Related To</xforms:label><xforms:value>related-to</xforms:value>
+            </xforms:item>
+            <xforms:item>
+               <xforms:label>Mirror Of</xforms:label><xforms:value>mirror-of</xforms:value>
+            </xforms:item>
+      </xforms:select1>
+
+      <p><i>You may enter more than 1 Related Resource for each relationship.</i></p>
+      <xforms:repeat id="relatedResourceRepeat" nodeset="./vr:relatedResource">
+         <xforms:input ref=".">
+           <xforms:label>Related Resource Name:</xforms:label>
+         </xforms:input>
+         <xforms:input ref="./@ivo-id">
+           <xforms:label>Related Resource Identifier:</xforms:label>
+         </xforms:input>
+      </xforms:repeat>
+<xforms:trigger class="triggerbutton">
+  <xforms:label>Insert Related Resource</xforms:label>
+    <xforms:insert ev:event="click" nodeset="./vr:relatedResource" at="index('relatedResourceRepeat')"
+      position="after"/>
+</xforms:trigger>
+
+<xforms:trigger class="triggerbutton">
+  <xforms:label>Remove Related Resource</xforms:label>
+  <xforms:delete ev:event="click" nodeset="./vr:relatedResource" at="index('relatedResourceRepeat')"/>
+</xforms:trigger>
+
+   </xforms:repeat>
+
+<xforms:trigger class="triggerbutton">
+  <xforms:label>Insert Relationship</xforms:label>
+    <xforms:insert ev:event="click" nodeset="vr:content/vr:relationship" at="index('relationShipRepeat')"
+      position="after"/>
+</xforms:trigger>
+
+<xforms:trigger class="triggerbutton">
+  <xforms:label>Remove RelationShip</xforms:label>
+  <xforms:delete ev:event="click" nodeset="vr:content/vr:relationship"
+    at="index('relationShipRepeat')"/>
+</xforms:trigger>
+</xforms:group>
+
+</xforms:group>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vr:VODescription 
+xmlns="http://www.ivoa.net/xml/VOResource/v0.9" 
+xmlns:vr="vr" 
+xmlns:cea="http://www.ivoa.net/xml/CEAService/v0.1" 
+xmlns:ceab="http://www.astrogrid.org/schema/CommonExecutionArchitectureBase/v1" 
+xmlns:ceapd="http://www.astrogrid.org/schema/AGParameterDefinition/v1" 
+xmlns:cs="http://www.ivoa.net/xml/ConeSearch/v0.2"
+xmlns:sia="http://www.ivoa.net/xml/SIA/v0.6" 
+xmlns:vc="http://www.ivoa.net/xml/VOCommunity/v0.2" 
+xmlns:vg="http://www.ivoa.net/xml/VORegistry/v0.2" 
+xmlns:vs="http://www.ivoa.net/xml/VODataService/v0.4" 
+xmlns:vt="http://www.ivoa.net/xml/VOTable/v0.1" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Resource xmlns:vr="http://www.ivoa.net/xml/VOResource/v0.9"  xsi:type="java:org.astrogrid.registry.beans.resource.registry.AuthorityType">
+    <Identifier>
+      <AuthorityID>rai.ncsa.uiuc.edu</AuthorityID>
+<ResourceKey>test</ResourceKey>
+    </Identifier>
+    <Title>NCSA Radio Astronomy Imaging Naming Authority</Title>
+    <ShortName>NCSA-RAI</ShortName>
+    <vg:ManagingOrg>
+    	<AuthorityID>test</AuthorityID>
+    	<ResourceKey>res</ResourceKey>
+    </vg:ManagingOrg>
+    <Summary>
+      <Description>
+        This authority ID will be used to identify generic resources
+        related to the NCSA Radio Astronomy Imaging Group at the
+        National Center for Supercomputing Applications (NCSA)
+      </Description>
+      <ReferenceURL>http://rai.ncsa.uiuc.edu/</ReferenceURL>
+    </Summary>
+    <Curation>
+      <Publisher>
+         <Title>NCSA Radio Astronomy Imaging</Title>
+      </Publisher>
+      <Contact>
+        <Name>Dr. Raymond Plante</Name>
+        <Email>rplante@ncsa.uiuc.edu</Email>
+      </Contact>
+      <Date>2003-08-30</Date>
+    </Curation>
+  </Resource>
+</vr:VODescription>

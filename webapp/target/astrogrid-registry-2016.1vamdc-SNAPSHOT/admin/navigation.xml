@@ -1,0 +1,36 @@
+<!-- admin navigation -->
+<div id='leftColumn'>
+<div id='navcolumn'>
+   <div id='menuServer'>
+      <h5>Server</h5>
+      <ul>
+         <li><a href="../" >Home</a>
+         <li><a href='../browse.jsp'>Browse</a>
+         <li><a href='/manager/reload?path=<%= request.getContextPath() %>'>Restart</a>
+      </ul>
+   </div>
+   <div id='menuDocs'>
+      <h5>Documentation</h5>
+      <ul>
+         <li><a href="../docs/index.html" >Docs</a>
+      </ul>
+   </div>
+   <div id='menuConfig'>
+      <h5>Configure</h5>
+      <ul>
+         <li><a href="../admin/fingerprint.jsp" >Fingerprint</a>
+      </ul>
+   </div>
+   <div id='menuRegister'>
+      <h5>Admin</h5>
+      <ul>
+         <li><a href="clear_cache.jsp">Clear Cache</a>
+         <li><a href="removeResource.jsp">Remove Resource</a>
+         <li><a href="editEntry_backdoor.jsp">Enter Resource (Back Door)</a>
+         <li><a href="harvestResource.jsp">Harvest</a>
+      </ul>
+   </div>
+
+</div>
+</div>
+

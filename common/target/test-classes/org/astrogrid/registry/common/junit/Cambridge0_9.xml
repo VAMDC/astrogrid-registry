@@ -1,0 +1,456 @@
+<vr:VODescription xmlns:exist="http://exist.sourceforge.net/NS/exist" xmlns:vr="http://www.ivoa.net/xml/VOResource/v0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <vr:Resource status="active" xmlns="http://www.ivoa.net/xml/VOResource/v0.9" xmlns:vg="http://www.ivoa.net/xml/VORegistry/v0.2" xsi:type="vg:RegistryType">
+        <Identifier>
+            <AuthorityID>uk.ac.cam.ast</AuthorityID>
+            <ResourceKey>org.astrogrid.registry.RegistryService</ResourceKey>
+        </Identifier>
+        <Title>CASU publishing registry</Title>
+        <Summary>
+            <Description>An AstroGrid Registry</Description>
+            <ReferenceURL>http://cass123.ast.cam.ac.uk:8080/CASU-registry</ReferenceURL>
+        </Summary>
+        <Type>Archive</Type>
+        <Curation>
+            <Publisher>
+                <Title>Cambridge Astronomical Survey Unit</Title>
+            </Publisher>
+            <Contact>
+                <Name>Guy Rixon</Name>
+                <Email>gtr@ast.cam.ac.uk</Email>
+            </Contact>
+        </Curation>
+        <Interface>
+            <Invocation>WebService</Invocation>
+            <AccessURL use="full">http://cass123.ast.cam.ac.uk:8080/CASU-registry/services/RegistryQuery</AccessURL>
+        </Interface>
+        <vg:ManagedAuthority>uk.ac.cam.ast</vg:ManagedAuthority>
+    </vr:Resource>
+    <vr:Resource status="active" updated="2004-12-08T23:30:00Z" xmlns="http://www.ivoa.net/xml/VOResource/v0.9" xmlns:cea="http://www.ivoa.net/xml/CEAService/v0.1" xmlns:ceab="http://www.astrogrid.org/schema/CommonExecutionArchitectureBase/v1" xmlns:ceapd="http://www.astrogrid.org/schema/AGParameterDefinition/v1" xsi:type="cea:CeaApplicationType">
+        <Identifier>
+            <AuthorityID>uk.ac.cam.ast</AuthorityID>
+            <ResourceKey>INT-WFS/observation-catalogue/ceaApplication</ResourceKey>
+        </Identifier>
+        <Title>INT-WFS observation catalogue</Title>
+        <Summary>
+            <Description>List of observations in the INT wide-field survey.</Description>
+            <ReferenceURL>http://cass123.ast.cam.ac.uk:8080/INT-WFS-observation-catalogue</ReferenceURL>
+        </Summary>
+        <Type>Other</Type>
+        <Curation>
+            <Publisher>
+                <Title>Cambridge Astronomical Survey Unit</Title>
+            </Publisher>
+            <Contact>
+                <Name>Guy Rixon</Name>
+                <Email>gtr@ast.cam.ac.uk</Email>
+            </Contact>
+        </Curation>
+        <cea:ApplicationDefinition>
+            <cea:Parameters>
+                <cea:ParameterDefinition name="Query" type="ADQL">
+                    <ceapd:UI_Name>Query</ceapd:UI_Name>
+                    <ceapd:UI_Description>Astronomy Data Query Language that defines the search criteria</ceapd:UI_Description>
+                    <ceapd:UCD/>
+                    <ceapd:DefaultValue/>
+                    <ceapd:Units/>
+                </cea:ParameterDefinition>
+                <cea:ParameterDefinition name="Result" type="text">
+                    <ceapd:UI_Name>Result</ceapd:UI_Name>
+                    <ceapd:UI_Description>Query results</ceapd:UI_Description>
+                    <ceapd:UCD/>
+                    <ceapd:DefaultValue/>
+                    <ceapd:Units/>
+                </cea:ParameterDefinition>
+                <cea:ParameterDefinition name="DEC" type="Dec">
+                    <ceapd:UI_Name>DEC</ceapd:UI_Name>
+                    <ceapd:UI_Description>Declination of cone</ceapd:UI_Description>
+                    <ceapd:UCD/>
+                    <ceapd:DefaultValue/>
+                    <ceapd:Units/>
+                </cea:ParameterDefinition>
+                <cea:ParameterDefinition name="Format" type="text">
+                    <ceapd:UI_Name>Format</ceapd:UI_Name>
+                    <ceapd:UI_Description>How the results are to be returned.  VOTABLE or CSV for now</ceapd:UI_Description>
+                    <ceapd:UCD/>
+                    <ceapd:DefaultValue>VOTABLE</ceapd:DefaultValue>
+                    <ceapd:Units/>
+                </cea:ParameterDefinition>
+                <cea:ParameterDefinition name="RA" type="RA">
+                    <ceapd:UI_Name>RA</ceapd:UI_Name>
+                    <ceapd:UI_Description>Right-Ascension of cone</ceapd:UI_Description>
+                    <ceapd:UCD/>
+                    <ceapd:DefaultValue/>
+                    <ceapd:Units/>
+                </cea:ParameterDefinition>
+                <cea:ParameterDefinition name="Radius" type="double">
+                    <ceapd:UI_Name>Radius</ceapd:UI_Name>
+                    <ceapd:UI_Description>Radius of cone</ceapd:UI_Description>
+                    <ceapd:UCD/>
+                    <ceapd:DefaultValue/>
+                    <ceapd:Units/>
+                </cea:ParameterDefinition>
+            </cea:Parameters>
+            <cea:Interfaces>
+                <ceab:Interface name="adql">
+                    <ceab:input>
+                        <ceab:pref maxoccurs="1" minoccurs="1" ref="Query"/>
+                        <ceab:pref maxoccurs="1" minoccurs="1" ref="Format"/>
+                    </ceab:input>
+                    <ceab:output>
+                        <ceab:pref maxoccurs="1" minoccurs="1" ref="Result"/>
+                    </ceab:output>
+                </ceab:Interface>
+            </cea:Interfaces>
+        </cea:ApplicationDefinition>
+    </vr:Resource>
+    <vr:Resource status="active" updated="2004-12-08T23:30:00Z" xmlns="http://www.ivoa.net/xml/VOResource/v0.9" xmlns:cea="http://www.ivoa.net/xml/CEAService/v0.1" xmlns:ceab="http://www.astrogrid.org/schema/CommonExecutionArchitectureBase/v1" xmlns:ceapd="http://www.astrogrid.org/schema/AGParameterDefinition/v1" xsi:type="cea:CeaServiceType">
+        <Identifier>
+            <AuthorityID>uk.ac.cam.ast</AuthorityID>
+            <ResourceKey>INT-WFS/observation-catalogue/ceaService</ResourceKey>
+        </Identifier>
+        <Title>INT-WFS observation catalogue</Title>
+        <ShortName/>
+        <Summary>
+            <Description>List of observations in the INT wide-field survey.</Description>
+            <ReferenceURL>http://cass123.ast.cam.ac.uk:8080/INT-WFS-observation-catalogue</ReferenceURL>
+        </Summary>
+        <Type>Other</Type>
+        <Curation>
+            <Publisher>
+                <Title>Cambridge Astronomical Survey Unit</Title>
+            </Publisher>
+            <Contact>
+                <Name>Guy Rixon</Name>
+                <Email>gtr@ast.cam.ac.uk</Email>
+            </Contact>
+        </Curation>
+        <vr:Capability>
+            <vr:StandardURL>http://www.astrogrid.org/maven/build/applications/</vr:StandardURL>
+            <vr:StandardID>
+                <vr:AuthorityID>astrogrid.org</vr:AuthorityID>
+                <vr:ResourceKey>CommonExecutionArchitucture</vr:ResourceKey>
+            </vr:StandardID>
+        </vr:Capability>
+        <vr:Interface>
+            <vr:Invocation>WebService</vr:Invocation>
+            <vr:AccessURL use="base">http://cass123.ast.cam.ac.uk:8080/INT-WFS-observation-catalogue/services/CommonExecutionConnectorService</vr:AccessURL>
+        </vr:Interface>
+        <cea:ManagedApplications>
+            <cea:ApplicationReference>
+                <AuthorityID>uk.ac.cam.ast</AuthorityID>
+                <ResourceKey>INT-WFS/observation-catalogue/ceaApplication</ResourceKey>
+            </cea:ApplicationReference>
+        </cea:ManagedApplications>
+    </vr:Resource>
+    <vr:Resource status="active" updated="2004-12-08T23:30:00Z" xmlns="http://www.ivoa.net/xml/VOResource/v0.9" xmlns:cea="http://www.ivoa.net/xml/CEAService/v0.1" xmlns:ceab="http://www.astrogrid.org/schema/CommonExecutionArchitectureBase/v1" xmlns:ceapd="http://www.astrogrid.org/schema/AGParameterDefinition/v1" xsi:type="cea:CeaApplicationType">
+        <Identifier>
+            <AuthorityID>uk.ac.cam.ast</AuthorityID>
+            <ResourceKey>INT-WFS/merged-object-catalogue/ceaApplication</ResourceKey>
+        </Identifier>
+        <Title>INT-WFS merged object-catalogue</Title>
+        <ShortName/>
+        <Summary>
+            <Description>Multi-band photometry of objects detected in INT-WFS images.</Description>
+            <ReferenceURL>http://cass123.ast.cam.ac.uk:8080/INT-WFS-merged-object-catalogue</ReferenceURL>
+        </Summary>
+        <Curation>
+            <Publisher>
+                <Title>Cambridge Astronomical Survey Unit</Title>
+            </Publisher>
+            <Contact>
+                <Name>Guy Rixon</Name>
+                <Email>gtr@ast.cam.ac.uk</Email>
+            </Contact>
+        </Curation>
+        <cea:ApplicationDefinition>
+            <cea:Parameters>
+                <cea:ParameterDefinition name="Query" type="ADQL">
+                    <ceapd:UI_Name>Query</ceapd:UI_Name>
+                    <ceapd:UI_Description>Astronomy Data Query Language that defines the search criteria</ceapd:UI_Description>
+                    <ceapd:UCD/>
+                    <ceapd:DefaultValue/>
+                    <ceapd:Units/>
+                </cea:ParameterDefinition>
+                <cea:ParameterDefinition name="Result" type="text">
+                    <ceapd:UI_Name>Result</ceapd:UI_Name>
+                    <ceapd:UI_Description>Query results</ceapd:UI_Description>
+                    <ceapd:UCD/>
+                    <ceapd:DefaultValue/>
+                    <ceapd:Units/>
+                </cea:ParameterDefinition>
+                <cea:ParameterDefinition name="DEC" type="Dec">
+                    <ceapd:UI_Name>DEC</ceapd:UI_Name>
+                    <ceapd:UI_Description>Declination of cone</ceapd:UI_Description>
+                    <ceapd:UCD/>
+                    <ceapd:DefaultValue/>
+                    <ceapd:Units/>
+                </cea:ParameterDefinition>
+                <cea:ParameterDefinition name="Format" type="text">
+                    <ceapd:UI_Name>Format</ceapd:UI_Name>
+                    <ceapd:UI_Description>How the results are to be returned.  VOTABLE or CSV for now</ceapd:UI_Description>
+                    <ceapd:UCD/>
+                    <ceapd:DefaultValue>VOTABLE</ceapd:DefaultValue>
+                    <ceapd:Units/>
+                </cea:ParameterDefinition>
+                <cea:ParameterDefinition name="RA" type="RA">
+                    <ceapd:UI_Name>RA</ceapd:UI_Name>
+                    <ceapd:UI_Description>Right-Ascension of cone</ceapd:UI_Description>
+                    <ceapd:UCD/>
+                    <ceapd:DefaultValue/>
+                    <ceapd:Units/>
+                </cea:ParameterDefinition>
+                <cea:ParameterDefinition name="Radius" type="double">
+                    <ceapd:UI_Name>Radius</ceapd:UI_Name>
+                    <ceapd:UI_Description>Radius of cone</ceapd:UI_Description>
+                    <ceapd:UCD/>
+                    <ceapd:DefaultValue/>
+                    <ceapd:Units/>
+                </cea:ParameterDefinition>
+            </cea:Parameters>
+            <cea:Interfaces>
+                <ceab:Interface name="cone">
+                    <ceab:input>
+                        <ceab:pref maxoccurs="1" minoccurs="1" ref="DEC"/>
+                        <ceab:pref maxoccurs="1" minoccurs="1" ref="RA"/>
+                        <ceab:pref maxoccurs="1" minoccurs="1" ref="Format"/>
+                        <ceab:pref maxoccurs="1" minoccurs="1" ref="Radius"/>
+                    </ceab:input>
+                    <ceab:output>
+                        <ceab:pref maxoccurs="1" minoccurs="1" ref="Result"/>
+                    </ceab:output>
+                </ceab:Interface>
+                <ceab:Interface name="adql">
+                    <ceab:input>
+                        <ceab:pref maxoccurs="1" minoccurs="1" ref="Query"/>
+                        <ceab:pref maxoccurs="1" minoccurs="1" ref="Format"/>
+                    </ceab:input>
+                    <ceab:output>
+                        <ceab:pref maxoccurs="1" minoccurs="1" ref="Result"/>
+                    </ceab:output>
+                </ceab:Interface>
+            </cea:Interfaces>
+        </cea:ApplicationDefinition>
+    </vr:Resource>
+    <vr:Resource status="active" updated="2004-12-08T23:30:00Z" xmlns="http://www.ivoa.net/xml/VOResource/v0.9" xmlns:cea="http://www.ivoa.net/xml/CEAService/v0.1" xmlns:ceab="http://www.astrogrid.org/schema/CommonExecutionArchitectureBase/v1" xmlns:ceapd="http://www.astrogrid.org/schema/AGParameterDefinition/v1" xsi:type="cea:CeaServiceType">
+        <Identifier>
+            <AuthorityID>uk.ac.cam.ast</AuthorityID>
+            <ResourceKey>INT-WFS/merged-object-catalogue/ceaService</ResourceKey>
+        </Identifier>
+        <Title>INT-WFS merged object-catalogue</Title>
+        <ShortName/>
+        <Summary>
+            <Description>Multi-band photometry of objects detected in INT-WFS images.</Description>
+            <ReferenceURL>http://cass123.ast.cam.ac.uk:8080/INT-WFS-merged-object-catalogue</ReferenceURL>
+        </Summary>
+        <Curation>
+            <Publisher>
+                <Title>Cambridge Astronomical Survey Unit</Title>
+            </Publisher>
+            <Contact>
+                <Name>Guy Rixon</Name>
+                <Email>gtr@ast.cam.ac.uk</Email>
+            </Contact>
+        </Curation>
+        <vr:Capability>
+            <vr:StandardURL>http://www.astrogrid.org/maven/build/applications/</vr:StandardURL>
+            <vr:StandardID>
+                <vr:AuthorityID>astrogrid.org</vr:AuthorityID>
+                <vr:ResourceKey>CommonExecutionArchitucture</vr:ResourceKey>
+            </vr:StandardID>
+        </vr:Capability>
+        <vr:Interface>
+            <vr:Invocation>WebService</vr:Invocation>
+            <vr:AccessURL use="base">http://cass123.ast.cam.ac.uk:8080/INT-WFS-merged-object-catalogue/services/CommonExecutionConnectorService</vr:AccessURL>
+        </vr:Interface>
+        <cea:ManagedApplications>
+            <cea:ApplicationReference>
+                <AuthorityID>uk.ac.cam.ast</AuthorityID>
+                <ResourceKey>INT-WFS/merged-object-catalogue/ceaApplication</ResourceKey>
+            </cea:ApplicationReference>
+        </cea:ManagedApplications>
+    </vr:Resource>
+    <vr:Resource status="active" updated="2004-12-07T15:15:00Z" xmlns:sia="http://www.ivoa.net/xml/SIA/v0.6" xsi:type="vr:ServiceType">
+        <vr:Identifier>
+            <vr:AuthorityID>uk.ac.cam.ast</vr:AuthorityID>
+            <vr:ResourceKey>INT-WFS/images/SIAP-service</vr:ResourceKey>
+        </vr:Identifier>
+        <vr:Title>INT WFS: SIAP service</vr:Title>
+        <vr:Summary>
+            <vr:Description>A Simple Image Access Protocol service for the reduced images of the Isaac Newton Telescope wide-field survey.</vr:Description>
+            <vr:ReferenceURL>http://wiki.astrogrid.org/bin/view/Astrogrid/IntWfsDataModel</vr:ReferenceURL>
+        </vr:Summary>
+        <vr:Type>Archive</vr:Type>
+        <vr:Curation>
+            <vr:Publisher>
+                <vr:Title>Cambridge Astronomical Survey Unit</vr:Title>
+            </vr:Publisher>
+            <vr:Contact>
+                <vr:Name>Guy Rixon</vr:Name>
+                <vr:Email>gtr@ast.cam.ac.uk</vr:Email>
+            </vr:Contact>
+            <vr:Creator>
+                <vr:Name>Guy Rixon</vr:Name>
+            </vr:Creator>
+        </vr:Curation>
+        <vr:Subject>A Simple Image Access Protocol service for the reduced images of the Isaac Newton Telescope wide-field survey.</vr:Subject>
+        <sia:SimpleImageAccess>
+            <sia:ImageServiceType>Pointed</sia:ImageServiceType>
+            <sia:MaxQueryRegionSize>
+                <sia:long>360</sia:long>
+                <sia:lat>360</sia:lat>
+            </sia:MaxQueryRegionSize>
+            <sia:MaxImageExtent>
+                <sia:long>360</sia:long>
+                <sia:lat>360</sia:lat>
+            </sia:MaxImageExtent>
+            <sia:MaxImageSize>
+                <sia:long>4096</sia:long>
+                <sia:lat>4096</sia:lat>
+            </sia:MaxImageSize>
+            <sia:MaxFileSize>16800000</sia:MaxFileSize>
+            <sia:MaxRecords>15000</sia:MaxRecords>
+        </sia:SimpleImageAccess>
+        <vr:Interface>
+            <vr:Invocation>Extended</vr:Invocation>
+            <vr:AccessURL>http://archive.ast.cam.ac.uk/cgi-bin/wfs-siap/queryImage</vr:AccessURL>
+        </vr:Interface>
+    </vr:Resource>
+    <vr:Resource status="deleted" updated="2004-12-07T15:15:00Z" xmlns:sia="http://www.ivoa.net/xml/SIA/v0.6" xsi:type="vr:ServiceType">
+        <vr:Identifier>
+            <vr:AuthorityID>uk.ac.cam.ast</vr:AuthorityID>
+            <vr:ResourceKey>SWIRE/tile-images/SIAP-service</vr:ResourceKey>
+        </vr:Identifier>
+        <vr:Title>SWIRE: full-tile images: SIAP service</vr:Title>
+        <vr:Summary>
+            <vr:Description>A SIAP service for the SWIRE 1.0 images in the ELAIS N1 region. This is an atlas-image service.</vr:Description>
+            <vr:ReferenceURL>http://data.spitzer.caltech.edu/popular/swire/20041027_enhanced_v1_EN1/documents/SWIRE1_EN1_doc_20041027.pdf</vr:ReferenceURL>
+        </vr:Summary>
+        <vr:Type>Archive</vr:Type>
+        <vr:Curation>
+            <vr:Publisher>
+                <vr:Title>Cambridge Astronomical Survey Unit</vr:Title>
+            </vr:Publisher>
+            <vr:Contact>
+                <vr:Name>Guy Rixon</vr:Name>
+                <vr:Email>gtr@ast.cam.ac.uk</vr:Email>
+            </vr:Contact>
+            <vr:Creator>
+                <vr:Name>J. A. Surace et al.</vr:Name>
+            </vr:Creator>
+        </vr:Curation>
+        <vr:Subject>DIGITAL_IMAGES, SWIRE, Spitzer, INT-WFS, IRAC, MIPS INT-WFC, ELAIS, SIAP</vr:Subject>
+        <sia:SimpleImageAccess>
+            <sia:ImageServiceType>Atlas</sia:ImageServiceType>
+            <sia:MaxQueryRegionSize>
+                <sia:long>360</sia:long>
+                <sia:lat>360</sia:lat>
+            </sia:MaxQueryRegionSize>
+            <sia:MaxImageExtent>
+                <sia:long>360</sia:long>
+                <sia:lat>360</sia:lat>
+            </sia:MaxImageExtent>
+            <sia:MaxImageSize>
+                <sia:long>9802</sia:long>
+                <sia:lat>10647</sia:lat>
+            </sia:MaxImageSize>
+            <sia:MaxFileSize>417456000</sia:MaxFileSize>
+            <sia:MaxRecords>275</sia:MaxRecords>
+        </sia:SimpleImageAccess>
+        <vr:Interface>
+            <vr:Invocation>Extended</vr:Invocation>
+            <vr:AccessURL>http://archive.ast.cam.ac.uk/cgi-bin/swire/siap-atlas/queryImage</vr:AccessURL>
+        </vr:Interface>
+    </vr:Resource>
+    <vr:Resource status="active" updated="2004-12-10T12:00:00Z" xmlns:sia="http://www.ivoa.net/xml/SIA/v0.6" xsi:type="vr:ServiceType">
+        <vr:Identifier>
+            <vr:AuthorityID>uk.ac.cam.ast</vr:AuthorityID>
+            <vr:ResourceKey>SWIRE/images/SIAP-atlas-service</vr:ResourceKey>
+        </vr:Identifier>
+        <vr:Title>SWIRE: images: SIAP atlas-service</vr:Title>
+        <vr:Summary>
+            <vr:Description>A SIAP service for the SWIRE 1.0 images in the ELAIS N1 region. This is an atlas-image service.</vr:Description>
+            <vr:ReferenceURL>http://data.spitzer.caltech.edu/popular/swire/20041027_enhanced_v1_EN1/documents/SWIRE1_EN1_doc_20041027.pdf</vr:ReferenceURL>
+        </vr:Summary>
+        <vr:Type>Archive</vr:Type>
+        <vr:Curation>
+            <vr:Publisher>
+                <vr:Title>Cambridge Astronomical Survey Unit</vr:Title>
+            </vr:Publisher>
+            <vr:Contact>
+                <vr:Name>Guy Rixon</vr:Name>
+                <vr:Email>gtr@ast.cam.ac.uk</vr:Email>
+            </vr:Contact>
+            <vr:Creator>
+                <vr:Name>J. A. Surace et al.</vr:Name>
+            </vr:Creator>
+        </vr:Curation>
+        <vr:Subject>DIGITAL_IMAGES, SWIRE, Spitzer, INT-WFS, IRAC, MIPS INT-WFC, ELAIS, SIAP</vr:Subject>
+        <sia:SimpleImageAccess>
+            <sia:ImageServiceType>Atlas</sia:ImageServiceType>
+            <sia:MaxQueryRegionSize>
+                <sia:long>360</sia:long>
+                <sia:lat>360</sia:lat>
+            </sia:MaxQueryRegionSize>
+            <sia:MaxImageExtent>
+                <sia:long>360</sia:long>
+                <sia:lat>360</sia:lat>
+            </sia:MaxImageExtent>
+            <sia:MaxImageSize>
+                <sia:long>9802</sia:long>
+                <sia:lat>10647</sia:lat>
+            </sia:MaxImageSize>
+            <sia:MaxFileSize>417456000</sia:MaxFileSize>
+            <sia:MaxRecords>275</sia:MaxRecords>
+        </sia:SimpleImageAccess>
+        <vr:Interface>
+            <vr:Invocation>Extended</vr:Invocation>
+            <vr:AccessURL>http://archive.ast.cam.ac.uk/cgi-bin/swire/siap-atlas/queryImage</vr:AccessURL>
+        </vr:Interface>
+    </vr:Resource>
+    <vr:Resource status="active" updated="2004-12-10T12:00:00Z" xmlns:sia="http://www.ivoa.net/xml/SIA/v0.6" xsi:type="vr:ServiceType">
+        <vr:Identifier>
+            <vr:AuthorityID>uk.ac.cam.ast</vr:AuthorityID>
+            <vr:ResourceKey>SWIRE/images/SIAP-cutout-service</vr:ResourceKey>
+        </vr:Identifier>
+        <vr:Title>SWIRE: images: SIAP cutout-service</vr:Title>
+        <vr:Summary>
+            <vr:Description>A SIAP service for the SWIRE 1.0 images in the ELAIS N1 region. This is a cutout service.</vr:Description>
+            <vr:ReferenceURL>http://data.spitzer.caltech.edu/popular/swire/20041027_enhanced_v1_EN1/documents/SWIRE1_EN1_doc_20041027.pdf</vr:ReferenceURL>
+        </vr:Summary>
+        <vr:Type>Archive</vr:Type>
+        <vr:Curation>
+            <vr:Publisher>
+                <vr:Title>Cambridge Astronomical Survey Unit</vr:Title>
+            </vr:Publisher>
+            <vr:Contact>
+                <vr:Name>Guy Rixon</vr:Name>
+                <vr:Email>gtr@ast.cam.ac.uk</vr:Email>
+            </vr:Contact>
+            <vr:Creator>
+                <vr:Name>J. A. Surace et al.</vr:Name>
+            </vr:Creator>
+        </vr:Curation>
+        <vr:Subject>DIGITAL_IMAGES, SWIRE, Spitzer, INT-WFS, IRAC, MIPS INT-WFC, ELAIS, SIAP</vr:Subject>
+        <sia:SimpleImageAccess>
+            <sia:ImageServiceType>Atlas</sia:ImageServiceType>
+            <sia:MaxQueryRegionSize>
+                <sia:long>360</sia:long>
+                <sia:lat>360</sia:lat>
+            </sia:MaxQueryRegionSize>
+            <sia:MaxImageExtent>
+                <sia:long>360</sia:long>
+                <sia:lat>360</sia:lat>
+            </sia:MaxImageExtent>
+            <sia:MaxImageSize>
+                <sia:long>9802</sia:long>
+                <sia:lat>10647</sia:lat>
+            </sia:MaxImageSize>
+            <sia:MaxFileSize>417456000</sia:MaxFileSize>
+            <sia:MaxRecords>275</sia:MaxRecords>
+        </sia:SimpleImageAccess>
+        <vr:Interface>
+            <vr:Invocation>Extended</vr:Invocation>
+            <vr:AccessURL>http://archive.ast.cam.ac.uk/cgi-bin/swire/siap-cutout/queryImage</vr:AccessURL>
+        </vr:Interface>
+    </vr:Resource>
+</vr:VODescription>

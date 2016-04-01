@@ -1,0 +1,765 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--+
+    | Maven project description for the AstroGrid registry webapp.
+    |
+    +-->
+<project
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="maven-project.xsd">
+
+    <!--+
+        | Extend the common project descriptor.
+        +-->
+    <extend>${basedir}/../maven/project.xml</extend>
+    
+    <siteAddress>terror.star.le.ac.uk</siteAddress>
+   	<siteDirectory>/software_docs/registry-${pom.currentVersion}</siteDirectory> 
+    
+
+    <!--+
+        | The short name of the project.
+        | This is used when naming jars and distribution files.
+        +-->
+    <id>astrogrid-registry</id>
+
+    <!--+
+        | The full name of the project.
+        | This is used when generating JavaDoc titles.
+        +-->
+    <name>AstroGrid registry webapp</name>
+
+    <!--+
+        | A short description of the project.
+        | The short description should be limited to a single line.
+        +-->
+    <shortDescription>
+       Full War file installtion of the Registry.
+    </shortDescription>
+
+    <!--+
+        | A detailed description of the project.
+        | This is used to generate the front page of the projects web site. 
+        +-->
+    <description>
+        <![CDATA[
+	<p>
+    	Welcome to the Registry Webapp Documentation.  
+    	In the menu on the left hand side you should find all the required information you
+    	need.<br />
+    	There have been many changes see "Changes" link, including WebStart GUI client and WebDav, support for 1.0 RI and others.<br />
+    	The Registry at the moment is designed to work with databases that support the XMLDB:API.<br />
+    	The Registry currently is bundled up with the eXist XMLDB and is the recommended database
+    	for the Astrogrid Registry.<br />
+    	For most Registries the bundled eXist is the easiest option.
+    	For Larger Publishing Registries (holding thousands of Resources) or Full Registries that contain all Resources from 
+    	all VO's we prefer eXist is installed as a seperate Database service.  Or you may have other reasons to have your Database
+    	on a seperate machine.  Please see <a href="/external_eXist.html">external eXist</a> for more information on installing
+    	eXist XMLDB externally.<br />
+    	You may click on 'Home' in the menu to exit the 'Docs' area and go back to your main Registry home page.
+	</p>
+		]]>        
+    </description>
+
+    <!--+
+        | Our cvs repository location.
+        +-->
+    <repository>
+        <connection>
+            scm:cvs:pserver:anoncvs@cvs.astrogrid.org:/devel:astrogrid/registry/webapp
+        </connection>
+        <developerConnection>
+            scm:cvs:ext:${maven.username}@cvs.astrogrid.org:/devel:astrogrid/registry/webapp
+        </developerConnection>
+    </repository>
+
+    <!--+
+        | The external libraries required to build our component.
+        +-->
+    <dependencies>
+    
+        <dependency>
+            <groupId>org.astrogrid</groupId>
+            <artifactId>astrogrid-common</artifactId>
+            <version>${astrogrid.common.version}</version>
+            <type>jar</type>
+            <properties>
+                <war.bundle>true</war.bundle>
+            </properties>            
+            <url>http://www.astrogrid.org/</url>
+        </dependency>
+    
+        <dependency>
+            <groupId>org.astrogrid</groupId>
+            <artifactId>astrogrid-registry-common</artifactId>
+            <version>${pom.currentVersion}</version>
+            <type>jar</type>
+            <url>http://www.astrogrid.org/</url>
+            <properties>
+                <war.bundle>true</war.bundle>
+            </properties>
+        </dependency>
+    	
+        <dependency>
+            <groupId>org.astrogrid</groupId>
+            <artifactId>astrogrid-registry-client-lite</artifactId>
+            <version>${astrogrid.registry.version}</version>
+            <type>jar</type>
+            <url>http://www.astrogrid.org/</url>
+            <properties>
+                <war.bundle>true</war.bundle>
+            </properties>
+        </dependency>
+    	
+        <dependency>
+           <artifactId>astrogrid-utils</artifactId>
+           <groupId>org.astrogrid</groupId>
+           <version>${astrogrid.utils.stable}</version>
+ 		   <properties>
+             	<war.bundle>true</war.bundle>
+             </properties>
+        </dependency>
+        
+    		<dependency>
+      		<groupId>org.astrogrid</groupId>
+		      <artifactId>astrogrid-contracts</artifactId>
+      		<version>${astrogrid.contracts.version}</version>
+		      <type>jar</type>
+ 		   	<properties>
+            	<war.bundle>true</war.bundle>
+            </properties>      
+    		</dependency>
+    	
+        <dependency>
+            <groupId>org.astrogrid</groupId>
+            <artifactId>astrogrid-pal-oldquery</artifactId>
+            <version>2007.2.05pl</version>
+            <type>jar</type>
+                   <properties>
+            <war.bundle>true</war.bundle>
+        </properties> 
+        </dependency>    	
+        
+        <!-- Xfire dependencies -->
+		 <dependency>
+            <groupId>xfire</groupId>
+            <artifactId>xfire-all</artifactId>
+	        <version>1.2</version>
+            <type>jar</type>
+            <url>http://www.astrogrid.org/</url>
+			<properties>
+            	<war.bundle>true</war.bundle>
+	        </properties>               
+        </dependency>   
+        
+		<dependency>
+            <groupId>activation</groupId>
+            <artifactId>activation-framework</artifactId>
+	        <version>1.1</version>
+            <type>jar</type>
+            <url>http://www.astrogrid.org/</url>
+            <properties>
+    	        <war.bundle>true</war.bundle>
+	        </properties>   	
+        </dependency>                
+        
+		<dependency>
+            <groupId>saxon</groupId>
+            <artifactId>saxon</artifactId>
+	        <version>8.9</version>
+            <type>jar</type>
+            <url>http://www.astrogrid.org/</url>
+            <properties>
+    	        <war.bundle>true</war.bundle>
+	        </properties>   	            
+        </dependency>      
+
+		<dependency>
+            <groupId>saxon</groupId>
+            <artifactId>saxon-dom</artifactId>
+	        <version>8.9</version>
+            <type>jar</type>
+            <url>http://www.astrogrid.org/</url>
+            <properties>
+    	        <war.bundle>true</war.bundle>
+	        </properties>            
+        </dependency>  
+        
+		<dependency>
+            <groupId>saxon</groupId>
+            <artifactId>saxon-dom4j</artifactId>
+	        <version>8.9</version>
+            <type>jar</type>
+            <url>http://www.astrogrid.org/</url>
+            <properties>
+    	        <war.bundle>true</war.bundle>
+	        </properties>            
+        </dependency>         
+        
+		<dependency>
+            <groupId>jdom</groupId>
+            <artifactId>jdom</artifactId>
+	        <version>1.0</version>
+            <type>jar</type>
+            <url>http://www.astrogrid.org/</url>
+            <properties>
+    	        <war.bundle>true</war.bundle>
+	        </properties>   
+        </dependency>      
+        
+<dependency>
+            <groupId>spring</groupId>
+            <artifactId>spring</artifactId>
+	        <version>1.2.6</version>
+            <type>jar</type>
+            <url>http://www.astrogrid.org/</url>
+            <properties>
+            <war.bundle>true</war.bundle>
+        </properties>   
+        </dependency>  
+        
+		<dependency>
+            <groupId>wsdl4j</groupId>
+            <artifactId>wsdl4j</artifactId>
+	        <version>1.5.2</version>
+            <type>jar</type>
+            <url>http://www.astrogrid.org/</url>
+            <properties>
+            <war.bundle>true</war.bundle>
+        </properties>   
+        </dependency>  
+        
+	<dependency>
+            <groupId>axis</groupId>
+            <artifactId>axis</artifactId>
+	        <version>1.3</version>
+            <type>jar</type>
+            <url>http://www.astrogrid.org/</url>
+            <properties>
+            <war.bundle>true</war.bundle>
+        </properties>   
+        </dependency>                
+        
+        <dependency>
+            <groupId>stax</groupId>
+            <artifactId>stax-api</artifactId>
+	        <version>1.0.1</version>
+            <type>jar</type>
+            <url>http://www.astrogrid.org/</url>
+            <properties>
+            <war.bundle>true</war.bundle>
+        </properties>   
+        </dependency>                         
+
+        <dependency>
+             <artifactId>woodstox</artifactId>
+             <groupId>woodstox</groupId>
+             <version>2.0.6</version>
+             <properties>
+            <war.bundle>true</war.bundle>
+        </properties>   
+         </dependency>
+        
+        <dependency>
+           <id>jaxrpc</id>
+           <version>05102005</version>
+           <type>jar</type>
+           <properties>
+            	<war.bundle>true</war.bundle>
+        	</properties> 
+        </dependency>   
+                 
+    	
+    	 <dependency>
+           <groupId>saaj</groupId>
+            <artifactId>saaj-impl</artifactId>
+            <version>1.3</version>
+            <type>jar</type>
+                        <properties>
+            	<war.bundle>true</war.bundle>
+        	</properties>   
+            
+        </dependency>
+        
+        <dependency>
+           <groupId>saaj</groupId>
+            <artifactId>saaj-api</artifactId>
+            <version>1.3</version>
+            <type>jar</type>
+                        <properties>
+            	<war.bundle>true</war.bundle>
+        	</properties>   
+            
+        </dependency>
+        
+    	
+        <!-- for writing XML -->
+       <dependency>
+          <artifactId>astrogrid-xml</artifactId>
+          <groupId>org.astrogrid</groupId>
+          <version>${astrogrid.xml.stable}</version>
+        <properties>
+            <war.bundle>true</war.bundle>
+        </properties>       	
+       </dependency>
+
+       <dependency>
+          <artifactId>astrogrid-slinger-api</artifactId>
+          <groupId>org.astrogrid</groupId>
+          <version>${astrogrid.slinger.version}</version>
+        <properties>
+            <war.bundle>true</war.bundle>
+        </properties>       	
+       </dependency>
+    	
+    	
+        <!--+
+            | The Registry server components.
+            +-->
+        <dependency>
+            <groupId>org.astrogrid</groupId>
+            <artifactId>astrogrid-registry-server</artifactId>
+            <version>${pom.currentVersion}</version>
+            <type>jar</type>
+            <url>http://www.astrogrid.org/</url>
+            <properties>
+                <war.bundle>true</war.bundle>
+            </properties>
+        </dependency>
+        
+        <dependency>
+        	<artifactId>commons-fileupload</artifactId>
+            <groupId>commons-fileupload</groupId>
+            <version>1.0</version>
+            <properties>
+            	<war.bundle>true</war.bundle>
+            </properties>            
+        </dependency>
+        
+          	<dependency>
+	    	<id>commons-collections</id>
+      		<version>3.0</version>
+      		<properties>
+        		<jar.fileset>true</jar.fileset>
+        		<war.bundle>true</war.bundle>
+      		</properties>
+    	</dependency>
+
+	<!--
+        <dependency>
+          <groupId>org.astrogrid</groupId>
+          <type>jar</type>
+          <artifactId>astrogrid-security</artifactId>
+          <version>${astrogrid.security.version}</version>
+            <properties>
+  	  	  	<war.bundle>true</war.bundle>
+            </properties>
+        </dependency> 	
+    	
+        <dependency>
+          <groupId>org.astrogrid</groupId>
+          <type>jar</type>
+          <artifactId>astrogrid-community-client</artifactId>
+          <version>${astrogrid.community.version}</version>
+          <properties>
+	  	  	<war.bundle>true</war.bundle>
+          </properties>
+        </dependency>
+
+        <dependency>
+          <groupId>org.astrogrid</groupId>
+          <type>jar</type>
+          <artifactId>astrogrid-community-common</artifactId>
+          <version>${astrogrid.community.version}</version>
+          <properties>
+  	  	    	<war.bundle>true</war.bundle>
+          </properties>        	
+        </dependency>
+
+        <dependency>
+          <groupId>org.astrogrid</groupId>
+          <type>jar</type>
+          <artifactId>astrogrid-community-resolver</artifactId>
+          <version>${astrogrid.community.version}</version>
+            <properties>
+  	  	  	<war.bundle>true</war.bundle>
+            </properties>        	
+        </dependency>
+-->
+        <dependency>
+          <groupId>org.astrogrid</groupId>
+          <type>jar</type>
+          <artifactId>astrogrid-registry-client-lite</artifactId>
+          <version>${astrogrid.registry.version}</version>
+            <properties>
+  	  	  	<war.bundle>true</war.bundle>
+            </properties>        	
+        </dependency>        	  
+                        
+        <dependency>
+            <artifactId>servletapi</artifactId>
+            <groupId>servletapi</groupId>
+            <version>2.3</version>
+        </dependency>
+        
+        <!--
+    	<dependency>
+           <id>jaxrpc</id>
+           <version>unknown</version>
+           <jar>jaxrpc.jar</jar>
+           <properties>
+            	<war.bundle>true</war.bundle>
+        	</properties>     
+        </dependency>
+
+        <dependency>
+           <id>saaj</id>
+           <version>unknown</version>
+           <jar>saaj.jar</jar>
+           <properties>
+            	<war.bundle>true</war.bundle>
+        	</properties>   
+        </dependency>
+        -->
+        <!--
+        
+    -->	
+        <dependency>
+          <id>junit</id>
+          <version>3.8</version>
+            <properties>
+            	<war.bundle>true</war.bundle>
+        	</properties>        	
+        </dependency>
+
+        <dependency>
+          <id>xmlunit</id>
+          <version>1.0</version>
+            <properties>
+            	<war.bundle>true</war.bundle>
+        	</properties>        	
+        </dependency>
+    	
+        <dependency>
+            <groupId>org.astrogrid</groupId>
+            <artifactId>astrogrid-xmldb-client</artifactId>
+	        <version>${astrogrid.xmldb.version}</version>
+            <type>jar</type>
+            <url>http://www.astrogrid.org/</url>
+            <properties>
+               	<war.bundle>true</war.bundle>
+          	</properties>
+        </dependency>
+        
+        <dependency>
+             <artifactId>commons-logging</artifactId>
+             <groupId>commons-logging</groupId>
+             <version>1.0.4</version>
+            <properties>
+               	<war.bundle>true</war.bundle>
+          	</properties>             
+         </dependency>
+    	
+                            	
+        <dependency>
+            <artifactId>commons-discovery</artifactId>
+            <groupId>commons-discovery</groupId>
+            <version>0.2</version>
+            <properties>
+               	<war.bundle>true</war.bundle>
+          	</properties>            
+        </dependency>
+        
+
+            <dependency>
+                 <artifactId>log4j</artifactId>
+                 <groupId>log4j</groupId>
+                 <version>1.2.14</version>
+            <properties>
+               	<war.bundle>true</war.bundle>
+          	</properties>                 
+             </dependency>
+    	
+  	  <dependency>
+  	      <groupId>xml-apis</groupId>
+  	      <type>jar</type>
+  	      <artifactId>xml-apis</artifactId>
+  	      <version>20060225</version>
+            <properties>
+               	<war.bundle>true</war.bundle>
+          	</properties>  	      
+  	    </dependency>    	
+    	    	
+        	<dependency>
+            	<groupId>xmldb-api</groupId>
+    	        <artifactId>xmldb</artifactId>
+    	        <type>jar</type>
+        		<version>20040708</version>
+            	<url>http://www.astrogrid.org/</url>
+            <properties>
+               	<war.bundle>true</war.bundle>
+          	</properties>            	
+    	    </dependency>   
+    	    
+    	    <dependency>
+            	<groupId>jline</groupId>
+    	        <artifactId>jline</artifactId>
+        	    <version>0.9.5</version>
+            	<type>jar</type>
+    	        <url>http://www.astrogrid.org/</url>
+    	        <properties>
+               	<war.bundle>true</war.bundle>
+          	</properties>  
+        	</dependency>
+    	    
+    	<dependency>
+        	<groupId>xalan</groupId>
+	        <artifactId>xalan</artifactId>
+	        <type>jar</type>
+    		<version>2.7.0</version>
+        	<url>http://www.astrogrid.org/</url>
+        	   <properties>
+               	<war.bundle>true</war.bundle>
+          	</properties>  
+	    </dependency>   
+	    
+    	<dependency>
+        	<groupId>xalan</groupId>
+	        <artifactId>serializer</artifactId>
+	        <type>jar</type>
+    		<version>2.7.0</version>
+        	<url>http://www.astrogrid.org/</url>
+        	   <properties>
+               	<war.bundle>true</war.bundle>
+          	</properties>  
+	    </dependency>   	     	
+	    
+    	<dependency>
+        	<groupId>xacml</groupId>
+	        <artifactId>sunxacml</artifactId>
+	        <type>jar</type>
+    		<version>20060105</version>
+        	<url>http://www.astrogrid.org/</url>
+        	   <properties>
+               	<war.bundle>true</war.bundle>
+          	</properties>  
+	    </dependency>     	
+    	
+    	<dependency>
+        	<groupId>xerces</groupId>
+	        <artifactId>xercesImpl</artifactId>
+	        <type>jar</type>
+    		<version>2.8.1</version>
+        	<url>http://www.astrogrid.org/</url>
+        	   <properties>
+               	<war.bundle>true</war.bundle>
+          	</properties>  
+	    </dependency>     	     	
+    	
+        <dependency>
+            <groupId>exist</groupId>
+            <artifactId>exist</artifactId>
+        	 <version>1.1.1-newcore</version>
+            <type>jar</type>
+            <url>http://www.astrogrid.org/</url>
+            <properties>
+               	<war.bundle>true</war.bundle>
+          	</properties>            
+        </dependency>
+	
+    	<dependency>
+        	<groupId>exist</groupId>
+	        <artifactId>exist-optional</artifactId>
+    		 <version>1.1.1-newcore</version>
+        	<type>jar</type>
+	        <url>http://www.astrogrid.org/</url>
+            <properties>
+               	<war.bundle>true</war.bundle>
+          	</properties>	        
+    	</dependency>
+
+    	<dependency>
+        	<groupId>exist</groupId>
+	        <artifactId>exist-modules</artifactId>
+    		 <version>1.1.1-newcore</version>
+        	<type>jar</type>
+	        <url>http://www.astrogrid.org/</url>
+            <properties>
+               	<war.bundle>true</war.bundle>
+          	</properties>	        
+    	</dependency>
+    	
+        	<dependency>
+            	<groupId>exist</groupId>
+    	        <artifactId>libreadline</artifactId>
+        	    <version>java-20030725</version>
+            	<type>jar</type>
+    	        <url>http://www.astrogrid.org/</url>
+            <properties>
+               	<war.bundle>true</war.bundle>
+          	</properties>    	        
+        	</dependency>
+    	
+    	
+    	<dependency>
+        	<groupId>jedit</groupId>
+	        <artifactId>jedit-syntax</artifactId>
+    	    <version>0.1-20031129</version>
+        	<type>jar</type>
+	        <url>http://www.astrogrid.org/</url>
+            <properties>
+               	<war.bundle>true</war.bundle>
+          	</properties>	        
+    	</dependency>
+    	
+        	<dependency>
+            	<groupId>jgroups</groupId>
+    	        <artifactId>jgroups</artifactId>
+        	    <version>2.2.6</version>
+            	<type>jar</type>
+    	        <url>http://www.astrogrid.org/</url>
+            <properties>
+               	<war.bundle>true</war.bundle>
+          	</properties>    	        
+        	</dependency>
+    		
+        <dependency>
+            <groupId>commons-pool</groupId>
+            <artifactId>commons-pool</artifactId>
+	        <version>1.2</version>
+            <type>jar</type>
+            <url>http://www.astrogrid.org/</url>
+            <properties>
+               	<war.bundle>true</war.bundle>
+          	</properties>            
+        </dependency>
+    	
+        <dependency>
+            <groupId>excalibur-cli</groupId>
+            <artifactId>excalibur-cli</artifactId>
+	        <version>1.0</version>
+            <type>jar</type>
+            <url>http://www.astrogrid.org/</url>
+            <properties>
+               	<war.bundle>true</war.bundle>
+          	</properties>            
+        </dependency>
+
+        <dependency>
+            <groupId>resolver</groupId>
+            <artifactId>resolver</artifactId>
+	        <version>20031104</version>
+            <type>jar</type>
+            <url>http://www.astrogrid.org/</url>
+            <properties>
+               	<war.bundle>true</war.bundle>
+          	</properties>            
+        </dependency>
+    	
+    	<dependency>
+        	<groupId>antlr</groupId>
+	        <artifactId>antlr</artifactId>
+    		<version>20040509</version>
+	        <type>jar</type>
+        	<url>http://www.astrogrid.org/</url>
+            <properties>
+               	<war.bundle>true</war.bundle>
+          	</properties>        	
+	    </dependency>
+	
+        <dependency>
+            <groupId>xmlrpc</groupId>
+            <artifactId>xmlrpc</artifactId>
+	        <version>1.2-patched</version>
+            <type>jar</type>
+            <url>http://www.astrogrid.org/</url>
+            <properties>
+               	<war.bundle>true</war.bundle>
+          	</properties>            
+        </dependency>
+        
+<!-- Java standard tag library: needed by the configuration JSPs. -->
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<type>jar</type>
+			<version>1.1.2</version>
+			<properties>
+				<war.bundle>true</war.bundle>
+			</properties>
+		</dependency>
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>standard</artifactId>
+			<type>jar</type>
+			<version>1.1.2</version>
+			<properties>
+  			<war.bundle>true</war.bundle>
+		  </properties>
+		</dependency>        
+        
+        <dependency>
+            <id>axis</id>
+            <version>1.3</version>
+            <properties>
+               	<war.bundle>true</war.bundle>
+          	</properties>    
+        </dependency>
+    	
+
+    </dependencies>
+
+    <!--+
+        | The build properties for our project.
+        +-->
+    <build>
+        <!--+
+            | The location of our Java source code.
+            +-->
+        <sourceDirectory>src/webapp-java</sourceDirectory>
+    	
+    	
+        <!--+
+            | The location of our JUnit source code.
+            +-->
+        <unitTestSourceDirectory>src/junit</unitTestSourceDirectory>
+        <!--+
+            | Our JUnit test classes.
+            +-->
+        <unitTest>
+
+            <!--+
+                | Which tests to include.
+                +-->
+            <includes>
+                <include>**/*Test.java</include>
+            </includes>
+
+        	
+            <!--+
+                | Which tests to include.
+                +-->
+            <resources>
+                <resource>
+               	   <directory>${basedir}/src/junit</directory>
+    		        <includes>
+    		           	<include>**/*.xml</include>
+       		           	<include>**/*.properties</include>
+      		           	<include>**/data</include>
+      		           	<include>**/data/*</include>
+    		        </includes>            	
+                </resource>
+            </resources>
+        </unitTest>
+    </build>
+    <reports>
+        <report><!--few reports for this subproject-->
+            maven-changelog-plugin
+        </report>
+    </reports>     
+
+</project>
+
+
+
+
+
+

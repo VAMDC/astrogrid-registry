@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vr:VODescription xmlns:vr="vr" xmlns:cea="http://www.ivoa.net/xml/CEAService/v0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:vg="http://www.ivoa.net/xml/VORegistry/v0.2" xmlns:vc="http://www.ivoa.net/xml/VOCommunity/v0.2" xmlns:vt="http://www.ivoa.net/xml/VOTable/v0.1" xmlns:cs="http://www.ivoa.net/xml/ConeSearch/v0.2" xmlns:ceab="http://www.astrogrid.org/schema/CommonExecutionArchitectureBase/v1" xmlns:ceapd="http://www.astrogrid.org/schema/AGParameterDefinition/v1" xmlns:sia="http://www.ivoa.net/xml/SIA/v0.6" xmlns:vs="http://www.ivoa.net/xml/VODataService/v0.4" xmlns="http://www.ivoa.net/xml/VOResource/v0.9">
+    <vr:Resource xsi:type="CeaApplicationType">
+        <Identifier>
+            <AuthorityID>org.astrogrid.test.mssl</AuthorityID>
+            <ResourceKey>testapp</ResourceKey>
+        </Identifier>
+        <Title>TemplateEntry</Title>
+        <ShortName>TemplateEntry</ShortName>
+        <Summary>
+            <Description>This is part of the astrogrid CEA.</Description>
+            <ReferenceURL>http://www.astrogrid.org/maven/docs/snapshot/applications/</ReferenceURL>
+        </Summary>
+        <Type>Other</Type>
+        <Curation>
+            <Publisher>
+                <Title>Astrogrid</Title>
+                <Description>blah blab</Description>
+                <ReferenceURL>http://www.astrogrid.org/</ReferenceURL>
+            </Publisher>
+            <Contact>
+                <Name>Paul Harrison</Name>
+                <Email>pah@jb.man.ac.uk</Email>
+            </Contact>
+            <Date role="representative">2004-03-26</Date>
+            <Creator>
+                <Name>Astrogrid</Name>
+                <Logo>??</Logo>
+            </Creator>
+            <Version>Iteration 5</Version>
+        </Curation>
+        <Subject>???</Subject>
+        <cea:ApplicationDefinition>
+            <cea:Parameters>
+                <cea:ParameterDefinition commandPosition="1" name="P1" switchType="normal" type="integer" xsi:type="CmdLineParameterDefn">
+                    <ceapd:UI_Name>Pause Time</ceapd:UI_Name>
+                    <ceapd:UI_Description>Text
+
+					this is the time tha the application will pause in seconds before continuing to give the appearance of doing something...</ceapd:UI_Description>
+                    <ceapd:UCD>AAD</ceapd:UCD>
+                    <ceapd:DefaultValue>1.0</ceapd:DefaultValue>
+                    <ceapd:Units>String</ceapd:Units>
+                </cea:ParameterDefinition>
+                <cea:ParameterDefinition commandPosition="2" name="P2" switchType="normal" type="double" xsi:type="CmdLineParameterDefn">
+                    <ceapd:UI_Name>String</ceapd:UI_Name>
+                    <ceapd:UI_Description>
+                        <ceab:b>Text This can be anything
+				bold bit</ceab:b>
+                    </ceapd:UI_Description>
+                    <ceapd:UCD>String</ceapd:UCD>
+                    <ceapd:DefaultValue>Text</ceapd:DefaultValue>
+                    <ceapd:Units>String</ceapd:Units>
+                </cea:ParameterDefinition>
+                <cea:ParameterDefinition name="P3" switchType="normal" type="MySpace_FileReference" xsi:type="CmdLineParameterDefn">
+                    <ceapd:UI_Name/>
+                    <ceapd:UI_Description/>
+                </cea:ParameterDefinition>
+                <cea:ParameterDefinition commandSwitch="P3" name="P3d" switchType="normal" type="FileReference" xsi:type="CmdLineParameterDefn">
+                    <ceapd:UI_Name/>
+                    <ceapd:UI_Description/>
+                </cea:ParameterDefinition>
+                <cea:ParameterDefinition commandSwitch="Parameter4" name="P4" switchType="keyword" type="string" xsi:type="CmdLineParameterDefn">
+                    <ceapd:UI_Name/>
+                    <ceapd:UI_Description/>
+                </cea:ParameterDefinition>
+                <cea:ParameterDefinition name="P5" switchType="normal" type="MySpace_VOTableReference" xsi:type="CmdLineParameterDefn">
+                    <ceapd:UI_Name/>
+                    <ceapd:UI_Description/>
+                </cea:ParameterDefinition>
+                <cea:ParameterDefinition name="P6" switchType="normal" type="RA" xsi:type="CmdLineParameterDefn">
+                    <ceapd:UI_Name/>
+                    <ceapd:UI_Description/>
+                </cea:ParameterDefinition>
+                <cea:ParameterDefinition name="P7" switchType="normal" type="Dec" xsi:type="CmdLineParameterDefn">
+                    <ceapd:UI_Name/>
+                    <ceapd:UI_Description/>
+                </cea:ParameterDefinition>
+                <cea:ParameterDefinition name="P8" switchType="normal" type="ADQL" xsi:type="CmdLineParameterDefn">
+                    <ceapd:UI_Name/>
+                    <ceapd:UI_Description/>
+                </cea:ParameterDefinition>
+                <cea:ParameterDefinition name="P9" switchType="normal" type="MySpace_FileReference" xsi:type="CmdLineParameterDefn">
+                    <ceapd:UI_Name/>
+                    <ceapd:UI_Description>The contents of this file will be copied to the output</ceapd:UI_Description>
+                </cea:ParameterDefinition>
+                <cea:ParameterDefinition commandSwitch="P9" name="P9d" switchType="normal" type="FileReference" xsi:type="CmdLineParameterDefn">
+                    <ceapd:UI_Name/>
+                    <ceapd:UI_Description>The contents of this file will be copied to the output</ceapd:UI_Description>
+                </cea:ParameterDefinition>
+                <cea:ParameterDefinition name="P10" switchType="normal" type="boolean" xsi:type="CmdLineParameterDefn"/>
+                <cea:ParameterDefinition name="P11" switchType="normal" type="anyURI" xsi:type="CmdLineParameterDefn"/>
+                <cea:ParameterDefinition name="P12" switchType="normal" type="FileReference" xsi:type="CmdLineParameterDefn">
+                    <ceapd:UI_Name/>
+                    <ceapd:UI_Description/>
+                </cea:ParameterDefinition>
+            </cea:Parameters>
+            <cea:Interfaces>
+                <Interface name="I1">
+                    <input>
+                        <pref ref="P1"/>
+                        <pref ref="P2"/>
+                        <pref ref="P4"/>
+                        <pref ref="P9"/>
+                    </input>
+                    <output>
+                        <pref ref="P3"/>
+                    </output>
+                </Interface>
+                <Interface name="Ilocal">
+                    <input>
+                        <pref ref="P1"/>
+                        <pref ref="P2"/>
+                        <pref ref="P4"/>
+                        <pref ref="P9d"/>
+                    </input>
+                    <output>
+                        <pref ref="P3d"/>
+                    </output>
+                </Interface>
+                <Interface name="I2">
+                    <input>
+                        <pref ref="P9"/>
+                    </input>
+                    <output>
+                        <pref ref="P3"/>
+                    </output>
+                </Interface>
+            </cea:Interfaces>
+        </cea:ApplicationDefinition>
+    </vr:Resource>
+</vr:VODescription>

@@ -1,0 +1,226 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>AstroGrid Registry web application - AstroGrid registry installation</title>
+    <style type="text/css" media="all">
+      @import url("./css/maven-base.css");
+      @import url("./css/maven-theme.css");
+      @import url("./css/site.css");
+    </style>
+    <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
+          </head>
+  <body class="composite">
+    <div id="banner">
+                    <span id="bannerLeft">
+    
+            AstroGrid Registry web application
+    
+            </span>
+                        <a href="http://www.astrogrid.org/" id="bannerRight">
+    
+                                    <img src="http://www.astrogrid.org/images/AGlogo.png" alt="" />
+    
+            </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+          
+  
+
+  
+    
+            
+  
+    
+            <div class="xleft">
+        Version: 2009.1
+                  |   
+                <a href="../../../../2009.1-SNAPSHOT/devel/index.html">Software Home</a>
+                          </div>
+            <div class="xright">            <a href="http://www.astrogrid.org/" class="externalLink">Astrogrid</a>
+            |
+                <a href="http://www.ivoa.net/" class="externalLink">IVOA</a>
+            |
+                <a href="../../../../2009.1-SNAPSHOT/devel/index.html">Developing</a>
+            |
+                <a href="../../../../2009.1-SNAPSHOT/deploy/index.html">Deploying</a>
+            
+  
+
+  
+    
+            
+  
+    
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+           
+  
+
+  
+    
+            
+  
+    
+            <div id="lastPublished">
+        Last Published: 2009-12-04
+              </div>
+                       <h5>Project Documentation</h5>
+            <ul>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+                    <a href="project-info.html">Project Information</a>
+                </li>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+                    <a href="project-reports.html">Project Reports</a>
+                </li>
+          </ul>
+                                                 
+                        
+                        
+            <a href="http://www.ivoa.net/" title="Complies with IVOA Standards" class="poweredBy">
+                            <img alt="Complies with IVOA Standards" src="http://www.ivoa.net/icons/ivoa_logo_small.jpg" />
+            </a>
+                               
+  
+
+  
+    
+            
+  
+    
+        </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        <div class="section"><h2><a name="Installation"></a>Installation</h2>
+<p><i>Definition 'Context Name' - is your webapp name (hence usually the unpacked directory name in the webapps).  This will be used
+a lot in various registry documentation usually with curly brackets.</i></p>
+<p>
+         The installations below have mainly been tested on tomcat versions 5.0.19-5.0.28 java1.4, 5.5.17-5.5.19 with java.1.5.  But the &quot;Manual Installation&quot; could be carried out on 
+ other servlet/j2ee containers and would welcome success or failure stories relating to other containers.  <br />
+For the purpose of most instructions here the guide will refer to tomcat.<br />
+<br />
+<i><b>Note:</b>tomcat 5.0 users using java1.5 has been done and requires a system property to be set:<br />
+
+        javax.xml.transform.TransformerFactory=com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl<br />
+</i><strong>Be sure to read the bottom section if you know your deploying this in a servlet container that will &quot;NOT&quot; unpack the war file.</strong><br />
+
+		Unpacking is usually a term of unzipping/extracting the war and is something typical that tomcat does when deploying a war file.
+      <br />
+
+      Download Location of war: http://developer.astrogrid.org
+      </p>
+<div class="section"><h3><a name="Installation"></a>Installation</h3>
+<p>
+         Most of the work is in the configure page, for installation. 
+         <ul><li>Take the war file and rename it to something you prefer e.g. registry.war (be sure to keep the .war ending).  Typical names are &quot;astrogrid-registry.war&quot; or &quot;registry.war&quot;</li>
+<li>Go to your Tomcat manager e.g. http://localhost:8080/manager/html (this may ask for a username and password ask your admin or check {tomcat}/conf/tomcat-users.xml for a user with the role of manager)</li>
+<li>If you do not have access to Tomcat manager because it is restricted on your server you may also copy the war file into the {tomcat}/webapps directory to install.</li>
+<li>Tomcat by default should unpack the war file into a directory in that webapps directory.  
+                Directory Name should be the same as the war file minus the &quot;.war&quot; part.</li>
+<li><strong>You should be done (for the installation part now for Configure) you should be able to access the url: http://{server}:{port}/{context} (optionally you can also check the webapps for a directory to verify).</strong></li>
+<li>The Configure will be on the menu at the left hand side of your Registry web application.</li>
+<li>If it does not unpack it then you may have it turned off in your tomcat or your using a different servlet container that does not unpack the war files &quot;see bottom section if you know it does not unpack wars&quot;.</li>
+</ul>
+</p>
+</div>
+<div class="section"><h3><a name="Handling_Packed_wars"></a>Handling Packed wars</h3>
+<p>This section is for servlet containers that do not unpack the war file.  You may be able go to your
+		Registry but it cannot make a connection to the embedded database.  You must download an empty eXist that can
+		be unzipped, and like the above directions go to your Configure page in the Registry to set your property to this new location of the
+		database. SEE THE 3RD POINT BELOW to set a property to your database.
+			<ul><li>Download an empty eXist db zip located at: <a href="http://software.astrogrid.org/eXist/empty_exist_for_internal_registry.zip" class="externalLink">Registry eXist Zip</a></li>
+<li>Now unzip it in some directory where you want your database.</li>
+<li>Now a property must be set &quot;reg.custom.exist.configuration&quot; property and point to this directory plus conf.xml ex: /exist/db/conf.xml.</li>
+<li>Information on changing properties is in the Configure section.</li>
+</ul>
+</p>
+</div>
+</div>
+
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">&#169;  
+          2002-2009
+    
+          AstroGrid
+          
+  
+
+  
+    
+            
+  
+    
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

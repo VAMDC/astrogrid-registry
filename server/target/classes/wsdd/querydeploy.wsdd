@@ -1,0 +1,67 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+    
+	<service name="RegistryQuery" provider="java:MSG" style="message" use="literal">
+		<parameter name="allowedMethods" value="*"/>
+		<parameter name="wsdlPortType" value="QueryRegistryPortType"/>
+		<parameter name="className" value="org.astrogrid.registry.server.query.v0_1.RegistryQueryService"/>
+		<parameter name="wsdlServicePort" value="QueryRegistrySOAPPort"/>
+		<parameter name="wsdlTargetNamespace" value="http://www.astrogrid.org/registry/wsdl"/>
+		<parameter name="wsdlServiceElement" value="QueryRegistryService"/>  
+		<!--
+		<wsdlFile>/../../schema/registry/RegistrySearch/v0.1/RegistrySearch.wsdl</wsdlFile>
+		-->
+		<wsdlFile>/schema/registry/RegistrySearch/v0.1/RegistrySearch.wsdl</wsdlFile>
+	</service>
+	
+	<service name="RegistryQueryv0_9" provider="java:MSG" style="message" use="literal">
+		<parameter name="allowedMethods" value="*"/>
+		<parameter name="wsdlPortType" value="QueryRegistryPortType"/>
+		<parameter name="className" value="org.astrogrid.registry.server.query.v0_9.RegistryQueryService"/>
+		<parameter name="wsdlServicePort" value="QueryRegistrySOAPPort"/>
+		<parameter name="wsdlTargetNamespace" value="http://www.astrogrid.org/registry/wsdl"/>
+		<parameter name="wsdlServiceElement" value="QueryRegistryService"/>  
+		<wsdlFile>/../../schema/registry/RegistrySearch/v0.9/RegistrySearch.wsdl</wsdlFile>
+	</service>
+	
+	<service name="RegistryQueryv1_0" provider="java:MSG" style="message" use="literal">
+		<parameter name="allowedMethods" value="*"/>
+		<parameter name="wsdlPortType" value="QueryRegistryPortType"/>
+		<parameter name="className" value="org.astrogrid.registry.server.query.v1_0.RegistryQueryService"/>
+		<parameter name="wsdlServicePort" value="QueryRegistrySOAPPort"/>
+		<parameter name="wsdlTargetNamespace" value="http://www.astrogrid.org/registry/wsdl"/>
+		<parameter name="wsdlServiceElement" value="QueryRegistryService"/>  
+		<wsdlFile>/../../schema/registry/RegistrySearch/v1.0/RegistrySearch.wsdl</wsdlFile>
+	</service>	
+	
+ 
+	<service name="RegistryHarvest" provider="java:MSG" style="message" use="literal">
+  		<parameter name="allowedMethods" value="*"/>
+  		<parameter name="wsdlPortType" value="RegistryHarvestPortType"/>
+  		<parameter name="className" value="org.astrogrid.registry.server.query.v0_1.OAIService"/>
+  		<parameter name="wsdlServicePort" value="RegistryHarvestPort"/>
+  		<parameter name="wsdlTargetNamespace" value="http://www.astrogrid.org/registry/wsdl"/>
+	  	<parameter name="wsdlServiceElement" value="RegistryInterfaceService"/>
+		<wsdlFile>/../../schema/registry/RegistryPublish/v0.1/RegistryPublish.wsdl</wsdlFile>
+	</service>
+	
+	<service name="RegistryHarvestv1_0" provider="java:MSG" style="message" use="literal">
+  		<parameter name="allowedMethods" value="*"/>
+  		<parameter name="wsdlPortType" value="RegistryHarvestPortType"/>
+  		<parameter name="className" value="org.astrogrid.registry.server.query.v1_0.OAIService"/>
+  		<parameter name="wsdlServicePort" value="RegistryHarvestPort"/>
+  		<parameter name="wsdlTargetNamespace" value="http://www.astrogrid.org/registry/wsdl"/>
+	  	<parameter name="wsdlServiceElement" value="RegistryInterfaceService"/>
+		<wsdlFile>/../../schema/registry/RegistryPublish/v1.0/RegistryPublish.wsdl</wsdlFile>
+	</service>
+	
+</deployment>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vor:VOResources version="1.0" xmlns:oai="http://www.openarchives.org/OAI/2.0/" 
+xmlns:vor="http://www.astrogrid.org/schema/VOResourcesUpdate/v1.0"
+xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<Resource created="2006-07-07T14:13:33" status="active" updated="2006-07-07T14:13:33" 
+xmlns:vg="http://www.ivoa.net/xml/VORegistry/v1.0" 
+xmlns:vr="http://www.ivoa.net/xml/VOResource/v1.0" xsi:type="vg:Authority">
+        <title>testtitle</title>
+        <identifier>ivo://org.changethis</identifier>
+        <curation>
+            <publisher>testpub</publisher>
+            <contact>
+                <name>testcontact</name>
+                <email>test@te.com</email>
+            </contact>
+        </curation>
+        <content>
+            <subject>Authority</subject>
+            <description>something description</description>
+            <referenceURL>http://www.ref.url</referenceURL>
+        </content>
+        <managingOrg ivo-id="ivo://org.changethis/organisation"/>
+    </Resource></vor:VOResources>

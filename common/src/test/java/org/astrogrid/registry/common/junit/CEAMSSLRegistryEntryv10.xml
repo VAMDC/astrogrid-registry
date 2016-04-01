@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vor:VOResources
+   xmlns:vor="http://www.ivoa.net/xml/RegistryInterface/v0.1"
+   xmlns:cea="http://www.ivoa.net/xml/CEAService/v0.2"
+   xmlns="http://www.ivoa.net/xml/VOResource/v0.10"
+   xmlns:ceapd="http://www.astrogrid.org/schema/AGParameterDefinition/v1"
+   xmlns:ceab="http://www.astrogrid.org/schema/CommonExecutionArchitectureBase/v1"
+   xmlns:vm="http://www.ivoa.net/xml/VOMetadata/v0.1"
+   xmlns:vt="http://www.ivoa.net/xml/VOTable/v0.1"
+   xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+   xmlns:vr="http://www.ivoa.net/xml/VOResource/v0.10" 
+   xmlns:vs="http://www.ivoa.net/xml/VODataService/v0.5" 
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<vor:Resource updated="2004-11-20Z" status="active" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="cea:CeaApplicationType">
+ <title>Make MPEG from Fits Images</title>
+ <shortName>IDL Movie Maker</shortName>
+ <identifier>ivo://astrogrid.mssl/CallMakeMPEGFitsImages</identifier>
+ <curation>
+  <publisher>Astrogrid</publisher>
+  <date>2004-03-26</date>
+  <contact>
+   <name>Elizabeth Auden</name>
+   <email>eca@mssl.ucl.ac.uk</email>
+  </contact>
+ </curation>
+ <content>
+  <subject>IDL Application</subject>
+  <description>This shell script uses IDL to convert a 3-D array to an MPEG file.</description>
+  <referenceURL>http://www.astrogrid.org/maven/build/applications/</referenceURL>
+  <type>Other</type>
+ </content>
+                <cea:ApplicationDefinition>
+                        <cea:Parameters>
+                                <cea:ParameterDefinition name="InputFiles" type="FITS">
+                                        <ceapd:DefaultValue>InputFiles</ceapd:DefaultValue>
+                                        <ceapd:UI_Description >
+                                                FITS images used to create a solar movie (repeatable parameter)
+                                        </ceapd:UI_Description>
+                                </cea:ParameterDefinition>
+                                <cea:ParameterDefinition name="OutputFile" type="binary">
+                                        <ceapd:DefaultValue>OutputFile</ceapd:DefaultValue>
+                                        <ceapd:UI_Description >
+                                                Solar movie MPEG file created from fits images.
+                                        </ceapd:UI_Description>
+                                </cea:ParameterDefinition>
+                        </cea:Parameters>
+                        <cea:Interfaces>
+                                <ceab:Interface name="Simple">
+                                        <ceab:input>
+                                                <ceab:pref ref="InputFiles"/>
+                                        </ceab:input>
+                                        <ceab:output>
+                                                <ceab:pref ref="OutputFile"/>
+                                        </ceab:output>
+                                </ceab:Interface>
+                        </cea:Interfaces>
+                </cea:ApplicationDefinition>
+</vor:Resource>
+<vor:Resource updated="2004-11-20Z" status="active" xsi:type="cea:CeaServiceType">
+ <title>Fits Movie Maker Service</title>
+ <shortName>Service for IDL</shortName>
+ <identifier>ivo://astrogrid.mssl/msslxy-cea</identifier>
+ <curation>
+  <publisher>Astrogrid</publisher>
+  <date>2004-03-26</date>
+  <contact>
+   <name>Elizabeth Auden</name>
+   <email>eca@mssl.ucl.ac.uk</email>
+  </contact>
+ </curation>
+ <content>
+  <subject>Service for IDL Application</subject>
+  <description>This shell script uses IDL to convert a 3-D array to an MPEG file.</description>
+  <referenceURL>http://www.astrogrid.org/maven/build/applications/</referenceURL>
+  <type>Other</type>
+ </content>
+    <interface xsi:type="vs:WebService">
+		<accessURL use="full">http://msslxy.mssl.ucl.ac.uk:8080/astrogrid-cea-commandline-SNAPSHOT/services/CommonExecutionConnectorService</accessURL>
+    </interface> 
+                <cea:ManagedApplications>
+                        <cea:ApplicationReference>ivo://astrogrid.org/CallMakeMPEGFitsImages</cea:ApplicationReference>
+                </cea:ManagedApplications>
+</vor:Resource>
+</vor:VOResources>

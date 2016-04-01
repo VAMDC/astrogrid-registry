@@ -1,0 +1,103 @@
+<project>
+    <extend>../maven/project.xml</extend>
+    <artifactId>astrogrid-registry-deploy-script</artifactId>
+    <name>Registry Installation Script</name>
+    <organization/>
+    <description>This project contains everything necessary to install the application, when run as a stand-alone ant script.  </description>
+    <shortDescription>Subproject to hold ant scripts and resources specific to the registry installation</shortDescription>
+    <repository/>
+    <build>
+        <resources>
+            <resource>
+                <directory>ant</directory>
+                <includes>
+                    <include>**/*.*</include>
+                </includes>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+    </build>
+    <dependencies>
+        <dependency>
+            <groupId>catalina-ant</groupId>
+            <artifactId>catalina-ant</artifactId>
+            <version>5.0.18</version>
+            <properties/>
+        </dependency>
+ 
+        <!--required to use the Ant 1.6 input task instead of the Ant 1.5.3
+			one...this requirement will probably go away come Maven 1.1-->
+        <dependency>
+            <groupId>ant</groupId>
+            <artifactId>ant1.6tasks</artifactId>
+            <version>1.6</version>
+        </dependency> 
+        <!--stuff needed by the Registry Ant task-->
+        <dependency>
+            <groupId>org.astrogrid</groupId>
+            <artifactId>astrogrid-common</artifactId>
+            <version>${astrogrid.common.version}</version>
+            <properties/>
+        </dependency>
+        <dependency>
+            <groupId>org.astrogrid</groupId>
+            <artifactId>astrogrid-deployment</artifactId>
+            <version>${astrogrid.deployment.version}</version>
+            <properties/>
+        </dependency>
+        <dependency>
+            <groupId>org.astrogrid</groupId>
+            <artifactId>astrogrid-registry-client-lite</artifactId>
+            <version>${astrogrid.registry.version}</version>
+            <properties/>
+        </dependency>
+        <dependency>
+            <groupId>org.astrogrid</groupId>
+            <artifactId>astrogrid-registry-common</artifactId>
+            <version>${astrogrid.registry.version}</version>
+            <properties/>
+        </dependency>
+        <dependency>
+            <groupId>axis</groupId>
+            <artifactId>axis</artifactId>
+            <version>1.1</version>
+            <properties/>
+        </dependency>
+        <dependency>
+            <groupId>commons-discovery</groupId>
+            <artifactId>commons-discovery</artifactId>
+            <version>20030211.213356</version>
+            <properties/>
+        </dependency>
+        <dependency>
+            <groupId>jaxrpc</groupId>
+            <artifactId>jaxrpc</artifactId>
+            <version></version>
+            <jar>jaxrpc.jar</jar>
+            <properties/>
+        </dependency>
+        <dependency>
+            <groupId>saaj</groupId>
+            <artifactId>saaj</artifactId>
+            <version></version>
+            <jar>saaj.jar</jar>
+            <properties/>
+        </dependency>
+        <dependency>
+            <groupId>wsdl4j</groupId>
+            <artifactId>wsdl4j</artifactId>
+            <version>1.4</version>
+            <properties/>
+        </dependency>    
+        <dependency>
+            <artifactId>commons-logging</artifactId>
+            <groupId>commons-logging</groupId>
+            <version>1.0.3</version>
+        </dependency>    
+        <dependency>
+          <id>junit</id>
+          <groupId>junit</groupId>
+          <version>3.8</version>
+        </dependency>
+    </dependencies>
+</project>

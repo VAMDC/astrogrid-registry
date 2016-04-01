@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	        This was generated from the original web.xml using web2context.xsl http://wiki.astrogrid.org/pub/Main/JohnTaylor/web2context.xsl
+	        -->
+<Context path="@REGISTRY_WEBAPP@">
+    <Environment name="reg.amend.authorityid" override="false" type="java.lang.String" value="@REGISTRY_AUTHID@" 
+        description="The Main Authority ID for this Registry (Authority ID used for the Registry type)"/>
+    <Environment name="xmldb.uri" override="false" type="java.lang.String" value="xmldb:exist://" 
+        description="The XMLDB server location url. By default it is set to use the internal eXist db. You may set it to xmldb:exist://host:port/exist/xmlrpc for external eXist db. e.g. xmldb:exist://localhost:8080/exist/xmlrpc. In general you can switch to another db but this is untested read configuration page from your context on that."/>
+    <Environment name="xmldb.driver" override="false" type="java.lang.String" value="org.exist.xmldb.DatabaseImpl" 
+        description="The XMLDB driver to be the registered xml database."/>
+    <Environment name="xmldb.query.service" override="false" type="java.lang.String" value="XQueryService" 
+        description="What type of query service, XQueryService or XPathQueryService."/>
+    <Environment name="xmldb.admin.user" override="false" type="java.lang.String" value="admin" 
+        description="The user used to create Resources or collections, and shutdown the internal eXist database if it is internally being ran."/>
+    <Environment name="xmldb.admin.password" override="false" type="java.lang.String" value="" 
+        description="The admin password used to create Resources or collections, and shutdown the internal eXist database if it is internally being ran."/>
+    <Environment name="xmldb.query.user" override="false" type="java.lang.String" value="" 
+        description="The user used to create Resources or collections, and shutdown the internal eXist database if it is internally being ran."/>
+    <Environment name="xmldb.query.password" override="false" type="java.lang.String" value="" 
+        description="The query password used to create Resources or collections, and shutdown the internal eXist database if it is internally being ran."/>
+    <Environment name="reg.amend.defaultversion" override="false" type="java.lang.String" value="0.10" 
+        description="The default registry version used, May be overriden on updates and queries based on vr namespace."/>
+    <Environment name="reg.amend.validate" override="false" type="java.lang.String" value="true" description="Have validation on or off."/>
+    <Environment name="reg.amend.quiton.invalid" override="false" type="java.lang.String" value="false" description="Quit on validation."/>
+    <Environment name="reg.amend.returncount" override="false" type="java.lang.String" value="100" 
+        description="The maximum number of results to return from queries."/>
+    <Environment name="reg.amend.harvest" override="false" type="java.lang.String" value="false" description="Does this registry need to do harvesting."/>
+    <Environment name="reg.amend.oaipublish.0.1" override="false" type="java.lang.String" value="@reg.amend.oaipublish.0.1@" 
+        description="The url to the oai publishing url for 0.10, default is set to astrogrid servlet, but is not required to use."/>
+    <Environment name="reg.custom.exist.configuration" override="false" type="java.lang.String" value="" 
+        description="Point to another exist configuration file on your disk hence a different data directory as well.  (only for internal db use).  This might be handly if you want to use the internal database, but not have the configuration file and data directory of eXist db with the war file so undeploying/updating wars will not lose data. Also use if servlet container does not unpack war file."/>
+    <Environment name="reg.custom.harvest.interval_hours" override="false" type="java.lang.String" value="2" 
+        description="Number of hours between harvest (if harvest is enabled)"/>
+    <Environment name="reg.amend.identify.repositoryName" override="false" type="java.lang.String" value="Astrogrid Full Repository" 
+        description="Used for the Identify verb in OAI.  The repository Name."/>
+    <Environment name="reg.amend.identify.adminEmail" override="false" type="java.lang.String" value="mailto:ktn@star.le.ac.uk" 
+        description="Used for the Identify verb in OAI.  The administration Email of this OAI repository."/>
+    <Environment name="reg.custom.identify.earliestDatestamp" override="false" type="java.lang.String" value="1950-03-03T22:14:22" 
+        description="Used for the Identify verb in OAI.  The earliest date stamp for records/metadata being published."/>
+    <Environment name="reg.custom.updatestylesheet.0.10" override="false" type="java.lang.String" value="true" 
+        description="(Advanced) Specify stylesheets to be used on updates for particular versions."/>
+    <Environment name="reg.custom.harveststylesheet.0.10" override="false" type="java.lang.String" value="true" 
+        description="(Advanced) Specify stylesheets to be used on harvest updates for particular versions."/>
+    <Environment name="reg.custom.keywordxpaths.0.10" override="false" type="java.lang.String" 
+        value="vr:content/vr:description, vr:title, vr:content/vr:subject" 
+        description="(Advanced) Specify xpath for keyword search based on various versions in the registry."/>
+    <Environment name="reg.custom.rootNode.default" override="false" type="java.lang.String" value="vor:Resource" 
+        description="(Advanced) The default root node for elements in the Registry. Can override on various versions in the registry."/>
+    <Environment name="reg.custom.rootNode.0.10" override="false" type="java.lang.String" value="vor:Resource" 
+        description="(Advanced) The default root node for elements in the Registry. Can override on various versions in the registry."/>
+</Context>

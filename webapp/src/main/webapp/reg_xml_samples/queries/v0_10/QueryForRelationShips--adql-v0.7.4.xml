@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Select xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.ivoa.net/xml/ADQL/v0.7.4"    xmlns:vr="http://www.ivoa.net/xml/VOResource/v0.10">
+  <SelectionList>
+    <Item xsi:type="columnReferenceType" Table="t" Name="a" />
+    <Item xsi:type="columnReferenceType" Table="g" Name="d" />
+  </SelectionList>
+  <From>
+    <Table xsi:type="tableType" Name="Tab" Alias="a" />
+    <Table xsi:type="tableType" Name="Tab" Alias="d" />
+  </From>
+  <Where>
+    <Condition xsi:type="intersectionSearchType">
+      <Condition xsi:type="comparisonPredType" Comparison="=">
+        <Arg xsi:type="columnReferenceType" Table="a" Name="vr:relationship/vr:relationshipType" />
+        <Arg xsi:type="atomType">
+          <Literal xsi:type="stringType" Value="derived-from" />
+        </Arg>
+      </Condition>
+      <Condition xsi:type="comparisonPredType" Comparison="=">
+        <Arg xsi:type="columnReferenceType" Table="a" Name="vr:relationship/vr:relatedResource/@ivo-id" />
+        <Arg xsi:type="atomType">
+          <Literal xsi:type="stringType" Value="ivo://org.astrogrid/MySpaceKind" />
+        </Arg>
+      </Condition>
+    </Condition>
+  </Where>
+</Select>

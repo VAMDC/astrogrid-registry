@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Search>
+<ri:Where xmlns:ri="http://www.ivoa.net/wsdl/RegistrySearch/v1.0" xmlns="http://www.ivoa.net/xml/ADQL/v1.0"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Condition xsi:type="comparisonPredType" Comparison="&gt;">
+      <Arg xsi:type="columnReferenceType" xpathName="title" />
+      <Arg xsi:type="atomType"> 
+        <Literal xsi:type="integerType" Value="6" />
+      </Arg>
+    </Condition>
+</ri:Where>
+<from>1</from>
+<max>1</max>
+</Search>

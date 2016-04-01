@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- $Id: castor-binding.xml,v 1.3 2004-03-19 08:16:48 KevinBenson Exp $
+castor binding file : configures the process of generating java classes from xml schema
+
+
+at present, just defined package - namespace mappings
+-->
+
+<binding defaultBindingType="type" xmlns="http://www.castor.org/SourceGenerator/Binding">
+  <package>
+    <name>org.astrogrid.registry.beans.resource</name>
+    <namespace>http://www.ivoa.net/xml/VOResource/v0.9</namespace>
+  </package> 
+  <package>
+    <name>org.astrogrid.registry.beans.resource.community</name>
+    <namespace>http://www.ivoa.net/xml/VOCommunity/v0.2</namespace>    
+  </package> 
+  <package>
+    <name>org.astrogrid.registry.beans.resource.registry</name>
+    <namespace>http://www.ivoa.net/xml/VORegistry/v0.2</namespace>
+  </package>
+  <package>
+	<name>org.astrogrid.registry.beans.resource.dataservice</name>
+    <namespace>http://www.ivoa.net/xml/VODataService/v0.4</namespace>
+  </package>
+  <package>
+  	<name>org.astrogrid.registry.beans.resource.conesearch</name>
+  	<namespace>http://www.ivoa.net/xml/ConeSearch/v0.2</namespace>
+  </package>
+  <package>
+  	<name>org.astrogrid.registry.beans.resource.sia</name>
+  	<namespace>http://www.ivoa.net/xml/SIA/v0.6</namespace>
+  </package>
+  <package>
+  	<name>org.astrogrid.registry.beans.resource.votable</name>
+  	<namespace>http://www.ivoa.net/xml/VOTable/v1.0</namespace>
+  </package>  
+  <package>
+  	<name>org.astrogrid.registry.beans.resource.cea</name>
+  	<namespace>http://www.ivoa.net/xml/CEAService/v0.1</namespace>
+  </package>
+  <package>
+  	<name>org.astrogrid.registry.beans.cea.base</name>
+  	<namespace>http://www.astrogrid.org/schema/CommonExecutionArchitectureBase/v1</namespace>
+  </package>
+  <package>
+  	<name>org.astrogrid.registry.beans.cea.param</name>
+  	<namespace>http://www.astrogrid.org/schema/AGParameterDefinition/v1</namespace>
+  </package>  
+</binding>

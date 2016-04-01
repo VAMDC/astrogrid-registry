@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<div id="skyservicetabularconeDiv"
+	  xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+      xmlns:xforms="http://www.w3.org/2002/xforms"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xhtml="http://www.w3.org/1999/xhtml"
+      xmlns:vr="http://www.ivoa.net/xml/VOResource/v0.10"
+      xmlns:vs="http://www.ivoa.net/xml/VODataService/v0.5"
+      xmlns:cs="http://www.ivoa.net/xml/ConeSearch/v0.3">
+
+<xforms:group class="outergroup">
+<xforms:label>ConeSearch Capability:</xforms:label>
+<xforms:input ref="cs:capability/@standardID">
+<xforms:label>Standard ID:</xforms:label>
+</xforms:input>
+
+<xforms:input ref="cs:capability/@standardURL">
+<xforms:label>Standard URL:</xforms:label>
+</xforms:input>
+
+<!-- needs to be float -->
+<xforms:input ref="cs:capability/maxSR">
+<xforms:label>Max Longitude Size:</xforms:label>
+</xforms:input>
+
+<!-- needs to be int -->
+<xforms:input ref="cs:capability/maxRecords">
+<xforms:label>Max Latitude Size:</xforms:label>
+</xforms:input>
+
+<xforms:select1 ref="cs:capability/verbosity">
+<xforms:label>Verbosity</xforms:label>
+<xforms:item>
+	<xforms:label>True</xforms:label><xforms:value>true</xforms:value>
+</xforms:item>
+<xforms:item>
+	<xforms:label>False</xforms:label><xforms:value>false</xforms:value>
+</xforms:item>
+</xforms:select1>
+</xforms:group>
+
+</div>

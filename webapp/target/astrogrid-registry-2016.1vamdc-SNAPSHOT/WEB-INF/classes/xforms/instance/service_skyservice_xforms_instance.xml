@@ -1,0 +1,85 @@
+    <vr:Resource xmlns="http://www.ivoa.net/xml/VOResource/v0.10"
+xmlns:vr="http://www.ivoa.net/xml/VOResource/v0.10" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xmlns:vs="http://www.ivoa.net/xml/VODataService/v0.5" xsi:type="vs:SkyService" status="active">
+ <title></title>
+ <shortname></shortname>
+ <identifier>ivo://</identifier>
+ <curation>
+  <publisher ivo-id=""></publisher>
+  <creator>
+    <name ivo-id=""></name>
+    <logo></logo>
+  </creator>
+  <contributer ivo-id=""></contributer>
+  <date></date>
+  <version></version>
+  <contact>
+   <name></name>
+   <address></address>
+   <email></email>
+   <telephone></telephone>
+  </contact>
+ </curation>
+ <content>
+  <subject></subject>
+  <description>s</description>
+  <source format=""></source>
+  <referenceURL></referenceURL>
+  <type></type>
+  <contentLevel></contentLevel>
+  <relationship>
+    <relationshipType></relationshipType>
+    <relatedResource ivo-id=""></relatedResource>
+  </relationship>
+ </content>
+ <interface xsi:type="">
+         <accessURL use=""></accessURL>
+         <vs:resultType></vs:resultType>
+		 <vs:param>
+			<vs:name></vs:name>
+			<vs:description></vs:description>
+            <vs:dataType arraysize=""></vs:dataType>
+            <vs:unit></vs:unit>
+            <vs:ucd></vs:ucd>
+		 </vs:param>
+		 <vs:qtype></vs:qtype>
+    </interface>
+     <vs:facility></vs:facility>
+     <vs:instrument></vs:instrument>
+        <vs:coverage xmlns="http://www.ivoa.net/xml/VODataService/v0.5">
+            <vs:spatial>
+                <vs:region xsi:type="">
+					<vs:coordFrame></vs:coordFrame>
+                    <vs:long>
+						<vs:min></vs:min>
+						<vs:max></vs:max>
+					</vs:long>
+                    <vs:lat>
+						<vs:min></vs:min>
+						<vs:max></vs:max>
+					</vs:lat>
+					<vs:center>
+						<vs:long></vs:long>
+						<vs:lat></vs:lat>
+					</vs:center>
+                    <vs:radius></vs:radius>
+				</vs:region>
+                <vs:resolution />
+                <vs:regionOfRegard />
+            </vs:spatial>
+            <vs:spectral>
+                <vs:waveband></vs:waveband>
+                <vs:range>
+                  <vs:min></vs:min>
+                   <vs:max></vs:max>
+				</vs:range>
+				<vs:resolution></vs:resolution>
+            </vs:spectral>
+            <vs:temporal>
+				<vs:startTime></vs:startTime>
+                <vs:endTime></vs:endTime>
+				<vs:resolution></vs:resolution>
+			</vs:temporal>
+        </vs:coverage>
+    </vr:Resource>

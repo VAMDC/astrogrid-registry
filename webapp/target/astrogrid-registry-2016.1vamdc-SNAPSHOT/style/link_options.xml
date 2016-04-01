@@ -1,0 +1,19 @@
+<meta name="robots" content="index,follow">
+<meta name="revisit-after" content="15 Days">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="-1">
+<script LANGUAGE="JavaScript" type="text/javascript">
+<!--
+    var url = document.location.toString();
+    var e_url = '';
+    var p = 0 ;
+    var p2 = 0 ;
+    p = url.indexOf("//") ;
+    e_url = url.substring(p+2) ;
+    p2 = e_url.indexOf("/") ;
+    var root_url = url.substring(0,p+p2+2)+"<%=request.getContextPath()%>";
+    document.write('<link href="'+root_url+'/css/alarge.css" rel="alternate stylesheet" type="text/css" media="screen" title="alarge">');
+    document.write('<link href="'+root_url+'/css/amedium.css" rel="alternate stylesheet" type="text/css" media="screen" title="amedium">');
+    document.write('<link href="'+root_url+'/css/asmall.css" rel="alternate stylesheet" type="text/css" media="screen" title="asmall">');
+// -->
+</script>

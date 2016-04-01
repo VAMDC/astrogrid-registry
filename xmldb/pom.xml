@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $id:$ -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>astrogrid-xmldb-client</artifactId>
+  <name>xmldb client classes</name>
+  <parent>
+      <groupId>org.astrogrid</groupId>
+      <artifactId>astrogrid-registry-base</artifactId>
+      <version>2016.1vamdc-SNAPSHOT</version>
+  </parent>
+  
+  <packaging>jar</packaging>
+  <description>Classes used across the components.</description>
+  <properties>
+   <astrogrid_name>common</astrogrid_name>
+  </properties>
+  
+  <dependencies>
+
+     <dependency>
+        <groupId>org.apache.axis</groupId>
+        <type>jar</type>
+        <artifactId>axis</artifactId>
+        <version>1.4</version>
+     </dependency>
+     
+      <dependency>
+      <groupId>exist</groupId>
+      <artifactId>xmlrpc</artifactId>
+      <version>1.2-patched</version>
+    </dependency>
+     
+    <dependency>
+      <groupId>org.astrogrid</groupId>
+      <artifactId>astrogrid-common</artifactId>
+    </dependency>
+    
+        <dependency>
+      <groupId>xmldb-api</groupId>
+      <artifactId>xmldb</artifactId>
+      <version>20040708</version>
+    </dependency> 
+    
+    
+    <dependency>
+      <groupId>exist</groupId>
+      <artifactId>exist</artifactId>
+      <version>1.1.1-newcore</version>
+    </dependency>
+    <dependency>
+      <groupId>exist</groupId>
+      <artifactId>exist-optional</artifactId>
+      <version>1.1.1-newcore</version>
+    </dependency>
+    <dependency>
+      <groupId>exist</groupId>
+      <artifactId>exist-modules</artifactId>
+      <version>1.1.1-newcore</version>
+    </dependency>
+    
+     
+     <dependency>
+        <groupId>commons-logging</groupId>
+        <artifactId>commons-logging</artifactId>
+     </dependency>
+
+     <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+     </dependency>
+
+     <dependency>
+        <groupId>xerces</groupId>
+        <artifactId>xercesImpl</artifactId>
+     </dependency>
+
+     <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>servlet-api</artifactId>
+        <version>2.4</version>
+        <scope>provided</scope>
+     </dependency>
+     
+  </dependencies>
+  
+ </project>

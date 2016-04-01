@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="AstroGrid">
+
+  <title>AstroGrid Project - Registry</title>
+
+  <body>
+    <menu name="Administrator Quickstart">  	
+       <item name="AstroGrid"  href="http://www.astrogrid.org"/>
+   	   <item name="Installation/Requirements" href="installation.html"/>    	
+	</menu>
+  </body>
+</project>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VODescription xmlns="http://www.ivoa.net/xml/VOResource/v0.9" xmlns:vr="http://www.ivoa.net/xml/VOResource/v0.9" xmlns:vg="http://www.ivoa.net/xml/VORegistry/v0.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <vr:Resource xsi:type="vg:AuthorityType">
+        <vr:Identifier>
+<vr:AuthorityID>org.astrogrid.localhost</vr:AuthorityID>
+<vr:ResourceKey>org.astrogrid.community</vr:ResourceKey>
+</vr:Identifier>
+        <Title>Community Authority Resource</Title>
+        <ShortName>Community Authority</ShortName>
+        <Summary>
+            <Description>Authority Resource to define Community, Policy, and Security services</Description>
+            <ReferenceURL>http://www.astrogrid.org/</ReferenceURL>
+        </Summary>
+        <Curation>
+            <Publisher>
+                <Title>Community Publisher</Title>
+            </Publisher>
+            <Contact>
+                <Name>Kevin Benson</Name>
+                <Email>kmb@mssl.ucl.ac.uk</Email>
+            </Contact>
+            <vr:Date>2004-11-24</vr:Date>
+        </Curation>
+        <Subject>Community</Subject>
+    </vr:Resource>
+</VODescription>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="urn:org.astrogrid.registry" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="urn:org.astrogrid.registry" xmlns:intf="urn:org.astrogrid.registry" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+   <wsdl:message name="adminQueryResponse">
+
+      <wsdl:part name="adminQueryReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="adminQueryRequest">
+
+      <wsdl:part name="in0" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="RegistryAdminInterface">
+
+      <wsdl:operation name="adminQuery" parameterOrder="in0">
+
+         <wsdl:input message="impl:adminQueryRequest" name="adminQueryRequest"/>
+
+         <wsdl:output message="impl:adminQueryResponse" name="adminQueryResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="RegistryAdminSoapBinding" type="impl:RegistryAdminInterface">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="adminQuery">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="adminQueryRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:org.astrogrid.registry" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="adminQueryResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:org.astrogrid.registry" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="RegistryAdminInterfaceService">
+
+      <wsdl:port binding="impl:RegistryAdminSoapBinding" name="RegistryAdmin">
+
+         <wsdlsoap:address location="http://localhost:8080/axis/services/RegistryAdmin"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

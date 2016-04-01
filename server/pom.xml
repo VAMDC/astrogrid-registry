@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>astrogrid-registry-server</artifactId>
+    <parent>
+      <artifactId>astrogrid-registry-base</artifactId>
+      <groupId>org.astrogrid</groupId>
+      <version>2016.1vamdc-SNAPSHOT</version>
+  </parent>
+  <name>AstroGrid registry server</name>
+  <description>
+    	Please see the "webapp" documentation for more information on the registry
+  </description>
+  
+  <build>
+    
+    <testResources>
+      <testResource>
+        <directory>${basedir}/src/test</directory>
+        <includes>
+          <include>**/*.xml</include>
+          <include>**/*.properties</include>
+          <include>**/data</include>
+          <include>**/data/*</include>
+        </includes>
+      </testResource>
+    </testResources>
+    <plugins>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <includes>
+            <include>**/*Test.java</include>
+          </includes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  
+  <!-- commented out dependencies below need to be looked at in detail -->
+  <dependencies>
+    <!-- AstroGrid dependencies from the registry project-tree, using a common version. -->
+    <dependency>
+      <groupId>org.astrogrid</groupId>
+      <artifactId>astrogrid-registry-common</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.astrogrid</groupId>
+      <artifactId>astrogrid-registry-client-lite</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.astrogrid</groupId>
+      <artifactId>astrogrid-xmldb-client</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    
+    <!-- AstroGrid dependencies from outside the registry project-tree -->
+    <dependency>
+      <groupId>org.astrogrid</groupId>
+      <artifactId>astrogrid-common</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.astrogrid</groupId>
+      <artifactId>astrogrid-contracts</artifactId>
+    </dependency>
+    
+    <!-- third-party dependencies from here on down. -->
+	  <dependency>
+      <groupId>net.sf.saxon</groupId>
+      <artifactId>saxon</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>net.sf.saxon</groupId>
+      <artifactId>saxon-dom</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>net.sf.saxon</groupId>
+      <artifactId>saxon-dom4j</artifactId>
+    </dependency>    
+    
+    
+    <dependency>
+      <groupId>org.codehaus.xfire</groupId>
+      <artifactId>xfire-all</artifactId>
+      <version>1.2.6</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.activation</groupId>
+      <artifactId>activation</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>jdom</groupId>
+      <artifactId>jdom</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>wsdl4j</groupId>
+      <artifactId>wsdl4j</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>stax</groupId>
+      <artifactId>stax-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.xml</groupId>
+      <artifactId>saaj-impl</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>javax.xml.soap</groupId>
+      <artifactId>saaj-api</artifactId>
+      <version>1.3</version>
+    </dependency>
+    
+    <dependency> 
+      <groupId>commons-discovery</groupId>
+      <artifactId>commons-discovery</artifactId>
+    </dependency>
+    
+    <dependency>
+      <groupId>axis</groupId>
+      <artifactId>axis</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>axis</groupId>
+      <artifactId>axis-jaxrpc</artifactId>
+    </dependency>
+    
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>xmlunit</groupId>
+      <artifactId>xmlunit</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>xml-apis</groupId>
+      <artifactId>xml-apis</artifactId>
+    </dependency>
+    
+    <dependency>
+      <groupId>xmldb-api</groupId>
+      <artifactId>xmldb</artifactId>
+      <version>20040708</version>
+    </dependency> 
+    <dependency>
+      <groupId>xalan</groupId>
+      <artifactId>xalan</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>xalan</groupId>
+      <artifactId>serializer</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.fabric3.fabric3-db-exist</groupId>
+      <artifactId>sunxacml</artifactId>
+      <version>1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>xerces</groupId>
+      <artifactId>xercesImpl</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>exist</groupId>
+      <artifactId>exist</artifactId>
+      <version>1.1.1-newcore</version>
+    </dependency>
+    <dependency>
+      <groupId>exist</groupId>
+      <artifactId>exist-optional</artifactId>
+      <version>1.1.1-newcore</version>
+    </dependency>
+    <dependency>
+      <groupId>exist</groupId>
+      <artifactId>exist-modules</artifactId>
+      <version>1.1.1-newcore</version>
+    </dependency>
+    <dependency>
+      <groupId>exist</groupId>
+      <artifactId>xmlrpc</artifactId>
+      <version>1.2-patched</version>
+    </dependency>
+    <dependency>
+      <groupId>servletapi</groupId>
+      <artifactId>servletapi</artifactId>
+      <version>2.3</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+  
+</project>

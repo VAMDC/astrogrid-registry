@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+
+  <properties>
+    <title>Page Title</title>
+    <author email="paul.harrison@manchester.ac.uk">Paul Harrison</author>
+  </properties>
+ <body>
+ <section>
+ 	<p>
+    	<b>Welcome to the Registry Webapp Documentation.</b>  <br />
+    	The Registry web application implements the full IVOA interface along with other
+    	helpful pages to help query and update the Registry and harvest external IVOA registries.<br />
+    	
+    	Look at the installation page (on the left menu) to install the Registry to your servlet container such as tomcat.
+    	<br />
+    	Once installed all the documentation, query, updating, harvesting web application pages will
+    	be located on your local site.  After installation you will need to continue with the Configuration page
+    	to set particular properties up for your registry.  Once configuration is done you will have an
+    	IVOA compliant Registry to use.
+    	
+    	<br />
+	</p>
+	<p>
+	<b> More about Registries:</b> <br />
+	The IVOA registries for a distributed network on the internet. Registries periodically replicate data between themselves in a process known as "harvesting". So registries contain effectively two classes of information;
+	<ul>
+	<li>The resources that have been entered directly into that registry - i.e. these resources are 'owned' by the registry.</li>
+	<li>the resources that the registry has harvested from the other registries that it knows about.</li>
+	</ul>
+	<br />
+	The resources that a registry 'owns' are separated from the other resources by belonging to a particular set of authority identifiers, which provide a namespace.
+	<br />
+	The decision about whether it is necessary to install a registry depends on whether you have permission to add resources at a particular registry - i.e. if the curator of a registry is prepared to allow you to enter resources in their registry then it might not be necessary to install a registry yourself. However, even if you can obtain this permission it can still be advantageous to install a local registry.
+	
+	</p>
+ </section>
+ </body>
+</document>

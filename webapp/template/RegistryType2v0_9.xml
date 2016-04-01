@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VODescription
+  xmlns="http://www.ivoa.net/xml/VOResource/v0.9"
+  xmlns:vr="http://www.ivoa.net/xml/VOResource/v0.9"
+  xmlns:vc="http://www.ivoa.net/xml/VOCommunity/v0.2"
+  xmlns:vg="http://www.ivoa.net/xml/VORegistry/v0.2"
+  xmlns:vs="http://www.ivoa.net/xml/VODataService/v0.4"
+  xmlns:vt="http://www.ivoa.net/xml/VOTable/v0.1"
+  xmlns:cs="http://www.ivoa.net/xml/ConeSearch/v0.2"
+  xmlns:sia="http://www.ivoa.net/xml/SIA/v0.6"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.ivoa.net/xml/VOResource/v0.9
+                      http://www.ivoa.net/xml/VOResource/VOResource-v0.9.xsd
+                      http://www.ivoa.net/xml/VOCommunity/v0.2
+                      http://www.ivoa.net/xml/VOCommunity/VOCommunity-v0.2.xsd
+                      http://www.ivoa.net/xml/VORegistry/v0.2
+                      http://www.ivoa.net/xml/VORegistry/VORegistry-v0.2.xsd
+                      http://www.ivoa.net/xml/ConeSearch/v0.2
+                      http://www.ivoa.net/xml/ConeSearch/ConeSearch-v0.2.xsd
+                      http://www.ivoa.net/xml/SIA/v0.6
+                      http://www.ivoa.net/xml/SIA/SIA-v0.6.xsd">
+ <vr:Resource xsi:type="RegistryType" updated="2005-11-04T15:34:22" status="active" >
+    <Identifier>
+      <AuthorityID>your.authorityid</AuthorityID>
+      <ResourceKey>org.astrogrid.registry.RegistryService</ResourceKey>
+    </Identifier>
+    <Title>Astrogrid template Registry</Title>
+    <Summary>
+      <Description>
+         This is the Astrogrid template registry currently.
+      </Description>
+      <ReferenceURL>http://localhost:8080/</ReferenceURL>
+    </Summary>
+    <Type>needtocheck for correct type probably institute</Type>
+    <Curation>
+      <Publisher>
+         <Title>MSSL Registry</Title>
+      </Publisher>
+      <Contact>
+        <Name>Integration tests</Name>
+       <Email>int@localhost.com</Email>
+      </Contact>
+    </Curation>
+    <vg:ManagedAuthority>@REGAUTHORITY@</vg:ManagedAuthority>
+    <Interface>
+      <Invocation>WebService</Invocation>
+      <AccessURL use="full">@TOMCATROOT@/astrogrid-registry-SNAPSHOT/services/RegistryQuery</AccessURL>
+    </Interface>
+  </vr:Resource>
+  </VODescription>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vor:VOResources
+   xmlns:vor="http://www.ivoa.net/xml/RegistryInterface/v0.1"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+   xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+   xmlns:vr="http://www.ivoa.net/xml/VOResource/v0.10" 
+   xmlns:vs="http://www.ivoa.net/xml/VODataService/v0.5" 
+   xmlns="http://www.ivoa.net/xml/VOResource/v0.10">
+<vor:Resource xsi:type="vr:Service"  updated="2004-11-20T15:34:22Z" status="active">
+ <title>Astrogrid VO Store</title>
+ <identifier>ivo://astrogrid.org/filestore-one</identifier>
+ <curation>
+  <publisher>Filestore Service</publisher>
+  <contact>
+   <name>Dave Morris</name>
+   <email>dave@ast.cam.ac.uk</email>
+  </contact>
+ </curation>
+ <content>
+  <subject>Users VOSpace</subject>
+  <description>VoStore filestre service.</description>
+  <referenceURL>http://www.ivoa.net/</referenceURL>
+  <type>Archive</type>
+ </content>
+    <interface xsi:type="vs:WebService">
+		<accessURL use="full">http://localhost:8080/astrogrid-filestore-one-@VERSION@/services/FileStore</accessURL>
+    </interface> 
+</vor:Resource>
+</vor:VOResources>

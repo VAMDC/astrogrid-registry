@@ -1,0 +1,20 @@
+<div id='banner'>
+    <table border='0' width='100%' cellpadding='8' cellspacing='0'><tr>
+      <td>
+         <a href='http://www.ivoa.net'>
+         <img border='0' alt='IVOA' src='img/ivoa_logo.jpg' align='left'></img>
+         </a>
+      </td><td>
+         <a href='http://www.astrogrid.org/maven/docs/SNAPSHOT/registry/index.html' id='projectLogo'>
+         <img border='0' alt='IVOA' src='img/ivoa_logo.jpg' align='right'></img>
+         </a>
+      </td>
+   </tr></table>
+</div>
+<div id='breadcrumbs'>
+  <div class='xleft'>IVOA Registry</div>
+  <div class='xright'>
+    <a href='http://www.ivoa.net'>IVOA</a>
+  </div>
+  <div class='clear'></div> <!-- switch off left right stuff -->
+</div>

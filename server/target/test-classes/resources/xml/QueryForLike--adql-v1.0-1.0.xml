@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Search>
+<ri:Where xmlns:ri="http://www.ivoa.net/wsdl/RegistrySearch/v1.0" xmlns="http://www.ivoa.net/xml/ADQL/v1.0"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Condition xsi:type="intersectionSearchType">
+    <Condition xsi:type="likePredType">
+      <Arg xsi:type="columnReferenceType" xpathName="title" />
+      <Pattern>
+        <Literal xsi:type="stringType" Value="%Digital%" />
+      </Pattern>
+    </Condition>
+    <Condition xsi:type="likePredType">
+      <Arg xsi:type="columnReferenceType" xpathName="content/description" />
+      <Pattern>
+        <Literal xsi:type="stringType" Value="%search%" />
+      </Pattern>
+    </Condition>
+  </Condition>
+</ri:Where>
+<from>1</from>
+<max>2</max>
+</Search>
