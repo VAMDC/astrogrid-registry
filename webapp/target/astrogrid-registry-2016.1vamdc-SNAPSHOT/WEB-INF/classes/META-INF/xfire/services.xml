@@ -1,9 +1,0 @@
-<beans xmlns="http://xfire.codehaus.org/config/1.0">
-  <service>
-    <name>RegistryQuery</name>
-    <namespace>http://www.astrogrid.org/registry/wsdl</namespace>
-    <serviceClass>org.astrogrid.registry.server.query.v1_0.RegistryQueryService</serviceClass>
-    <implementationClass>org.astrogrid.registry.server.query.v1_0.RegistryQueryService</implementationClass>
-  </service>
-</beans>
-
