@@ -65,7 +65,7 @@ public class XSLHelperTest extends TestCase {
      * @throws Exception standard junit exception to be thrown.
      */   
     public void testXSLADQLToXQL5Test() throws Exception {        
-        Document adql = askQueryFromFile("QueryForLike2--adql-v1.0-1.0.xml");        
+        Document adql = askQueryFromFile("/xml/QueryForLike2--adql-v1.0-1.0.xml");        
         XSLHelper xsl = new XSLHelper();
         String xql = xsl.transformADQLToXQL(adql,"1.0","Resource","1.0");
         System.out.println("here is the xql fromadqlxsl = " + xql);
@@ -78,7 +78,7 @@ public class XSLHelperTest extends TestCase {
      * @throws Exception standard junit exception to be thrown.
      */   
     public void testXSLADQLToXQL6Test() throws Exception {        
-        Document adql = askQueryFromFile("QueryForLike3--adql-v1.0-1.0.xml");        
+        Document adql = askQueryFromFile("/xml/QueryForLike3--adql-v1.0-1.0.xml");        
         XSLHelper xsl = new XSLHelper();
         String xql = xsl.transformADQLToXQL(adql,"1.0","Resource","1.0");
         System.out.println("here is the xql fromadqlxsl = " + xql);

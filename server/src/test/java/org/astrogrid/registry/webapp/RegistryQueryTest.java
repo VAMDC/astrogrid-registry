@@ -1,12 +1,9 @@
 package org.astrogrid.registry.webapp;
 
 import java.io.*;
-import java.util.Iterator;
 import org.astrogrid.xmldb.client.XMLDBManager;
 import org.astrogrid.util.DomHelper;
 import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.xmldb.api.base.ResourceSet;
 
 import org.codehaus.xfire.util.STAXUtils;
 
@@ -14,21 +11,13 @@ import org.codehaus.xfire.util.STAXUtils;
 import org.astrogrid.registry.server.query.QueryFactory;
 import org.astrogrid.registry.server.query.ISearch;
 
-import java.util.HashMap;
-
 import junit.framework.*;
-import java.util.Map;
-import java.util.Iterator;
 import java.util.Properties;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.astrogrid.config.Config;
 import javax.xml.stream.*;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 /**
  * Class: RegistryQueryTest
@@ -38,14 +27,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class RegistryQueryTest extends TestCase {
     
-    /**
-     * Our debug logger.
-     *
-     */
-    //private static Log log = LogFactory.getLog(RegistryQueryTest.class);    
-    
     public RegistryQueryTest() {
-        
     }
     
     DocumentBuilder builder;
@@ -54,7 +36,9 @@ public class RegistryQueryTest extends TestCase {
     /**
      * Setup our test.
      *
+   * @throws java.lang.Exception
     */ 
+    @Override
     public void setUp() throws Exception {
         super.setUp();
         //log.debug("debug setup");
@@ -64,11 +48,8 @@ public class RegistryQueryTest extends TestCase {
         Properties props = new Properties();
         props.setProperty("create-database", "true");
         props.setProperty("configuration",fi.getAbsolutePath());      
-        if(fi != null) {
-          XMLDBManager.registerDB(props);
-        }
+        XMLDBManager.registerDB(props);
         
-        rqs = QueryFactory.createQueryService("0.1");
         rqsv1_0 = QueryFactory.createQueryService("1.0");
         
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -80,24 +61,9 @@ public class RegistryQueryTest extends TestCase {
      * Description: test to perform an adql query for an identifier known in the registry.
      * @throws Exception standard junit exception to be thrown.
     */         
-    public void testADQLSearchv0_10_1() throws Exception {
-    	System.out.println("start testADQLSearchv0_10_1");
-        Document adql = askQueryFromFile("QueryForIdentifier--adql-v0.7.4.xml");
-        XMLStreamReader reader = rqs.Search(adql);
-	    Document doc = STAXUtils.read(builder,reader,true);        
-        assertNotNull(doc);
-        assertTrue((doc.getElementsByTagNameNS("*","Resource").getLength() > 0));
-        System.out.println("done testADQLSearchv0_10_1");
-    }
-    
-    /**
-     * Method: testSearchByIdent
-     * Description: test to perform an adql query for an identifier known in the registry.
-     * @throws Exception standard junit exception to be thrown.
-    */         
     public void testADQLSearchv1_0_1() throws Exception {
     	System.out.println("start testADQLSearchv1_0_1");
-        Document adql = askQueryFromFile("QueryForIdentifier--adql-v0.7.4-1.0.xml");
+        Document adql = askQueryFromFile("/xml/QueryForIdentifier--adql-v0.7.4-1.0.xml");
         XMLStreamReader reader = rqsv1_0.Search(adql);
 	    Document doc = STAXUtils.read(builder,reader,true);        
         assertNotNull(doc);
@@ -112,7 +78,7 @@ public class RegistryQueryTest extends TestCase {
     */         
     public void testADQLSearchv1_0_2() throws Exception {
     	System.out.println("start testADQLSearchv1_0_2");
-        Document adql = askQueryFromFile("QueryForLike2--adql-v1.0-1.0.xml");
+        Document adql = askQueryFromFile("/xml/QueryForLike2--adql-v1.0-1.0.xml");
         XMLStreamReader reader = rqsv1_0.Search(adql);
 	    Document doc = STAXUtils.read(builder,reader,true);        
         assertNotNull(doc);
@@ -127,30 +93,12 @@ public class RegistryQueryTest extends TestCase {
     */         
     public void testADQLSearchv1_0_3() throws Exception {
     	System.out.println("start testADQLSearchv1_0_2");
-        Document adql = askQueryFromFile("QueryForLike--adql-v1.0-1.0.xml");
+        Document adql = askQueryFromFile("/xml/QueryForLike--adql-v1.0-1.0.xml");
         XMLStreamReader reader = rqsv1_0.Search(adql);
 	    Document doc = STAXUtils.read(builder,reader,true);        
         assertNotNull(doc);
         assertTrue((doc.getElementsByTagNameNS("*","Resource").getLength() > 0));
         System.out.println("done testADQLSearchv1_0_2");        
-    }
-    
-    
-
-    /**
-     * Method: testKeywordQueryService
-     * Description: test to perform a keyword search on the registry via the use of the common 
-     * web service interface method.
-     * @throws Exception standard junit exception to be thrown.
-     * */ 
-    public void testKeywordQueryServicev0_10_1() throws Exception {
-    	System.out.println("start testKeywordQueryServicev0_10_1");
-        Document keywordDoc = DomHelper.newDocument("<KeywordSearch><keywords>Full</keywords></KeywordSearch>");
-        XMLStreamReader reader = rqs.KeywordSearch(keywordDoc);
-	    Document doc = STAXUtils.read(builder,reader,true);
-        assertNotNull(doc);
-        assertTrue((doc.getElementsByTagNameNS("*","Resource").getLength() > 0));
-        System.out.println("done testKeywordQueryServicev0_10_1");        
     }
     
     /**
@@ -270,108 +218,7 @@ public class RegistryQueryTest extends TestCase {
         assertTrue((doc.getElementsByTagNameNS("*","Resource").getLength() == 0));
         assertTrue(doc.getDocumentElement().getLocalName().equals("XQuerySearchResponse"));        
         System.out.println("done testXQuerySearchv1_0_6");
-    }      
-    
-    
-    /**
-     * Method: testXQuerySearch
-     * Description: test to perform a xquery search on the registry via the use of the common 
-     * web service interface method.
-     * @throws Exception standard junit exception to be thrown.
-    */       
-    public void testXQuerySearchv0_10_1() throws Exception {
-    	System.out.println("start testXQuerySearchv0_10_1");
-        Document xqueryDoc = DomHelper.newDocument("<XQuerySearch><XQuery>declare namespace vr = \"http://www.ivoa.net/xml/VOResource/v0.10\"; declare namespace vor=\"http://www.ivoa.net/xml/RegistryInterface/v0.1\"; for $x in //RootResource where $x/vr:identifier = 'ivo://registry.test/org.astrogrid.registry.RegistryService' return $x</XQuery></XQuerySearch>");
-        XMLStreamReader reader = rqs.XQuerySearch(xqueryDoc);
-	    Document doc = STAXUtils.read(builder,reader,true);        
-        assertNotNull(doc);
-        assertTrue((doc.getElementsByTagNameNS("*","Resource").getLength() > 0));
-        System.out.println("done testXQuerySearchv0_10_1");
     }
-    
-    /**
-     * Method: testXQuerySearch
-     * Description: test to perform a xquery search on the registry via the use of the common 
-     * web service interface method.
-     * @throws Exception standard junit exception to be thrown.
-    */       
-    public void testXQuerySearchv0_10_2() throws Exception {
-        System.out.println("start testXQuerySearchv0_10_2");
-        Document xqueryDoc = DomHelper.newDocument("<XQuerySearch><XQuery>declare namespace vr = \"http://www.ivoa.net/xml/VOResource/v0.10\"; declare namespace vor=\"http://www.ivoa.net/xml/RegistryInterface/v0.1\"; for $x in //RootResource return $x</XQuery></XQuerySearch>");
-        XMLStreamReader reader = rqs.XQuerySearch(xqueryDoc);
-	    Document doc = STAXUtils.read(builder,reader,true);        
-        assertNotNull(doc);
-        assertTrue((doc.getElementsByTagNameNS("*","Resource").getLength() > 0));
-        System.out.println("done testXQuerySearchv0_10_2");
-    }    
-
-    /**
-     * Method: testXQuerySearch
-     * Description: test to perform a xquery search on the registry via the use of the common 
-     * web service interface method.
-     * @throws Exception standard junit exception to be thrown.
-    */       
-    public void testXQuerySearchv0_10_3() throws Exception {
-    	System.out.println("start testXQuerySearchv0_10_3");
-        Document xqueryDoc = DomHelper.newDocument("<XQuerySearch><XQuery>declare namespace vr = \"http://www.ivoa.net/xml/VOResource/v0.10\"; declare namespace vor=\"http://www.ivoa.net/xml/RegistryInterface/v0.1\";" +
-        "//RootResource[(matches(vr:title,'main','i') or matches(vr:identifier,'main','i') or matches(vr:shortName,'main','i') or matches(vr:content/vr:subject,'main','i') or matches(vr:content/vr:description,'main','i')) and @status='active']" +		"</XQuery></XQuerySearch>");
-        XMLStreamReader reader = rqs.XQuerySearch(xqueryDoc);
-	    Document doc = STAXUtils.read(builder,reader,true);        
-        assertNotNull(doc);
-        assertTrue((doc.getElementsByTagNameNS("*","Resource").getLength() > 0));
-        System.out.println("done testXQuerySearchv0_10_3");
-    }     
-    
-    /**
-     * Method: testXQuerySearch
-     * Description: test to perform a xquery search on the registry via the use of the common 
-     * web service interface method.
-     * @throws Exception standard junit exception to be thrown.
-    */       
-    public void testXQuerySearchv0_10_4() throws Exception {
-        System.out.println("start testXQuerySearchv0_10_4");
-        Document xqueryDoc = DomHelper.newDocument("<XQuerySearch><XQuery>declare namespace vr = \"http://www.ivoa.net/xml/VOResource/v0.10\"; declare namespace vor=\"http://www.ivoa.net/xml/RegistryInterface/v0.1\"; for $x in //RootResource where $x/vr:identifier = 'nothingto be found' return $x</XQuery></XQuerySearch>");
-        XMLStreamReader reader = rqs.XQuerySearch(xqueryDoc);
-	    Document doc = STAXUtils.read(builder,reader,true);        
-        assertNotNull(doc);
-        assertTrue((doc.getElementsByTagNameNS("*","Resource").getLength() == 0));
-        assertTrue(doc.getDocumentElement().getLocalName().equals("XQuerySearchResponse"));        
-        System.out.println("done testXQuerySearchv0_10_4");
-    }    
-
-    /**
-     * Method: testXQuerySearch
-     * Description: test to perform a xquery search on the registry via the use of the common 
-     * web service interface method.
-     * @throws Exception standard junit exception to be thrown.
-    */       
-    public void testXQuerySearchv0_10_5() throws Exception {
-    	System.out.println("start testXQuerySearchv0_10_5");
-        Document xqueryDoc = DomHelper.newDocument("<XQuerySearch><XQuery>declare namespace vr = \"http://www.ivoa.net/xml/VOResource/v0.10\"; declare namespace vor=\"http://www.ivoa.net/xml/RegistryInterface/v0.1\";" +
-        "//RootResource[(match-all(vr:title,'main') or match-all(vr:identifier,'main') or match-all(vr:shortName,'main') or match-all(vr:content/vr:subject,'main') or match-all(vr:content/vr:description,'main')) and @status='active']" +		"</XQuery></XQuerySearch>");
-        XMLStreamReader reader = rqs.XQuerySearch(xqueryDoc);
-	    Document doc = STAXUtils.read(builder,reader,true);        
-        assertNotNull(doc);
-        assertTrue((doc.getElementsByTagNameNS("*","Resource").getLength() > 0));
-        System.out.println("done testXQuerySearchv0_10_5");
-    }
-
-    
-    /**
-     * Method: testGetResourceByIdentifier
-     * Description: test to perform a query for one particular identifier in the registry not based on adql.
-     * @throws Exception standard junit exception to be thrown.
-     * 
-     */
-    public void testGetResourcev0_10_1() throws Exception {        
-         System.out.println("begin testGetResourcev0_10_1");
-         Document inputDoc = DomHelper.newDocument("<GetResource><identifier>ivo://registry.test/org.astrogrid.registry.RegistryService</identifier></GetResource>");
-         XMLStreamReader reader = rqs.GetResource(inputDoc);
- 	     Document doc = STAXUtils.read(builder,reader,true);         
-         assertNotNull(doc);
-         assertTrue((doc.getElementsByTagNameNS("*","Resource").getLength() == 1));
-         System.out.println("done testGetResourcev0_10_1");         
-     }
     
     /**
      * Method: testGetResourceByIdentifier
@@ -387,23 +234,6 @@ public class RegistryQueryTest extends TestCase {
          assertNotNull(doc);
          assertTrue((doc.getElementsByTagNameNS("*","Resource").getLength() == 1));
          System.out.println("done testGetResourcev1_0_1");         
-     }
-    
-    
-    /**
-     * Method: testGetResourceByIdentifier
-     * Description: test to perform a query for one particular identifier in the registry not based on adql.
-     * @throws Exception standard junit exception to be thrown.
-     */     
-    public void testGetResourceNotFoundv0_10_1() throws Exception {
-         System.out.println("begin testGetResourceNotFoundv0_10_1");
-         Document inputDoc = DomHelper.newDocument("<GetResource><identifier>ivo://nothing/helloworld</identifier></GetResource>");
-         XMLStreamReader reader = rqs.GetResource(inputDoc);
- 	     Document doc = STAXUtils.read(builder,reader,true);         
-         assertNotNull(doc);
-         assertTrue((doc.getElementsByTagNameNS("*","Resource").getLength() == 0));
-         assertEquals(doc.getDocumentElement().getLocalName(),"Fault");
-         System.out.println("done testGetResourceNotFoundv1_0_1");         
      }
     
     /**
