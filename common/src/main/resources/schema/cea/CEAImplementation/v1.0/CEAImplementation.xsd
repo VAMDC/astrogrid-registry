@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- $Id: CEAImplementation.xsd,v 1.2 2006/07/04 14:04:13 clq2 Exp $ -->
+
+<!-- This schema specifies the CEC specific parts of the CEC configuration -->
+<xs:schema targetNamespace="http://www.astrogrid.org/schema/CEAImplementation/v1"
+	xmlns:ceapd="http://www.astrogrid.org/schema/AGParameterDefinition/v1"
+	xmlns:ceab="http://www.astrogrid.org/schema/CommonExecutionArchitectureBase/v1"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:ceaimp="http://www.astrogrid.org/schema/CEAImplementation/v1" elementFormDefault="qualified"
+	attributeFormDefault="unqualified" version="0.2">
+	
+	<xs:import namespace="http://www.astrogrid.org/schema/AGParameterDefinition/v1"
+		schemaLocation="../../../jes/AGParameterDefinition/v1.0/AGParameterDefinition.xsd"/>
+	<xs:import namespace="http://www.astrogrid.org/schema/CommonExecutionArchitectureBase/v1"
+		schemaLocation="../../../cea/CommonExecutionArchitectureBase/v1.0/CommonExecutionArchitectureBase.xsd"/>
+	
+	<xs:complexType name="CommonExecutionConnectorConfigType">
+		<xs:annotation>
+			<xs:documentation>The base for a common execution connector configuration</xs:documentation>
+		</xs:annotation>
+	</xs:complexType>
+	<xs:element name="Application">
+		<xs:annotation>
+			<xs:documentation>The definition of what an application is</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="ceaimp:CommandLineApplication">
+					<xs:attribute name="version" type="xs:string" use="optional">
+						<xs:annotation>
+							<xs:documentation>perhaps this is best as an attribute</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+		<xs:unique name="parameternameunique">
+			<xs:selector xpath="./ceab:Parameters/ceaimp:CmdLineParameterDefn"/>
+			<xs:field xpath="@name"/>
+		</xs:unique>
+		<xs:unique name="interfacenameunique">
+			<xs:selector xpath="./ceab:Interfaces/ceab:Interface"/>
+			<xs:field xpath="@name"/>
+		</xs:unique>
+		<xs:keyref name="parametername" refer="ceaimp:parameternameunique">
+			<xs:selector xpath=".//ceab:pref"/>
+			<xs:field xpath="@ref"/>
+		</xs:keyref>
+	</xs:element>
+	<xs:complexType name="CommandLineApplication">
+		<xs:annotation>
+			<xs:documentation>Description of a command line application</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ceab:ApplicationBase">
+				<xs:sequence>
+					<xs:element name="ExecutionPath" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>This is the file path of the executable</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="LongName" type="xs:string" minOccurs="1"/>
+					<xs:element name="Version" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>this should probably be in the main schema
+							somewhere...</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Description" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>A description of the application that can become part of the
+								registry entry</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ReferenceURL" type="xs:anyURI" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>references to on-line information about the
+							application</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="WebServiceApplication">
+		<xs:annotation>
+			<xs:documentation>Description of a web service application</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ceab:ApplicationBase"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DataCentreApplication">
+		<xs:annotation>
+			<xs:documentation>Description of a data centre application</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ceab:ApplicationBase"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="switchTypes">
+		<xs:annotation>
+			<xs:documentation>normal is the -x value style and keyword is the x=value
+			style</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="normal"/>
+			<xs:enumeration value="keyword"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="CommandLineParameterDefinition">
+		<xs:annotation>
+			<xs:documentation>Defines what it is to be a command line parameter - needs more thought with
+				experience</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ceapd:BaseParameterDefinition">
+				<xs:attribute name="commandSwitch" type="xs:string" use="optional">
+					<xs:annotation>
+						<xs:documentation>The characters that make up the commandline switch</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="commandPosition" type="xs:int" use="optional" default="-1">
+					<xs:annotation>
+						<xs:documentation>the command position for a position only parameter. The default value
+							means that the parameter is position independent and is assumed to need a switch.
+							Conversely if a parameter has a position value it is assumed not to need a switch
+						</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="stdio" type="xs:boolean" use="optional" default="false">
+					<xs:annotation>
+						<xs:documentation>is stdio - not used in implementation - should probably be
+						removed.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="switchType" type="ceaimp:switchTypes" use="optional" default="normal">
+					<xs:annotation>
+						<xs:documentation>specifies the style of the switch - would be better to call
+							switchStyle!</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="fileRef" type="xs:boolean" use="optional" default="true">
+					<xs:annotation>
+						<xs:documentation>does the application treat the parameter as a reference to a
+						file</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="localFileName" type="xs:string" use="optional">
+					<xs:annotation>
+						<xs:documentation>the local name of the file that this parameter refers to if the
+							application uses a fixed file name</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DataCenterParameterDefinition">
+		<xs:annotation>
+			<xs:documentation>special properties for datacentre parameters</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ceapd:BaseParameterDefinition"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="CmdLineParameterDefn" substitutionGroup="ceab:Parameter">
+		<xs:annotation>
+			<xs:documentation>The specialization for a command line parameter</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="ceaimp:CommandLineParameterDefinition"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CommandLineExecutionControllerConfig">
+		<xs:annotation>
+			<xs:documentation>The configuration for a command line execution controller</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="ceaimp:CommonExecutionConnectorConfigType">
+					<xs:sequence>
+						<xs:element ref="ceaimp:Application" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DataCentreParameterDefn" type="ceaimp:DataCenterParameterDefinition"
+		substitutionGroup="ceab:Parameter">
+		<xs:annotation>
+			<xs:documentation>The specialization for a datacentre parameter</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="DataCentre" type="ceaimp:DataCentreApplication">
+		<xs:unique name="DCparameternameunique">
+			<xs:selector xpath="./ceab:Parameters/ceaimp:DataCentreParameterDefn"/>
+			<xs:field xpath="@name"/>
+		</xs:unique>
+		<xs:unique name="DCinterfacenameunique">
+			<xs:selector xpath="./ceab:Interfaces/ceab:Interface"/>
+			<xs:field xpath="@name"/>
+		</xs:unique>
+		<xs:keyref name="DCparametername" refer="ceaimp:DCparameternameunique">
+			<xs:selector xpath=".//ceab:pref"/>
+			<xs:field xpath="@ref"/>
+		</xs:keyref>
+	</xs:element>
+	<xs:element name="DataCentreControllerConfig">
+		<xs:annotation>
+			<xs:documentation>Configuration for a set of datacentre descriptions</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="ceaimp:CommonExecutionConnectorConfigType">
+					<xs:sequence>
+						<xs:element ref="ceaimp:DataCentre" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="WebServiceParameterDefinition">
+		<xs:annotation>
+			<xs:documentation>Special properties for web serivce parameters</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ceapd:BaseParameterDefinition"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="WebServiceParameterDefn" type="ceaimp:WebServiceParameterDefinition"
+		substitutionGroup="ceab:Parameter">
+		<xs:annotation>
+			<xs:documentation>The specialization for a web service parameter</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="WebService" type="ceaimp:WebServiceApplication">
+		<xs:unique name="WSparameternameunique">
+			<xs:selector xpath="./ceab:Parameters/ceaimp:WebServiceParameterDefn"/>
+			<xs:field xpath="@name"/>
+		</xs:unique>
+		<xs:unique name="WSinterfacenameunique">
+			<xs:selector xpath="./ceab:Interfaces/ceab:Interface"/>
+			<xs:field xpath="@name"/>
+		</xs:unique>
+		<xs:keyref name="WSparametername" refer="ceaimp:WSparameternameunique">
+			<xs:selector xpath=".//ceab:pref"/>
+			<xs:field xpath="@ref"/>
+		</xs:keyref>
+	</xs:element>
+	<xs:element name="WebServiceExecutionControllerConfig">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="ceaimp:CommonExecutionConnectorConfigType">
+					<xs:sequence>
+						<xs:element ref="ceaimp:WebService" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

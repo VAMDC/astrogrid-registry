@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Paul Harrison (Contractor) -->
+<xs:schema targetNamespace="http://www.astrogrid.org/xml/AstrogridResource/v0.1" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:vr="http://www.ivoa.net/xml/VOResource/v0.9" xmlns:ag="http://www.astrogrid.org/xml/AstrogridResource/v0.1" xmlns:vt="http://www.ivoa.net/xml/VOTable/v1.0" xmlns:vm="http://www.ivoa.net/xml/VOMetadata/v0.1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.1">
+	<xs:annotation>
+		<xs:documentation>
+        An extension to the core resource metadata (VOResource) for describing astrogrid specific resources
+      	      </xs:documentation>
+	</xs:annotation>
+	<xs:import namespace="http://www.ivoa.net/xml/VOResource/v0.9" 
+		schemaLocation="../../../vo-resource-types/VOResource/v0.9/VOResource.xsd"/>
+	<xs:simpleType name="AGServiceKindType">
+		<xs:annotation>
+			<xs:documentation>Enumeration of the various types of Astrogrid Service</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="MySpace"/>
+			<xs:enumeration value="CeaServer"/>
+			<xs:enumeration value="Community"/>
+			<xs:enumeration value="FileStore"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="AGServiceType">
+		<xs:annotation>
+			<xs:documentation>A service defintion with the Astrogrid service Kind added</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="vr:ServiceType">
+				<xs:sequence>
+					<xs:element name="AGServiceKind" type="ag:AGServiceKindType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="AGService" substitutionGroup="vr:Resource">
+		<xs:annotation>
+			<xs:documentation>the actual service definition</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="ag:AGServiceType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

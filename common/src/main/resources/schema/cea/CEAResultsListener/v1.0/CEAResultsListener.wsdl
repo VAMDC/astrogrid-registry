@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions
+    targetNamespace="urn:cea/resultslistener/v1"
+
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:apachesoap="http://xml.apache.org/xml-soap"
+    xmlns:ceat="http://www.astrogrid.org/schema/CEATypes/v1"
+    xmlns:intf="urn:cea/resultslistener/v1"
+    xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+    xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:wrapper="urn:cea/resultslistener-wrapper/v1"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <wsdl:documentation>
+        interface definition for the results callback web service.
+    </wsdl:documentation>
+      
+    <wsdl:types>
+        <xsd:schema
+            targetNamespace="urn:cea/resultslistener-wrapper/v1"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://www.astrogrid.org/schema/CEATypes/v1" schemaLocation="../../../cea/CEATypes/v1.0/CEATypes.xsd"/>
+            <xsd:element name="putResults">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element ref="ceat:job-identifier" />
+                        <xsd:element name="result-list" type="ceat:result-list-type" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+
+    <wsdl:message name="PutResultsRequest">
+        <wsdl:part element="wrapper:putResults" name="parameters"/>
+    </wsdl:message>
+    <wsdl:portType name="ResultsListener">
+        <wsdl:operation name="putResults">
+            <documentation>Return the results to the listener</documentation>
+            <wsdl:input message="intf:PutResultsRequest"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding
+        name="ResultsListenerServiceSoapBinding"
+        type="intf:ResultsListener">
+        <wsdlsoap:binding
+            style="document"
+            transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="putResults">
+            <wsdlsoap:operation soapAction="putResults"/>
+            <wsdl:input>
+                <wsdlsoap:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ResultsListenerService">
+        <wsdl:port
+            binding="intf:ResultsListenerServiceSoapBinding"
+            name="ResultListener">
+            <wsdlsoap:address location="http://localhost:8080/axis/services/ResultsListenerService"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

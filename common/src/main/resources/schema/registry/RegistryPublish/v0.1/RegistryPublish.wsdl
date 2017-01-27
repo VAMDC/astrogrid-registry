@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="PublishingRegistry"              xmlns="http://schemas.xmlsoap.org/wsdl/"              xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"              xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"              xmlns:rih="http://www.ivoa.net/wsdl/RegistryHarvest/v0.1"             xmlns:tns="http://www.astrogrid.org/registry/wsdl"             targetNamespace="http://www.astrogrid.org/registry/wsdl">
+   <import namespace="http://www.ivoa.net/wsdl/RegistryHarvest/v0.1"           location="./Publish.wsdl"/>
+   <service name="RegistryInterfaceService">      <port name="RegistryHarvestPort" binding="rih:RegistryHarvestSOAP">         <soap:address         location="http://localhost:8080/astrogrid-registry/services/RegistryHarvestPort"/>      </port>   </service>   </definitions>

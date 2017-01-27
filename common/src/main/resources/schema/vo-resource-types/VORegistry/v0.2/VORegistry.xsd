@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.ivoa.net/xml/VORegistry/v0.2" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           xmlns:vr="http://www.ivoa.net/xml/VOResource/v0.9" 
+           xmlns:vg="http://www.ivoa.net/xml/VORegistry/v0.2" 
+           xmlns:vm="http://www.ivoa.net/xml/VOMetadata/v0.1"
+           elementFormDefault="qualified" attributeFormDefault="unqualified"
+	   version="0.2">
+
+   <xs:import namespace="http://www.ivoa.net/xml/VOResource/v0.9"
+      schemaLocation="http://www.ivoa.net/xml/VOResource/VOResource-v0.9.xsd"/>
+
+   <xs:element name="Registry" type="vg:RegistryType" 
+			       substitutionGroup="vr:Service">
+      <xs:annotation>
+         <xs:documentation>
+           a service that provides access to descriptions of resources.
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:complexType name="RegistryType">
+      <xs:complexContent>
+         <xs:extension base="vr:ServiceType">
+            <xs:sequence>
+               <xs:element ref="vg:ManagedAuthority" maxOccurs="unbounded"/>
+            </xs:sequence>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+
+   <xs:element name="ManagedAuthority" type="vr:AuthorityIDType">
+      <xs:annotation>
+         <xs:documentation>
+           an authority identifier managed by a registry.
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+
+   <xs:element name="Authority" type="vg:AuthorityType" 
+				substitutionGroup="vr:Resource">
+      <xs:annotation>
+         <xs:documentation>
+           a naming authority; an assertion of control over a
+	   namespace represented by an authority identifier. 
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:complexType name="AuthorityType">
+      <xs:complexContent>
+         <xs:extension base="vr:ResourceType">
+            <xs:sequence>
+               <xs:element ref="vg:ManagingOrg" minOccurs="0">
+   	          <xs:annotation>
+   	             <xs:documentation>
+   	               the organization that manages the current authority.  
+   	             </xs:documentation>
+   	          </xs:annotation>
+   	       </xs:element>
+            </xs:sequence>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+
+   <xs:element name="ManagingOrg" type="vr:IdentifierType">
+      <xs:annotation>
+         <xs:documentation>
+           a reference to an organization that manages something.
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+
+</xs:schema>

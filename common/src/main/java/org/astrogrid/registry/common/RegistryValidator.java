@@ -1,7 +1,6 @@
 package org.astrogrid.registry.common;
 
 import org.astrogrid.test.AstrogridAssert;
-import org.astrogrid.contracts.SchemaMap;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

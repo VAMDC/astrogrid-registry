@@ -1,0 +1,544 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Vivek Haridas (The Johns Hopkins University) -->
+<xs:schema targetNamespace="http://adql.ivoa.net/v0.73" xmlns:reg="http://www.ivoa.net/xml/STC/STCregion/v1.10" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://adql.ivoa.net/v0.73" elementFormDefault="qualified">
+	<xs:import namespace="http://www.ivoa.net/xml/STC/STCregion/v1.10" 
+		schemaLocation="../../../stc/STCregion/v1.10/STCregion.xsd"/>
+	<xs:complexType name="atomType">
+		<xs:annotation>
+			<xs:documentation>Encapsulates basic literals such as Strings, Integers and Real numbers</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="Real" type="xs:double"/>
+				<xs:element name="Integer" type="xs:long"/>
+				<xs:element name="String" type="xs:string"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="comparisonType">
+		<xs:annotation>
+			<xs:documentation>The Comparison operators such as Less-than or More-than, etc</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="="/>
+			<xs:enumeration value="&lt;&gt;"/>
+			<xs:enumeration value="&gt;"/>
+			<xs:enumeration value="&gt;="/>
+			<xs:enumeration value="&lt;"/>
+			<xs:enumeration value="&lt;="/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="unaryOperatorType">
+		<xs:annotation>
+			<xs:documentation>Operators for expressing a single element operation</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="+"/>
+			<xs:enumeration value="-"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="binaryOperatorType">
+		<xs:annotation>
+			<xs:documentation>Used for expressing operations like A+B</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="+"/>
+			<xs:enumeration value="-"/>
+			<xs:enumeration value="*"/>
+			<xs:enumeration value="/"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="tableType">
+		<xs:annotation>
+			<xs:documentation>Represents a table with its name and its alias name</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="Name" type="xs:string" use="required"/>
+		<xs:attribute name="Alias" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="ArchiveTableType" mixed="false">
+		<xs:annotation>
+			<xs:documentation>Same as a tableType with an additional archive name</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:tableType">
+				<xs:attribute name="Archive" type="xs:string" use="required"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="includeTableType">
+		<xs:annotation>
+			<xs:documentation>Used for adding a table for the Xmatch operation</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="Name" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="dropTableType">
+		<xs:annotation>
+			<xs:documentation>Used for avoiding a table in Xmatch</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="Name" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="columnReferenceType">
+		<xs:annotation>
+			<xs:documentation>Represents a column</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="Table" type="xs:string" use="required"/>
+		<xs:attribute name="Name" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="unaryExprType">
+		<xs:annotation>
+			<xs:documentation>Represents an unary expression such as -(a.ra)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="Atom" type="tns:atomType"/>
+				<xs:element name="Column" type="tns:columnReferenceType"/>
+				<xs:element name="UnaryOperation" type="tns:unaryExprType"/>
+				<xs:element name="BinaryOperation" type="tns:binaryExprType"/>
+				<xs:element name="Closed" type="tns:closedExprType"/>
+				<xs:element name="Function" type="tns:functionType"/>
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="Oper" type="tns:unaryOperatorType" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="binaryExprType">
+		<xs:annotation>
+			<xs:documentation>Represents a binary expression such as a+b</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice minOccurs="2" maxOccurs="2">
+				<xs:element name="Atom" type="tns:atomType"/>
+				<xs:element name="UnaryOperation" type="tns:unaryExprType"/>
+				<xs:element name="BinaryOperation" type="tns:binaryExprType"/>
+				<xs:element name="Closed" type="tns:closedExprType"/>
+				<xs:element name="Column" type="tns:columnReferenceType"/>
+				<xs:element name="Function" type="tns:functionType"/>
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="Oper" type="tns:binaryOperatorType" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="closedExprType">
+		<xs:annotation>
+			<xs:documentation>Represents an expression inside a bracket</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="Atom" type="tns:atomType"/>
+				<xs:element name="Column" type="tns:columnReferenceType"/>
+				<xs:element name="UnaryOperation" type="tns:unaryExprType"/>
+				<xs:element name="BinaryOperation" type="tns:binaryExprType"/>
+				<xs:element name="Closed" type="tns:closedExprType"/>
+				<xs:element name="Function" type="tns:functionType"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="functionType">
+		<xs:annotation>
+			<xs:documentation>A function expression, one of math,trigonometri or aggregate function</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="Trignometric" type="tns:trigonometricFunctionType"/>
+				<xs:element name="Aggregate" type="tns:aggregateFunctionType"/>
+				<xs:element name="Math" type="tns:mathFunctionType"/>
+			</xs:choice>
+			<xs:element name="Allow" type="tns:selectionOptionType" minOccurs="0"/>
+			<xs:choice>
+				<xs:element name="Atom" type="tns:atomType"/>
+				<xs:element name="Column" type="tns:columnReferenceType"/>
+				<xs:element name="UnaryOperation" type="tns:unaryExprType"/>
+				<xs:element name="BinaryOperation" type="tns:binaryExprType"/>
+				<xs:element name="Closed" type="tns:closedExprType"/>
+				<xs:element name="All" type="tns:allSelectionItemType"/>
+				<xs:element name="Function" type="tns:functionType"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="trigonometricFunctionType">
+		<xs:annotation>
+			<xs:documentation>Enumeration of allowed trigonometric functions</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SIN"/>
+			<xs:enumeration value="COS"/>
+			<xs:enumeration value="TAN"/>
+			<xs:enumeration value="COT"/>
+			<xs:enumeration value="ASIN"/>
+			<xs:enumeration value="ACOS"/>
+			<xs:enumeration value="ATAN"/>
+			<xs:enumeration value="ATAN2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="aggregateFunctionType">
+		<xs:annotation>
+			<xs:documentation>Enumeration of allowed aggregate functions</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AVG"/>
+			<xs:enumeration value="MIN"/>
+			<xs:enumeration value="MAX"/>
+			<xs:enumeration value="SUM"/>
+			<xs:enumeration value="COUNT"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="mathFunctionType">
+		<xs:annotation>
+			<xs:documentation>Enumeration of allowed math functions</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ABS"/>
+			<xs:enumeration value="CEILING"/>
+			<xs:enumeration value="DEGREES"/>
+			<xs:enumeration value="EXP"/>
+			<xs:enumeration value="FLOOR"/>
+			<xs:enumeration value="LOG"/>
+			<xs:enumeration value="PI"/>
+			<xs:enumeration value="POWER"/>
+			<xs:enumeration value="RADIANS"/>
+			<xs:enumeration value="SQRT"/>
+			<xs:enumeration value="SQUARE"/>
+			<xs:enumeration value="LOG10"/>
+			<xs:enumeration value="RAND"/>
+			<xs:enumeration value="ROUND"/>
+			<xs:enumeration value="TRUNCATE"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="selectionOptionType">
+		<xs:annotation>
+			<xs:documentation>Option of selecting all or distinct elements in a query</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="Option" type="tns:allOrDistinctType" use="required"/>
+	</xs:complexType>
+	<xs:simpleType name="allOrDistinctType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="All"/>
+			<xs:enumeration value="DISTINCT"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="allSelectionItemType">
+		<xs:annotation>
+			<xs:documentation>Represent all columns as in Select * query</xs:documentation>
+		</xs:annotation>
+	</xs:complexType>
+	<xs:complexType name="xMatchType">
+		<xs:annotation>
+			<xs:documentation>A cross match expression</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice minOccurs="2" maxOccurs="unbounded">
+				<xs:element name="Include" type="tns:includeTableType"/>
+				<xs:element name="Drop" type="tns:dropTableType"/>
+			</xs:choice>
+			<xs:element name="Nature" type="tns:comparisonType"/>
+			<xs:element name="Sigma" type="tns:distanceType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="distanceType">
+		<xs:annotation>
+			<xs:documentation>Used inside an xmatch for speccifying distance</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="Real" type="xs:double"/>
+				<xs:element name="Integer" type="xs:long"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="likePredType">
+		<xs:annotation>
+			<xs:documentation>The Like expression of a query</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="Atom" type="tns:atomType"/>
+				<xs:element name="Column" type="tns:columnReferenceType"/>
+				<xs:element name="UnaryOperation" type="tns:unaryExprType"/>
+				<xs:element name="BinaryOperation" type="tns:binaryExprType"/>
+				<xs:element name="Closed" type="tns:closedExprType"/>
+				<xs:element name="Function" type="tns:functionType"/>
+			</xs:choice>
+			<xs:element name="Pattern" type="tns:atomType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="notLikePredType" mixed="false">
+		<xs:annotation>
+			<xs:documentation>The Not Like expression of a query</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:likePredType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="betweenPredType">
+		<xs:annotation>
+			<xs:documentation>Represents the Between expression of a query</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice minOccurs="3" maxOccurs="3">
+				<xs:element name="Atom" type="tns:atomType"/>
+				<xs:element name="UnaryOperation" type="tns:unaryExprType"/>
+				<xs:element name="BinaryOperation" type="tns:binaryExprType"/>
+				<xs:element name="Column" type="tns:columnReferenceType"/>
+				<xs:element name="Closed" type="tns:closedExprType"/>
+				<xs:element name="Function" type="tns:functionType"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="notBetweenPredType" mixed="false">
+		<xs:annotation>
+			<xs:documentation>Represents the Not Between expression of a query</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:betweenPredType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="comparisonPredType">
+		<xs:annotation>
+			<xs:documentation>Represents the Comparison of two expressions</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice minOccurs="2" maxOccurs="2">
+				<xs:element name="Atom" type="tns:atomType"/>
+				<xs:element name="Column" type="tns:columnReferenceType"/>
+				<xs:element name="UnaryOperation" type="tns:unaryExprType"/>
+				<xs:element name="BinaryOperation" type="tns:binaryExprType"/>
+				<xs:element name="Closed" type="tns:closedExprType"/>
+				<xs:element name="Function" type="tns:functionType"/>
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="Comparison" type="tns:comparisonType" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="unionSearchType">
+		<xs:annotation>
+			<xs:documentation>Represents expressions like A Or B</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice minOccurs="2" maxOccurs="2">
+				<xs:element name="Xmatch" type="tns:xMatchType"/>
+				<xs:element name="NotBetween" type="tns:notBetweenPredType"/>
+				<xs:element name="Between" type="tns:betweenPredType"/>
+				<xs:element name="Or" type="tns:unionSearchType"/>
+				<xs:element name="Like" type="tns:likePredType"/>
+				<xs:element name="And" type="tns:intersectionSearchType"/>
+				<xs:element name="Circle" type="reg:circleType"/>
+				<xs:element name="Closed" type="tns:closedSearchType"/>
+				<xs:element name="NotLike" type="tns:notLikePredType"/>
+				<xs:element name="Not" type="tns:inverseSearchType"/>
+				<xs:element name="Compare" type="tns:comparisonPredType"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="intersectionSearchType">
+		<xs:annotation>
+			<xs:documentation>Represents expressions like A And B</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice minOccurs="2" maxOccurs="2">
+				<xs:element name="Xmatch" type="tns:xMatchType"/>
+				<xs:element name="NotBetween" type="tns:notBetweenPredType"/>
+				<xs:element name="And" type="tns:intersectionSearchType"/>
+				<xs:element name="Or" type="tns:unionSearchType"/>
+				<xs:element name="Between" type="tns:betweenPredType"/>
+				<xs:element name="Not" type="tns:inverseSearchType"/>
+				<xs:element name="Circle" type="reg:circleType"/>
+				<xs:element name="NotLike" type="tns:notLikePredType"/>
+				<xs:element name="Closed" type="tns:closedSearchType"/>
+				<xs:element name="Like" type="tns:likePredType"/>
+				<xs:element name="Compare" type="tns:comparisonPredType"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="inverseSearchType">
+		<xs:annotation>
+			<xs:documentation>Represents expressions like Not A</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="Xmatch" type="tns:xMatchType"/>
+				<xs:element name="NotBetween" type="tns:notBetweenPredType"/>
+				<xs:element name="And" type="tns:intersectionSearchType"/>
+				<xs:element name="Or" type="tns:unionSearchType"/>
+				<xs:element name="Like" type="tns:likePredType"/>
+				<xs:element name="Between" type="tns:betweenPredType"/>
+				<xs:element name="Not" type="tns:inverseSearchType"/>
+				<xs:element name="Circle" type="reg:circleType"/>
+				<xs:element name="NotLike" type="tns:notLikePredType"/>
+				<xs:element name="Closed" type="tns:closedSearchType"/>
+				<xs:element name="Compare" type="tns:comparisonPredType"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="closedSearchType">
+		<xs:annotation>
+			<xs:documentation>Represents expressions like (A)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="Xmatch" type="tns:xMatchType"/>
+				<xs:element name="NotBetween" type="tns:notBetweenPredType"/>
+				<xs:element name="Between" type="tns:betweenPredType"/>
+				<xs:element name="Or" type="tns:unionSearchType"/>
+				<xs:element name="Like" type="tns:likePredType"/>
+				<xs:element name="And" type="tns:intersectionSearchType"/>
+				<xs:element name="Circle" type="reg:circleType"/>
+				<xs:element name="Closed" type="tns:closedSearchType"/>
+				<xs:element name="NotLike" type="tns:notLikePredType"/>
+				<xs:element name="Not" type="tns:inverseSearchType"/>
+				<xs:element name="Compare" type="tns:comparisonPredType"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="havingType">
+		<xs:annotation>
+			<xs:documentation>Represents the Having expression part of a query</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="NotBetween" type="tns:notBetweenPredType"/>
+				<xs:element name="Or" type="tns:unionSearchType"/>
+				<xs:element name="Between" type="tns:betweenPredType"/>
+				<xs:element name="And" type="tns:intersectionSearchType"/>
+				<xs:element name="Closed" type="tns:closedSearchType"/>
+				<xs:element name="NotLike" type="tns:notLikePredType"/>
+				<xs:element name="Not" type="tns:inverseSearchType"/>
+				<xs:element name="Like" type="tns:likePredType"/>
+				<xs:element name="Compare" type="tns:comparisonPredType"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="groupByType">
+		<xs:annotation>
+			<xs:documentation>Represents the Group By expression part of a query</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Column" type="tns:columnReferenceType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="whereType">
+		<xs:annotation>
+			<xs:documentation>Represents the Where part of the query</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="Xmatch" type="tns:xMatchType"/>
+				<xs:element name="NotBetween" type="tns:notBetweenPredType"/>
+				<xs:element name="Between" type="tns:betweenPredType"/>
+				<xs:element name="Or" type="tns:unionSearchType"/>
+				<xs:element name="Like" type="tns:likePredType"/>
+				<xs:element name="And" type="tns:intersectionSearchType"/>
+				<xs:element name="Circle" type="reg:circleType"/>
+				<xs:element name="Closed" type="tns:closedSearchType"/>
+				<xs:element name="NotLike" type="tns:notLikePredType"/>
+				<xs:element name="Not" type="tns:inverseSearchType"/>
+				<xs:element name="Compare" type="tns:comparisonPredType"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="fromType">
+		<xs:annotation>
+			<xs:documentation>Represents the From part of the query</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice maxOccurs="unbounded">
+				<xs:element name="Table" type="tns:tableType"/>
+				<xs:element name="ArchiveTable" type="tns:ArchiveTableType"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="selectionListType">
+		<xs:annotation>
+			<xs:documentation>List of items to be selected in the Query</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice maxOccurs="unbounded">
+				<xs:element name="Function" type="tns:functionType"/>
+				<xs:element name="Atom" type="tns:atomType"/>
+				<xs:element name="UnaryOperation" type="tns:unaryExprType"/>
+				<xs:element name="Column" type="tns:columnReferenceType"/>
+				<xs:element name="Alias" type="tns:aliasSelectionItemType"/>
+				<xs:element name="All" type="tns:allSelectionItemType"/>
+				<xs:element name="Closed" type="tns:closedExprType"/>
+				<xs:element name="BinaryOperation" type="tns:binaryExprType"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="aliasSelectionItemType">
+		<xs:annotation>
+			<xs:documentation>Used to selecting an expression as a new alias column</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="Atom" type="tns:atomType"/>
+				<xs:element name="Column" type="tns:columnReferenceType"/>
+				<xs:element name="UnaryOperation" type="tns:unaryExprType"/>
+				<xs:element name="BinaryOperation" type="tns:binaryExprType"/>
+				<xs:element name="Closed" type="tns:closedExprType"/>
+				<xs:element name="Function" type="tns:functionType"/>
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="As" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="selectionLimitType">
+		<xs:annotation>
+			<xs:documentation>Represents the TOP part of a query</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="Top" type="xs:unsignedInt" use="required"/>
+	</xs:complexType>
+	<xs:simpleType name="orderDirectionType">
+		<xs:annotation>
+			<xs:documentation>Ascending or Descending order of an Order by term</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ASC"/>
+			<xs:enumeration value="DESC"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="orderOptionType">
+		<xs:annotation>
+			<xs:documentation>Option for setting the direction for Order By </xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="Direction" type="tns:orderDirectionType" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="orderType">
+		<xs:annotation>
+			<xs:documentation>Represents the ORDER BY part of a query</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="Atom" type="tns:atomType"/>
+				<xs:element name="Column" type="tns:columnReferenceType"/>
+				<xs:element name="UnaryOperation" type="tns:unaryExprType"/>
+				<xs:element name="BinaryOperation" type="tns:binaryExprType"/>
+				<xs:element name="Closed" type="tns:closedExprType"/>
+				<xs:element name="Function" type="tns:functionType"/>
+			</xs:choice>
+			<xs:element name="Order" type="tns:orderOptionType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="orderExpressionType">
+		<xs:annotation>
+			<xs:documentation>List of expressions in which order the results should be provided</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Item" type="tns:orderType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="selectType">
+		<xs:annotation>
+			<xs:documentation>The SELECT part of a query</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Allow" type="tns:selectionOptionType" minOccurs="0"/>
+			<xs:element name="Restrict" type="tns:selectionLimitType" minOccurs="0"/>
+			<xs:element name="SelectionList" type="tns:selectionListType"/>
+			<xs:element name="From" type="tns:fromType" minOccurs="0"/>
+			<xs:element name="Where" type="tns:whereType" minOccurs="0"/>
+			<xs:element name="GroupBy" type="tns:groupByType" minOccurs="0"/>
+			<xs:element name="Having" type="tns:havingType" minOccurs="0"/>
+			<xs:element name="OrderBy" type="tns:orderExpressionType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Select" type="tns:selectType">
+		<xs:annotation>
+			<xs:documentation>The only permitted root element of a query, the SELECT element</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+</xs:schema>

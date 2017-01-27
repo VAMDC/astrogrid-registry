@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.ivoa.net/xml/VODataService/v0.4" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           xmlns:vr="http://www.ivoa.net/xml/VOResource/v0.9" 
+           xmlns:vs="http://www.ivoa.net/xml/VODataService/v0.4" 
+           xmlns:vt="http://www.ivoa.net/xml/VOTable/v1.0"
+           xmlns:vm="http://www.ivoa.net/xml/VOMetadata/v0.1"
+           elementFormDefault="qualified" attributeFormDefault="unqualified"
+	   version="0.4">
+
+   <xs:annotation>
+      <xs:appinfo>
+        <vm:SchemaName>VODataService</vm:SchemaName>
+        <vm:schemaPrefix>xs</vm:schemaPrefix>
+        <vm:targetPrefix>vs</vm:targetPrefix>
+      </xs:appinfo>
+      <xs:documentation>
+        An extension to the core resource metadata (VOResource) for 
+      	describing data collections and services.
+      </xs:documentation>
+      <xs:documentation>
+      	Diff 0.2-0.1: Service and subelements moved to VOResource core
+      </xs:documentation>
+   </xs:annotation>
+
+   <xs:import schemaLocation="../../../vo-resource-types/VOResource/v0.9/VOResource.xsd" 
+   	namespace="http://www.ivoa.net/xml/VOResource/v0.9"/>
+   <xs:import schemaLocation="../../../vo-formats/VOTable/v1.0/VOTable.xsd" 
+   	namespace="http://www.ivoa.net/xml/VOTable/v1.0"/>
+
+   <xs:include schemaLocation="../../../vo-resource-types/VODataServiceCoverage/v0.2/VODataServiceCoverage.xsd"/>
+
+   <xs:element name="DataCollection" type="vs:DataCollectionType" 
+               substitutionGroup="vr:Resource">
+      <xs:annotation>
+         <xs:documentation>
+	   A logical grouping of data which, in general, is composed of one 
+	   or more accessible datasets.
+	 </xs:documentation>
+         <xs:documentation>
+	   (A dataset is a collection of digitally-encoded data with a that 
+	   is normally accessible as a single unit, e.g. a file.)
+	 </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:complexType name="DataCollectionType">
+      <xs:complexContent>
+         <xs:extension base="vr:ResourceType">
+            <xs:sequence>
+      	      <xs:element ref="vr:Facility" minOccurs="0" 
+	                                    maxOccurs="unbounded"/>
+      	      <xs:element ref="vr:Instrument" minOccurs="0" 
+	                                      maxOccurs="unbounded"/>
+	      <xs:element ref="vs:Coverage" minOccurs="0"/>
+	      <xs:element ref="vs:Access" minOccurs="0"/>
+            </xs:sequence>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+
+   <xs:element name="Access" type="vs:AccessType">
+      <xs:annotation>
+         <xs:documentation>
+	   a description about how a data collection may be accessed
+	 </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:complexType name="AccessType">
+      <xs:sequence>
+        <xs:element ref="vs:Format" minOccurs="0" maxOccurs="unbounded"/>
+	<xs:element ref="vs:Rights" minOccurs="0"/>
+	<xs:element ref="vr:AccessURL" minOccurs="0">
+	   <xs:annotation>
+	     <xs:documentation>
+	       Specifically, this is a URL that can be used to
+	       download the data contained in the data collection in
+	       question. 
+	     </xs:documentation>
+	   </xs:annotation>
+	</xs:element>
+      </xs:sequence>
+   </xs:complexType>
+
+   <xs:element name="Format" type="vs:FormatType">
+      <xs:annotation>
+         <xs:documentation>
+	   The physical or digital manifestation of the information supported
+	   by a resource.
+	 </xs:documentation>
+         <xs:documentation>
+	   MIME types should be used for network-retrievable, digital data.
+	   Non-MIME type values are used for media that cannot be retrieved
+	   over the network--e.g. CDROM, poster, slides, video cassette, 
+	   etc.  
+	 </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:complexType name="FormatType">
+      <xs:simpleContent>
+         <xs:extension base="xs:string">
+	   <xs:attribute name="isMIMEType" type="xs:boolean" default="false">
+	     <xs:annotation>
+	       <xs:documentation>
+	         if true, then the content is a MIME Type
+	       </xs:documentation>
+	     </xs:annotation>
+	   </xs:attribute>
+         </xs:extension>
+      </xs:simpleContent>
+   </xs:complexType>
+
+   <xs:element name="Rights" type="vs:RightsType">
+      <xs:annotation>
+       	 <xs:appinfo>
+       	   <vm:dcterm>Rights</vm:dcterm>
+       	 </xs:appinfo>           
+         <xs:documentation>
+	   Information about rights held in and over the resource.
+	 </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:simpleType name="RightsType">
+         <xs:restriction base="xs:string">
+	    <xs:enumeration value="public">
+	       <xs:annotation>
+	          <xs:documentation>
+		     unrestricted, public access is allowed
+	          </xs:documentation>
+	       </xs:annotation>
+	    </xs:enumeration>
+	    <xs:enumeration value="public">
+	       <xs:annotation>
+	          <xs:documentation>
+		     unrestricted, public access is allowed without 
+		     authentication.
+	          </xs:documentation>
+	       </xs:annotation>
+	    </xs:enumeration>
+	    <xs:enumeration value="secure">
+	       <xs:annotation>
+	          <xs:documentation>
+		     authenticated, public access is allowed.
+	          </xs:documentation>
+	       </xs:annotation>
+	    </xs:enumeration>
+	    <xs:enumeration value="proprietary">
+	       <xs:annotation>
+	          <xs:documentation>
+		     only proprietary access is allowed with authentication.
+	          </xs:documentation>
+	       </xs:annotation>
+	    </xs:enumeration>
+         </xs:restriction>
+   </xs:simpleType>
+
+   <xs:element name="SkyService" type="vs:SkyServiceType" 
+               substitutionGroup="vr:Service">
+      <xs:annotation>
+         <xs:documentation>
+	   A service for accessing astronomical data
+	 </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:complexType name="SkyServiceType">
+      <xs:complexContent>
+         <xs:extension base="vr:ServiceType">
+            <xs:sequence>
+      	       <xs:element ref="vr:Facility" minOccurs="0" 
+	                                     maxOccurs="unbounded"/>
+      	       <xs:element ref="vr:Instrument" minOccurs="0" 
+	                                       maxOccurs="unbounded"/>
+	       <xs:element ref="vs:Coverage"/>
+            </xs:sequence>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+
+   <xs:element name="ParamHTTP" type="vs:ParamHTTPType"
+		substitutionGroup="vr:Interface">
+     <xs:annotation>
+       <xs:documentation>
+          A service invoked via an HTTP Query (either Get or Post)
+          with a set of arguments consisting of keyword name-value pairs.
+       </xs:documentation>
+       <xs:documentation>
+          Note that the URL for help with this service can be put into
+          the Service/ReferenceURL element.
+       </xs:documentation>
+     </xs:annotation>
+   </xs:element>
+
+   <xs:complexType name="ExtendedInterfaceType">
+      <xs:annotation>
+         <xs:documentation>
+           This is used as a base type for extended Interface types. 
+      	   It simply restricts the value of Invocation to be "Extended".
+         </xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="vr:InterfaceType">
+           <xs:sequence>
+             <xs:element ref="vr:Invocation"/>
+             <xs:element ref="vr:Description" minOccurs="0"/>
+             <xs:element ref="vr:AccessURL"/>
+           </xs:sequence>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+
+   <xs:complexType name="ParamHTTPType">
+      <xs:complexContent>
+         <xs:extension base="vs:ExtendedInterfaceType">
+            <xs:sequence>
+               <xs:element ref="vs:HTTPResults" minOccurs="1" 
+   		              maxOccurs="1"/>
+               <xs:element ref="vs:Param" minOccurs="0" 
+                            maxOccurs="unbounded">
+                  <xs:annotation>
+                    <xs:documentation>
+                       an input parameter.  This should be rendered
+                       as name=value in the query URL's arguements.  
+                    </xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+            </xs:sequence>
+	    <xs:attribute name="qtype" type="vs:HTTPQueryType"/>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+
+   <xs:simpleType name="HTTPQueryType">
+      <xs:annotation>
+         <xs:documentation>
+	   The type of HTTP request, either GET or POST.
+         </xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:string">
+         <xs:enumeration value="GET"/>
+         <xs:enumeration value="POST"/>
+      </xs:restriction>
+   </xs:simpleType>
+
+   <xs:element name="HTTPResults" type="xs:string">
+      <xs:annotation>
+         <xs:documentation>
+         The MIME type of a document returned by an HTTP Get.
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+
+   <xs:element name="VOTableColumns">
+      <xs:annotation>
+         <xs:documentation>
+            The columns returned in a VOTable.
+         </xs:documentation>
+         <xs:documentation>
+            This element is recommended for use within extensions of
+	    the Capability element.
+         </xs:documentation>
+      </xs:annotation>
+
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element ref="vt:FIELD" minOccurs="0" 
+                         maxOccurs="unbounded"/>
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+
+   <xs:element name="TabularSkyService" type="vs:TabularSkyServiceType" 
+               substitutionGroup="vs:SkyService">
+      <xs:annotation>
+         <xs:documentation>
+            A service that interacts with one or more specified tables
+	    having some coverage of the sky, time, and/or frequency.
+         </xs:documentation>
+         <xs:documentation>
+	    A table with sky coverage typically have columns that give
+	    longitude-latitude positions in some coordinate system.  
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:complexType name="TabularSkyServiceType">
+      <xs:complexContent>
+         <xs:extension base="vs:SkyServiceType">
+            <xs:sequence>
+	       <xs:element ref="vs:Table" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+
+   <xs:element name="Table" type="vs:TableType">
+      <xs:annotation>
+         <xs:documentation>
+            a description of a table and its columns.
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:complexType name="TableType">
+      <xs:sequence>
+         <xs:element ref="vr:Name" minOccurs="0"/>
+         <xs:element ref="vr:Description" minOccurs="0"/>
+         <xs:element ref="vs:Column" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+      <xs:attribute name="role" type="xs:string">
+         <xs:annotation>
+      	    <xs:documentation>
+      	       a name for the role this table plays.  Recognized
+	       values include "out", indicating this table is output 
+	       from a query.
+      	    </xs:documentation>
+      	 </xs:annotation>
+      </xs:attribute>
+   </xs:complexType>
+
+   <xs:element name="Column" type="vs:ParamType">
+      <xs:annotation>
+         <xs:documentation>
+            a description of a table column.
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:element name="Param" type="vs:ParamType">
+      <xs:annotation>
+         <xs:documentation>
+            a description of a parameter
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:complexType name="ParamType">
+      <xs:sequence>
+         <xs:element ref="vr:Name" />
+         <xs:element ref="vr:Description" minOccurs="0"/>
+         <xs:element ref="vs:DataType" minOccurs="0"/>
+         <xs:element ref="vs:Unit" minOccurs="0"/>
+         <xs:element ref="vs:UCD" minOccurs="0"/>
+      </xs:sequence>
+   </xs:complexType>
+
+   <xs:element name="DataType">
+      <xs:annotation>
+         <xs:documentation>
+            a (VOTable-supported) data type
+         </xs:documentation>
+      </xs:annotation>
+      <xs:complexType>
+        <xs:simpleContent>
+	  <xs:extension base="vt:dataType">
+	    <xs:attribute name="arraysize" type="xs:string"/>
+	  </xs:extension>
+        </xs:simpleContent>
+      </xs:complexType>
+   </xs:element>
+
+   <xs:element name="Unit" type="xs:string">
+      <xs:annotation>
+         <xs:documentation>
+            the measurement unit associated with a measurement.
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+
+   <xs:element name="UCD" type="xs:string">
+      <xs:annotation>
+         <xs:documentation>
+            the name of a unified content descriptor.  See ....
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+
+</xs:schema>

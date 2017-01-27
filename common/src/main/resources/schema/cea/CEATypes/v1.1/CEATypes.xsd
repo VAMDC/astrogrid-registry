@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $id: $ -->
+<!-- these are types that are used only in the CEA interface definitions -->
+<!-- note that the type naming in this file is not really in line with the latest style -->
+<xs:schema targetNamespace="http://www.ivoa.net/xml/CEA/types/v1.1"
+   xmlns:xs="http://www.w3.org/2001/XMLSchema"
+   xmlns:ceat="http://www.ivoa.net/xml/CEA/types/v1.1"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:uws="http://www.ivoa.net/xml/UWS/v0.9.2"
+   elementFormDefault="qualified" attributeFormDefault="unqualified"
+   version="1.0 $Revision: 1.4 $"
+   xmlns:ceab="http://www.ivoa.net/xml/CEA/base/v1.1"
+xmlns:vr="http://www.ivoa.net/xml/VOResource/v1.0">
+   <xs:import namespace="http://www.ivoa.net/xml/CEA/base/v1.1" schemaLocation="../../CEABase/v1.1/CEABase.xsd">
+   </xs:import>
+   <xs:import namespace="http://www.ivoa.net/xml/UWS/v0.9.2" schemaLocation="../../UWS/v0.9/UWS.xsd">
+   </xs:import>
+   <xs:import namespace="http://www.ivoa.net/xml/VOResource/v1.0" schemaLocation="../../../vo-resource-types/VOResource/v1.0/VOResource.xsd"></xs:import>
+   <xs:element name="tool" type="ceat:Tool" />
+   
+   <xs:element name="message" type="ceat:message-type" />
+   <xs:complexType name="message-type">
+      
+        <xs:annotation>
+         <xs:documentation>
+            A log entry recorded during execution
+         </xs:documentation>
+      </xs:annotation>
+        
+        <xs:all>
+         
+            <xs:element name="phase" type="uws:ExecutionPhase" minOccurs="1">
+            
+                <xs:annotation>
+               <xs:documentation>
+                  The excecution phase that the message occured in.
+               </xs:documentation>
+            </xs:annotation>
+            </xs:element>
+            
+            <xs:element name="content" type="xs:string" minOccurs="0">
+            
+                <xs:annotation>
+               <xs:documentation>
+                  The human readable content of the message.
+               </xs:documentation>
+            </xs:annotation>
+            </xs:element>
+            
+            <xs:element name="source" type="xs:string" minOccurs="0">
+            
+                <xs:annotation>
+               <xs:documentation>
+                  a label indicating the source of the message - e.g.
+                  module component name and line number in source code.
+               </xs:documentation>
+            </xs:annotation>
+            </xs:element>
+            
+            <xs:element name="timestamp" type="xs:dateTime" minOccurs="0">
+            
+                <xs:annotation>
+               <xs:documentation>
+                  The time at which the message was issued.
+               </xs:documentation>
+            </xs:annotation>
+            </xs:element>
+            
+            <xs:element name="level" type="ceat:log-level" minOccurs="0">
+            
+                <xs:annotation>
+               <xs:documentation>
+                  signicance level of the message
+               </xs:documentation>
+            </xs:annotation>
+            </xs:element>
+        </xs:all>
+    </xs:complexType>
+   <xs:element name="jobId" type="uws:JobIdentifier">
+      
+        <xs:annotation>
+         <xs:documentation>
+            a concrete element containing the job identifier
+         </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+   <!-- supporting types -->
+   <xs:simpleType name="log-level">
+      <xs:annotation>
+         <xs:documentation>
+            Enumeration of possible message log levels.
+         </xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:string">
+         <xs:enumeration value="info">
+            <xs:annotation>
+               <xs:documentation>
+                  a message with only informational content
+               </xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="warn">
+            <xs:annotation>
+               <xs:documentation>
+                  a message that warns about a possible error condition
+               </xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="error">
+            <xs:annotation>
+               <xs:documentation>
+                  a message that informs about a definite error
+                  condition
+               </xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+      </xs:restriction>
+   </xs:simpleType>
+   <!-- should refactor with the CEABase equivalent -->
+   <xs:complexType name="result-list-type">
+      
+        <xs:sequence>
+         
+            <xs:element name="result" type="ceat:ParameterValue" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+   <!-- should refactor with the CEABase equivalent -->
+   <xs:complexType name="input-list-type">
+      
+        <xs:sequence>
+         
+            <xs:element name="parameter" type="ceat:ParameterValue" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+   <xs:complexType name="execution-summary-type">
+      <xs:complexContent>
+         <xs:extension base="uws:JobSummary">
+            <xs:sequence maxOccurs="1">
+               <xs:element name="application-name" type="xs:string" />
+               <!-- need to think about whether this is ok - would probably expose as CEAresult endpoint on the job -->
+               <xs:element name="input-list"
+                  type="ceat:input-list-type"
+               />
+               <xs:element name="result-list"
+                  type="ceat:result-list-type" minOccurs="0"
+                  maxOccurs="1"
+               />
+               <xs:element name="log" type="xs:string" maxOccurs="1"
+                  minOccurs="0"
+               >
+                  <xs:annotation>
+                     <xs:documentation>
+                        Any informative/error messages issued by the job
+                        during execution.
+                     </xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+            </xs:sequence>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+   <!-- elements to use in interfaces -->
+   <xs:complexType name="InitializeJob">
+      
+        <xs:sequence>
+         
+            <xs:element ref="ceat:tool" />
+            
+            <xs:element name="externalId" type="uws:JobIdentifier">
+            
+                <xs:annotation>
+               <xs:documentation>
+                  An external identifier that the caller can use to
+                  identify a job.
+               </xs:documentation>
+            </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Tool" mixed="false">
+         
+        <xs:annotation>
+            <xs:documentation>
+               represents an invocation of a CEA application, with all
+               the parameter values defined.
+            </xs:documentation>
+         </xs:annotation>
+        
+        <xs:sequence>
+            
+            <xs:element name="input" type="ceat:ListOfParameterValues" minOccurs="0">
+               
+                <xs:annotation>
+                  <xs:documentation>
+                     the list of parameters supplied as input
+                  </xs:documentation>
+               </xs:annotation>
+            </xs:element>
+            
+            <xs:element name="output" type="ceat:ListOfParameterValues" minOccurs="0">
+               
+                <xs:annotation>
+                  <xs:documentation>
+                     the list of parameters expected as output
+                  </xs:documentation>
+               </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        
+        <xs:attribute name="id" type="vr:IdentifierURI" use="required">
+            
+            <xs:annotation>
+               <xs:documentation>
+                  ivoa resource identifier of the application to call
+               </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        
+        <xs:attribute name="interface" type="xs:string" use="required">
+            
+            <xs:annotation>
+               <xs:documentation>
+                  which interface of the application to call
+               </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+   
+    <xs:complexType name="ParameterValue" mixed="false"> <!-- TODO probably should be in CEA Types - the only issue against this is that the interface can have a constant value, which is expressed as a Parameter Value - this should be moved to implementation detail perhaps -->
+      <!--The parameter value possibly needs to be more strongly typed than it is at the moment...or use the Quantity from the DM working group when available..-->
+      <!-- perhaps the opportunity could be taken to reduce the length of element names for the v1.0 release -->
+      <xs:annotation>
+         <xs:documentation>
+            Defines what a parameter can contain when it is passed to be
+            executed -This can be a single value element, or a simple
+            construction of an array - could perhaps allow a VOQuantity
+            as well.
+         </xs:documentation>
+      </xs:annotation>
+      <xs:choice><!-- in software use two different subtypes for this choice -->
+         <xs:element name="value" type="xs:string">
+            <xs:annotation>
+               <xs:documentation>
+                  The value of the parameter - formally has an xsd type
+                  of string, though the 'real' type is encoded in the
+                  parameter definition
+               </xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="array" type="ceat:ParameterValueArray">
+            <xs:annotation>
+               <xs:documentation>
+                  very simple model of a array - cannot be sparsely
+                  filled,
+               </xs:documentation>
+            </xs:annotation>
+         </xs:element>
+      </xs:choice>
+      <xs:attribute name="id" type="xs:string" use="required">
+         <xs:annotation>
+            <xs:documentation>
+               The id is a reference to the id of the parameter as
+               defined in the parameters section - used to be called
+               "name"
+            </xs:documentation>
+         </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="encoding" type="ceat:BinaryEncodings"
+         use="optional">
+         <xs:annotation>
+            <xs:documentation>
+               give the opportunity to specify some form of encoding for
+               parameter values. e.g. if passing a binary parameter by
+               value.
+            </xs:documentation>
+         </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="indirect" type="xs:boolean" use="optional"
+         default="false">
+         <xs:annotation>
+            <xs:documentation>
+               This specifies whether the parameter value is indirect -
+               i.e. if value of the parameter is some form of URI to the
+               actual parameter value. If the value is indirect then the
+               CEA server implementation is expected to fetch the
+               parameter before passing it on to the application. This
+               is most often called 'passing by reference' in computer
+               languages.
+            </xs:documentation>
+         </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="mime" type="xs:string" use="optional">
+         <xs:annotation>
+            <xs:documentation>
+               possible mime type of the parameter
+            </xs:documentation>
+         </xs:annotation></xs:attribute>
+   </xs:complexType>
+    <xs:complexType name="ParameterValueArray">
+        <xs:annotation>
+           <xs:documentation>
+              simple array model - assumed to be fully filled in a
+              row-major fashion
+           </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+         <xs:element name="value" type="xs:string" minOccurs="0"
+            maxOccurs="unbounded" />
+      </xs:sequence>
+      <xs:attribute name="arrayShape" type="ceab:arrayDEF" >
+         <xs:annotation>
+            <xs:documentation>
+               editor note - should this be here to allow overriding of
+               the parameter defintion.
+            </xs:documentation>
+         </xs:annotation></xs:attribute>
+   </xs:complexType>
+   
+     <xs:complexType name="ParameterValueGroup">
+        <xs:annotation>
+           <xs:documentation>
+              a way of grouping parameters to indicate that there will
+              be a repetition of parameters into a table like structure
+              - the "table" is presented to the interface in column
+              order and the attribute ncol indicates how many columns
+           </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+         <xs:element name="parameter" type="ceat:ParameterValue" maxOccurs="unbounded" minOccurs="1"></xs:element>
+      </xs:sequence>
+      <xs:attribute name="ncol" type="xs:int"></xs:attribute>
+   </xs:complexType>
+ 
+   <xs:complexType name="ListOfParameterValues">
+        <xs:annotation>
+           <xs:documentation>
+              A list of parameter values
+           </xs:documentation>
+        </xs:annotation>
+        <xs:choice maxOccurs="unbounded" minOccurs="0">
+           <!-- perhaps it would be nice to be able to put in the parameter grouping here - especially for the case where the pgroup is a table like structure. -->
+           <xs:element name="parameter" type="ceat:ParameterValue"
+              minOccurs="1" maxOccurs="1" />
+           <xs:element name="parameterGroup" type="ceat:ParameterValueGroup"></xs:element>
+        </xs:choice>
+   </xs:complexType>
+   
+   <xs:simpleType name="BinaryEncodings">
+      <xs:annotation>
+         <xs:documentation>
+            the allowable binary encodings for a parameter value. The
+            parameter value formally has an xsd type of string, but the
+            use of encodings would allow a pure binary object, e.g. a
+            jpeg file to be included as a direct parameter value.
+         </xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:string">
+         <xs:enumeration value="base64" />
+      </xs:restriction>
+   </xs:simpleType>
+   
+
+   <xs:element name="executionSummary"
+      type="ceat:execution-summary-type"
+   >
+   </xs:element>
+</xs:schema>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="urn:astrogrid:schema:vo-resource-types:TabularDB:v0.3"
+  elementFormDefault="qualified" 
+  attributeFormDefault="unqualified"
+  xmlns:db='urn:astrogrid:schema:vo-resource-types:TabularDB:v0.3'
+  xmlns:xs='http://www.w3.org/2001/XMLSchema'
+  xmlns:vr='http://www.ivoa.net/xml/VOResource/v0.10'
+  xmlns:vs='http://www.ivoa.net/xml/VODataService/v0.5'
+  xmlns:vt='http://www.ivoa.net/xml/VOTable/v1.0'>
+  
+  <!-- Changes from v0.2:
+        - the namespace URN is now in the astrogrid space. -->
+
+  <!-- IVOA schema from which elements are referenced below. The VOTable schema is not used
+       directly but is used by the VODataService schema. -->
+  <xs:import namespace="http://www.ivoa.net/xml/VOResource/v0.10"
+             schemaLocation="../../../vo-resource-types/VOResource/v0.10/VOResource.xsd"/>
+  <xs:import namespace="http://www.ivoa.net/xml/VOTable/v1.0"
+             schemaLocation="http://www.ivoa.net/xml/VOTable/v1.0"/>
+  <xs:import namespace="http://www.ivoa.net/xml/VODataService/v0.5"
+             schemaLocation="../../../vo-resource-types/VODataService/v0.5/VODataService.xsd"/>
+  
+
+  <!-- The sub-type of VOResource that allows the database to be described.
+       This is identical to vs:DataCollectionType except that vs:Access is
+       replaced by db:DB reflecting the fact that this resource described data
+       in dependently of any service. -->
+  <xs:complexType name="TabularDB">
+    <xs:annotation>
+      <xs:documentation>
+        A type of IVOA resource describing (exactly) one database independently of
+        any service giving access to the database. The mandatory core of the element 
+        details the database itself. There may, optionally, be additional elements 
+        describing the provenance and astronomical usage of the resource.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="vs:DataCollection">
+        <xs:sequence>
+	        <xs:element name="db" type="db:DB"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <!-- The description of a database. See the structure of vs:Table (imported from
+       VODataService) for details of the description of the database schema. -->
+  <xs:complexType name="DB">
+    <xs:annotation>
+      <xs:documentation>
+        The structure of the database. There may be detailed metadata for zero or more tables,
+        and these are intended to be read by software. The must also be a human-readable
+        description and a name. A db:DB element with no tables could be used to
+        register a database for which the detailed schemata have not yet been worked out.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="name" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>
+            State the formal name of the database by which it is known to the DBMS.
+            This may be different to the name of the resource as specified in the 
+            http://www.ivoa.net/xml/VOResource/v0.10 namespace; the latter is for
+            human reader and the current element is for the machines.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="description" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>
+            Describe any special features of the database, if any. This description 
+            should avoid scientific description of the data collection as a whole
+            (that is better put in the {http://www.ivoa.net/xml/VOResource/v0.10}Content 
+            structure). The description should also avoid duplicating the structural 
+            description of the tables in the {http://www.ivoa.net/xml/VODataService/v0.5}Table
+            elements. If there is sublety about the relationship of the tables in the database,
+            then describe it here.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="table" type="vs:Table" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+</xs:schema>

@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Paul Harrison (Contractor) -->
+<!-- $id$ -->
+<xsd:schema targetNamespace="http://www.astrogrid.org/schema/AGWorkflow/v1" xmlns:agpd="http://www.astrogrid.org/schema/AGParameterDefinition/v1" xmlns:agcred="http://www.astrogrid.org/schema/Credentials/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:agwf="http://www.astrogrid.org/schema/AGWorkflow/v1" xmlns:er="http://www.astrogrid.org/schema/ExecutionRecord/v1" elementFormDefault="qualified" attributeFormDefault="unqualified">
+        <xsd:import namespace="http://www.astrogrid.org/schema/Credentials/v1" 
+        	schemaLocation="../../../jes/Credentials/v1.0/Credentials.xsd"/>
+        <xsd:import namespace="http://www.astrogrid.org/schema/AGParameterDefinition/v1" 
+        	schemaLocation="../../../jes/AGParameterDefinition/v1.0/AGParameterDefinition.xsd"/>
+        <xsd:import namespace="http://www.astrogrid.org/schema/ExecutionRecord/v1" 
+        	schemaLocation="../../../jes/ExecutionRecord/v1.0/ExecutionRecord.xsd"/>
+        <xsd:element name="workflow">
+                <xsd:annotation>
+                        <xsd:documentation>
+                                Base element of an Astrogird workflow document, conforming to the schema
+                                defined for namespace <tt>http://www.astrogrid.org/schema/AGWorkflow/v1</tt>
+                                </xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType>
+                        <xsd:all>
+                                <xsd:element ref="agwf:sequence" minOccurs="1" maxOccurs="1">
+                                        <xsd:annotation><xsd:documentation>sequence of activities to perform</xsd:documentation></xsd:annotation>
+                                </xsd:element>
+                                <xsd:element name="description" type="xsd:string" minOccurs="0" maxOccurs="1">
+                                        <xsd:annotation><xsd:documentation>An optional textual description</xsd:documentation></xsd:annotation>
+                                </xsd:element>
+                                <xsd:element name="Credentials" type="agcred:Credentials" minOccurs="1" maxOccurs="1"/>
+                                <xsd:element ref="er:job-execution-record" minOccurs="0" maxOccurs="1">
+								<xsd:annotation><xsd:documentation>Details of the execution of this workflow</xsd:documentation></xsd:annotation>
+								</xsd:element>
+                        </xsd:all>
+                        <xsd:attribute name="name" type="xsd:string" use="required">
+							<xsd:annotation><xsd:documentation>descriptive name for this workflow</xsd:documentation>								
+							</xsd:annotation>
+							</xsd:attribute>
+                        <xsd:attribute name="id" use="optional" type="xsd:ID">
+							<xsd:annotation><xsd:documentation>used within the job execution system.</xsd:documentation>
+								
+							</xsd:annotation>
+							</xsd:attribute>
+                </xsd:complexType>
+        </xsd:element>
+
+        <!-- variable manipulation -->
+        <xsd:element name="set" substitutionGroup="agwf:Activity">
+                <xsd:annotation>
+                        <xsd:documentation>Declare (and optionally initialize) a new workflow variable, or update value of existing variable</xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType>
+                        <xsd:complexContent>
+                                <xsd:extension base="agwf:AbstractActivity">
+                                        <xsd:attribute name="var" type="xsd:NCName" use="required">
+                                        <xsd:annotation>
+                                                <xsd:documentation>the name of the variabe to set</xsd:documentation>
+                                        </xsd:annotation>
+                                        </xsd:attribute>
+                                        <xsd:attribute name="value" type="xsd:string" use="optional" >
+                                        <xsd:annotation>
+                                                <xsd:documentation>the value to set the variable to. May contain embedded expressions in ${..}, which will be evaluated</xsd:documentation>
+                                        </xsd:annotation>
+                                        </xsd:attribute>
+                                </xsd:extension>
+                        </xsd:complexContent>
+                </xsd:complexType>
+        </xsd:element>
+
+        <xsd:element name="unset" substitutionGroup="agwf:Activity">
+                <xsd:annotation>
+                        <xsd:documentation>forget a previously-declared workflow variable</xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType>
+                        <xsd:complexContent>
+                                <xsd:extension base="agwf:AbstractActivity">
+                                        <xsd:attribute name="var" type="xsd:NCName" use="required">
+                                        <xsd:annotation>
+                                                <xsd:documentation>the name of the variabe to unset</xsd:documentation>
+                                        </xsd:annotation>
+                                        </xsd:attribute>
+                                </xsd:extension>
+                        </xsd:complexContent>
+                </xsd:complexType>
+        </xsd:element>
+
+        <xsd:element name="scope" substitutionGroup="agwf:Activity">
+                <xsd:annotation>
+                        <xsd:documentation>create a new workflow-variable scope for its body. any variables defined within
+                                its body will no longer be in scope after the end tag.
+                                </xsd:documentation>
+                </xsd:annotation>
+                        <xsd:complexType>
+                        <xsd:complexContent>
+                                <xsd:extension base="agwf:AbstractActivity">
+                                        <xsd:sequence>
+                                                <xsd:element ref="agwf:Activity" minOccurs="1" maxOccurs="1"/>
+                                        </xsd:sequence>
+                                </xsd:extension>
+                        </xsd:complexContent>
+                        </xsd:complexType>
+        </xsd:element>
+
+        <!-- program-flow constructs -->
+
+        <!-- iteration -->
+        <xsd:element name="for" substitutionGroup="agwf:Activity">
+                <xsd:annotation>
+                        <xsd:documentation>A for loop construct - iterated over a sequence of items</xsd:documentation>
+                </xsd:annotation>
+                        <xsd:complexType>
+                        <xsd:complexContent>
+                                <xsd:extension base="agwf:AbstractActivity">
+                                        <xsd:sequence>
+                                                <xsd:element ref="agwf:Activity" minOccurs="0" maxOccurs="1"/>
+                                        </xsd:sequence>
+                                <xsd:attribute name="var" type="xsd:NCName" use="required">
+                                        <xsd:annotation>
+                                                <xsd:documentation>the name of the loop variable</xsd:documentation>
+                                        </xsd:annotation>
+                                </xsd:attribute>
+                                <xsd:attribute name="items" type="xsd:string" use="required">
+                                        <xsd:annotation>
+                                                <xsd:documentation>A sequence or iterator of items- the loop variable will be assigned to each in turn, and then loop body executed</xsd:documentation>
+                                        </xsd:annotation>
+                                </xsd:attribute>
+                                </xsd:extension>
+                        </xsd:complexContent>
+                        </xsd:complexType>
+        </xsd:element>
+
+                <xsd:element name="while" substitutionGroup="agwf:Activity">
+                <xsd:annotation>
+                        <xsd:documentation>A while loop construct</xsd:documentation>
+                </xsd:annotation>
+                        <xsd:complexType>
+                        <xsd:complexContent>
+                                <xsd:extension base="agwf:AbstractActivity">
+                                        <xsd:sequence>
+                                                <xsd:element ref="agwf:Activity" minOccurs="1" maxOccurs="1"/>
+                                        </xsd:sequence>
+                                <xsd:attribute name="test" type="xsd:string" use="required">
+                                        <xsd:annotation>
+                                                <xsd:documentation>the condition for the loop: an expression (in ${..}) that evaluates to a boolean</xsd:documentation>
+                                        </xsd:annotation>
+                                </xsd:attribute>
+                                </xsd:extension>
+                        </xsd:complexContent>
+                        </xsd:complexType>
+        </xsd:element>
+
+                <xsd:element name="parfor" substitutionGroup="agwf:Activity">
+                <xsd:annotation>
+                        <xsd:documentation>A parallel-for loop construct - executes the loop body on each element of items in parallel</xsd:documentation>
+                </xsd:annotation>
+                        <xsd:complexType>
+                        <xsd:complexContent>
+                                <xsd:extension base="agwf:AbstractActivity">
+                                        <xsd:sequence>
+                                                <xsd:element ref="agwf:Activity" minOccurs="1" maxOccurs="1"/>
+                                        </xsd:sequence>
+                                <xsd:attribute name="var" type="xsd:NCName" use="required">
+                                        <xsd:annotation>
+                                                <xsd:documentation>the name of the loop variable</xsd:documentation>
+                                        </xsd:annotation>
+                                </xsd:attribute>
+                                <xsd:attribute name="items" type="xsd:string" use="required">
+                                        <xsd:annotation>
+                                                <xsd:documentation>A sequence or iterator of items- the loop variable will be assigned to each in turn, and then loop body executed</xsd:documentation>
+                                        </xsd:annotation>
+                                </xsd:attribute>
+                                </xsd:extension>
+                        </xsd:complexContent>
+                        </xsd:complexType>
+        </xsd:element>
+
+         <!-- branching -->
+                <xsd:element name="if" substitutionGroup="agwf:Activity">
+                <xsd:annotation>
+                        <xsd:documentation>An if statement</xsd:documentation>
+                </xsd:annotation>
+                        <xsd:complexType>
+                        <xsd:complexContent>
+                                <xsd:extension base="agwf:AbstractActivity">
+                                        <xsd:sequence>
+                                                <xsd:element ref="agwf:then" minOccurs="0" maxOccurs="1"/>
+                                                <xsd:element ref="agwf:else" minOccurs="0" maxOccurs="1" />
+                                        </xsd:sequence>
+                                <xsd:attribute name="test" type="xsd:string" use="required">
+                                        <xsd:annotation>
+                                                <xsd:documentation>the condition for the if: an expression (in ${..}) that evaluates to a boolean</xsd:documentation>
+                                        </xsd:annotation>
+                                </xsd:attribute>
+                                </xsd:extension>
+                        </xsd:complexContent>
+                        </xsd:complexType>
+        </xsd:element>
+
+        <xsd:element name="then">
+                <xsd:annotation>
+                        <xsd:documentation>Branch to take when if condition evaluates to true</xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType>
+                        <xsd:sequence>
+                                <xsd:element ref="agwf:Activity" minOccurs="1" maxOccurs="1" />
+                        </xsd:sequence>
+                </xsd:complexType>
+        </xsd:element>
+
+        <xsd:element name="else">
+                <xsd:annotation>
+                        <xsd:documentation>Branch to take when if condition evaluates to false</xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType>
+                        <xsd:sequence>
+                                <xsd:element ref="agwf:Activity" minOccurs="1" maxOccurs="1" />
+                        </xsd:sequence>
+                </xsd:complexType>
+        </xsd:element>
+
+        <!-- sequencing -->
+        <xsd:element name="sequence" substitutionGroup="agwf:Activity" >
+                <xsd:annotation>
+                        <xsd:documentation>a collection of activities to be performed sequentially</xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType>
+                        <xsd:complexContent>
+                                <xsd:extension base="agwf:ActivityContainer" />
+                        </xsd:complexContent>
+                </xsd:complexType>
+        </xsd:element>
+
+        <!-- want to rename 'flow' to parallel at some point -->
+        <xsd:element name="flow" substitutionGroup="agwf:Activity" >
+                <xsd:annotation>
+                        <xsd:documentation>a collection of activities to be performed potentially in parallel</xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType>
+                        <xsd:complexContent>
+                                <xsd:extension base="agwf:ActivityContainer" />
+                        </xsd:complexContent>
+                </xsd:complexType>
+        </xsd:element>
+
+        <!-- error -handling -->
+        <xsd:element name="try" substitutionGroup="agwf:Activity">
+                <xsd:annotation>
+                        <xsd:documentation>Error-handling construct. if an error occurs during execution of the wrapped activity,
+                                the activity in the 'catch' block is executed.</xsd:documentation>
+                </xsd:annotation>
+                        <xsd:complexType>
+                        <xsd:complexContent>
+                                <xsd:extension base="agwf:AbstractActivity">
+                                        <xsd:sequence>
+                                                <xsd:element ref="agwf:Activity" minOccurs="1" maxOccurs="1"/>
+                                                <xsd:element ref="agwf:catch" minOccurs="1" maxOccurs="1" />
+                                        </xsd:sequence>
+                                </xsd:extension>
+                        </xsd:complexContent>
+                        </xsd:complexType>
+        </xsd:element>
+
+        <xsd:element name="catch">
+                <xsd:annotation>
+                        <xsd:documentation>Action to take when an error occurs in the wrapped try block
+                                variable specified by 'var' attribute will contain details of the error.
+                                </xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType>
+                        <xsd:sequence>
+                                <xsd:element ref="agwf:Activity" minOccurs="1" maxOccurs="1" />
+                        </xsd:sequence>
+                                <xsd:attribute name="var" type="xsd:NCName" use="required">
+                                <xsd:annotation>
+                                        <xsd:documentation>name of the variable to define to contain the thrown error</xsd:documentation>
+                                </xsd:annotation>
+                                </xsd:attribute>
+                </xsd:complexType>
+        </xsd:element>
+
+        <!-- atomic activities -->
+        <xsd:element name="step" substitutionGroup="agwf:Activity">
+                <xsd:annotation>
+                        <xsd:documentation>a step of the workflow - call to an external CEA application.</xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType>
+                        <xsd:complexContent>
+                                <xsd:extension base="agwf:AbstractActivity">
+                                        <xsd:sequence>
+                                                <xsd:element name="description" type="xsd:string" minOccurs="0">
+													<xsd:annotation><xsd:documentation>optional description of this step.</xsd:documentation>														
+													</xsd:annotation>
+													</xsd:element>
+                                                <xsd:element ref="agwf:tool">
+													<xsd:annotation><xsd:documentation>defines the application to call, and the parameters to pass</xsd:documentation>														
+													</xsd:annotation>
+													</xsd:element>
+                                                <xsd:element ref="er:step-execution-record" minOccurs="0" maxOccurs="unbounded">
+													<xsd:annotation><xsd:documentation>records of executioins of this step</xsd:documentation>														
+													</xsd:annotation>
+													</xsd:element>
+                                        </xsd:sequence>
+                                        <xsd:attribute name="name" type="xsd:string" use="required">
+											<xsd:annotation><xsd:documentation>descriptive name for this step</xsd:documentation>												
+											</xsd:annotation>
+											</xsd:attribute>
+										<xsd:attribute name="result-var" type="xsd:NCName" use="optional">
+											<xsd:annotation><xsd:documentation>workflow variable in which to store results of this cea call</xsd:documentation>												
+											</xsd:annotation>
+											</xsd:attribute>
+                                        <!-- deprecated - want to remove sometime -->
+                                        <xsd:attribute name="joinCondition" use="optional" default="any" type="agwf:join-type">
+                                                <xsd:annotation>
+                                                        <xsd:documentation>@deprecated don't use</xsd:documentation>
+                                                </xsd:annotation>
+                                        </xsd:attribute>
+                                        <xsd:attribute name="stepNumber" type="xsd:int" use="optional">
+                                                <xsd:annotation>
+                                                        <xsd:documentation>@deprecated don't use</xsd:documentation>
+                                                </xsd:annotation>
+                                        </xsd:attribute>
+                                        <xsd:attribute name="sequenceNumber" type="xsd:int" use="optional">
+                                                <xsd:annotation>
+                                                        <xsd:documentation>@deprecated don't use</xsd:documentation>
+                                                </xsd:annotation>
+                                        </xsd:attribute>
+
+                                </xsd:extension>
+                        </xsd:complexContent>
+                </xsd:complexType>
+        </xsd:element>
+
+        <xsd:element name="script" substitutionGroup="agwf:Activity">
+                <xsd:annotation>
+                        <xsd:documentation>a step in the workflow - execute some script statements.</xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType>
+                        <xsd:complexContent>
+                                <xsd:extension base="agwf:AbstractActivity">
+                                        <xsd:sequence>
+                                                <xsd:element name="description" type="xsd:string" minOccurs="0">
+														<xsd:annotation><xsd:documentation>optional description of this step</xsd:documentation>															
+														</xsd:annotation>
+													</xsd:element>
+                                                <xsd:element name="body" type="xsd:string" minOccurs="1">
+														<xsd:annotation><xsd:documentation>script statements to execute. By default, groovy language is expected</xsd:documentation>															
+														</xsd:annotation>
+													</xsd:element>
+													
+                                                <xsd:element ref="er:step-execution-record" minOccurs="0" maxOccurs="unbounded">
+													<xsd:annotation><xsd:documentation>records of execution of this script step</xsd:documentation>														
+													</xsd:annotation>
+													</xsd:element>
+                                        </xsd:sequence>
+                                </xsd:extension>
+                        </xsd:complexContent>
+                </xsd:complexType>
+        </xsd:element>
+        <!-- definitions supporting step -->
+        <xsd:element name="tool">
+                <xsd:annotation>
+                        <xsd:documentation>represents a call to a CEA application </xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType>
+                        <xsd:sequence>
+                                <xsd:element ref="agwf:input" minOccurs="0"/>
+                                <xsd:element ref="agwf:output" minOccurs="0"/>
+                        </xsd:sequence>
+                        <xsd:attribute name="name" type="xsd:string" use="required">
+							<xsd:annotation><xsd:documentation>name of the application to call</xsd:documentation>								
+							</xsd:annotation>
+							</xsd:attribute>
+                        <xsd:attribute name="interface" type="xsd:string" use="required">
+							<xsd:annotation><xsd:documentation>which interface of the application to call</xsd:documentation>								
+							</xsd:annotation>
+							</xsd:attribute>
+                </xsd:complexType>
+        </xsd:element>
+
+        <xsd:element name="input">
+                <xsd:annotation>
+                        <xsd:documentation>the list of input parameters</xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType>
+                        <xsd:sequence>
+                                <xsd:element ref="agwf:parameter" minOccurs="0" maxOccurs="unbounded"/>
+                        </xsd:sequence>
+                </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="output">
+                <xsd:annotation>
+                        <xsd:documentation>the list of output paramters</xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType>
+                        <xsd:sequence>
+                                <xsd:element ref="agwf:parameter" minOccurs="0" maxOccurs="unbounded"/>
+                        </xsd:sequence>
+                </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="parameter" type="agpd:parameterValue">
+                <xsd:annotation>
+                        <xsd:documentation>a parameter to be passed to a CEA application</xsd:documentation>
+                </xsd:annotation>
+        </xsd:element>
+
+        <xsd:element name="Activity" type="agwf:AbstractActivity" abstract="true">
+                <xsd:annotation>
+                        <xsd:documentation>Head of the substitution group</xsd:documentation>
+                </xsd:annotation>
+        </xsd:element>
+
+        <xsd:complexType name="ActivityContainer" mixed="0" abstract="true">
+                        <xsd:annotation>
+                                <xsd:documentation>Abstract base class of activities that contain other activities</xsd:documentation>
+                        </xsd:annotation>
+                        <xsd:complexContent>
+                                <xsd:extension base="agwf:AbstractActivity">
+                                        <xsd:sequence>
+                                                <xsd:element ref="agwf:Activity" minOccurs="0" maxOccurs="unbounded"/>
+                                        </xsd:sequence>
+                                </xsd:extension>
+                        </xsd:complexContent>
+        </xsd:complexType>
+
+        <xsd:complexType name="AbstractActivity" mixed="0" abstract="true">
+                <xsd:annotation>
+                        <xsd:documentation>The abstract base class of all activities that can be performed in a workflow</xsd:documentation>
+                </xsd:annotation>
+                <xsd:attribute name="id" use="optional" type="xsd:ID">
+					<xsd:annotation><xsd:documentation>used within the job execution system.</xsd:documentation>
+						
+					</xsd:annotation>
+					</xsd:attribute>
+        </xsd:complexType>
+
+
+        <xsd:simpleType name="join-type">
+                <xsd:annotation>
+                        <xsd:documentation>
+                                @deprecated not used any more
+                        </xsd:documentation>
+                </xsd:annotation>
+                                                        <xsd:restriction base="xsd:string">
+                                                                <xsd:enumeration value="true"/>
+                                                                <xsd:enumeration value="false"/>
+                                                                <xsd:enumeration value="any"/>
+                                                        </xsd:restriction>
+        </xsd:simpleType>
+
+</xsd:schema>

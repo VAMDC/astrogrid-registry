@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           xmlns:vr="http://www.ivoa.net/xml/VOResource/v1.0"
+           xmlns:vs="http://www.ivoa.net/xml/VODataService/v1.0"
+           xmlns:stap="urn:astrogrid:schema:vo-resource-types:STAP:v1.0"
+           targetNamespace="urn:astrogrid:schema:vo-resource-types:STAP:v1.0"
+           elementFormDefault="unqualified" attributeFormDefault="unqualified"
+           version="0.9r2">
+
+   <xs:annotation>
+      <xs:documentation>
+        Implementation of an XML Schema describing a Simple Time
+        Access Service.   Based on "The Simple Time Access Specification"
+        by Silvia Dalla
+      </xs:documentation>
+   </xs:annotation>
+
+   <xs:import namespace="http://www.ivoa.net/xml/VOResource/v1.0"
+              schemaLocation="../../../vo-resource-types/VOResource/v1.0/VOResource.xsd"/>
+   <xs:import namespace="http://www.ivoa.net/xml/VODataService/v1.0"
+              schemaLocation="../../../vo-resource-types/VODataService/v1.0/VODataService.xsd"/>
+
+
+   <xs:complexType name="STAPCapRestriction" abstract="true">
+      <xs:annotation>
+         <xs:documentation>
+            an abstract capability that fixes the standardID to the
+            IVOA ID for the STAP standard.
+         </xs:documentation>
+         <xs:documentation>
+            See vr:Capability for documentation on inherited children.
+         </xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="vr:Capability">
+            <xs:sequence>
+               <xs:element name="validationLevel" type="vr:Validation"
+                           minOccurs="0" maxOccurs="unbounded"/>
+               <xs:element name="description" type="xs:token" 
+                           minOccurs="0"/>
+               <xs:element name="interface" type="vr:Interface" 
+                           minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+            <xs:attribute name="standardID" type="vr:IdentifierURI"
+                          use="required" fixed="ivo://org.astrogrid/std/STAP/v1.0"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+
+   <xs:complexType name="SimpleTimeAccess">
+      <xs:annotation>
+         <xs:documentation>
+            The capabilities of an STAP implementation.  
+         </xs:documentation>
+         <xs:documentation>
+            Editor's Notes: 
+               *  This is a prototype definition to
+                  illustrate how to extend the schema to a specific 
+                  standard interface.
+               *  Staging information is not included yet.   
+         </xs:documentation>
+      </xs:annotation>
+
+      <xs:complexContent>
+         <xs:extension base="stap:STAPCapRestriction">
+            <xs:sequence>
+               <xs:element name="supportPositioning" type="xs:boolean" minOccurs="0">
+                  <xs:annotation>
+                     <xs:documentation>
+                      Does the STAP Service handle Positioning parameters pos and size.
+                     </xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+               
+               <xs:element name="supportedFormats" type="stap:QuerableFormats" minOccurs="0"  maxOccurs="2">
+                  <xs:annotation>
+                     <xs:documentation>
+                      Does the STAP Service handle Positioning parameters pos and size.
+                     </xs:documentation>
+                  </xs:annotation>
+               </xs:element>               
+               
+               <xs:element name="maxRecords" type="xs:int" minOccurs="0">
+                  <xs:annotation>
+                     <xs:documentation>
+                        The largest number of records that the Time Query web
+                        method will return. 
+                     </xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+
+               <xs:element name="testQuery" type="stap:Query" 
+                           minOccurs="0" maxOccurs="1">
+                  <xs:annotation>
+                     <xs:documentation>
+                        a set of query parameters that is expected
+                        to produce at least one matched record which
+                        can be used to test the service.  
+                     </xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+
+            </xs:sequence>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+   
+      <xs:complexType name="SkySize">
+      <xs:sequence>
+         <xs:element name="long" type="xs:float">
+           <xs:annotation>
+              <xs:documentation>
+                 The maximum size in the longitude (R.A.) direction 
+              </xs:documentation>
+           </xs:annotation>
+         </xs:element>
+         <xs:element name="lat" type="xs:float">
+           <xs:annotation>
+              <xs:documentation>
+                 The maximum size in the latitdude (Dec.) direction 
+              </xs:documentation>
+           </xs:annotation>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+
+   <xs:complexType name="SkyPos">
+      <xs:sequence>
+         <xs:element name="long" type="xs:double">
+           <xs:annotation>
+              <xs:documentation>
+                 The sky position in the longitude (R.A.) direction 
+              </xs:documentation>
+           </xs:annotation>
+         </xs:element>
+         <xs:element name="lat" type="xs:double">
+           <xs:annotation>
+              <xs:documentation>
+                 The sky position in the latitdude (Dec.) direction 
+              </xs:documentation>
+           </xs:annotation>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+   
+   
+   
+    <xs:simpleType name="QuerableFormats">
+      <xs:annotation>
+         <xs:documentation>
+      Supported Formats
+         </xs:documentation>
+      </xs:annotation>
+
+      <xs:restriction base="xs:string">
+
+         <xs:enumeration value="FITS">
+            <xs:annotation>
+               <xs:documentation>
+         The STAP service can return FITS type image data.
+               </xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+
+         <xs:enumeration value="CDF">
+            <xs:annotation>
+               <xs:documentation>
+                 The STAP service can return CDF time series data.
+               </xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+
+      </xs:restriction>
+   </xs:simpleType>
+
+   <xs:complexType name="Query">
+      <xs:annotation>
+         <xs:documentation>
+            A query to be sent to the service
+         </xs:documentation>
+      </xs:annotation>
+
+      <xs:sequence>
+         <xs:element name="START" type="xs:dateTime">
+            <xs:annotation>
+               <xs:documentation>
+                   the right ascension of the search cone's center in
+                   decimal degrees.  
+               </xs:documentation>
+            </xs:annotation>
+         </xs:element>
+
+         <xs:element name="END" type="xs:dateTime">
+            <xs:annotation>
+               <xs:documentation>
+                   the declination of the search cone's center in
+                   decimal degrees.  
+               </xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         
+  		 <xs:element name="pos" type="stap:SkyPos" minOccurs="0">
+            <xs:annotation>
+               <xs:documentation>
+                   the right ascension of the search cone's center in
+                   decimal degrees.  
+               </xs:documentation>
+            </xs:annotation>
+         </xs:element>
+
+         <xs:element name="size" type="stap:SkySize" minOccurs="0">
+            <xs:annotation>
+               <xs:documentation>
+                   the declination of the search cone's center in
+                   decimal degrees.  
+               </xs:documentation>
+            </xs:annotation>
+         </xs:element>         
+
+      </xs:sequence>
+
+   </xs:complexType>
+
+</xs:schema>

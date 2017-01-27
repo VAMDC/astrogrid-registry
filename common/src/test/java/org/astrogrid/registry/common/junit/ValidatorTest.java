@@ -7,9 +7,8 @@ import org.astrogrid.util.DomHelper;
 import org.w3c.dom.Document;
 
 import junit.framework.*;
-import org.astrogrid.contracts.SchemaMap;
-import org.astrogrid.registry.common.RegistryValidator;
 import java.util.Map;
+import org.astrogrid.registry.common.SchemaMap;
 
 /**
  * Class: ValidatorTest

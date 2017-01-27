@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="IVOARegistryUpdate" 
+             xmlns="http://schemas.xmlsoap.org/wsdl/" 
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+             xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" 
+             xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
+             xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+             xmlns:ri="http://www.ivoa.net/xml/RegistryInterface/v0.1"              xmlns:ri2="http://www.ivoa.net/xml/RegistryInterface/v0.1" 
+             xmlns:tns="http://www.ivoa.net/wsdl/RegistryUpdate/v0.1"
+             targetNamespace="http://www.ivoa.net/wsdl/RegistryUpdate/v0.1">   <types>      <xs:schema xmlns="http://www.w3.org/2001/XMLSchema" 
+         xmlns:tns="http://www.ivoa.net/wsdl/RegistrySearch/v0.1" 
+         targetNamespace="http://www.ivoa.net/wsdl/RegistrySearch/v0.1">
+         <xs:import namespace="http://www.ivoa.net/xml/RegistryInterface/v0.1"
+                    schemaLocation="../../../registry/RegistryInterface/v0.1/RegistryInterface.xsd"/>                             <xs:import namespace="http://www.ivoa.net/xml/RegistryInterface/v1.0"                    schemaLocation="../../../registry/RegistryInterface/v1.0/RegistryInterface.xsd"/>                    
+	      <xs:element name="Update">	        <xs:complexType>	          <xs:sequence>	             <xs:choice>	            	<xs:element ref="ri:VOResources" />  	            	<xs:element ref="ri2:VOResources" />	              </xs:choice>	          </xs:sequence>	        </xs:complexType>	      </xs:element>	
+	      <xs:element name="UpdateResponse">	      	      </xs:element>      
+      </xs:schema>         </types>
+   <message name="empty"/>
+   <message name="UpdateReq">        <part name="Update" element="tns:Update" />   </message>
+   <message name="UpdateResp">      <part name="UpdateResponse" element="tns:UpdateResponse" />   </message>
+   <portType name="RegistryUpdatePortType">      <operation name="Update">         <input message="tns:UpdateReq" />         <output message="tns:UpdateResp" />      </operation>   </portType>
+   <binding name="RegistryUpdateSOAP" type="tns:RegistryUpdatePortType">      <soap:binding style="document"                     transport="http://schemas.xmlsoap.org/soap/http"/>
+      <operation name="Update">         <soap:operation style="document" soapAction="Update" />         <input>            <soap:body use="literal" />         </input>         <output>            <soap:body use="literal" />         </output>      </operation>
+   </binding></definitions>

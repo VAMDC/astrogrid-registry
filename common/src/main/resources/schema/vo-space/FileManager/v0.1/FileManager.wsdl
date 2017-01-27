@@ -1,0 +1,680 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="FileManager"
+    targetNamespace="urn:astrogrid:schema:vo-space:FileManager:v0.1"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tns="urn:astrogrid:schema:vo-space:FileManager:v0.1"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsd1="urn:astrogrid:schema:filemanager:FileManager:v0.1">
+    <wsdl:types>
+        <xsd:schema targetNamespace="urn:astrogrid:schema:filemanager:FileManager:v0.1"
+            xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsd1="urn:astrogrid:schema:filemanager:FileManager:v0.1">
+            <!-- identifier types -->
+            <xsd:simpleType name="AccountIdent">
+                <xsd:annotation>
+                    <xsd:documentation>valid format for an account name - another form of ivorn.</xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:anyURI"> <!-- todo - refine -->
+                    <xsd:pattern value="ivo://.*"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="NodeName">
+                <xsd:annotation>
+                    <xsd:documentation>valid format for a node name.</xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:NMTOKEN"/>
+            </xsd:simpleType>
+            <!-- ivorn types -->
+            <xsd:simpleType name="Ivorn">
+                <xsd:annotation>
+                    <xsd:documentation>representation of an ivorn. </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:anyURI">
+                    <xsd:pattern value="ivo://.*"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="NodeIvorn">
+                <xsd:annotation>
+                    <xsd:documentation>Ivorn that points to a file manager node. todo:
+                    refine</xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:anyURI"> <!-- todo - refine -->
+                    <xsd:pattern value="ivo://.*"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+
+            <!-- configuration for caching / bunching behaviour -->
+            <xsd:complexType name="BundlePreferences">
+                <xsd:annotation><xsd:documentation>description of client's preferred bunching behaviour</xsd:documentation></xsd:annotation>
+                <xsd:all>
+                    <xsd:element name="prefetchDepth" maxOccurs="1" minOccurs="0" default="1" type="xsd:int">
+                        <xsd:annotation><xsd:documentation>maximum level in this node's subtree to bundle. 0 indicates none, -1 indicates all. if null, decision is left to server</xsd:documentation></xsd:annotation>
+                    </xsd:element>
+                    
+                    <xsd:element name="maxExtraNodes" maxOccurs="1" minOccurs="0" default="-1" type="xsd:int" >
+                        <xsd:annotation><xsd:documentation>maximum additional nodes to return. May limit actual prefetch depth. O indicates none, -1 indicates no limit, if null, decision is left to server</xsd:documentation></xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="fetchParents" default="true" type="xsd:boolean">
+                        <xsd:annotation><xsd:documentation>if true, fetch node's parents to prefetch depth too</xsd:documentation></xsd:annotation>
+                    </xsd:element>                    
+                </xsd:all>
+            </xsd:complexType>
+            <!-- node datastructure -->
+            <xsd:element name="NodeBundle">
+                <xsd:complexType> 
+                    <xsd:annotation>
+                        <xsd:documentation>Bundle of nodes</xsd:documentation>
+                    </xsd:annotation>                    
+                    <xsd:sequence>
+                        <xsd:element maxOccurs="unbounded" minOccurs="1" name="node" type="xsd1:Node"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+                </xsd:element>
+
+            <xsd:simpleType name="NodeTypes">
+                <xsd:annotation>
+                    <xsd:documentation>Enumeration of possible kinds of file manager
+                    node</xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:string">
+                    <xsd:enumeration value="FILE"/>
+                    <xsd:enumeration value="FOLDER"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+                <xsd:complexType name="Node">
+                    <xsd:annotation>
+                    <xsd:documentation>Representation of a node.</xsd:documentation>
+                    </xsd:annotation>
+                    <xsd:sequence>
+                        <xsd:element maxOccurs="1" minOccurs="1" name="ivorn"
+                            type="xsd1:NodeIvorn"/>
+                        <xsd:element maxOccurs="1" minOccurs="0" name="parent"
+                            type="xsd1:NodeIvorn"/>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="child"
+                            type="xsd1:child"/>
+                        <xsd:element maxOccurs="1" minOccurs="1" name="name"
+                            type="xsd1:NodeName"/>
+                        <xsd:element maxOccurs="1" minOccurs="1" name="type" type="xsd1:NodeTypes"/>
+                        <xsd:element maxOccurs="1" minOccurs="1" name="createDate"
+                            type="xsd:dateTime"/>
+                        <xsd:element maxOccurs="1" minOccurs="0" name="modifyDate"
+                            type="xsd:dateTime"/>
+                        <xsd:element maxOccurs="1" minOccurs="0" name="location"
+                            type="xsd1:Ivorn"/>
+                        <xsd:element maxOccurs="1" minOccurs="0" name="size" type="xsd:long"/>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="attributes" type="xsd1:attribute"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+             <xsd:complexType name="child">
+             	<xsd:all>
+             		<xsd:element name="name" type="xsd1:NodeName"/>
+             		<xsd:element name="ivorn" type="xsd1:NodeIvorn"/>
+             	</xsd:all>
+             </xsd:complexType>
+            <xsd:complexType name="attribute">
+                <xsd:all>
+                    <xsd:element name="key" type="xsd:string"/>
+                    <xsd:element name="value" type="xsd:string" />
+                </xsd:all>
+            </xsd:complexType>
+            <!-- message types  - not visible in generated interface, but necessary to force wrapped style.-->
+            <xsd:element name="addAccount">
+                <xsd:complexType>
+                <xsd:all>
+                    <xsd:element maxOccurs="1" minOccurs="1" name="ident" type="xsd1:AccountIdent" />
+                    <xsd:element maxOccurs="1" minOccurs="0" name="hints" type="xsd1:BundlePreferences" />
+                </xsd:all>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="getAccount">
+                <xsd:complexType>
+                    <xsd:all>
+                        <xsd:element maxOccurs="1" minOccurs="1" name="ident" type="xsd1:AccountIdent" />
+                        <xsd:element maxOccurs="1" minOccurs="0" name="hints" type="xsd1:BundlePreferences" />
+                    </xsd:all>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="getNode">
+                <xsd:complexType>
+                    <xsd:all>
+                        <xsd:element maxOccurs="1" minOccurs="1" name="nodeIvorn" type="xsd1:NodeIvorn"/>
+                        <xsd:element maxOccurs="1" minOccurs="0" name="hints" type="xsd1:BundlePreferences"/>
+                    </xsd:all>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="getIdentifier">
+                <xsd:complexType/>
+            </xsd:element>
+            <xsd:element name="delete">
+                <xsd:complexType>
+                    <xsd:all>
+                        <xsd:element maxOccurs="1" minOccurs="1" name="nodeIvorn" type="xsd1:NodeIvorn"/>
+                    </xsd:all>
+                </xsd:complexType>                
+            </xsd:element>
+            <xsd:element name="readContent">
+                <xsd:complexType>
+                    <xsd:all>
+                        <xsd:element maxOccurs="1" minOccurs="1" name="nodeIvorn" type="xsd1:NodeIvorn"/>
+                    </xsd:all>
+                </xsd:complexType>                        
+            </xsd:element>
+            <xsd:element name="writeContent">
+                <xsd:complexType>
+                    <xsd:all>
+                        <xsd:element maxOccurs="1" minOccurs="1" name="nodeIvorn" type="xsd1:NodeIvorn"/>
+                    </xsd:all>
+                </xsd:complexType>                        
+            </xsd:element>
+            <xsd:element name="appendContent">
+                <xsd:complexType>
+                    <xsd:all>
+                        <xsd:element maxOccurs="1" minOccurs="1" name="nodeIvorn" type="xsd1:NodeIvorn"/>
+                    </xsd:all>
+                </xsd:complexType>                        
+            </xsd:element>            
+            <xsd:element name="copyContentToURL">
+                <xsd:complexType>
+                    <xsd:all>
+                        <xsd:element maxOccurs="1" minOccurs="1" name="nodeIvorn" type="xsd1:NodeIvorn"/>
+                        <xsd:element maxOccurs="1" minOccurs="1" name="url" type="xsd:anyURI"/>
+                    </xsd:all>
+                </xsd:complexType>                        
+            </xsd:element>
+            <xsd:element name="copyURLToContent">
+                <xsd:complexType>
+                    <xsd:all>
+                        <xsd:element maxOccurs="1" minOccurs="1" name="nodeIvorn" type="xsd1:NodeIvorn"/>                        
+                        <xsd:element maxOccurs="1" minOccurs="1" name="url" type="xsd:anyURI"/>      
+                    </xsd:all>
+                </xsd:complexType>                        
+            </xsd:element>
+            <xsd:element name="move">
+                <xsd:complexType>
+                    <xsd:all>
+                    	<xsd:element maxOccurs="1" minOccurs="0" name="nodeIvorn" type="xsd1:NodeIvorn"/>
+                        <xsd:element maxOccurs="1" minOccurs="0" name="newParent" type="xsd1:NodeIvorn"/>
+                        <xsd:element maxOccurs="1" minOccurs="1" name="newNodeName" type="xsd1:NodeName" />
+                        <xsd:element maxOccurs="1" minOccurs="0" name="newLocation" type="xsd1:Ivorn"/>                
+                    </xsd:all>
+                </xsd:complexType>                
+            </xsd:element>
+            <xsd:element name="copy">
+                <xsd:complexType>
+                    <xsd:all>
+                    	<xsd:element maxOccurs="1" minOccurs="0" name="nodeIvorn" type="xsd1:NodeIvorn"/>                    
+                        <xsd:element maxOccurs="1" minOccurs="0" name="newParent" type="xsd1:NodeIvorn"/>
+                        <xsd:element maxOccurs="1" minOccurs="1" name="newNodeName" type="xsd1:NodeName" />
+                        <xsd:element maxOccurs="1" minOccurs="0" name="newLocation" type="xsd1:Ivorn"/>                
+                    </xsd:all>
+                </xsd:complexType>                  
+            </xsd:element>
+            <xsd:element name="refresh">
+                <xsd:complexType>
+                    <xsd:all>
+                        <xsd:element maxOccurs="1" minOccurs="1" name="nodeIvorn" type="xsd1:NodeIvorn"/>
+                        <xsd:element maxOccurs="1" minOccurs="0" name="hints" type="xsd1:BundlePreferences"/>
+                    </xsd:all>
+                </xsd:complexType>                
+            </xsd:element>
+            <xsd:element name="addNode">
+                <xsd:complexType>
+                    <xsd:all>
+                        <xsd:element maxOccurs="1" minOccurs="0" name="parentIvorn" type="xsd1:NodeIvorn"/>
+                        <xsd:element maxOccurs="1" minOccurs="1" name="newNodeName" type="xsd1:NodeName" />
+                        <xsd:element maxOccurs="1" minOccurs="1" name="nodeType" type="xsd1:NodeTypes"/>
+                    </xsd:all>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+    <!-- messages-->
+    
+     <!-- request messages -->
+    <wsdl:message name="addAccountRequest">
+        <wsdl:part name="addAccount" element="xsd1:addAccount"/>
+    </wsdl:message>
+
+    <wsdl:message name="getAccountRequest">
+        <wsdl:part name="getAccount" element="xsd1:getAccount"/>
+    </wsdl:message>
+    <wsdl:message name="getNodeRequest">
+        <wsdl:part name="getNode" element="xsd1:getNode" />
+    </wsdl:message>
+    <wsdl:message name="getIdentifierRequest">
+        <wsdl:part name="getIdentifier" element="xsd1:getIdentifier" />
+    </wsdl:message>
+    <wsdl:message name="deleteRequest">
+        <wsdl:part name="delete" element="xsd1:delete" />
+    </wsdl:message>
+    <wsdl:message name="readContentRequest">
+        <wsdl:part name="readContent" element="xsd1:readContent" />
+    </wsdl:message>
+    <wsdl:message name="writeContentRequest">
+        <wsdl:part name="writeContent" element="xsd1:writeContent" />
+    </wsdl:message>
+    <wsdl:message name="appendContentRequest">
+        <wsdl:part name="appendContent" element="xsd1:appendContent" />
+    </wsdl:message>    
+    <wsdl:message name="copyURLToContentRequest">
+        <wsdl:part name="copyURLToContent" element="xsd1:copyURLToContent" />
+    </wsdl:message>
+    <wsdl:message name="copyContentToURLRequest">
+        <wsdl:part name="copyContentToURL" element="xsd1:copyContentToURL" />
+    </wsdl:message>
+    <wsdl:message name="moveRequest">
+        <wsdl:part name="move" element="xsd1:move" />
+    </wsdl:message>
+    <wsdl:message name="copyRequest">
+        <wsdl:part name="copy" element="xsd1:copy" />
+    </wsdl:message>
+    <wsdl:message name="refreshRequest">
+        <wsdl:part name="refresh" element="xsd1:refresh" />
+    </wsdl:message>
+    <wsdl:message name="addNodeRequest">
+        <wsdl:part name="addNode" element="xsd1:addNode" />
+    </wsdl:message>
+
+   <!-- response messages -->
+    <wsdl:message name="CopyContentToURLResponse"/>
+    <wsdl:message name="NodeBundleMessage">
+        <wsdl:documentation>message containing a bundle of nodes</wsdl:documentation>
+        <wsdl:part element="xsd1:NodeBundle" name="nodes"/>
+    </wsdl:message>
+    <wsdl:message name="ResourceLocationMessage">
+        <wsdl:part name="url" type="xsd:anyURI" />
+    </wsdl:message>
+    <wsdl:message name="IvornMessage">
+           <wsdl:part name="ivorn" type="xsd1:Ivorn" />
+    </wsdl:message>
+    
+    <!-- fault messages -->
+    <wsdl:message name="FileManagerFault">
+        <wsdl:documentation>
+            generic fault message type for fileManager
+        </wsdl:documentation>
+        <wsdl:part name="message" type="xsd:string" />
+    </wsdl:message>
+    
+    <wsdl:message name="DuplicateNodeFault">
+        <wsdl:documentation>
+            fault when a duplicate node is encountered.
+        </wsdl:documentation>
+        <wsdl:part name="message" type="xsd:string" />
+    </wsdl:message>
+    
+    <wsdl:message name="NodeNotFoundFault">
+        <wsdl:documentation>
+            fault when a required node is not found.
+        </wsdl:documentation>
+        <wsdl:part name="message" type="xsd:string" />
+    </wsdl:message>
+    
+    <!-- the port type -->
+    <wsdl:portType name="FileManagerPortType">
+        <wsdl:operation name="getNode">
+            <wsdl:documentation>access a node in the tree</wsdl:documentation>
+            <wsdl:input message="tns:getNodeRequest">
+                <wsdl:documentation>node to
+                retreive</wsdl:documentation>
+            </wsdl:input>
+            <wsdl:output message="tns:NodeBundleMessage">
+                <wsdl:documentation>the requested node (and maybe some others)</wsdl:documentation>
+            </wsdl:output>
+            <wsdl:fault name="NodeNotFoundFault" message="tns:NodeNotFoundFault"/>
+            <wsdl:fault name="FileManagerFault" message="tns:FileManagerFault" />
+        </wsdl:operation>
+        
+        <wsdl:operation name="addAccount">
+            <wsdl:documentation>Add a new account</wsdl:documentation>
+            <wsdl:input message="tns:addAccountRequest">
+                <wsdl:documentation>identifier of the new account</wsdl:documentation>
+            </wsdl:input>
+            <wsdl:output message="tns:NodeBundleMessage">
+                <wsdl:documentation >node of the new account</wsdl:documentation>
+            </wsdl:output>     
+            <wsdl:fault name="DuplicateNodeFault" message="tns:DuplicateNodeFault"/>
+            <wsdl:fault name="FileManagerFault" message="tns:FileManagerFault" />            
+        </wsdl:operation>
+        
+        <wsdl:operation name="getAccount">
+            <wsdl:documentation >get node for an account</wsdl:documentation>
+            <wsdl:input message="tns:getAccountRequest">
+                <wsdl:documentation >identifier of the account</wsdl:documentation>
+            </wsdl:input>
+            <wsdl:output message="tns:NodeBundleMessage">
+                <wsdl:documentation >node of the account (maybe plus subtree)</wsdl:documentation>
+            </wsdl:output>  
+            <wsdl:fault name="NodeNotFoundFault" message="tns:NodeNotFoundFault"/>            
+            <wsdl:fault name="FileManagerFault" message="tns:FileManagerFault" />            
+        </wsdl:operation>
+        
+        <wsdl:operation name="getIdentifier">
+            <wsdl:documentation>Retreive Ivorn for this service</wsdl:documentation>
+            <wsdl:input message="tns:getIdentifierRequest"/>
+            <wsdl:output message="tns:IvornMessage"/>                        
+        </wsdl:operation>
+  
+        <wsdl:operation name="delete">
+            <wsdl:documentation >delete a node</wsdl:documentation>
+            <wsdl:input message="tns:deleteRequest">
+                <wsdl:documentation >the node to delete.</wsdl:documentation>
+            </wsdl:input>
+            <wsdl:output message="tns:NodeBundleMessage">
+                <wsdl:documentation>nodes that have  changed as a result.</wsdl:documentation>
+            </wsdl:output>            
+            <wsdl:fault name="NodeNotFoundFault" message="tns:NodeNotFoundFault"/>            
+            <wsdl:fault name="FileManagerFault" message="tns:FileManagerFault" />            
+        </wsdl:operation>        
+
+        <wsdl:operation name="readContent">
+            <wsdl:documentation>read contents of a node</wsdl:documentation>
+            <wsdl:input message="tns:readContentRequest"/>
+            <wsdl:output message="tns:ResourceLocationMessage"/>   
+            <wsdl:fault name="NodeNotFoundFault" message="tns:NodeNotFoundFault"/>            
+            <wsdl:fault name="FileManagerFault" message="tns:FileManagerFault" />             
+        </wsdl:operation>
+        
+        <wsdl:operation name="writeContent">     
+            <wsdl:documentation>write contents of a node</wsdl:documentation>
+            <wsdl:input message="tns:writeContentRequest"/>
+            <wsdl:output message="tns:ResourceLocationMessage"/>
+            <wsdl:fault name="NodeNotFoundFault" message="tns:NodeNotFoundFault"/>            
+            <wsdl:fault name="FileManagerFault" message="tns:FileManagerFault" />                  
+        </wsdl:operation>
+        
+        <wsdl:operation name="appendContent">     
+            <wsdl:documentation>write contents of a node</wsdl:documentation>
+            <wsdl:input message="tns:appendContentRequest"/>
+            <wsdl:output message="tns:ResourceLocationMessage"/>
+            <wsdl:fault name="NodeNotFoundFault" message="tns:NodeNotFoundFault"/>            
+            <wsdl:fault name="FileManagerFault" message="tns:FileManagerFault" />                  
+        </wsdl:operation>
+                
+        
+        <wsdl:operation name="copyURLToContent">
+            <wsdl:documentation>write a url resource into the contents of this node</wsdl:documentation>
+            <wsdl:input message="tns:copyURLToContentRequest"/>
+            <wsdl:output message="tns:NodeBundleMessage">
+                <wsdl:documentation>nodes that have  changed as a result.</wsdl:documentation>
+            </wsdl:output>     
+            <wsdl:fault name="NodeNotFoundFault" message="tns:NodeNotFoundFault"/>            
+            <wsdl:fault name="FileManagerFault" message="tns:FileManagerFault" />             
+        </wsdl:operation>
+        <wsdl:operation name="copyContentToURL">     
+            <wsdl:documentation>write contents of a node to a url resource</wsdl:documentation>
+            <wsdl:input message="tns:copyContentToURLRequest"/>
+            <wsdl:output message="tns:CopyContentToURLResponse" />
+            <wsdl:fault name="NodeNotFoundFault" message="tns:NodeNotFoundFault"/>            
+            <wsdl:fault name="FileManagerFault" message="tns:FileManagerFault" />                  
+        </wsdl:operation>
+        
+        <wsdl:operation name="move">    
+            <wsdl:input message="tns:moveRequest"/>            
+        <wsdl:output message="tns:NodeBundleMessage">
+        <wsdl:documentation >nodes that have changed as a concequence</wsdl:documentation>
+        </wsdl:output>    
+            <wsdl:fault name="DuplicateNodeFault" message="tns:DuplicateNodeFault"/>            
+            <wsdl:fault name="NodeNotFoundFault" message="tns:NodeNotFoundFault"/>            
+            <wsdl:fault name="FileManagerFault" message="tns:FileManagerFault" />                
+        </wsdl:operation>
+        
+        <wsdl:operation name="copy">
+            <wsdl:input message="tns:copyRequest"/>
+        <wsdl:output message="tns:NodeBundleMessage">
+            <wsdl:documentation >nodes that have changed as a concequence</wsdl:documentation>
+        </wsdl:output>
+            <wsdl:fault name="DuplicateNodeFault" message="tns:DuplicateNodeFault"/>            
+            <wsdl:fault name="NodeNotFoundFault" message="tns:NodeNotFoundFault"/>            
+            <wsdl:fault name="FileManagerFault" message="tns:FileManagerFault" />                
+        </wsdl:operation>         
+        
+        <wsdl:operation name="refresh">
+            <wsdl:documentation >check this node for changes.</wsdl:documentation>
+            <wsdl:input message="tns:refreshRequest">
+                <wsdl:documentation>node to refesh</wsdl:documentation>
+            </wsdl:input>
+            <wsdl:output message="tns:NodeBundleMessage">
+                <wsdl:documentation>nodes that have changed.</wsdl:documentation>
+            </wsdl:output>     
+            <wsdl:fault name="NodeNotFoundFault" message="tns:NodeNotFoundFault"/>            
+            <wsdl:fault name="FileManagerFault" message="tns:FileManagerFault" />            
+        </wsdl:operation>
+        <wsdl:operation name="addNode">
+            <wsdl:documentation>add a new node</wsdl:documentation>
+            <wsdl:input message="tns:addNodeRequest">
+                <wsdl:documentation >information on new node.</wsdl:documentation>
+            </wsdl:input>
+            <wsdl:output message="tns:NodeBundleMessage">
+                <wsdl:documentation >new node, plus nodes that have changed as a result.</wsdl:documentation>
+            </wsdl:output>    
+            <wsdl:fault name="DuplicateNodeFault" message="tns:DuplicateNodeFault"/>            
+            <wsdl:fault name="NodeNotFoundFault" message="tns:NodeNotFoundFault"/>            
+            <wsdl:fault name="FileManagerFault" message="tns:FileManagerFault" />            
+        </wsdl:operation>
+        <!-- the port type -->
+    </wsdl:portType>
+    <wsdl:binding name="FileManagerBinding" type="tns:FileManagerPortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="getNode">
+            <soap:operation soapAction="getNode"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NodeNotFoundFault">  
+                <soap:fault name="NodeNotFoundFault" use="literal"/>
+            </wsdl:fault>            
+            <wsdl:fault name="FileManagerFault"> 
+                <soap:fault name="FileManagerFault" use="literal"/>
+            </wsdl:fault>            
+        </wsdl:operation>
+        <wsdl:operation name="addAccount">
+            <soap:operation soapAction="addAccount"/>
+            <wsdl:input>
+                <soap:body  use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="DuplicateNodeFault">  
+                <soap:fault name="DuplicateNodeFault" use="literal"/>
+            </wsdl:fault>              
+            <wsdl:fault name="FileManagerFault">
+                <soap:fault name="FileManagerFault" use="literal"/>
+            </wsdl:fault> 
+        </wsdl:operation>
+        <wsdl:operation name="getAccount">
+            <soap:operation soapAction="getAccount"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NodeNotFoundFault">  
+                <soap:fault name="NodeNotFoundFault" use="literal"/>
+            </wsdl:fault>              
+            <wsdl:fault name="FileManagerFault">
+                <soap:fault name="FileManagerFault" use="literal"/>
+            </wsdl:fault> 
+        </wsdl:operation>
+        <wsdl:operation name="getIdentifier">
+            <soap:operation soapAction="getIdentifier"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation> 
+        <wsdl:operation name="copy">
+            <soap:operation soapAction="copy"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body  use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NodeNotFoundFault">  
+                <soap:fault name="NodeNotFoundFault" use="literal"/>
+            </wsdl:fault>   
+            <wsdl:fault name="DuplicateNodeFault">  
+                <soap:fault name="DuplicateNodeFault" use="literal"/>
+            </wsdl:fault>              
+            <wsdl:fault name="FileManagerFault">
+                <soap:fault name="FileManagerFault" use="literal"/>
+            </wsdl:fault>             
+        </wsdl:operation>
+        <wsdl:operation name="move">
+            <soap:operation soapAction="move"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body  use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NodeNotFoundFault">  
+                <soap:fault name="NodeNotFoundFault" use="literal"/>
+            </wsdl:fault>    
+            <wsdl:fault name="DuplicateNodeFault">  
+                <soap:fault name="DuplicateNodeFault" use="literal"/>
+            </wsdl:fault>              
+            <wsdl:fault name="FileManagerFault">
+                <soap:fault name="FileManagerFault" use="literal"/>
+            </wsdl:fault>             
+        </wsdl:operation>        
+        <wsdl:operation name="delete">
+            <soap:operation soapAction="delete"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NodeNotFoundFault">  
+                <soap:fault name="NodeNotFoundFault" use="literal"/>
+            </wsdl:fault>              
+            <wsdl:fault name="FileManagerFault">
+                <soap:fault name="FileManagerFault" use="literal"/>
+            </wsdl:fault>             
+        </wsdl:operation>
+        <wsdl:operation name="readContent">
+            <soap:operation soapAction="readContent"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NodeNotFoundFault">  
+                <soap:fault name="NodeNotFoundFault" use="literal"/>
+            </wsdl:fault>              
+            <wsdl:fault name="FileManagerFault">
+                <soap:fault name="FileManagerFault" use="literal"/>
+            </wsdl:fault>              
+        </wsdl:operation>
+        <wsdl:operation name="writeContent">
+            <soap:operation soapAction="writeContent"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NodeNotFoundFault">  
+                <soap:fault name="NodeNotFoundFault" use="literal"/>
+            </wsdl:fault>              
+            <wsdl:fault name="FileManagerFault">
+                <soap:fault name="FileManagerFault" use="literal"/>
+            </wsdl:fault>              
+        </wsdl:operation>
+        <wsdl:operation name="appendContent">
+            <soap:operation soapAction="appendContent"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NodeNotFoundFault">  
+                <soap:fault name="NodeNotFoundFault" use="literal"/>
+            </wsdl:fault>              
+            <wsdl:fault name="FileManagerFault">
+                <soap:fault name="FileManagerFault" use="literal"/>
+            </wsdl:fault>              
+        </wsdl:operation>        
+        <wsdl:operation name="copyURLToContent">
+            <soap:operation soapAction="copyURLToContent"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NodeNotFoundFault">  
+                <soap:fault name="NodeNotFoundFault" use="literal"/>
+            </wsdl:fault>              
+            <wsdl:fault name="FileManagerFault">
+                <soap:fault name="FileManagerFault" use="literal"/>
+            </wsdl:fault>              
+        </wsdl:operation>
+        <wsdl:operation name="copyContentToURL">
+            <soap:operation soapAction="copyContentToURL"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>   
+            <wsdl:fault name="NodeNotFoundFault">  
+                <soap:fault name="NodeNotFoundFault" use="literal"/>
+            </wsdl:fault>              
+            <wsdl:fault name="FileManagerFault">
+                <soap:fault name="FileManagerFault" use="literal"/>
+            </wsdl:fault>              
+        </wsdl:operation>        
+        <wsdl:operation name="refresh">
+            <soap:operation soapAction="refresh"/>
+            <wsdl:input> 
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NodeNotFoundFault">  
+                <soap:fault name="NodeNotFoundFault" use="literal"/>
+            </wsdl:fault>              
+            <wsdl:fault name="FileManagerFault">
+                <soap:fault name="FileManagerFault" use="literal"/>
+            </wsdl:fault>             
+        </wsdl:operation>
+        <wsdl:operation name="addNode">
+            <soap:operation soapAction="addNode"/>
+            <wsdl:input> 
+                <soap:body  use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="DuplicateNodeFault">  
+                <soap:fault name="DuplicateNodeFault" use="literal"/>
+            </wsdl:fault>  
+            <wsdl:fault name="NodeNotFoundFault">  
+                <soap:fault name="NodeNotFoundFault" use="literal"/>
+            </wsdl:fault>  
+            <wsdl:fault name="FileManagerFault">
+                <soap:fault name="FileManagerFault" use="literal"/>
+            </wsdl:fault>             
+        </wsdl:operation>
+    </wsdl:binding>
+    <!-- the service -->
+    <wsdl:service name="FileManager">
+        <wsdl:port binding="tns:FileManagerBinding" name="FileManagerPort">
+            <soap:address location="http://localhost:8000/FileManager"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

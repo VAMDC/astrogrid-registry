@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Tony Linde (University of Leicester) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	   elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+    <xs:simpleType name="RelationshipType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="mirror-of">
+	      <xs:annotation>
+	         <xs:documentation>
+		   The current resource mirrors another resource
+	         </xs:documentation>
+	      </xs:annotation>
+	    </xs:enumeration>
+            <xs:enumeration value="service-for">
+	      <xs:annotation>
+	         <xs:documentation>
+		   The current resource is a service that provides access to 
+		   a data collection
+	         </xs:documentation>
+	      </xs:annotation>
+	    </xs:enumeration>
+            <xs:enumeration value="derived-from">
+	      <xs:annotation>
+	         <xs:documentation>
+		   The current resource is derived from another resource. 
+	         </xs:documentation>
+	      </xs:annotation>
+	    </xs:enumeration>
+            <xs:enumeration value="related-to">
+	      <xs:annotation>
+	         <xs:documentation>
+		   The current resource is related to another resource in an
+		   unspecified way.
+	         </xs:documentation>
+	      </xs:annotation>
+	    </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

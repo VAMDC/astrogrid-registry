@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.ivoa.net/xml/RegistryInterface/v0.1" 
+           xmlns="http://www.w3.org/2001/XMLSchema" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           xmlns:vr="http://www.ivoa.net/xml/VOResource/v0.10" 
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified"
+           version="0.10">
+
+   <xs:annotation>
+      <xs:documentation>
+        Application schema used by the IVOA Registry Interface.  
+      </xs:documentation>
+   </xs:annotation>
+
+   <xs:import namespace="http://www.ivoa.net/xml/VOResource/v0.10"
+   	schemaLocation="../../../vo-resource-types/VOResource/v0.10/VOResource.xsd"/>
+   <xs:element name="VOResources">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element name="Resource" type="vr:Resource" 
+                        maxOccurs="unbounded"/>
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+         
+</xs:schema>
+

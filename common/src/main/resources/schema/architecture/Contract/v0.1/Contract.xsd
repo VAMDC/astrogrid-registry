@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+  targetNamespace="urn:astrogrid:schema:architecture:Contract:v0.1"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="urn:astrogrid:schema:architecture:Contract:v0.1"
+	elementFormDefault="qualified"
+	attributeFormDefault="unqualified"
+>
+  
+  <xsd:element name="contract">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="name" type="xsd:anyURI">
+          <xsd:annotation>
+            <xsd:documentation>
+              The URN for the contract. This must follow the rules laid down for 
+              URNs in RFC2141.
+            </xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+        <xsd:element name="title" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>
+              A human-readable title for the contract.
+            </xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+        <xsd:element name="description" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>
+              A terse description of what the contract controls. State the kind of interface
+              controlled (e.g. SOAP service, Java API, etc.).
+            </xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+      	<xsd:element name="document" type="tns:Document" minOccurs="0" maxOccurs="unbounded">
+      		<xsd:annotation>
+      			<xsd:documentation>
+      				Any documentation for the contract. The primary document is usually a description
+      				of the semantics of the interface.
+      			</xsd:documentation>
+      		</xsd:annotation>
+      	</xsd:element>
+        <xsd:element name="schema" type="tns:Schema" minOccurs="0" maxOccurs="unbounded">
+          <xsd:annotation>
+            <xsd:documentation>
+              An XML schema used in the contract.
+            </xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+	<xsd:complexType name="Document">
+		<xsd:annotation>
+			<xsd:documentation>
+				Identifies a document used or owned by the contract.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+  		<xsd:element name="name" type="xsd:string"/>
+	  	<xsd:element name="location" type="xsd:string"/>
+			<xsd:element name="description" type="xsd:string"/>
+		</xsd:sequence>
+		<xsd:attribute name="usage" type="tns:Usage"/>
+	</xsd:complexType>
+	
+	<xsd:simpleType name="Usage">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="owned">
+				<xsd:annotation>
+					<xsd:documentation>
+						Implies that the document is used only by the current contract and the document's location
+						is relative to the contract's base directory.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="shared">
+				<xsd:annotation>
+					<xsd:documentation>
+						Implies that the document is used by contracts other than this one and that the document's
+						location is relative to some base directory for shared documents.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+				
+  <xsd:complexType name="Schema">
+    <xsd:annotation>
+      <xsd:documentation>
+        Identifies an XML schema (including WSDL documents). The version of the schema
+        should be stated as part of the namespace URI.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="namespace" type="xsd:anyURI">
+        <xsd:annotation>
+          <xsd:documentation>
+            States the namespace URI for the schema. E.g.
+            urn:astrogrid:schema:vo-resource-types:TabularDB:v0.3
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="location"  type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>
+            Identifies the schema file. Assume that all schemata are
+            located in a tree rooted at a directory called "schema" and state the path
+            below that point, including the file name on the end of the path. E.g.
+            vo-resources-types/TabularDB/v0.3/TabularDB.xsd
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    	<xsd:element name="description" type="xsd:string" minOccurs="0">
+    		<xsd:annotation>
+    			<xsd:documentation>
+    				Describes briefly the use of the schema in this contract. No need to discuss the 
+    				general uses of the schema.
+    			</xsd:documentation>
+    		</xsd:annotation>
+    	</xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+      
+</xsd:schema>

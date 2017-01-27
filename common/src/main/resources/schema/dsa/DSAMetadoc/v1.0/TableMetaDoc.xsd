@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" xmlns:tmd="urn:astrogrid:schema:TableMetaDoc:v1" targetNamespace="urn:astrogrid:schema:TableMetaDoc:v1" version="1.0">
+	<xs:annotation>
+		<xs:documentation> 
+			This schema defines the 'tabular catalog metadocument' that is used to
+			describe tabular catalog. 'Catalog' here is used in the database sense,
+         as a collection of tables - they need not be sky catalogs. 
+         The schema is self-contained, and might be referred to from other 
+         schemas. 
+         Element names are similar where possible to the VO-standard metadata
+			documents. In a document that informs an AstroGrid skycatserver 
+         installation, the root element must be DatasetDescription in this 
+         namespace. Other documents may use Catalog or Table as root elements, 
+         but these documents will not be usuable in AstroGrid software.
+         This version of the schema is a placeholder release to synchronise
+         with the current state of the AstroGrid DSA codebase;  it will be
+         the basis of a future release that deals more explicitly with the 
+         issue of epoch etc.
+		</xs:documentation>
+	</xs:annotation>
+	
+	<xs:element name="DatasetDescription">
+		<xs:annotation>
+			<xs:documentation>
+				Describes a collection of catalogues presumed to be held in the 
+            same database; the catalogues need not be logically connected 
+            but must be accessible through the same interfaces, such a common 
+            JDBC connection. This must be the root element in a document that 
+            informs an AstroGrid skycatserver installation.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tmd:Catalog" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="Catalog">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Name" type="xs:string"/>
+				<xs:element name="Description" type="xs:string" minOccurs="0"/>
+				<xs:element ref="tmd:Table" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="Table">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Name" type="xs:string"/>
+				<xs:element name="Description" type="xs:string" minOccurs="0"/>
+				<xs:element maxOccurs="unbounded" ref="tmd:Column"/>
+			</xs:sequence>
+			<xs:attribute name="ID" use="required" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="Column">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Name" type="xs:string"/>
+				<xs:element ref="tmd:Datatype"/>
+				<xs:element name="Description" type="xs:string" minOccurs="0"/>
+				<xs:element minOccurs="0" ref="tmd:Units"/>
+				<xs:element name="DimEq" type="xs:string" minOccurs="0"/>
+				<xs:element name="Scale" type="xs:string" minOccurs="0"/>
+				<xs:element ref="tmd:UCD" maxOccurs="unbounded" minOccurs="1"/>
+				<xs:element ref="tmd:ErrorColumn" minOccurs="0"/>
+				<xs:choice>
+				   <xs:element ref="tmd:SkyPolarCoord" minOccurs="0"/>
+					<xs:element name="SkyHtmPos" minOccurs="0"/>
+				</xs:choice>
+			</xs:sequence>
+			<xs:attribute name="ID" use="required" type="xs:string"/>
+			<xs:attribute name="indexed" use="required" type="xs:boolean"/>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="Datatype">
+		<xs:annotation>
+			<xs:documentation>
+				Allowed types of table columns.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+       <!-- This is the original set of types used by DSA -->
+				<xs:enumeration value="float"/>
+				<xs:enumeration value="int"/>
+				<xs:enumeration value="string"/>
+				<xs:enumeration value="dateTime"/>
+
+       <!-- These are an extended list from the ScalarDataTypes in
+            VOTable / VOResource schemas;  not all may yet be in use 
+            within DSA, but are put here for future schema validation
+            compatibility. -->
+            <xs:enumeration value="boolean"/>    
+            <xs:enumeration value="bit"/>
+            <xs:enumeration value="unsignedByte"/>    
+            <xs:enumeration value="short"/>
+            <xs:enumeration value="long"/>
+            <xs:enumeration value="char"/>
+            <xs:enumeration value="unicodeChar"/>
+            <xs:enumeration value="double"/>
+            <xs:enumeration value="floatComplex"/>
+            <xs:enumeration value="doubleComplex"/>
+
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="Units" type="xs:string"/>
+	<xs:element name="UCD">
+		<xs:complexType mixed="true">
+			<xs:attribute name="version" use="required" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The UCD version describes which version of the UCD dictionary to use, eg
+						'1' or '1+'</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="ErrorColumn" type="xs:string"/>
+
+	<xs:element name="SkyPolarCoord">
+		<xs:simpleType>
+		<xs:restriction base="xs:string">
+		<xs:enumeration value="RA"/>
+		<xs:enumeration value="DEC"/>
+		</xs:restriction>
+		</xs:simpleType>
+  </xs:element>
+
+</xs:schema>

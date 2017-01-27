@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           xmlns:vs="http://www.ivoa.net/xml/VODataService/v0.4" 
+           elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+   <xs:element name="Coverage" type="vs:CoverageType">
+      <xs:annotation>
+         <xs:documentation>
+           Extent of the content of the resource over space, time, and 
+           frequency.
+         </xs:documentation>
+         <xs:documentation>
+           Note that this definition is a temporary stand-in
+           specification to be used until the STC metadata can be
+           integrated in.  Resolution has been folded into coverage as
+           this expected to be the case for the final STC-based version.
+         </xs:documentation>
+         <xs:documentation>
+           Diff 0.2 - 0.1: corrected definition of CircleRegionType
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:complexType name="CoverageType">
+      <xs:sequence>
+         <xs:element ref="vs:Spatial" minOccurs="0"/>
+         <xs:element ref="vs:Spectral" minOccurs="0"/>
+         <xs:element ref="vs:Temporal" minOccurs="0"/>
+      </xs:sequence>
+   </xs:complexType>
+
+   <xs:element name="Spatial" type="vs:SpatialType">
+      <xs:annotation>
+         <xs:documentation>the spatial coverage of a resource</xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:complexType name="SpatialType">
+      <xs:sequence>
+         <xs:element ref="vs:Region" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+               <xs:documentation>
+                  Multiple occurances imply a coverage that is a union
+                  of the regions given (i.e. a logical "or", according
+                  to RM).
+               </xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element ref="vs:SpatialResolution" minOccurs="0"/>
+         <xs:element ref="vs:RegionOfRegard" minOccurs="0"/>
+      </xs:sequence>
+   </xs:complexType>
+
+   <xs:element name="Region" type="vs:RegionType" abstract="true">
+      <xs:annotation>
+         <xs:documentation>a coverage area of the sky</xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:complexType name="RegionType">
+      <xs:sequence/>
+   </xs:complexType>
+
+   <xs:element name="AllSky" type="vs:RegionType"  
+               substitutionGroup="vs:Region">
+      <xs:annotation>
+         <xs:documentation>
+            a coverage area covering the entire sky
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+
+   <xs:element name="CoordFrame" type="vs:CoordFrameType">
+      <xs:annotation>
+         <xs:documentation>
+            a coordinate system frame
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:simpleType name="CoordFrameType">
+      <xs:restriction base="xs:string">
+         <xs:enumeration value="ICRS">
+            <xs:annotation>
+               <xs:documentation>
+                 The International Celestial Reference System
+               </xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="FK5">
+            <xs:annotation>
+               <xs:documentation>
+                 Equatorial coordinates in the FK5 system (J2000)
+               </xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="FK4">
+            <xs:annotation>
+               <xs:documentation>
+                 Equatorial coordinates in the FK4 system (J1950)
+               </xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="ECL">
+            <xs:annotation>
+               <xs:documentation>
+                 ecliptic coordinates (J2000)
+               </xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="GAL">
+            <xs:annotation>
+               <xs:documentation>
+                 Galactic Coordinates (J2000)
+               </xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="SGAL">
+            <xs:annotation>
+               <xs:documentation>
+                 Super-Galactic Coordinates (J2000)
+               </xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+      </xs:restriction>
+   </xs:simpleType>
+
+   <xs:element name="CoordRange" type="vs:CoordRangeType" 
+               substitutionGroup="vs:Region">
+      <xs:annotation>
+         <xs:documentation>
+            a coverage area of the sky characterized by a range of
+            longitude and latitude.
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:complexType name="CoordRangeType">
+      <xs:complexContent>
+         <xs:extension base="vs:RegionType">
+            <xs:sequence>
+               <xs:element ref="vs:CoordFrame"/>
+               <xs:element name="long">
+                  <xs:annotation>
+                     <xs:documentation>The range in longitude</xs:documentation>
+                  </xs:annotation>
+                  <xs:complexType>
+                     <xs:sequence>
+                        <xs:element name="min" type="xs:double">
+                           <xs:annotation>
+                              <xs:documentation>The minimum longitude</xs:documentation>
+                           </xs:annotation>
+                        </xs:element>
+                        <xs:element name="max" type="xs:double">
+                           <xs:annotation>
+                              <xs:documentation>The maximum longitude</xs:documentation>
+                           </xs:annotation>
+                        </xs:element>
+                     </xs:sequence>
+                  </xs:complexType>
+               </xs:element>
+               <xs:element name="lat">
+                  <xs:annotation>
+                     <xs:documentation>The range in latitude</xs:documentation>
+                  </xs:annotation>
+                  <xs:complexType>
+                     <xs:sequence>
+                        <xs:element name="min" type="xs:double">
+                          <xs:annotation>
+                             <xs:documentation>The minimum latitude</xs:documentation>
+                          </xs:annotation>
+                        </xs:element>
+                        <xs:element name="max" type="xs:double">
+                           <xs:annotation>
+                              <xs:documentation>The maximum latitude</xs:documentation>
+                           </xs:annotation>
+                        </xs:element>
+                     </xs:sequence>
+                  </xs:complexType>
+               </xs:element>
+            </xs:sequence>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+
+   <xs:element name="CircleRegion" type="vs:CircleRegionType" 
+               substitutionGroup="vs:Region">
+      <xs:annotation>
+         <xs:documentation>
+            a coverage area of the sky characterized by a central position
+            and angular radius
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:complexType name="CircleRegionType">
+      <xs:complexContent>
+         <xs:extension base="vs:RegionType">
+            <xs:sequence>
+               <xs:element ref="vs:CoordFrame"/>
+               <xs:element ref="vs:CenterPosition"/>
+               <xs:element name="radius" type="xs:float">
+                  <xs:annotation>
+                    <xs:documentation>
+                       the radius of the circle in degrees.
+                    </xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+            </xs:sequence>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+
+   <xs:element name="CenterPosition" type="vs:positionType">
+      <xs:annotation>
+         <xs:documentation>
+            the position of the center of some region of the sky.
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:complexType name="positionType">
+      <xs:sequence>
+         <xs:element name="long" type="xs:double">
+            <xs:annotation>
+               <xs:documentation>
+                 the longitude component of the sky position
+               </xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="lat" type="xs:double">
+            <xs:annotation>
+               <xs:documentation>
+                 the latitude component of the sky position
+               </xs:documentation>
+            </xs:annotation>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+
+   <xs:element name="SpatialResolution" type="xs:float">
+      <xs:annotation>
+         <xs:documentation>
+            The spatial (angular) resolution that is typical of the
+            observations of interest, in decimal degrees.
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+
+   <xs:element name="RegionOfRegard" type="xs:float">
+      <xs:annotation>
+         <xs:documentation>
+            The intrinsic size scale, given in arcseconds, associated
+            with data items contained in a resource.
+         </xs:documentation>
+         <xs:documentation>
+            Both data archives and catalogs have an intrinsic scale size.  For
+            example, a source catalog created from an instrument with one
+            degree angular resolution would have a RegionOfRegard of 0.5
+            degree, meaning that if one is searching for information
+            pertinent to a given position, objects in this catalog within
+            0.5 degree of the position of interest would need to be
+            included.  For an image archive the RegionOfRegard corresponds
+            to the image field of view.
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   
+   <xs:element name="Temporal" type="vs:TemporalType">
+      <xs:annotation>
+         <xs:documentation>the temporal coverage of a resource</xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:complexType name="TemporalType">
+      <xs:sequence>
+         <xs:element ref="vs:StartTime" minOccurs="0" maxOccurs="1"/>
+         <xs:element ref="vs:EndTime" minOccurs="0" maxOccurs="1"/>
+         <xs:element ref="vs:TemporalResolution" minOccurs="0"/>
+      </xs:sequence>
+   </xs:complexType>
+
+   <xs:element name="StartTime" type="xs:date">
+      <xs:annotation>
+         <xs:documentation>
+            The earliest temporal coverage of the resource.
+         </xs:documentation>
+         <xs:documentation>
+            If not provided, the start time is not known.
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   
+   <xs:element name="EndTime" type="xs:date">
+      <xs:annotation>
+         <xs:documentation>
+            The latest temporal coverage of the resource.
+         </xs:documentation>
+         <xs:documentation>
+            If not provided, the end time is not known (e.g. because
+            information continues to be added to the resource).
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   
+   <xs:element name="TemporalResolution" type="xs:float">
+      <xs:annotation>
+         <xs:documentation>
+            The temporal resolution that is typical of the
+            observations of interest, in seconds.
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   
+   <xs:element name="Spectral" type="vs:SpectralType">
+      <xs:annotation>
+         <xs:documentation>the spectral coverage of a resource</xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:complexType name="SpectralType">
+      <xs:sequence>
+         <xs:element ref="vs:Waveband" minOccurs="0" maxOccurs="unbounded"/>
+         <xs:element ref="vs:WavelengthRange" minOccurs="0"/>
+         <xs:element ref="vs:SpectralResolution" minOccurs="0"/>
+      </xs:sequence>
+   </xs:complexType>
+
+   <xs:element name="Waveband" type="vs:WavebandType">
+      <xs:annotation>
+         <xs:documentation>
+            a named spectral region of the electro-magnetic spectrum.
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:simpleType name="WavebandType">
+      <xs:restriction base="xs:string">
+         <xs:enumeration value="Radio">
+            <xs:annotation>
+               <xs:documentation>
+                 wavelength &gt;= 10 mm; frequency &lt;= 30 GHz.
+               </xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="Millimeter">
+            <xs:annotation>
+               <xs:documentation>
+                 0.1 mm &lt;= wavelength &lt;= 10 mm; 
+                 3000 GHz &gt;= frequency &gt;= 30 GHz.
+               </xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="Infrared">
+            <xs:annotation>
+               <xs:documentation>
+                 1 micron &lt;= wavelength &lt;= 100 micons 
+               </xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="Optical">
+            <xs:annotation>
+               <xs:documentation>
+                 0.3 microns &lt;= wavelength &lt;= 1 micon; 
+                 300 nm &lt;= wavelength &lt;= 1000 nm; 
+                 3000 Angstroms &lt;= wavelength &lt;= 10000 Angstroms
+               </xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="UV">
+            <xs:annotation>
+               <xs:documentation>
+                 0.1 microns &lt;= wavelength &lt;= 0.3 micon; 
+                 1000 nm &lt;= wavelength &lt;= 3000 nm; 
+                 1000 Angstroms &lt;= wavelength &lt;= 30000 Angstroms
+               </xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="EUV">
+            <xs:annotation>
+               <xs:documentation>
+                 100 Angstroms &lt;= wavelength &lt;= 1000 Angstroms; 
+                 12 eV &lt;= Energy &lt;= 120 eV
+               </xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="X-ray">
+            <xs:annotation>
+               <xs:documentation>
+                 0.1 Angstroms &lt;= wavelength &lt;= 100 Angstroms; 
+                 0.12 keV &lt;= energy &lt;= 120 keV
+               </xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="Gamma-ray">
+            <xs:annotation>
+               <xs:documentation>
+                 energy &gt;= 120 keV
+               </xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+      </xs:restriction>
+   </xs:simpleType>
+
+   <xs:element name="WavelengthRange" type="vs:WavelengthRangeType">
+      <xs:annotation>
+         <xs:documentation>
+            a range of the electro-magnetic spectrum specified by 
+            a lower and upper wavelength limit.
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:complexType name="WavelengthRangeType">
+      <xs:sequence>
+         <xs:element name="min" type="xs:float">
+            <xs:annotation>
+               <xs:documentation>
+                 The minimum wavelength
+               </xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="max" type="xs:float">
+            <xs:annotation>
+               <xs:documentation>
+                 The maximum wavelength
+               </xs:documentation>
+            </xs:annotation>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+
+   <xs:element name="SpectralResolution" type="xs:float">
+      <xs:annotation>
+         <xs:documentation>
+            The spectral resolution that is typical of the
+            observations of interest, given as a ratio of the wavelength
+            width (delta-lambda) to the observing wavelength (lambda).
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   
+</xs:schema>

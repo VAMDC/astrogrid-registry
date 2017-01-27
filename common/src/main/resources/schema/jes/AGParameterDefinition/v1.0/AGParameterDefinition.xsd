@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id: AGParameterDefinition.xsd,v 1.1.2.1 2005/02/24 20:08:07 gtr Exp $ -->
+<!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Paul Harrison (Contractor) -->
+<xs:schema targetNamespace="http://www.astrogrid.org/schema/AGParameterDefinition/v1" xmlns:agpd="http://www.astrogrid.org/schema/AGParameterDefinition/v1" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:annotation>
+		<xs:documentation>this file captures some of the ideas used in the WSDL-like parameter definition files, but as yet is not used for validation</xs:documentation>
+	</xs:annotation>
+	<xs:annotation>
+		<xs:documentation>the baseparameter definition is mimiced by the contents of a part element in the wsdl</xs:documentation>
+	</xs:annotation>
+	<xs:annotation>
+		<xs:documentation>important types are defined here that would have special significance....</xs:documentation>
+	</xs:annotation>
+	<!-- This is the standard type -->
+	<xs:simpleType name="parameterTypes">
+		<xs:annotation>
+			<xs:documentation>The list of possible parameter types</xs:documentation>
+			<xs:documentation>The enumeration values should have the namespace appended? I have removed them to make castor generate nicer objects</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="integer">
+				<xs:annotation>
+					<xs:documentation>Integer</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="real">
+				<xs:annotation>
+					<xs:documentation>Real</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="complex"/>
+			<xs:enumeration value="double"/>
+			<xs:enumeration value="text"/>
+			<xs:enumeration value="boolean"/>
+			<xs:enumeration value="anyURI"/>
+			<xs:enumeration value="anyXML"/>
+			<xs:enumeration value="VOTable"/>
+			<xs:enumeration value="RA"/>
+			<xs:enumeration value="Dec"/>
+			<xs:enumeration value="ADQL"/>
+			<xs:enumeration value="binary"/>
+			<xs:enumeration value="FITS"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="xhtmlDocumentation" mixed="false">
+		<xs:annotation>
+			<xs:documentation>should really reference the XHTML shema, but just did this for convienience</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="xs:string"/>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="tDocumentation" mixed="true">
+		<xs:annotation>
+			<xs:documentation>what documentation can be</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="java-param">
+		<xs:restriction base="xs:token">
+			<xs:pattern value="[a-zA-Z][a-zA-Z0-9]*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="java-class">
+		<xs:restriction base="xs:token">
+			<xs:pattern value="([a-zA-Z0-9]+\.)*[a-zA-Z][a-zA-Z0-9]*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="java-package">
+		<xs:restriction base="xs:token">
+			<xs:pattern value="([a-zA-Z0-9]+\.)*[a-zA-Z0-9]*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="BaseParameterDefinition">
+		<xs:all>
+			<xs:element name="UI_Name" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The name that is to be used to display this parameter in te UI</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="UI_Description" type="agpd:xhtmlDocumentation" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A long description of the parameter that might be displayed in the UI to help the user</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="UCD" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>If the parameter has a UCD then use the reference here - it could help in workflow typing...</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DefaultValue" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>a possible default for this type of parameter - should probably be xs:any, but castor/axis do not deal with this well</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Units" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This would ideally be an enumeration of all the possible types of units?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OptionList" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>For parameters that can only have one of a list of values</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="OptionVal" type="xs:string" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:all>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="type" type="agpd:parameterTypes" use="required"/>
+		<!-- these are not really used at the moment -->
+		<xs:attribute name="accept-encodings" type="xs:string" use="optional" default="standard"/><!-- changed from xs:NMTOKENS for castor generation bug -->
+		<xs:attribute name="sub-type" type="xs:string" use="optional" default="none"/>
+	</xs:complexType>
+	<!--The parameter value probably  needs to be more strongly typed than it is at the moment.....-->
+	<xs:complexType name="parameterValue" mixed="false">
+		<xs:annotation>
+			<xs:documentation>Defines what a parameterValue can contain - for the instance document</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="value" type="xs:string"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="encoding" type="xs:NMTOKEN" use="optional"/>
+		<xs:attribute name="indirect" type="xs:boolean" use="optional" default="false"/>
+		<!-- <xs:attribute name="type" type="agpd:parameterTypes" use="required"/> -->
+	</xs:complexType>
+</xs:schema>

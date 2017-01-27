@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+            xmlns:vr="http://www.ivoa.net/xml/VOResource/v0.10"
+            xmlns:vs="http://www.ivoa.net/xml/VODataService/v0.5"
+            xmlns:cs="http://www.ivoa.net/xml/ConeSearch/v0.3"
+            targetNamespace="http://www.ivoa.net/xml/ConeSearch/v0.3"
+            elementFormDefault="qualified" attributeFormDefault="unqualified"
+            version="0.3">
+
+   <xs:annotation>
+      <xs:documentation>
+        Implementation of an XML Schema describing a Cone Search Service.
+        Based on "Simple Cone Search: a First Guide for Data Curators",
+        http://www.us-vo.org/metadata/conesearch/.
+      </xs:documentation>
+      <xs:documentation>
+        Diff:
+      </xs:documentation>
+   </xs:annotation>
+
+   <xs:import namespace="http://www.ivoa.net/xml/VOResource/v0.10" 
+     schemaLocation="../../../vo-resource-types/VOResource/v0.10/VOResource.xsd"/>
+   <xs:import namespace="http://www.ivoa.net/xml/VODataService/v0.5"
+     schemaLocation="../../../vo-resource-types/VODataService/v0.5/VODataService.xsd"/>
+
+   <xs:complexType name="ConeSearch">
+      <xs:annotation>
+         <xs:documentation>
+           a standard service that returns catalog entries with a
+           position falling within a cone on the sky (given by a position 
+           and a radius).  
+         </xs:documentation>
+         <xs:documentation>
+           The standard ConeSearch interface is defined to be ParamHTTP; 
+           the specifics of this interface (e.g. the supported inputs)
+           can be given using xsi:type="ParamHTTP" with the Interface 
+           element.  Other alternative (and therefore non-standard) 
+           interfaces may also be described (e.g. a WebService version).
+         </xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="vs:TabularSkyService">
+            <xs:sequence>
+               <xs:element name="capability" type="cs:ConeSearchCapability">
+                  <xs:annotation>
+                     <xs:documentation>
+                        a description of how this particular ConeSearch 
+                        service behaves.  
+                     </xs:documentation>
+                     <xs:documentation>
+                        It is not necessary to provide a value to the 
+                        standardURL attribute as it defaults to the current
+                        standard location.
+                     </xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+            </xs:sequence>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+
+   <xs:complexType name="CSCapRestriction" abstract="true">
+      <xs:annotation>
+         <xs:documentation>
+            an abstract capability that sets the standardURL to the ConeSearch
+            standard definition
+         </xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="vr:Capability">
+            <xs:sequence/>
+            <xs:attribute name="standardID" type="vr:IdentifierURI"/>
+            <xs:attribute name="standardURL" type="xs:anyURI" 
+                default="http://www.us-vo.org/metadata/conesearch.html"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+
+   <xs:complexType name="ConeSearchCapability">
+      <xs:annotation>
+         <xs:documentation>
+            The capabilities of a Cone Search implementation.  It includes
+            the listing of the columns that appear in image query
+            output VOTable and Cone Search-specific metadata.
+         </xs:documentation>
+      </xs:annotation>
+
+      <xs:complexContent>
+         <xs:extension base="cs:CSCapRestriction">
+            <xs:sequence>
+               <xs:element name="maxSR" type="xs:float">
+                  <xs:annotation>
+                     <xs:documentation>
+                        The largest search radius, in degrees, that will be
+                        accepted by the service without returning an error 
+                        condition.
+                     </xs:documentation>
+                     <xs:documentation>
+                        Use 180.0 if there is no restriction.
+                     </xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+
+               <xs:element name="maxRecords" type="xs:int">
+                  <xs:annotation>
+                     <xs:documentation>
+                        The largest number of records that the service will 
+                        return. 
+                     </xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+
+               <xs:element name="verbosity" type="xs:boolean">
+                  <xs:annotation>
+                     <xs:documentation>
+                        True if the service supports the VERB keyword; 
+                        false, otherwise.
+                     </xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+            </xs:sequence>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+
+</xs:schema>

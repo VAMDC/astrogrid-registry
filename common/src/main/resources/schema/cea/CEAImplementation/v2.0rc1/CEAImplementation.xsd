@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id: CEAImplementation.xsd,v 1.2 2007/04/16 11:31:50 gtr Exp $ -->
+<!-- This schema specifies the CEC specific parts of the CEC configuration -->
+<xs:schema
+   targetNamespace="http://www.astrogrid.org/schema/CEAImplementation/v2.0rc1"
+   xmlns:ceab="http://www.ivoa.net/xml/CEA/base/v1.0rc1"
+   xmlns:xs="http://www.w3.org/2001/XMLSchema"
+   xmlns:ceaimp="http://www.astrogrid.org/schema/CEAImplementation/v2.0rc1"
+   xmlns:vr="http://www.ivoa.net/xml/VOResource/v1.0"
+   elementFormDefault="unqualified" attributeFormDefault="unqualified"
+   version="1.0rc1" xmlns:cea="http://www.ivoa.net/xml/CEA/v1.0rc1">
+   <xs:import namespace="http://www.ivoa.net/xml/CEA/base/v1.0rc1"
+      schemaLocation="../../../cea/CEABase/v1.0rc1/CEABase.xsd" />
+   <xs:import namespace="http://www.ivoa.net/xml/VOResource/v1.0"
+      schemaLocation="../../../vo-resource-types/VOResource/v1.0/VOResource.xsd" />
+   <xs:import namespace="http://www.ivoa.net/xml/CEA/v1.0rc1" 
+       schemaLocation="../../../vo-resource-types/CEAService/v1.0rc1/CEAService.xsd"/>
+   <xs:element name="application">
+      <xs:annotation>
+         <xs:documentation>
+            The definition of what an application is
+         </xs:documentation>
+      </xs:annotation>
+      <xs:complexType>
+         <xs:complexContent>
+            <xs:extension base="ceaimp:CommandLineApplication">
+
+            </xs:extension>
+         </xs:complexContent>
+      </xs:complexType>
+
+   </xs:element>
+   <xs:complexType name="CommandLineApplication">
+      <xs:annotation>
+         <xs:documentation>
+            Description of a command line application
+         </xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="cea:CeaApplication">
+            <xs:sequence>
+               <xs:element name="executionPath"
+                  type="ceaimp:ExecutableDescription">
+                  <xs:annotation>
+                     <xs:documentation>
+                        This is the file path of the executable
+                     </xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+           </xs:sequence>
+
+            <xs:attribute name="instanceClass" type="xs:string"
+               use="optional" />
+            <!-- really would want the instance class to be of type java-class - but the simple castor mapping does not cope -->
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+
+   <xs:simpleType name="SwitchTypes">
+      <xs:annotation>
+         <xs:documentation>
+            normal is the -x value style and keyword is the x=value
+            style
+         </xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:string">
+         <xs:enumeration value="normal" />
+         <xs:enumeration value="keyword" />
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="FileRefTypes">
+      <xs:annotation>
+         <xs:documentation>
+            is a parameter treated as a file or directory reference
+         </xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:string">
+         <xs:enumeration value="no" />
+         <xs:enumeration value="file" />
+         <xs:enumeration value="directory" />
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:complexType name="CommandLineParameterDefinition">
+      <xs:annotation>
+         <xs:documentation>
+            Defines what it is to be a command line parameter - needs
+            more thought with experience
+         </xs:documentation>
+         <xs:documentation>
+            implmentation note - it would probably be better to
+            implement most of the properties that are attributes as
+            elements, as there are relationships between the attributes
+            that are not properly expressed in this type.
+         </xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="ceab:BaseParameterDefinition">
+            <xs:attribute name="commandSwitch" type="xs:string"
+               use="optional">
+               <xs:annotation>
+                  <xs:documentation>
+                     The characters that make up the commandline switch
+                  </xs:documentation>
+               </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="commandPosition" type="xs:int"
+               use="optional" default="-1">
+               <xs:annotation>
+                  <xs:documentation>
+                     the command position for a position only parameter.
+                     The default value means that the parameter is
+                     position independent and is assumed to need a
+                     switch. Conversely if a parameter has a position
+                     value it is assumed not to need a switch
+                  </xs:documentation>
+               </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="switchType" type="ceaimp:SwitchTypes"
+               use="optional" default="normal">
+               <xs:annotation>
+                  <xs:documentation>
+                     specifies the style of the switch - would be better
+                     to call switchStyle!
+                  </xs:documentation>
+               </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="fileRef" type="ceaimp:FileRefTypes"
+               use="optional" default="file">
+               <xs:annotation>
+                  <xs:documentation>
+                     does the application treat the parameter as a
+                     reference to a file or a directory. If it is a
+                     directory and an output parameter, then the
+                     corresponding parameter should be repeatable
+                  </xs:documentation>
+               </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="localFileName" type="xs:string"
+               use="optional">
+               <xs:annotation>
+                  <xs:documentation>
+                     the local name of the file that this parameter
+                     refers to if the application uses a fixed file name
+                  </xs:documentation>
+               </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="isStreamable" type="xs:boolean"
+               default="false">
+               <xs:annotation>
+                  <xs:documentation>
+                     indicates whether the underlying application is
+                     capable of streaming the content pointed to by the
+                     parameter - if the local file name is set to "-"
+                     then stdout and stdin should be used otherwise it
+                     should be assumed that the application can natively
+                     stream the parameter (e.g. reading a url) so no
+                     attempt should be made by the CEC to download to a
+                     local file
+                  </xs:documentation>
+               </xs:annotation>
+            </xs:attribute>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:element name="commandLineExecutionControllerConfig">
+      <xs:annotation>
+         <xs:documentation>
+            The configuration for a command line execution controller
+         </xs:documentation>
+      </xs:annotation>
+      <xs:complexType>         
+               <xs:sequence>
+                  <xs:element ref="ceaimp:application"
+                     maxOccurs="unbounded" />
+               </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+
+
+   <xs:complexType name="ExecutableDescription" mixed="true">
+      <xs:annotation>
+         <xs:documentation>
+            an executable description that allows for backward
+            compatibility with existing setups - the string value is the
+            command line
+         </xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:element name="commandpval" type="xs:string"
+            maxOccurs="unbounded" minOccurs="0">
+            <xs:annotation>
+               <xs:documentation>
+                  a possible fixed parameter to be placed on the command
+                  line - these are treated as individual strings to be
+                  added to the command line at this level, so for
+                  example -cp /somedir/some.jar would need to be
+                  represented by two commmandpval elements with each
+                  string &lt;commandpval&gt;-cp&lt;/commandpval&gt;
+                  &lt;commandpval&gt;/somedir/some.jar&lt;/commandpval&gt;
+               </xs:documentation>
+            </xs:annotation>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+
+
+ </xs:schema>

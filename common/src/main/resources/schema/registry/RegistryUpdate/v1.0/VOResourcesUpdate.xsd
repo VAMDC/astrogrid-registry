@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.astrogrid.org/schema/VOResourcesUpdate/v1.0" 
+           xmlns="http://www.w3.org/2001/XMLSchema" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           xmlns:vr1_0="http://www.ivoa.net/xml/VOResource/v1.0"
+           xmlns:vr0_10="http://www.ivoa.net/xml/VOResource/v0.10"
+           elementFormDefault="unqualified"
+           attributeFormDefault="unqualified"
+           version="1.0">
+
+   <xs:annotation>
+      <xs:documentation>
+        Update Schema for the Registry
+      </xs:documentation>
+   </xs:annotation>
+
+   <xs:import namespace="http://www.ivoa.net/xml/VOResource/v1.0"
+              schemaLocation="../../../vo-resource-types/VOResource/v1.0/VOResource.xsd"/>
+
+   <xs:import namespace="http://www.ivoa.net/xml/VOResource/v0.10"
+              schemaLocation="../../../vo-resource-types/VOResource/v0.10/VOResource.xsd"/>              
+              
+   <xs:element name="VOResources">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:choice>
+               <xs:element name="Resource" type="vr1_0:Resource" minOccurs="1" maxOccurs="unbounded"/>
+               <xs:element name="Resource" type="vr0_10:Resource" minOccurs="1" maxOccurs="unbounded"/>
+             </xs:choice>
+         </xs:sequence>
+         <xs:attribute name="version" type="xs:decimal" use="required" />
+      </xs:complexType>
+   </xs:element>
+         
+</xs:schema>

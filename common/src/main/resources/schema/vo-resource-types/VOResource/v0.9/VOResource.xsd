@@ -1,0 +1,1088 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.ivoa.net/xml/VOResource/v0.9" 
+           xmlns="http://www.w3.org/2001/XMLSchema" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           xmlns:vr="http://www.ivoa.net/xml/VOResource/v0.9" 
+           xmlns:vm="http://www.ivoa.net/xml/VOMetadata/v0.1"
+           elementFormDefault="qualified"
+	   attributeFormDefault="unqualified"
+	   version="0.9r1">
+
+   <xs:annotation>
+     <xs:appinfo>
+       <vm:schemaName>VOResource</vm:schemaName>
+       <vm:schemaPrefix>xs</vm:schemaPrefix>
+       <vm:targetPrefix>vr</vm:targetPrefix>
+     </xs:appinfo>
+      <xs:documentation>
+        Implementation of an XML Schema describing a resource to 
+        be used in the Virtual Observatory Project.  Based on "Resource 
+        Metadata for the Virtual Observatory", Version 0.8, 
+        February 2002 by Bob Hanisch et al.
+      </xs:documentation>
+      <xs:documentation>
+        Diff 0.05-0.06:  The Topologi tool apparently doesn't like
+          annotations of global elements referenced locally.
+          Although, this does not appear to be in violation of the XML
+          Schema standard, they have been commented out for the time
+          being. 
+        Diff 0.06-0.1:  Changed target namespace to 
+          http://www.ivoa.net/xml/prop/VOResource.
+        Diff 0.8-0.1:  Updated for RM v0.8; jumped version # to match RM.
+        Diff 0.8.1-0.8:  A proposed structuring of the RM model for v0.9
+	Diff 0.8.2-0.8.1: "Manager" changed back to "Publisher";
+          "Subject" contents elevated one level, "Topic" changed back
+	  to "Subject"; more documentation; "ResourceKey" made
+	  mandatory; added extensible relationships.
+        Diff 0.8.3-0.8.2: fix bug in def of VOResource; set minimum mandatory
+	  elements; added LogicalIdentifier; added admin attributes to Resource:
+	  created, updated, status; moved Description, ReferenceURL, Source to
+	  Summary element; added Source; correct misspelling of categoryType;
+	  added "Other" type; make RelatedTo a ResourceReferenceType; dropped
+	  ManagedResourceType; dropped Contact/Address,Phone; added role 
+	  attribute to Date; dropped ProjectRef,DataCollRef,ServiceRef,OrgRef;
+	  Interface overhaul: move URL (as AccessURL) up as common child, move
+	  ParamHTTPGet to VODataService (as ParamHTTP).
+	Diff 0.9-0.8.3:  primarily version update to WD status; more
+	  vm tagging.  
+      </xs:documentation>
+   </xs:annotation>
+
+   <xs:include schemaLocation="../../../vo-resource-types/VOResourceRelType/v0.2/VOResourceRelType.xsd"/>
+
+   <xs:element name="VODescription">
+      <xs:annotation>
+         <xs:documentation>A description of one or more VO Resources</xs:documentation>
+         <xs:documentation>
+            This element is used as a general container for multiple resource
+            descriptions and can be used as a root element.
+         </xs:documentation>
+      </xs:annotation>
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element ref="vr:Resource" maxOccurs="unbounded"/>
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+
+   <xs:element name="VOResource">
+      <xs:annotation>
+         <xs:documentation>
+	   A description of a single VO Resource
+         </xs:documentation>
+         <xs:documentation>
+            This element is used as a general container for a single resource
+            descriptions and can be used as a root element.  
+         </xs:documentation>
+      </xs:annotation>
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element ref="vr:Resource" />
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+
+   <xs:element name="Resource" type="vr:ResourceType">
+      <xs:annotation>
+         <xs:documentation>
+           Any entity that is describable and identifiable by a IVOA Identifier.
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:complexType name="ResourceType">
+      <xs:sequence>
+         <xs:element ref="vr:Identifier"/>
+         <xs:element ref="vr:Title"/>
+         <xs:element ref="vr:ShortName" minOccurs="0"/>
+         <xs:element ref="vr:Summary"/>
+         <xs:element ref="vr:Type" minOccurs="0" maxOccurs="unbounded"/>
+ 	 <xs:element ref="vr:RelatedResource" minOccurs="0" 
+	                                      maxOccurs="unbounded"/>
+         <xs:element ref="vr:LogicalIdentifier" 
+		     minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+	       <xs:documentation>
+	          This is typically not provided unless this resource is 
+		  claiming to be a mirror of another.  Multiple 
+		  LogicalIdentifiers can be present, usually with different
+		  role attributes.  For each role, there should be a 
+		  corresponding relationship described under a RelatedResource,
+		  when applicable.
+	       </xs:documentation>
+            </xs:annotation>
+	 </xs:element>
+         <xs:element ref="vr:Curation"/>
+      	 <xs:element ref="vr:Subject" minOccurs="0" maxOccurs="unbounded"/>
+      	 <xs:element ref="vr:ContentLevel" minOccurs="0" 
+	                                   maxOccurs="unbounded"/>
+      </xs:sequence>
+      <xs:attribute name="created" type="xs:date">
+         <xs:annotation>
+            <xs:documentation>
+	      The date this resource metadata description was created.
+            </xs:documentation>
+         </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="updated" type="xs:date">
+         <xs:annotation>
+            <xs:documentation>
+	      The date this resource metadata description was last updated.
+            </xs:documentation>
+         </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="status" default="active">
+         <xs:annotation>
+            <xs:documentation>
+	      a tag indicating whether this resource is believed to be still
+	      actively maintained.
+            </xs:documentation>
+         </xs:annotation>
+         <xs:simpleType>
+	    <xs:restriction base="xs:string">
+	       <xs:enumeration value="active">
+                 <xs:annotation>
+                   <xs:documentation>
+                      resource is believed to be currently maintained, and its
+		      description is up to date (default). 
+                   </xs:documentation>
+                 </xs:annotation>
+               </xs:enumeration>
+	       <xs:enumeration value="inactive">
+                 <xs:annotation>
+                   <xs:documentation>
+                     resource is apparently not being maintained at the present.
+                   </xs:documentation>
+                 </xs:annotation>
+               </xs:enumeration>
+	       <xs:enumeration value="deleted">
+                 <xs:annotation>
+                   <xs:documentation>
+                      resource publisher has explicitly deleted the resource.
+                   </xs:documentation>
+                 </xs:annotation>
+               </xs:enumeration>
+	    </xs:restriction>
+         </xs:simpleType>
+      </xs:attribute>
+   </xs:complexType>
+
+   <xs:element name="Identifier" type="vr:IdentifierType">
+      <xs:annotation>
+         <xs:appinfo>
+           <vm:dcterm>Identifier</vm:dcterm>
+         </xs:appinfo>           
+         <xs:documentation>
+           Unambiguous reference to the resource conforming to the IVOA
+           standard for identifiers
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:complexType name="IdentifierType">
+      <xs:sequence>
+         <xs:element ref="vr:AuthorityID" />
+         <xs:element ref="vr:ResourceKey"/>
+      </xs:sequence>
+   </xs:complexType>
+
+   <xs:element name="AuthorityID" type="vr:AuthorityIDType">
+     <xs:annotation>
+       <xs:documentation>the identifier of a namespace under the control of
+          a single naming authority</xs:documentation>
+     </xs:annotation>
+   </xs:element>
+   <xs:simpleType name="AuthorityIDType">
+     <xs:restriction base="xs:string">
+       <xs:pattern value="[\w\d][\w\d\-_\.!~\*'\(\)]{2,}"/>
+     </xs:restriction>
+   </xs:simpleType>
+
+   <xs:element name="ResourceKey" type="vr:ResourceKeyType" nillable="true">
+     <xs:annotation>
+       <xs:documentation>a name for a resource that is unique within an 
+          authority's namespace</xs:documentation>
+     </xs:annotation>
+   </xs:element>
+   <xs:simpleType name="ResourceKeyType">
+     <xs:restriction base="xs:string">
+       <xs:pattern value="[\w\d\-_\.!~\*'\(\)]+(/[\w\d\-_\.!~\*'\(\)]+)*"/>
+     </xs:restriction>
+   </xs:simpleType>
+
+   <xs:element name="Title" type="xs:string">
+      <xs:annotation>
+         <xs:appinfo>
+           <vm:dcterm>Title</vm:dcterm>
+         </xs:appinfo>           
+         <xs:documentation>the full name of a resource</xs:documentation>
+      </xs:annotation>
+   </xs:element>
+
+   <xs:element name="ShortName" type="xs:string">
+      <xs:annotation>
+         <xs:documentation>
+           a short name or abbreviation for this resource that applications 
+           may use to refer to this resource in a compact display.   
+         </xs:documentation>
+         <xs:documentation>
+           One word or a few letters is recommended.
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+
+   <xs:element name="Summary" type="vr:SummaryType">
+      <xs:annotation>
+         <xs:documentation>
+	   An informational, human-readable overview of a resource.
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:complexType name="SummaryType">
+      <xs:sequence>
+         <xs:element ref="vr:Description"/>
+         <xs:element ref="vr:ReferenceURL"/>
+         <xs:element ref="vr:Source" minOccurs="0"/>
+      </xs:sequence>
+   </xs:complexType>
+
+   <xs:element name="Description" type="xs:string">
+      <xs:annotation>
+         <xs:appinfo>
+           <vm:dcterm>Description</vm:dcterm>
+         </xs:appinfo>           
+         <xs:documentation>
+           An account of the nature of the resource
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+
+   <xs:element name="Source" type="vr:SourceType">
+      <xs:annotation>
+         <xs:appinfo>
+	   <vm:dcterm>Source</vm:dcterm>
+         </xs:appinfo>
+         <xs:documentation>
+            a bibliographic reference from which the present resource is 
+	    derived or extracted.  
+         </xs:documentation>
+         <xs:documentation>
+            This is intended to point to an article in the published 
+	    literature.  An ADS Bibcode is recommended as a value when 
+	    available.    
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:complexType name="SourceType">
+      <xs:simpleContent>
+         <xs:extension base="xs:string">
+	   <xs:attribute name="format" type="xs:string">
+	     <xs:annotation>
+	       <xs:documentation>
+	         The reference format.  Recognized values include "bibcode", 
+		 refering to a standard astronomical bibcode bibcode
+		 (http://cdsweb.u-strasbg.fr/simbad/refcode.html).  
+	       </xs:documentation>
+	     </xs:annotation>
+	   </xs:attribute>
+         </xs:extension>
+      </xs:simpleContent>
+   </xs:complexType>
+
+   <xs:element name="ReferenceURL" type="xs:anyURI">
+      <xs:annotation>
+         <xs:documentation>
+            URL pointing to a human-readable document describing this 
+            resource.   
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+
+   <xs:element name="Type" type="vr:categoryType">
+      <xs:annotation>
+         <xs:appinfo>
+           <vm:dcterm>Type</vm:dcterm>
+         </xs:appinfo>
+         <xs:documentation>
+           Nature or genre of the content of the resource
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+
+   <xs:simpleType name="categoryType">
+     <xs:restriction base="xs:string">
+         <xs:enumeration value="Other">
+           <xs:annotation>
+             <xs:documentation>
+               resource that does not fall into any of the category names
+	       currently defined.
+             </xs:documentation>
+           </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="Archive">
+           <xs:annotation>
+             <xs:documentation>
+               Collection of pointed observations
+             </xs:documentation>
+           </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="Bibliography">
+           <xs:annotation>
+             <xs:documentation>
+               Collection of bibliographic reference, abstracts, and 
+	       publications
+             </xs:documentation>
+           </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="Catalog">
+           <xs:annotation>
+             <xs:documentation>
+               Collection of derived data, primarily in tabular form
+             </xs:documentation>
+           </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="Journal">
+           <xs:annotation>
+             <xs:documentation>
+               Collection of scholarly publications under common editorial 
+               policy
+             </xs:documentation>
+           </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="Library">
+           <xs:annotation>
+             <xs:documentation>
+               Collection of published materials (journals, books, etc.)
+             </xs:documentation>
+           </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="Simulation">
+           <xs:annotation>
+             <xs:documentation>
+               Theoretical simulation or model
+             </xs:documentation>
+           </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="Survey">
+           <xs:annotation>
+             <xs:documentation>
+               Collection of observations covering substantial and
+	       contiguous areas of the sky
+             </xs:documentation>
+           </xs:annotation>
+         </xs:enumeration>
+	 <xs:enumeration value="Transformation">
+	   <xs:annotation>
+	     <xs:documentation>
+	       A service that transforms data
+	     </xs:documentation>
+	   </xs:annotation>
+	 </xs:enumeration>
+         <xs:enumeration value="Education">
+           <xs:annotation>
+             <xs:documentation>
+               Collection of materials appropriate for educational use, such
+               as teaching resources, curricula, etc.
+             </xs:documentation>
+           </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="Outreach">
+           <xs:annotation>
+             <xs:documentation>
+               Collection of materials appropriate for public outreach, such
+               as press releases and photo galleries
+             </xs:documentation>
+           </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="EPOResource">
+           <xs:annotation>
+             <xs:documentation>
+               Collection of materials that may be suitable for EPO
+	       products but which are not in final product form, as in Type 
+               Outreach or Type Education.  EPOResource would apply,
+               e.g., to archives with easily accessed preview images or to
+               surveys with easy-to-use images.
+             </xs:documentation>
+           </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="Animation">
+           <xs:annotation>
+             <xs:documentation>
+               Animation clips of astronomical phenomena
+             </xs:documentation>
+           </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="Artwork">
+           <xs:annotation>
+             <xs:documentation>
+               Artists' renderings of astronomical phenomena or objects
+             </xs:documentation>
+           </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="Background">
+           <xs:annotation>
+             <xs:documentation>
+               Background information on astronomical phenomena or objects
+             </xs:documentation>
+           </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="BasicData">
+           <xs:annotation>
+             <xs:documentation>
+               Compilations of basic astronomical facts about objects,
+               such as approximate distance or membership in constellation.
+             </xs:documentation>
+           </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="Historical">
+           <xs:annotation>
+             <xs:documentation>
+               Historical information about astronomical objects
+             </xs:documentation>
+           </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="Photographic">
+           <xs:annotation>
+             <xs:documentation>
+               Publication-quality photographs of astronomical objects
+             </xs:documentation>
+           </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="Press">
+           <xs:annotation>
+             <xs:documentation>
+               Press releases about astronomical objects
+             </xs:documentation>
+           </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="Organisation">
+           <xs:annotation>
+             <xs:documentation>
+               An organization that is a publisher or curator of other 
+	       resources.
+             </xs:documentation>
+           </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="Project">
+           <xs:annotation>
+             <xs:documentation>
+               A project that is a publisher or curator of other resources
+             </xs:documentation>
+           </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="Person">
+           <xs:annotation>
+             <xs:documentation>
+               Collection of pointed observations
+             </xs:documentation>
+           </xs:annotation>
+         </xs:enumeration>
+       </xs:restriction>
+   </xs:simpleType>
+
+   <xs:element name="RelatedResource" type="vr:RelatedResourceType">
+      <xs:annotation>
+         <xs:documentation>
+           an description of a relationship to another resource.  
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:complexType name="RelatedResourceType">
+      <xs:sequence>
+         <xs:element ref="vr:Relationship"/>
+         <xs:element ref="vr:RelatedTo"/>
+      </xs:sequence>
+   </xs:complexType>
+
+   <xs:element name="Relationship" type="vr:RelationshipType">
+      <!-- RelationshipType is included from VOResourceRelType.xsd,
+	   allowing new relationship types to be easily added later -->
+      <xs:annotation>
+         <xs:documentation>
+           a property that relates one resource to another.
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+
+   <xs:element name="RelatedTo" type="vr:ResourceReferenceType">
+      <xs:annotation>
+         <xs:documentation>
+           the resource that is related to the current one being described.
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+
+   <xs:element name="LogicalIdentifier" type="vr:LogicalIdentifierType">
+      <xs:annotation>
+         <xs:documentation>
+	   a reference to a group of resources which the current resouce 
+	   claims to be similar to in some way.  A resource's registered
+	   identifier (given by the Identifier element) is its default
+	   LogicalIdentifier.  
+	 </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:complexType name="LogicalIdentifierType">
+      <xs:complexContent>
+         <xs:extension base="vr:IdentifierType">
+	    <xs:attribute name="role" type="xs:string">
+	     <xs:annotation>
+	       <xs:documentation>
+	         a name refering to the characteristic that relates resources
+		 having this logical identifier.
+	       </xs:documentation>
+	       <xs:documentation>
+	         recognized values include "mirror" indicating that all 
+		 resources with this logical ID are mirrors of each other;
+		 when role="mirror", there should be associated "mirror-of" 
+		 relationship metadata.
+	       </xs:documentation>
+	     </xs:annotation>
+	   </xs:attribute>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+
+   <xs:element name="Curation" type="vr:CurationType">
+     <xs:annotation>
+       <xs:documentation>
+         Information regarding the general curation of the resource
+       </xs:documentation>
+     </xs:annotation>
+   </xs:element>
+   <xs:complexType name="CurationType">
+     <xs:sequence>
+       <xs:element ref="vr:Publisher"/>
+       <xs:element ref="vr:Contact"/>
+       <xs:element ref="vr:Date" minOccurs="0" maxOccurs="unbounded"/>
+       <xs:element ref="vr:Creator" minOccurs="0"/>
+       <xs:element ref="vr:Contributor" minOccurs="0" maxOccurs="unbounded"/>
+       <xs:element ref="vr:Version" minOccurs="0"/>
+     </xs:sequence>
+   </xs:complexType>
+
+   <xs:element name="Publisher" type="vr:ResourceReferenceType">
+      <xs:annotation>
+         <xs:appinfo>
+           <vm:dcterm>Publisher</vm:dcterm>
+         </xs:appinfo>
+         <xs:documentation>
+           Entity (e.g. person or organisation) responsible for making the 
+           resource available
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+
+   <xs:complexType name="ResourceReferenceType">
+      <xs:sequence>
+         <xs:element ref="vr:Identifier" minOccurs="0"/>
+         <xs:element ref="vr:Title" />
+	 <xs:element ref="vr:Description" minOccurs="0"/>
+	 <xs:element ref="vr:ReferenceURL" minOccurs="0"/>
+      </xs:sequence>
+   </xs:complexType>
+
+   <xs:element name="Contact" type="vr:ContactType">
+      <xs:annotation>
+         <xs:documentation>
+	   Information that can be used for contacting someone with
+	   regard to this resource.
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:complexType name="ContactType">
+      <xs:sequence>
+         <xs:element ref="vr:Name"/>
+	 <xs:element ref="vr:Identifier" minOccurs="0"/>
+         <xs:element ref="vr:Email" minOccurs="0"/>
+      </xs:sequence>
+   </xs:complexType>
+
+   <xs:element name="Name" type="xs:string">
+      <xs:annotation>
+         <xs:documentation>the name of someone or something</xs:documentation>
+         <xs:documentation>
+	   This name may or may not refer to a resource; thus it is more
+	   generic than "Title".
+	 </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+
+   <xs:element name="Email" type="xs:string">
+      <xs:annotation>
+         <xs:documentation>an email address</xs:documentation>
+      </xs:annotation>
+   </xs:element>
+
+   <xs:element name="Date" type="vr:DateType">
+      <xs:annotation>
+         <xs:appinfo>
+           <vm:dcterm>Date</vm:dcterm>
+         </xs:appinfo>
+         <xs:documentation>
+	   Date associated with an event in the life cycle of the
+	   resource.  
+	 </xs:documentation>
+         <xs:documentation>
+	   This will typically be associated with the creation or availability 
+	   (i.e., most recent release or version) of the resource.
+	 </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:complexType name="DateType">
+      <xs:simpleContent>
+         <xs:extension base="xs:date">
+	   <xs:attribute name="role" type="xs:string" default="representative">
+	     <xs:annotation>
+	       <xs:documentation>
+	         A string indicating what the date refers to.  
+	       </xs:documentation>
+	       <xs:documentation>
+	         While this vocabulary is uncontroled, recognized strings 
+		 include "creation", indicating the date that the resource 
+		 itself was created, and "updated", indicating when the
+		 resource was updated last.  The default value, 
+		 "representative", means that the date is a rough 
+		 representation of the time coverage of the resource.
+	       </xs:documentation>
+	       <xs:documentation>
+	         Note that this date refers to the resource; dates describing
+		 the metadata description of the resource are handled by
+		 the "created" and "updated" attributes of the Resource 
+		 element. 
+	       </xs:documentation>
+	     </xs:annotation>
+	   </xs:attribute>
+         </xs:extension>
+      </xs:simpleContent>
+   </xs:complexType>
+
+   <xs:element name="Contributor" type="vr:NameReferenceType">
+      <xs:annotation>
+         <xs:appinfo>
+           <vm:dcterm>Contributor</vm:dcterm>
+         </xs:appinfo>
+         <xs:documentation>
+            Entity responsible for contributions to the content of the resource
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:complexType name="NameReferenceType"> 
+     <xs:sequence>
+         <xs:element ref="vr:Identifier" minOccurs="0"/>
+         <xs:element ref="vr:Name" />
+      </xs:sequence>
+   </xs:complexType>
+
+   <xs:element name="Creator" type="vr:CreatorType">
+      <xs:annotation>
+         <xs:appinfo>
+           <vm:dcterm>Creator</vm:dcterm>
+         </xs:appinfo>
+         <xs:documentation>
+	   The entity (e.g. person or organisation) primarily responsible for
+	   creating the content or constitution of the resource
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:complexType name="CreatorType">
+      <xs:complexContent>
+         <xs:extension base="vr:NameReferenceType">
+ 	    <xs:sequence>
+	       <xs:element ref="vr:Logo" minOccurs="0"/>
+ 	    </xs:sequence>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+
+   <xs:element name="Logo" type="xs:anyURI">
+      <xs:annotation>
+         <xs:documentation>
+	   URL pointing to a graphical logo, which may be used to help 
+	   identify the information source
+	 </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+
+   <xs:element name="Version" type="xs:string">
+      <xs:annotation>
+         <xs:documentation>
+	   Label associated with creation or availablilty of a version of 
+	   a resource.
+	 </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+
+   <xs:element name="Subject" type="xs:string">
+      <xs:annotation>
+       	 <xs:appinfo>
+       	   <vm:dcterm>Subject</vm:dcterm>
+       	 </xs:appinfo>           
+         <xs:documentation>
+	   List of topics, object types, or other descriptive keywords 
+	   about the resource.  
+         </xs:documentation>
+         <xs:documentation>
+	   Terms for Subject should be drawn from the IAU Astronomy Thesaurus 
+	   (http://msowww.anu.edu.au/library/thesaurus/).
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+
+   <xs:element name="ContentLevel" type="vr:ContentLevelType">
+      <xs:annotation>
+       	 <xs:appinfo>
+       	   <vm:dcterm>Subject</vm:dcterm>
+       	   <vm:dcterm>Subject.ContentLevel</vm:dcterm>
+       	 </xs:appinfo>           
+         <xs:documentation>
+            Description of the content level or intended audience
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:simpleType name="ContentLevelType">
+       <xs:restriction base="xs:string">
+         <xs:enumeration value="General">
+           <xs:annotation>
+             <xs:documentation>
+               Resource provides information appropriate for all users
+             </xs:documentation>
+           </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="Elementary Education">
+           <xs:annotation>
+             <xs:documentation>
+               Resource provides information appropriate for use in elementary
+	       education (e.g. approximate ages 6-11)
+             </xs:documentation>
+           </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="Middle School Education">
+           <xs:annotation>
+             <xs:documentation>
+               Resource provides information appropriate for use in middle
+	       school education (e.g. approximate ages 11-14)
+             </xs:documentation>
+           </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="Secondary Education">
+           <xs:annotation>
+             <xs:documentation>
+               Resource provides information appropriate for use in elementary
+	       education (e.g. approximate ages 14-18)
+             </xs:documentation>
+           </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="Community College">
+           <xs:annotation>
+             <xs:documentation>
+               Resource provides information appropriate for use in 
+	       community/junior college or early university education.
+             </xs:documentation>
+           </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="University">
+           <xs:annotation>
+             <xs:documentation>
+               Resource provides information appropriate for use in
+	       university education
+             </xs:documentation>
+           </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="Research">
+           <xs:annotation>
+             <xs:documentation>
+               Resource provides information appropriate for
+	       supporting scientific research.
+             </xs:documentation>
+           </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="Amateur">
+           <xs:annotation>
+             <xs:documentation>
+               Resource provides information of interest to
+	       amateur astronomers.
+             </xs:documentation>
+           </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="Informal Education">
+           <xs:annotation>
+             <xs:documentation>
+               Resource provides information appropriate for education
+	       at museums, planetariums, and other centers of informal learning.
+             </xs:documentation>
+           </xs:annotation>
+         </xs:enumeration>
+       </xs:restriction>
+   </xs:simpleType>
+
+   <xs:element name="Facility" type="vr:ResourceReferenceType">
+      <xs:annotation>
+       	 <xs:appinfo>
+       	   <vm:dcterm>Subject</vm:dcterm>
+       	   <vm:dcterm>Subject.Instrument</vm:dcterm>
+       	 </xs:appinfo>           
+         <xs:documentation>
+            the observatory or facility used to collect the data 
+	    contained or managed by this resource.  
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+
+   <xs:element name="Instrument" type="vr:ResourceReferenceType">
+      <xs:annotation>
+       	 <xs:appinfo>
+       	   <vm:dcterm>Subject</vm:dcterm>
+       	   <vm:dcterm>Subject.Instrument</vm:dcterm>
+       	 </xs:appinfo>           
+         <xs:documentation>
+            the Instrument used to collect the data contain or 
+	    managed by a resource.  
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+
+   <xs:element name="Service" type="vr:ServiceType" 
+			      substitutionGroup="vr:Resource">
+      <xs:annotation>
+         <xs:documentation>
+	   A resource that provides an interface for executing some operation 
+	   or retrieving data.
+	 </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:complexType name="ServiceType">
+      <xs:complexContent>
+         <xs:extension base="vr:ResourceType">
+            <xs:sequence>
+              <xs:element ref="vr:Capability" minOccurs="0"/>
+              <xs:element ref="vr:Interface"/>
+            </xs:sequence>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+
+   <xs:element name="Interface" type="vr:InterfaceType">
+     <xs:annotation>
+       <xs:documentation>
+          A description of a service interface.
+       </xs:documentation>
+       <xs:documentation>
+          For common types of interfaces, this element can be used
+	  directly to tag the description.  However, some interfaces
+	  require additional metadata beyond what is provide by this
+          element; in this case, one might use a member of the
+          Interface substitution group (e.g. ParamHTTP from the 
+	  VODataService schema).  
+       </xs:documentation>
+     </xs:annotation>
+   </xs:element>
+   <xs:complexType name="InterfaceType">
+      <xs:annotation>
+         <xs:documentation>
+           This is typically used as a base type for defining specific
+	   kinds of service interfaces.  If this type is used
+	   directly, the Description element should be used to describe
+	   how to invoke the service.
+         </xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:element ref="vr:Invocation"/>
+         <xs:element ref="vr:Description" minOccurs="0">
+       	    <xs:annotation>
+       	       <xs:documentation>
+	         Specifically, a textual description of the interface.
+       	       </xs:documentation>
+       	       <xs:documentation>
+	         This is typically only used when a structured description
+		 is not available or supported for this particular type of
+		 interface.  
+       	       </xs:documentation>
+       	    </xs:annotation>
+         </xs:element>
+         <xs:element ref="vr:AccessURL" >
+       	    <xs:annotation>
+       	       <xs:documentation>
+	         Whether this refers to a base or full URL depends on
+		 the specific class of interface.  If 
+       	       </xs:documentation>
+       	       <xs:documentation>
+	         Editor's note: this element assumes that
+		 all registered services are inherently web based.
+       	       </xs:documentation>
+       	    </xs:annotation>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+
+   <xs:element name="Invocation" type="vr:InvocationType">
+      <!-- InvocationType is included from VOResourceInvocType.xsd,
+           allowing new invocation types to be easily added later -->
+      <xs:annotation>
+         <xs:documentation>
+	   The type of interface used by the current Service,
+	   expressed as a controlled name.  
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+
+   <xs:simpleType name="InvocationType">
+      <xs:restriction base="xs:string">
+         <xs:enumeration value="Custom">
+            <xs:annotation>
+	      <xs:documentation>
+	        A custom web-based interface that does not fit into
+		any of the other predefined types.  
+	      </xs:documentation>
+	      <xs:documentation>
+	        A Description element should be used to describe how to 
+		use the AccessURL to invoke the service.
+	      </xs:documentation>
+            </xs:annotation>
+	 </xs:enumeration>
+         <xs:enumeration value="Extended">
+            <xs:annotation>
+	      <xs:documentation>
+	        A service that is described using extended Interface metadata. 
+	      </xs:documentation>
+	      <xs:documentation>
+	        This value should be chosen when Interface is extended to add
+		additional metadata.  See ParamHTTPGet defined in VODataService
+		as an example.  
+	      </xs:documentation>
+            </xs:annotation>
+	 </xs:enumeration>
+         <xs:enumeration value="WebService">
+            <xs:annotation>
+	      <xs:documentation>
+	        A Web Service that is describable by a WSDL document.
+	      </xs:documentation>
+	      <xs:documentation>
+		The AccessURL element gives the URL to the WSDL document for
+		the service.
+	      </xs:documentation>
+            </xs:annotation>
+	 </xs:enumeration>
+         <xs:enumeration value="WebBrowser">
+            <xs:annotation>
+	      <xs:documentation>
+	        A (form-based) service intended to be accessed interactively 
+		by a user via a web browser.  
+	      </xs:documentation>
+	      <xs:documentation>
+		The AccessURL element gives the URL to the HTML
+		document used to access the service.
+	      </xs:documentation>
+            </xs:annotation>
+	 </xs:enumeration>
+         <xs:enumeration value="GLUService">
+            <xs:annotation>
+	      <xs:documentation>
+	        A web-based service that is described in a GLU registry.
+	      </xs:documentation>
+	      <xs:documentation>
+		The AccessURL element gives the URL to the GLU record
+		describing the service.
+	      </xs:documentation>
+            </xs:annotation>
+	 </xs:enumeration>
+      </xs:restriction>
+   </xs:simpleType>
+
+   <xs:element name="AccessURL" type="vr:AccessURLType">
+      <xs:annotation>
+         <xs:documentation>
+           A full or base URL that can be used to access data or a service.
+         </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:complexType name="AccessURLType">
+     <xs:simpleContent>
+       <xs:extension base="xs:anyURI">
+         <xs:attribute name="use">
+	   <xs:annotation>
+	     <xs:documentation>
+	       A flag indicating whether this should be interpreted as a base
+	       URL, a full URL, or a URL to a directory that will produce a 
+	       listing of files.
+	     </xs:documentation>
+	     <xs:documentation>
+	       The default value assumed when one is not given depends on the 
+	       context.  
+	     </xs:documentation>
+	   </xs:annotation>
+	   <xs:simpleType>
+	     <xs:restriction base="xs:string">
+	       <xs:enumeration value="full">
+           	 <xs:annotation>
+           	   <xs:documentation>
+           	     Assume a full URL--that is, one that can be invoked 
+		     directly without alteration.  This usually returns a 
+		     single document or file.  
+           	   </xs:documentation>
+           	 </xs:annotation>
+               </xs:enumeration>
+	       <xs:enumeration value="base">
+           	 <xs:annotation>
+           	   <xs:documentation>
+           	     Assume a base URL--that is, one requiring an extra portion
+		     to be appended before being invoked.  
+           	   </xs:documentation>
+           	 </xs:annotation>
+               </xs:enumeration>
+	       <xs:enumeration value="dir">
+           	 <xs:annotation>
+           	   <xs:documentation>
+           	     Assume URL points to a directory that will return a listing
+		     of files.  
+           	   </xs:documentation>
+           	 </xs:annotation>
+               </xs:enumeration>
+	     </xs:restriction>
+	   </xs:simpleType>
+	 </xs:attribute>
+       </xs:extension>
+     </xs:simpleContent>
+   </xs:complexType>
+
+   <xs:element name="Capability" type="vr:CapabilityType">
+      <xs:annotation>
+         <xs:documentation>
+	   a specific description of the context and capabilities of a service.
+	 </xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:complexType name="CapabilityType">
+      <xs:annotation>
+         <xs:documentation>
+           This is a base type for defining specific kinds of service 
+           capability descriptions, each with its own special mark-up schema.
+         </xs:documentation>
+      </xs:annotation>
+
+      <xs:sequence> 
+         <xs:element ref="vr:StandardURL" minOccurs="0" maxOccurs="1" />
+         <xs:element ref="vr:StandardID" minOccurs="0" maxOccurs="1" />
+      </xs:sequence> 
+   </xs:complexType>
+
+   <xs:element name="StandardID" type="vr:IdentifierType">
+     <xs:annotation>
+       <xs:documentation>
+          An identifier for a registered standard.  
+       </xs:documentation>
+     </xs:annotation>
+   </xs:element>
+
+   <xs:element name="StandardURL" type="xs:anyURI">
+     <xs:annotation>
+       <xs:documentation>
+          A URL that points to a human-readable document that describes the 
+          standard upon which a resource is based.
+       </xs:documentation>
+       <xs:documentation>
+          This is different from the Service's ReferenceURL, which should 
+	  describe the specific implementation of the standard service.
+       </xs:documentation>
+     </xs:annotation>
+   </xs:element>
+
+</xs:schema>

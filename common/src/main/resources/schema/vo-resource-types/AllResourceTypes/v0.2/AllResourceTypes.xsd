@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+  targetNamespace="urn:astrogrid:schema:vo-resource-types:AllResourceTypes:v0.2"
+  xmlns:tns="urn:astrogrid.org:registry:resourceTypes"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:vor="http://www.ivoa.net/xml/VOResource/v0.10"
+  xmlns:vods="http://www.ivoa.net/xml/VODataService/v0.5"
+  xmlns:voreg="http://www.ivoa.net/xml/VORegistry/v0.3"
+  xmlns:cea="http://www.ivoa.net/xml/CEAService/v0.2"
+  xmlns:tdb="urn:astrogrid:schema:vo-resource-types:TabularDB:v0.3"
+ >
+
+  <xsd:import namespace="http://www.ivoa.net/xml/VOResource/v0.10"
+    schemaLocation="../../../vo-resource-types/VOResource/v0.10/VOResource.xsd"/>
+  
+  <xsd:import namespace="http://www.ivoa.net/xml/VODataService/v0.5"
+    schemaLocation="../../../vo-resource-types/VODataService/v0.5/VODataService.xsd"/>
+  
+  <xsd:import namespace="http://www.ivoa.net/xml/VORegistry/v0.3"
+    schemaLocation="../../../vo-resource-types/VORegistry/v0.3/VORegistry.xsd"/>
+  
+  <xsd:import namespace="http://www.ivoa.net/xml/CEAService/v0.2"
+    schemaLocation="../../../vo-resource-types/CEAService/v0.2/CEAService.xsd"/>
+  
+  <xsd:import namespace="urn:astrogrid:schema:vo-resource-types:TabularDB:v0.3"
+    schemaLocation="../../../vo-resource-types/TabularDB/v0.3/TabularDB.xsd"/>
+    
+  
+  <xsd:element name="authority"         type="voreg:Authority"/>
+  
+  <xsd:element name="ceaApplication"    type="cea:CeaApplicationType"/>
+  
+  <xsd:element name="ceaService"        type="cea:CeaServiceType"/>
+  
+  <xsd:element name="dataCollection"    type="vods:DataCollection"/>
+  
+  <xsd:element name="organisation"      type="vor:Organisation"/>
+  
+  <xsd:element name="registry"          type="voreg:Registry"/>
+  
+  <xsd:element name="resource"          type="vor:Resource"/>
+  
+  <xsd:element name="service"           type="vor:Service"/>
+  
+  <xsd:element name="skyService"        type="vods:SkyService"/>
+  
+  <xsd:element name="tabularDB"         type="tdb:TabularDB"/>
+  
+  <xsd:element name="tabularSkyService" type="vods:TabularSkyService"/>
+  
+</xsd:schema>

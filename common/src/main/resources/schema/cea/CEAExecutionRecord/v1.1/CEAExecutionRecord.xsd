@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- this is an implementation detail? proabably should change the namespace 
+TODO needs to be factored out into CEATypes and UWS so that nothing is left here...
+-->
+<xsd:schema
+   targetNamespace="http://www.astrogrid.org/schema/CEAExecutionRecord/v1.1"
+   xmlns:er="http://www.astrogrid.org/schema/CEAExecutionRecord/v1.1"
+   xmlns:uws="http://www.ivoa.net/xml/UWS/v0.9.2"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+   elementFormDefault="qualified" attributeFormDefault="unqualified"
+   xmlns:ceat="http://www.ivoa.net/xml/CEA/types/v1.1"
+>
+   <xsd:import namespace="http://www.ivoa.net/xml/CEA/types/v1.1"
+      schemaLocation="../../CEATypes/v1.1/CEATypes.xsd"
+   >
+   </xsd:import>
+   <xsd:import namespace="http://www.ivoa.net/xml/UWS/v0.9.2" schemaLocation="../../UWS/v0.9/UWS.xsd"></xsd:import>
+   <xsd:element name="job-execution-record">
+      <xsd:annotation>
+         <xsd:documentation>
+            A record of a single execution of a job
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexType>
+         <xsd:complexContent>
+            <xsd:extension base="er:job-execution-record-type" />
+         </xsd:complexContent>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="step-execution-record">
+      <xsd:annotation>
+         <xsd:documentation>
+            A record of a single execution of a job step
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexType>
+         <xsd:complexContent>
+            <xsd:extension base="er:execution-record-type" />
+         </xsd:complexContent>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="extension">
+      <xsd:annotation>
+         <xsd:documentation>
+            A string 'buffer' for holding further information, keyed by
+            attribute - so execution record becomes a map.
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexType>
+         <xsd:simpleContent>
+            <xsd:extension base="xsd:string">
+               <xsd:attribute name="key" type="xsd:string"
+                  use="required"
+               >
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        key to be used to retreive this extension buffer
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:attribute>
+            </xsd:extension>
+         </xsd:simpleContent>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:complexType name="execution-record-type">
+      <xsd:annotation>
+         <xsd:documentation>
+            basic type for execution records
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element ref="er:extension" minOccurs="0"
+            maxOccurs="unbounded"
+         />
+         <xsd:element ref="ceat:message" minOccurs="0"
+            maxOccurs="unbounded"
+         />
+      </xsd:sequence>
+      <xsd:attribute name="startTime" type="xsd:dateTime"
+         use="optional"
+      >
+         <xsd:annotation>
+            <xsd:documentation>
+               time execution started
+            </xsd:documentation>
+         </xsd:annotation>
+      </xsd:attribute>
+      <xsd:attribute name="finishTime" type="xsd:dateTime"
+         use="optional"
+      >
+         <xsd:annotation>
+            <xsd:documentation>
+               time execution finished
+            </xsd:documentation>
+         </xsd:annotation>
+      </xsd:attribute>
+      <xsd:attribute name="status" type="uws:ExecutionPhase"
+         use="optional" default="PENDING"
+      >
+         <xsd:annotation>
+            <xsd:documentation>
+               current execution status
+            </xsd:documentation>
+         </xsd:annotation>
+      </xsd:attribute>
+   </xsd:complexType>
+   <xsd:complexType name="job-execution-record-type">
+      <xsd:complexContent>
+         <xsd:extension base="er:execution-record-type">
+            <xsd:sequence>
+               <xsd:element name="jobId" type="er:jobURN" minOccurs="1"
+                  maxOccurs="1"
+               >
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        globally unique identifier for this execution of
+                        the workflow
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <!-- defined as a complex type to get castor to produce a new bean for us. -->
+   <xsd:complexType name="jobURN">
+      <xsd:annotation>
+         <xsd:documentation>
+            unique identifier for job executions
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:simpleContent>
+         <xsd:extension base="xsd:anyURI" />
+      </xsd:simpleContent>
+   </xsd:complexType>
+   <!-- imported from JesTypes - seems simplest to merge these schemas now -->
+   <xsd:simpleType name="workflow-string">
+      <xsd:restriction base="xsd:string" />
+   </xsd:simpleType>
+   <xsd:complexType name="workflow-summary-type">
+      <xsd:annotation>
+         <xsd:documentation>
+            summary record for a single execution of a job
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="er:job-execution-record-type">
+            <xsd:sequence>
+               <xsd:element name="workflow-name" type="xsd:string" />
+               <xsd:element name="description" type="xsd:string" />
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="urn:common.filestore.astrogrid.org" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="urn:common.filestore.astrogrid.org" xmlns:intf="urn:common.filestore.astrogrid.org" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns1="http://exception.common.filestore.astrogrid.org" xmlns:tns2="http://transfer.common.filestore.astrogrid.org" xmlns:tns3="http://file.common.filestore.astrogrid.org" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><wsdl:types><schema targetNamespace="http://exception.common.filestore.astrogrid.org" xmlns="http://www.w3.org/2001/XMLSchema"><import namespace="http://schemas.xmlsoap.org/soap/encoding/"/><complexType name="FileStoreException"><sequence/></complexType><complexType name="FileStoreTransferException"><complexContent><extension base="tns1:FileStoreException"><sequence/></extension></complexContent></complexType><complexType name="FileStoreIdentifierException"><complexContent><extension base="tns1:FileStoreException"><sequence><element name="ident" nillable="true" type="xsd:string"/></sequence></extension></complexContent></complexType><complexType name="FileStoreNotFoundException"><complexContent><extension base="tns1:FileStoreException"><sequence/></extension></complexContent></complexType><complexType name="FileStoreServiceException"><complexContent><extension base="tns1:FileStoreException"><sequence/></extension></complexContent></complexType></schema><schema targetNamespace="http://file.common.filestore.astrogrid.org" xmlns="http://www.w3.org/2001/XMLSchema"><import namespace="http://schemas.xmlsoap.org/soap/encoding/"/><complexType name="FileProperty"><sequence><element name="name" nillable="true" type="xsd:string"/><element name="value" nillable="true" type="xsd:string"/></sequence></complexType></schema><schema targetNamespace="urn:common.filestore.astrogrid.org" xmlns="http://www.w3.org/2001/XMLSchema"><import namespace="http://schemas.xmlsoap.org/soap/encoding/"/><complexType name="ArrayOf_tns1_FileProperty"><complexContent><restriction base="soapenc:Array"><attribute ref="soapenc:arrayType" wsdl:arrayType="tns3:FileProperty[]"/></restriction></complexContent></complexType></schema><schema targetNamespace="http://transfer.common.filestore.astrogrid.org" xmlns="http://www.w3.org/2001/XMLSchema"><import namespace="http://schemas.xmlsoap.org/soap/encoding/"/><complexType name="TransferProperties"><sequence><element name="fileProperties" nillable="true" type="impl:ArrayOf_tns1_FileProperty"/><element name="ident" nillable="true" type="xsd:string"/><element name="location" nillable="true" type="xsd:string"/><element name="method" nillable="true" type="xsd:string"/><element name="protocol" nillable="true" type="xsd:string"/></sequence></complexType></schema></wsdl:types>
+  <wsdl:message name="throwIdentifierExceptionResponse">
+  </wsdl:message>
+  <wsdl:message name="FileStoreNotFoundException">
+    <wsdl:part name="fault" type="tns1:FileStoreNotFoundException"/>
+  </wsdl:message>
+  <wsdl:message name="identifierResponse">
+    <wsdl:part name="identifierReturn" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="FileStoreIdentifierException">
+    <wsdl:part name="fault" type="tns1:FileStoreIdentifierException"/>
+  </wsdl:message>
+  <wsdl:message name="exportStringResponse">
+    <wsdl:part name="exportStringReturn" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="exportBytesResponse">
+    <wsdl:part name="exportBytesReturn" type="xsd:base64Binary"/>
+  </wsdl:message>
+  <wsdl:message name="exportBytesRequest">
+    <wsdl:part name="in0" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="appendBytesRequest">
+    <wsdl:part name="in0" type="xsd:string"/>
+    <wsdl:part name="in1" type="xsd:base64Binary"/>
+  </wsdl:message>
+  <wsdl:message name="importStringResponse">
+    <wsdl:part name="importStringReturn" type="impl:ArrayOf_tns1_FileProperty"/>
+  </wsdl:message>
+  <wsdl:message name="propertiesRequest">
+    <wsdl:part name="in0" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="importBytesRequest">
+    <wsdl:part name="in0" type="impl:ArrayOf_tns1_FileProperty"/>
+    <wsdl:part name="in1" type="xsd:base64Binary"/>
+  </wsdl:message>
+  <wsdl:message name="propertiesResponse">
+    <wsdl:part name="propertiesReturn" type="impl:ArrayOf_tns1_FileProperty"/>
+  </wsdl:message>
+  <wsdl:message name="appendStringResponse">
+    <wsdl:part name="appendStringReturn" type="impl:ArrayOf_tns1_FileProperty"/>
+  </wsdl:message>
+  <wsdl:message name="identifierRequest">
+  </wsdl:message>
+  <wsdl:message name="throwIdentifierExceptionRequest">
+  </wsdl:message>
+  <wsdl:message name="appendBytesResponse">
+    <wsdl:part name="appendBytesReturn" type="impl:ArrayOf_tns1_FileProperty"/>
+  </wsdl:message>
+  <wsdl:message name="exportInitRequest">
+    <wsdl:part name="in0" type="tns2:TransferProperties"/>
+  </wsdl:message>
+  <wsdl:message name="exportDataResponse">
+    <wsdl:part name="exportDataReturn" type="tns2:TransferProperties"/>
+  </wsdl:message>
+  <wsdl:message name="duplicateResponse">
+    <wsdl:part name="duplicateReturn" type="impl:ArrayOf_tns1_FileProperty"/>
+  </wsdl:message>
+  <wsdl:message name="importBytesResponse">
+    <wsdl:part name="importBytesReturn" type="impl:ArrayOf_tns1_FileProperty"/>
+  </wsdl:message>
+  <wsdl:message name="importDataRequest">
+    <wsdl:part name="in0" type="tns2:TransferProperties"/>
+  </wsdl:message>
+  <wsdl:message name="duplicateRequest">
+    <wsdl:part name="in0" type="xsd:string"/>
+    <wsdl:part name="in1" type="impl:ArrayOf_tns1_FileProperty"/>
+  </wsdl:message>
+  <wsdl:message name="importInitRequest">
+    <wsdl:part name="in0" type="tns2:TransferProperties"/>
+  </wsdl:message>
+  <wsdl:message name="FileStoreException">
+    <wsdl:part name="fault" type="tns1:FileStoreException"/>
+  </wsdl:message>
+  <wsdl:message name="importInitResponse">
+    <wsdl:part name="importInitReturn" type="tns2:TransferProperties"/>
+  </wsdl:message>
+  <wsdl:message name="exportStringRequest">
+    <wsdl:part name="in0" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="importStringRequest">
+    <wsdl:part name="in0" type="impl:ArrayOf_tns1_FileProperty"/>
+    <wsdl:part name="in1" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="exportInitResponse">
+    <wsdl:part name="exportInitReturn" type="tns2:TransferProperties"/>
+  </wsdl:message>
+  <wsdl:message name="FileStoreServiceException">
+    <wsdl:part name="fault" type="tns1:FileStoreServiceException"/>
+  </wsdl:message>
+  <wsdl:message name="deleteResponse">
+    <wsdl:part name="deleteReturn" type="impl:ArrayOf_tns1_FileProperty"/>
+  </wsdl:message>
+  <wsdl:message name="exportDataRequest">
+    <wsdl:part name="in0" type="tns2:TransferProperties"/>
+  </wsdl:message>
+  <wsdl:message name="deleteRequest">
+    <wsdl:part name="in0" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="importDataResponse">
+    <wsdl:part name="importDataReturn" type="tns2:TransferProperties"/>
+  </wsdl:message>
+  <wsdl:message name="FileStoreTransferException">
+    <wsdl:part name="fault" type="tns1:FileStoreTransferException"/>
+  </wsdl:message>
+  <wsdl:message name="appendStringRequest">
+    <wsdl:part name="in0" type="xsd:string"/>
+    <wsdl:part name="in1" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:portType name="FileStore">
+    <wsdl:operation name="delete" parameterOrder="in0">
+      <wsdl:input message="impl:deleteRequest" name="deleteRequest"/>
+      <wsdl:output message="impl:deleteResponse" name="deleteResponse"/>
+      <wsdl:fault message="impl:FileStoreNotFoundException" name="FileStoreNotFoundException"/>
+      <wsdl:fault message="impl:FileStoreIdentifierException" name="FileStoreIdentifierException"/>
+      <wsdl:fault message="impl:FileStoreServiceException" name="FileStoreServiceException"/>
+    </wsdl:operation>
+    <wsdl:operation name="duplicate" parameterOrder="in0 in1">
+      <wsdl:input message="impl:duplicateRequest" name="duplicateRequest"/>
+      <wsdl:output message="impl:duplicateResponse" name="duplicateResponse"/>
+      <wsdl:fault message="impl:FileStoreTransferException" name="FileStoreTransferException"/>
+      <wsdl:fault message="impl:FileStoreNotFoundException" name="FileStoreNotFoundException"/>
+      <wsdl:fault message="impl:FileStoreIdentifierException" name="FileStoreIdentifierException"/>
+      <wsdl:fault message="impl:FileStoreServiceException" name="FileStoreServiceException"/>
+    </wsdl:operation>
+    <wsdl:operation name="properties" parameterOrder="in0">
+      <wsdl:input message="impl:propertiesRequest" name="propertiesRequest"/>
+      <wsdl:output message="impl:propertiesResponse" name="propertiesResponse"/>
+      <wsdl:fault message="impl:FileStoreNotFoundException" name="FileStoreNotFoundException"/>
+      <wsdl:fault message="impl:FileStoreIdentifierException" name="FileStoreIdentifierException"/>
+      <wsdl:fault message="impl:FileStoreServiceException" name="FileStoreServiceException"/>
+    </wsdl:operation>
+    <wsdl:operation name="identifier">
+      <wsdl:input message="impl:identifierRequest" name="identifierRequest"/>
+      <wsdl:output message="impl:identifierResponse" name="identifierResponse"/>
+      <wsdl:fault message="impl:FileStoreServiceException" name="FileStoreServiceException"/>
+    </wsdl:operation>
+    <wsdl:operation name="appendBytes" parameterOrder="in0 in1">
+      <wsdl:input message="impl:appendBytesRequest" name="appendBytesRequest"/>
+      <wsdl:output message="impl:appendBytesResponse" name="appendBytesResponse"/>
+      <wsdl:fault message="impl:FileStoreException" name="FileStoreException"/>
+      <wsdl:fault message="impl:FileStoreNotFoundException" name="FileStoreNotFoundException"/>
+      <wsdl:fault message="impl:FileStoreIdentifierException" name="FileStoreIdentifierException"/>
+      <wsdl:fault message="impl:FileStoreServiceException" name="FileStoreServiceException"/>
+    </wsdl:operation>
+    <wsdl:operation name="appendString" parameterOrder="in0 in1">
+      <wsdl:input message="impl:appendStringRequest" name="appendStringRequest"/>
+      <wsdl:output message="impl:appendStringResponse" name="appendStringResponse"/>
+      <wsdl:fault message="impl:FileStoreException" name="FileStoreException"/>
+      <wsdl:fault message="impl:FileStoreNotFoundException" name="FileStoreNotFoundException"/>
+      <wsdl:fault message="impl:FileStoreIdentifierException" name="FileStoreIdentifierException"/>
+      <wsdl:fault message="impl:FileStoreServiceException" name="FileStoreServiceException"/>
+    </wsdl:operation>
+    <wsdl:operation name="importString" parameterOrder="in0 in1">
+      <wsdl:input message="impl:importStringRequest" name="importStringRequest"/>
+      <wsdl:output message="impl:importStringResponse" name="importStringResponse"/>
+      <wsdl:fault message="impl:FileStoreException" name="FileStoreException"/>
+      <wsdl:fault message="impl:FileStoreServiceException" name="FileStoreServiceException"/>
+    </wsdl:operation>
+    <wsdl:operation name="importBytes" parameterOrder="in0 in1">
+      <wsdl:input message="impl:importBytesRequest" name="importBytesRequest"/>
+      <wsdl:output message="impl:importBytesResponse" name="importBytesResponse"/>
+      <wsdl:fault message="impl:FileStoreException" name="FileStoreException"/>
+      <wsdl:fault message="impl:FileStoreServiceException" name="FileStoreServiceException"/>
+    </wsdl:operation>
+    <wsdl:operation name="exportString" parameterOrder="in0">
+      <wsdl:input message="impl:exportStringRequest" name="exportStringRequest"/>
+      <wsdl:output message="impl:exportStringResponse" name="exportStringResponse"/>
+      <wsdl:fault message="impl:FileStoreNotFoundException" name="FileStoreNotFoundException"/>
+      <wsdl:fault message="impl:FileStoreIdentifierException" name="FileStoreIdentifierException"/>
+      <wsdl:fault message="impl:FileStoreServiceException" name="FileStoreServiceException"/>
+    </wsdl:operation>
+    <wsdl:operation name="exportBytes" parameterOrder="in0">
+      <wsdl:input message="impl:exportBytesRequest" name="exportBytesRequest"/>
+      <wsdl:output message="impl:exportBytesResponse" name="exportBytesResponse"/>
+      <wsdl:fault message="impl:FileStoreNotFoundException" name="FileStoreNotFoundException"/>
+      <wsdl:fault message="impl:FileStoreIdentifierException" name="FileStoreIdentifierException"/>
+      <wsdl:fault message="impl:FileStoreServiceException" name="FileStoreServiceException"/>
+    </wsdl:operation>
+    <wsdl:operation name="importInit" parameterOrder="in0">
+      <wsdl:input message="impl:importInitRequest" name="importInitRequest"/>
+      <wsdl:output message="impl:importInitResponse" name="importInitResponse"/>
+      <wsdl:fault message="impl:FileStoreTransferException" name="FileStoreTransferException"/>
+      <wsdl:fault message="impl:FileStoreServiceException" name="FileStoreServiceException"/>
+    </wsdl:operation>
+    <wsdl:operation name="importData" parameterOrder="in0">
+      <wsdl:input message="impl:importDataRequest" name="importDataRequest"/>
+      <wsdl:output message="impl:importDataResponse" name="importDataResponse"/>
+      <wsdl:fault message="impl:FileStoreTransferException" name="FileStoreTransferException"/>
+      <wsdl:fault message="impl:FileStoreServiceException" name="FileStoreServiceException"/>
+    </wsdl:operation>
+    <wsdl:operation name="exportInit" parameterOrder="in0">
+      <wsdl:input message="impl:exportInitRequest" name="exportInitRequest"/>
+      <wsdl:output message="impl:exportInitResponse" name="exportInitResponse"/>
+      <wsdl:fault message="impl:FileStoreTransferException" name="FileStoreTransferException"/>
+      <wsdl:fault message="impl:FileStoreNotFoundException" name="FileStoreNotFoundException"/>
+      <wsdl:fault message="impl:FileStoreServiceException" name="FileStoreServiceException"/>
+    </wsdl:operation>
+    <wsdl:operation name="exportData" parameterOrder="in0">
+      <wsdl:input message="impl:exportDataRequest" name="exportDataRequest"/>
+      <wsdl:output message="impl:exportDataResponse" name="exportDataResponse"/>
+      <wsdl:fault message="impl:FileStoreServiceException" name="FileStoreServiceException"/>
+    </wsdl:operation>
+    <wsdl:operation name="throwIdentifierException">
+      <wsdl:input message="impl:throwIdentifierExceptionRequest" name="throwIdentifierExceptionRequest"/>
+      <wsdl:output message="impl:throwIdentifierExceptionResponse" name="throwIdentifierExceptionResponse"/>
+      <wsdl:fault message="impl:FileStoreIdentifierException" name="FileStoreIdentifierException"/>
+      <wsdl:fault message="impl:FileStoreServiceException" name="FileStoreServiceException"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="FileStoreSoapBinding" type="impl:FileStore">
+    <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="delete">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="deleteRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="deleteResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:output>
+      <wsdl:fault name="FileStoreNotFoundException">
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:fault>
+      <wsdl:fault name="FileStoreIdentifierException">
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:fault>
+      <wsdl:fault name="FileStoreServiceException">
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="duplicate">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="duplicateRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="duplicateResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:output>
+      <wsdl:fault name="FileStoreTransferException">
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:fault>
+      <wsdl:fault name="FileStoreNotFoundException">
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:fault>
+      <wsdl:fault name="FileStoreIdentifierException">
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:fault>
+      <wsdl:fault name="FileStoreServiceException">
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="properties">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="propertiesRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="propertiesResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:output>
+      <wsdl:fault name="FileStoreNotFoundException">
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:fault>
+      <wsdl:fault name="FileStoreIdentifierException">
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:fault>
+      <wsdl:fault name="FileStoreServiceException">
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="identifier">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="identifierRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="identifierResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:output>
+      <wsdl:fault name="FileStoreServiceException">
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="appendBytes">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="appendBytesRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="appendBytesResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:output>
+      <wsdl:fault name="FileStoreException">
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:fault>
+      <wsdl:fault name="FileStoreNotFoundException">
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:fault>
+      <wsdl:fault name="FileStoreIdentifierException">
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:fault>
+      <wsdl:fault name="FileStoreServiceException">
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="appendString">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="appendStringRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="appendStringResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:output>
+      <wsdl:fault name="FileStoreException">
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:fault>
+      <wsdl:fault name="FileStoreNotFoundException">
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:fault>
+      <wsdl:fault name="FileStoreIdentifierException">
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:fault>
+      <wsdl:fault name="FileStoreServiceException">
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="importString">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="importStringRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="importStringResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:output>
+      <wsdl:fault name="FileStoreException">
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:fault>
+      <wsdl:fault name="FileStoreServiceException">
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="importBytes">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="importBytesRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="importBytesResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:output>
+      <wsdl:fault name="FileStoreException">
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:fault>
+      <wsdl:fault name="FileStoreServiceException">
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="exportString">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="exportStringRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="exportStringResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:output>
+      <wsdl:fault name="FileStoreNotFoundException">
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:fault>
+      <wsdl:fault name="FileStoreIdentifierException">
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:fault>
+      <wsdl:fault name="FileStoreServiceException">
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="exportBytes">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="exportBytesRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="exportBytesResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:output>
+      <wsdl:fault name="FileStoreNotFoundException">
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:fault>
+      <wsdl:fault name="FileStoreIdentifierException">
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:fault>
+      <wsdl:fault name="FileStoreServiceException">
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="importInit">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="importInitRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="importInitResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:output>
+      <wsdl:fault name="FileStoreTransferException">
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:fault>
+      <wsdl:fault name="FileStoreServiceException">
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="importData">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="importDataRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="importDataResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:output>
+      <wsdl:fault name="FileStoreTransferException">
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:fault>
+      <wsdl:fault name="FileStoreServiceException">
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="exportInit">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="exportInitRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="exportInitResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:output>
+      <wsdl:fault name="FileStoreTransferException">
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:fault>
+      <wsdl:fault name="FileStoreNotFoundException">
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:fault>
+      <wsdl:fault name="FileStoreServiceException">
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="exportData">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="exportDataRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="exportDataResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:output>
+      <wsdl:fault name="FileStoreServiceException">
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="throwIdentifierException">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="throwIdentifierExceptionRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="throwIdentifierExceptionResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:output>
+      <wsdl:fault name="FileStoreIdentifierException">
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:fault>
+      <wsdl:fault name="FileStoreServiceException">
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:common.filestore.astrogrid.org" use="encoded"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="FileStoreService">
+    <wsdl:port binding="impl:FileStoreSoapBinding" name="FileStore">
+      <wsdlsoap:address location="http://galahad.star.le.ac.uk:8082/astrogrid-filestore/services/FileStore"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

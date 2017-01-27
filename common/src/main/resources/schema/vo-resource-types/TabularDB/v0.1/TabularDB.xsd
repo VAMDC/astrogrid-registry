@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="urn:gtr-experimental:TabularDB"
+  elementFormDefault="qualified" 
+  attributeFormDefault="unqualified"
+  xmlns:db='urn:gtr-experimental:TabularDB'
+  xmlns:xs='http://www.w3.org/2001/XMLSchema'
+  xmlns:vr='http://www.ivoa.net/xml/VOResource/v0.9'
+  xmlns:vs='http://www.ivoa.net/xml/VODataService/v0.4'
+  xmlns:vt='http://www.ivoa.net/xml/VOTable/v1.0'>
+
+  <!-- IVOA schema from which elements are referenced below. The VOTable schema is not used
+       directly but is used by the VODataService schema. -->
+  <xs:import namespace="http://www.ivoa.net/xml/VOResource/v0.9"
+             schemaLocation="../../../vo-resource-types/VOResource/v0.9/VOResource.xsd"/>
+  <xs:import namespace="http://www.ivoa.net/xml/VOTable/v1.0"
+             schemaLocation="../../../vo-formats/VOTable/v1.0/VOTable.xsd"/>
+  <xs:import namespace="http://www.ivoa.net/xml/VODataService/v0.4"
+             schemaLocation="../../../vo-resource-types/VODataService/v0.4/VODataService.xsd"/>
+  
+
+  <!-- The sub-type of VOResource that allows the database to be described.
+       This is identical to vs:DataCollectionType except that vs:Access is
+       replaced by db:DB reflecting the fact that this resource described data
+       in dependently of any service. -->
+  <xs:element name="TabularDB" type="db:TabularDBType" substitutionGroup="vr:Resource">
+    <xs:annotation>
+      <xs:documentation>
+        A type of IVOA resource describing (exactly) one database independently of
+        any service giving access to the database. The mandatory core of the element 
+        details the database itself. There may, optionally, be additional elements 
+        describing the provenance and astronomical usage of the resource.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="TabularDBType">
+    <xs:complexContent>
+      <xs:extension base="vr:ResourceType">
+        <xs:sequence>
+      	  <xs:element ref="vr:Facility" minOccurs="0" maxOccurs="unbounded"/>
+      	  <xs:element ref="vr:Instrument" minOccurs="0" maxOccurs="unbounded"/>
+	        <xs:element ref="vs:Coverage" minOccurs="0"/>
+	        <xs:element ref="db:DB"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <!-- The description of a database. See the structure of vs:Table (imported from
+       VODataService) for details of the description of the database schema. -->
+  <xs:element name="DB">
+    <xs:annotation>
+      <xs:documentation>
+        The structure of the database. There may be detailed metadata for zero or more tables,
+        and these are intended to be read by software. The must also be a human-readable
+        description and a name. A db:DB element with no tables could be used to
+        register a database for which the detailed schemata have not yet been worked out.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="vr:Name"/>
+        <xs:element ref="vr:Description"/>
+        <xs:element ref="vs:Table" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+</xs:schema>
