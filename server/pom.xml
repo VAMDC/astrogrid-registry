@@ -48,13 +48,8 @@
     <!-- AstroGrid dependencies from outside the registry project-tree -->
     <dependency>
       <groupId>org.astrogrid</groupId>
-      <artifactId>astrogrid-common</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.astrogrid</groupId>
       <artifactId>astrogrid-contracts</artifactId>
     </dependency>
-    
     <!-- third-party dependencies from here on down. -->
 	  <dependency>
       <groupId>net.sf.saxon</groupId>
@@ -104,11 +99,6 @@
     <dependency> 
       <groupId>commons-discovery</groupId>
       <artifactId>commons-discovery</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>commons-pool</groupId>
-      <artifactId>commons-pool</artifactId>
-      <version>1.6</version>
     </dependency>
     
     <dependency>
