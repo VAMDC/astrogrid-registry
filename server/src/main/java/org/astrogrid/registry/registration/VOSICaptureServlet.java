@@ -1,13 +1,11 @@
 package org.astrogrid.registry.registration;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -36,7 +34,13 @@ public class VOSICaptureServlet extends RegistrarServlet {
    * is static. In future versions, the form might be produced by XSLT
    * from the current content of the resource document. Therefore, this servlet
    * is the preferred entry-point and it delegates to the JSP.
+   * 
+   * @param request
+   * @param response
+   * @throws javax.servlet.ServletException
+   * @throws java.io.IOException
    */
+  @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     String ivornString = request.getParameter("IVORN");
@@ -99,11 +103,15 @@ public class VOSICaptureServlet extends RegistrarServlet {
    *
    * Fetches a list of capabilities as an XML document from a given URL.
    * Retrieves the registration with the given IVORN as a DOM and transcribes
-   * the capabilities using XSLT.
+   * the capabilities using XSLT. May also update the CEA application-data
+   * in the registration.
    *
    * @param request servlet request
    * @param response servlet response
+   * @throws javax.servlet.ServletException
+   * @throws java.io.IOException
    */
+  @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     
@@ -130,52 +138,72 @@ public class VOSICaptureServlet extends RegistrarServlet {
       throw new ServletException("The given IVORN is invalid.", ex);
     }
     
-    // Generate the mopdification date in XSD format.
-    Instant now = new Instant();
-    String updated = now.toString();
-    
-    // Set the transformation to work on the registration document.
-    // Get the registration document out of the registry.
-    // The resource URI leads to the XML text.
-    try {
-    	URL transformUrl;
-    	RegistryTransformer transformer;
-    	  URL resourceUrl = new URL(this.getContextUri(request) +
+    // Locate the registration document in the database.
+    URL resourceUrl = new URL(this.getContextUri(request) +
                   "/main/viewResourceEntry_body.jsp?IVORN=" +
                   encodedIvorn);
-      if(vosiUri != null && vosiUri.trim().length() > 0) {
-    	  System.out.println("transforming with GetCapabilities");
-          transformUrl = this.getClass().getResource("/xsl/GetCapabilities.xsl");
-          transformer = new RegistryTransformer(transformUrl);
-          transformer.setTransformationSource(resourceUrl);
-          transformer.setTransformationParameter("vosi-uri", vosiUri);
-          transformer.setTransformationParameter("updated", updated);
-          transformer.transform();
-          //register(ivorn, transformer.getResultAsDomNode());
-          register(ivorn,vosiHarvest.harvestCapabilities(transformer.getResultAsDomNode()));
+           
+    // Retrive the registration document from the database and update it in memory.
+    Node updatedRegistration = addCapabilities(resourceUrl, vosiUri);
           
-//          register(ivorn, transformer.getResultAsDomNode());
-      }else if(vosiAppDataUri != null && vosiAppDataUri.trim().length() > 0) {
-    	  System.out.println("transforming for app data");
-          register(ivorn,vosiHarvest.harvestApplicationInfo(vosiAppDataUri,DomHelper.newDocument(resourceUrl)));    	  
+    // Update the registration in the database. 
+    register(ivorn, updatedRegistration);
+      
+    // Optionally, update the CEA data.
+    if (vosiAppDataUri != null && vosiAppDataUri.trim().length() > 0) {
+    	System.out.println("transforming for CEA app data");
+      try {    	  
+        register(ivorn,vosiHarvest.harvestApplicationInfo(vosiAppDataUri,DomHelper.newDocument(resourceUrl)));
+      } catch (Exception e) {
+        throw new ServletException("Failed to update CEA data in a registration", e);
       }
-    } catch (Exception ex) {
-      throw new ServletException("Failed to transform a registration.", ex);
     }
     
     // On successful registration, send the client to a summary of the resource.
     String redirectUri = this.getContextUri(request) + 
                          "/main/browse.jsp?IvornPart=" + 
                          encodedIvorn;
-    response.setStatus(response.SC_SEE_OTHER);
+    response.setStatus(HttpServletResponse.SC_SEE_OTHER);
     response.setHeader("Location", redirectUri);    
   }
   
   /** 
-   * Returns a short description of the servlet.
+   * Supplies a short description of the servlet.
+   * 
+   * @return The description.
    */
+  @Override
   public String getServletInfo() {
     return "Adds capability elements to a service registration";
+  }
+  
+  /**
+   * Reads a registration document from a given URL and inserts the
+   * capabilities on a second, given URI. Any capabilities previously in the
+   * document are discarded. The URL for the document may point directly into
+   * the database.
+   * 
+   * @param registrationDocument URL giving the XML text of the registration document.
+   * @param vosiUri URL giving the XML text of the capabilities document.
+   * @return
+   * @throws ServletException If either document cannot be read, or if the transformation fails.
+   */
+  protected Node addCapabilities(
+      URL     registrationDocument, 
+      String  vosiUri
+  ) throws ServletException {
+    try {
+      URL transformUrl = this.getClass().getResource("/xsl/GetCapabilities.xsl");
+      RegistryTransformer transformer = new RegistryTransformer(transformUrl);
+      transformer.setTransformationSource(registrationDocument);
+      transformer.setTransformationParameter("vosi-uri", vosiUri);
+      transformer.setTransformationParameter("updated", new Instant().toString());
+      transformer.transform();
+      return transformer.getResultAsDomNode();
+    }
+    catch (IOException e1) {
+      throw new ServletException("Failed to add capabilities to a registration document", e1);
+    }
   }
   
 
