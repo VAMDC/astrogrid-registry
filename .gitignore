@@ -1,0 +1,5 @@
+/server/target/
+/common/target/
+/webapp/target/
+/client-lite/target/
+/xmldb/target/

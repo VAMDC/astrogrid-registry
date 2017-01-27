@@ -79,11 +79,6 @@ There are some irritations
       <version>${project.version}</version>
     </dependency>
     
-    <dependency>
-      <groupId>org.astrogrid</groupId>
-      <artifactId>astrogrid-contracts</artifactId>
-    </dependency>
-    
 
 	<dependency>
       <groupId>net.sf.saxon</groupId>
