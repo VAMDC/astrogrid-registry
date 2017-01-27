@@ -339,28 +339,6 @@
        </testQuery>
     </capability>
 
-    <coverage>
-       <stc:STCResourceProfile
-            xmlns="http://www.ivoa.net/xml/STC/stc-v1.30.xsd">
-
-          <AstroCoordSystem xlink:type="simple"
-                            xlink:href="ivo://STClib/CoordSys#UTC-FK5-TOPO" 
-                            id="UTC-FK5-TOPO"/> 
-
-          <AstroCoordArea coord_system_id="UTC-FK5-TOPO">
-             <AllSky/>
-          </AstroCoordArea>
-
-       </stc:STCResourceProfile>
-
-       <waveband>Radio</waveband>
-       <waveband>Millimeter</waveband>
-       <waveband>Infrared</waveband>
-       <waveband>Optical</waveband>
-       <waveband>UV</waveband>
-
-    </coverage>
-
 </ri:Resource>
 <ri:Resource xsi:type="vs:CatalogService"
           status="active" created="2000-01-01T09:00:00" updated="2000-01-01T09:00:00"
@@ -457,20 +435,6 @@
     </capability>
 
     <coverage>
-       <!--
-       <stc:STCResourceProfile
-            xmlns="http://www.ivoa.net/xml/STC/stc-v1.30.xsd">
-
-          <AstroCoordSystem xlink:type="simple"
-                            xlink:href="ivo://STClib/CoordSys#UTC-FK5-TOPO" 
-                            id="UTC-FK5-TOPO"/> 
-
-          <AstroCoordArea coord_system_id="UTC-FK5-TOPO">
-             <AllSky/>
-          </AstroCoordArea>
-
-       </stc:STCResourceProfile>
-		-->
        <waveband>Radio</waveband>
        <waveband>Millimeter</waveband>
        <waveband>Infrared</waveband>
@@ -540,83 +504,7 @@
     <format isMIMEType="false">tarred Miriad visibililty datasets</format>
     <format isMIMEType="true">image/fits</format>
 
-    <coverage>
-       <stc:STCResourceProfile
-            xmlns="http://www.ivoa.net/xml/STC/stc-v1.30.xsd">
-
-<!--
-          <AstroCoordSystem xlink:type="simple"
-                            xlink:href="ivo://STClib/CoordSys#UTC-FK5-TOPO" 
-                            id="UTC-FK5-TOPO"/> 
--->
-          <AstroCoords coord_system_id="UTC-FK5-TOPO">
-             <Time unit="s">
-                <!-- Uncertainty.Temporal -->
-                <Error>1</Error>
-                
-                <!-- Resolution.Temporal -->
-                <Resolution>10</Resolution>
-                <Resolution>120</Resolution>
-             </Time>
-
-             <Position1D>
-                <!-- Uncertainty.Spatial -->
-                <Error pos_unit="arcsec">0.25</Error>
-                
-                <!-- Resolution.Spatial -->
-                <Resolution pos_unit="arcsec">1</Resolution>
-                <Resolution pos_unit="arcsec">30</Resolution>
-
-                <!-- RegionOfRegard -->
-                <Size pos_unit="deg">0.0167</Size>
-                <Size pos_unit="deg">2</Size>
-             </Position1D>
-
-             <Spectral>
-                <!-- Uncertainty.Spatial -->
-                <Error spectral_unit="kHz">12</Error>
-                
-                <!-- Resolution.Spectral -->
-                <Resolution spectral_unit="kHz">6.1</Resolution>
-                <Resolution spectral_unit="GHz">1.0</Resolution>
-             </Spectral>
-          </AstroCoords>
-
-          <AstroCoordArea coord_system_id="UTC-FK5-TOPO">
-
-             <TimeInterval>
-                <StartTime>
-                   <ISOTime>1991-05-18T19:00:00</ISOTime>
-                </StartTime>
-                <StopTime>
-                   <ISOTime>2004-06-07T05:53:00</ISOTime>
-                </StopTime>
-             </TimeInterval>
-
-             <Circle unit="deg">
-                <Center>
-                   <C1>0.0</C1>
-                   <C2>90.0</C2>
-                </Center>
-                <Radius>120</Radius>
-             </Circle>
-
-             <SpectralInterval unit="GHz">
-                <LoLimit>70</LoLimit>
-                <HiLimit>116</HiLimit>
-             </SpectralInterval>
-             <SpectralInterval unit="GHz">
-                <LoLimit>210</LoLimit>
-                <HiLimit>270</HiLimit>
-             </SpectralInterval>
-
-          </AstroCoordArea>
-       </stc:STCResourceProfile>
-       <footprint ivo-id="ivo://bima.ncsa/footprint">
-          http://bimaarch.ncsa.uiuc.edu/VO/footprint
-       </footprint>
-       <waveband>Millimeter</waveband>
-    </coverage>
+    
 </ri:Resource>
 <ri:Resource xsi:type="vt:ServiceStandard"
           status="active" created="2000-01-01T09:00:00" updated="2000-01-01T09:00:00"
