@@ -17,7 +17,6 @@ import org.apache.commons.logging.LogFactory;
 
 import org.astrogrid.registry.server.xmldb.XMLDBRegistry;
 import org.astrogrid.registry.server.SOAPFaultException;
-import org.astrogrid.registry.server.ConfigExtractor;
 import org.astrogrid.contracts.http.filters.ContractsFilter;
 
 import org.astrogrid.util.DomHelper;
@@ -25,7 +24,6 @@ import org.astrogrid.config.Config;
 
 import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.base.XMLDBException;
-import org.apache.commons.collections.map.ReferenceMap;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -111,51 +109,8 @@ public abstract class DefaultQueryService {
    
    public abstract NodeDescriber getXQuerySearchRootResourceNode();
       
-   /**
-    * Method: Search
-    * Description: Web Service method to take ADQL DOM and perform a query on the
-    * registry.  Takes in a DOM so it can handle multiple versions of ADQL.
-    * 
-    * @param query - DOM object containing ADQL. Which is xsl'ed into XQuery language for the query.
-    * @return - Resource DOM object of the Resources from the query of the registry. 
-    * 
-    */
-   public XMLStreamReader Search(Document query) {
-      log.debug("start Search");
-      long beginQ = System.currentTimeMillis();
-
-      //transform the ADQL to an XQuery for the registry.
-      String xqlQuery = null;
-      String start, max, identOnly;
-      try {
-          xqlQuery = queryHelper.getQuery(query);
-          start = DomHelper.getNodeTextValue(query,"from");
-          max = DomHelper.getNodeTextValue(query,"max");
-          if(max == null && contractVersion.equals("0.1")) {
-              max = conf.getString("reg.amend.returncount","100");
-          }
-          identOnly = DomHelper.getNodeTextValue(query,"identifiersOnly");
-      }catch(Exception e) {
-          e.printStackTrace();
-          sfe = new SOAPFaultException("Server Error: " + e.getMessage(),e, queryWSDLNS, SOAPFaultException.QUERYSOAP_TYPE);
-          return processSingleResult(sfe.getFaultDocument(),null);
-      }
-      log.debug("The XQLQuery From ADQLSearch = " + xqlQuery);
-
-      try {
-	      //perform the query and log how long it took to query.
-	      ResourceSet resultSet = queryHelper.queryRegistry(xqlQuery, start, max);
-	      log.info("Time taken to complete search on server = " +
-	              (System.currentTimeMillis() - beginQ));
-	      log.debug("end Search");
-	            
-	      //To be correct we need to transform the results, with a correct response element 
-	      //for the soap message and for the right root element around the resources.
-	      return processResults(resultSet,"SearchResponse", start, max, identOnly);
-      }catch(SOAPFaultException soapexc) {
-    	  return processSingleResult(soapexc.getFaultDocument(),null);
-      }
-   }
+   
+  
    
 
    
