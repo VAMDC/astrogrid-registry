@@ -18,7 +18,8 @@
       <ri:Resource updated="{$updated}" xmlns:vr="http://www.ivoa.net/xml/VOResource/v1.0"
         xmlns:vs="http://www.ivoa.net/xml/VODataService/v1.0"
         xmlns:ri="http://www.ivoa.net/xml/RegistryInterface/v1.0"
-        xmlns:va="http://www.ivoa.net/xml/VOApplication/v1.0rc1">
+        xmlns:va="http://www.ivoa.net/xml/VOApplication/v1.0rc1"
+        xmlns:cap='http://www.ivoa.net/xml/VOSICapabilities/v1.0'>
         
         <!-- Copy the attributes (but not "updated" which is overridden above) -->
         <xsl:copy-of select="@status"/>
