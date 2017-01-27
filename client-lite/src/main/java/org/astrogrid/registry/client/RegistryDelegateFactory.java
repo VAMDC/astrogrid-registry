@@ -39,7 +39,7 @@ public class RegistryDelegateFactory {
 
    public static Config conf = null;
    
-   private static final String DEFAULT_CONTRACT_VERSION = "0.1";
+   private static final String DEFAULT_CONTRACT_VERSION = "1.0";
    
    public static final String QUERY_URL_PROPERTY = "org.astrogrid.registry.query.endpoint";
    public static final String OAI_URL_PROPERTY = "org.astrogrid.registry.oai.query.endpoint";
@@ -169,12 +169,10 @@ public class RegistryDelegateFactory {
 	  System.out.println("the endpoint constructoed = " + contractEndpoint);
 	  if(contractVersion.equals("1.0")) {
 		  return new org.astrogrid.registry.client.admin.v1_0.UpdateRegistry(contractEndpoint);
-	  }else if(contractVersion.equals("0.1")) {
-		  return new org.astrogrid.registry.client.admin.v0_1.UpdateRegistry(contractEndpoint);
-	  }else {
+	  } else {
 		  logger.warn("Could not find an AdminService for version = " + contractVersion + 
-				  " Currently only 0.1 and 1.0 is available.  Defaulting to 0.1");
-		  return new org.astrogrid.registry.client.admin.v0_1.UpdateRegistry(contractEndpoint);
+				  " Currently only 1.0 is available.  Defaulting to 1.0");
+		  return new org.astrogrid.registry.client.admin.v1_0.UpdateRegistry(contractEndpoint);
 	  }
    }
    

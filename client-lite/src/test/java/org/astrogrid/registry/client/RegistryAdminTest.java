@@ -8,9 +8,12 @@ package org.astrogrid.registry.client;
 import java.net.URL;
 import org.apache.axis.utils.XMLUtils; 
 import org.w3c.dom.Document; 
-import junit.framework.*;
 import java.io.File;
 import org.astrogrid.registry.client.admin.RegistryAdminService;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * Class: RegistryAdminTest
@@ -20,13 +23,13 @@ import org.astrogrid.registry.client.admin.RegistryAdminService;
  * @author Kevin Benson
  *
  */
-public class RegistryAdminTest extends TestCase { 
+public class RegistryAdminTest { 
 
    /**
     * Switch for our debug statements.
     *
     */
-   private static boolean DEBUG_FLAG = true ;
+   private final static boolean DEBUG_FLAG = true ;
    
    /**
     * RegistryAdminService interface to all the methods.
@@ -44,9 +47,8 @@ public class RegistryAdminTest extends TestCase {
     *
    * @throws java.lang.Exception
     */
-   @Override
+   @Before
    public void setUp() throws Exception {
-       super.setUp() ;
        if (DEBUG_FLAG) System.out.println("") ;
        if (DEBUG_FLAG) System.out.println("----\"----") ;
        if (DEBUG_FLAG) System.out.println("RegistryQueryJunit:setup()") ;
@@ -73,26 +75,30 @@ public class RegistryAdminTest extends TestCase {
     * Description: tests the basic update/add ability of a xml resource in a DOM format.
     * @throws Exception standard junit exception to be thrown.
     */
+   @Test
+   @Ignore
    public void testUpdate() throws Exception {
       if (DEBUG_FLAG) System.out.println("Begin testUpdateOnRegistry");
       Document doc = RegistryDelegateFactory.conf.getDom("reg.testfile");
-      assertNotNull(doc);  
+      Assert.assertNotNull(doc);  
       System.out.println("the doc of reg.testfile = " + XMLUtils.DocumentToString(doc));
       Document responseDoc = rs.update(doc);
       System.out.println("the responseDoc of an update" + XMLUtils.DocumentToString(responseDoc));
-      assertNotNull(responseDoc);         
+      Assert.assertNotNull(responseDoc);         
    }
    
    /**
     * Method: testUpdateFromFile
     * Description: tests the basic update/add ability of a xml resource from a local File format.
     * @throws Exception standard junit exception to be thrown.
-    */   
+    */
+   @Test
+   @Ignore
    public void testUpdateFromFile() throws Exception {
        if (DEBUG_FLAG) System.out.println("Begin testUpdateOnRegistry");
        Document responseDoc = rs.updateFromFile(new File(regTestBase,"RegTest4.xml"));
        System.out.println("the responseDoc of an update" + XMLUtils.DocumentToString(responseDoc));
-       assertNotNull(responseDoc);         
+       Assert.assertNotNull(responseDoc);         
    }
    
    /**
@@ -105,24 +111,25 @@ public class RegistryAdminTest extends TestCase {
        if (DEBUG_FLAG) System.out.println("Begin testUpdateOnRegistry");
        Document responseDoc = rs.updateFromURL(new URL("file:///" + regTestBase+"/RegTest2.xml"));
        System.out.println("the responseDoc of an update" + XMLUtils.DocumentToString(responseDoc));
-       assertNotNull(responseDoc);         
+       Assert.assertNotNull(responseDoc);         
    }
    
    /**
     * Method: testUpdateFromString
     * Description: tests the basic update/add ability of a xml resource from xml String.
     * @throws Exception standard junit exception to be thrown.
-    */      
+    */
+   @Test
+   @Ignore
    public void testUpdateFromString() throws Exception {
        if (DEBUG_FLAG) System.out.println("Begin testUpdateOnRegistry");
        Document doc = RegistryDelegateFactory.conf.getDom("reg.testfile3");
        String xml =  XMLUtils.DocumentToString(doc);
-       assertNotNull(doc);
-       assertTrue((xml.length() > 0));
+       Assert.assertNotNull(doc);
+       Assert.assertTrue((xml.length() > 0));
        Document responseDoc = rs.updateFromString(xml);
        System.out.println("the responseDoc of an update" + XMLUtils.DocumentToString(responseDoc));
-       assertNotNull(responseDoc);         
+       Assert.assertNotNull(responseDoc);         
     }   
    
-  
 }

@@ -25,9 +25,9 @@ import org.astrogrid.registry.common.RegistryDOMHelper;
 public class QueryRegistry extends org.astrogrid.registry.client.query.QueryRegistry implements RegistryService {
 	 
 	private String NAMESPACE_URI =
-	      "http://www.ivoa.net/wsdl/RegistrySearch/v0.1";
+	      "http://www.ivoa.net/wsdl/RegistrySearch/v1.0";
 	
-	private static final String CONTRACT_VERSION = "0.1";
+	private static final String CONTRACT_VERSION = "1.0";
 	
 	  /**
      * Commons Logger for this class
