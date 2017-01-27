@@ -17,17 +17,6 @@ import org.xmldb.api.base.ResourceSet;
 public interface ISearch  {
     
 	/**
-	 * Method: Search
-	 * Description: Performs an XQuery based off an ADQL DOM.  Uses an
-	 * XSL stylesheet to convert the ADQL DOM to an XQuery and streams the results
-	 * to the client.
-	 * @param query  ADQL DOM in the Soap Body
-	 * @return streamer to the client via Xfire.
-	 */
-    public XMLStreamReader Search(Document query);
-    
-    
-	/**
 	 * Method: XQuerySearch
 	 * Description: Performs an XQuery search passed in and returns results
 	 * to the client.
