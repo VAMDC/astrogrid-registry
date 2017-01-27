@@ -3,7 +3,6 @@ package org.astrogrid.registry.server.admin;
 import org.astrogrid.registry.server.xmldb.XMLDBRegistry;
 import org.astrogrid.registry.common.RegistryDOMHelper;
 import org.astrogrid.registry.server.query.QueryConfigExtractor;
-import org.astrogrid.config.Config;
 import org.astrogrid.util.DomHelper;
 
 import org.apache.commons.logging.Log;
@@ -28,30 +27,14 @@ import javax.xml.parsers.ParserConfigurationException;
 
 public class AuthorityListManager { 
     
-    /**
-     * Logging variable for writing information to the logs
-     */
-   private static final Log log = 
-                               LogFactory.getLog(AuthorityListManager.class);
+   private static final Log LOG = LogFactory.getLog(AuthorityListManager.class);
    
    /**
-    * conf - Config variable to access the configuration for the server normally
-    * jndi to a config file.
-    * @see org.astrogrid.config.Config
-    */   
-   public static Config conf = null;   
-   
-   
-   private XMLDBRegistry xdbRegistry = null;
-   
-   /**
-    * Static to be used on the initiatian of this class for the config
+    * Database interface.
     */
-   static {
-      if(conf == null) {
-         conf = org.astrogrid.config.SimpleConfig.getSingleton();
-      }      
-   }   
+   private final XMLDBRegistry xdbRegistry;
+   
+  
    
    public AuthorityListManager(XMLDBRegistry xdbRegistry) {
        this.xdbRegistry = xdbRegistry;
@@ -101,15 +84,15 @@ public class AuthorityListManager {
      * @throws XMLDBException
      */
     public void populateManagedMaps(String collectionName, String versionNumber) throws XMLDBException {
-        log.debug("start populateManagedMaps");       
+        LOG.debug("start populateManagedMaps");       
         //get All the Managed Authorities, the getManagedAutories() does not
         //perform a query every time only once.
         HashMap versionManaged = null;
         versionManaged = getManagedAuthorities(collectionName, versionNumber);
         
         RegistryAdminService.manageAuths.putAll(versionManaged);
-        log.info("After loading Managed Authorities from Query = " + RegistryAdminService.manageAuths.size() + " for registry version = " + versionNumber);
-        log.debug("end populateManagedMaps");
+        LOG.info("After loading Managed Authorities from Query = " + RegistryAdminService.manageAuths.size() + " for registry version = " + versionNumber);
+        LOG.debug("end populateManagedMaps");
     }
     
     public HashMap getManagedAuthorities(String collectionName, String regVersion) throws XMLDBException {
@@ -124,15 +107,15 @@ public class AuthorityListManager {
             Resource xmlr = rs.getMembersAsResource();
             registries = DomHelper.newDocument(xmlr.getContent().toString());           
         }catch(ParserConfigurationException pce) {
-          log.error(pce);
+          LOG.error(pce);
         }catch(IOException ioe){
-          log.error(ioe);
+          LOG.error(ioe);
         }catch(SAXException sax) {
-          log.error(sax);
+          LOG.error(sax);
         }
         
         NodeList resources = registries.getElementsByTagNameNS("*","Resource");
-        log.info("Number of Resources found loading up registries = " + resources.getLength());
+        LOG.info("Number of Resources found loading up registries = " + resources.getLength());
         String val = null;
         Element resourceElem = null;
         for(int j = 0;j < resources.getLength();j++) {
@@ -141,7 +124,7 @@ public class AuthorityListManager {
         	   resourceElem.getAttribute("status").equals("active")) {
 	            String mainOwner = RegistryDOMHelper.getAuthorityID(resourceElem);
 	            NodeList mgList = resourceElem.getElementsByTagNameNS("*","managedAuthority");
-	            log.info("mglist size = " + mgList.getLength());
+	            LOG.info("mglist size = " + mgList.getLength());
 	            for(int i = 0;i < mgList.getLength();i++) {
 	                val = mgList.item(i).getFirstChild().getNodeValue();
 	                manageAuthorities.put(new AuthorityList(val,regVersion),new AuthorityList(val, regVersion, mainOwner));

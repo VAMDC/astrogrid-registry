@@ -81,9 +81,7 @@ public class SoapDispatcher {
 	    	 //since this service will be used a lot, supposedly .intern() can be quicker
 	    	 //than .equals() so lets try it out.
 	    	 //each method should return a XMLStreamReader that is streamed back to the client.
-	    	 if(interfaceName == "Search".intern()) {
-	    		 responseReader = query.Search(inputDoc);	    		 
-	    	 }else if(interfaceName == "XQuerySearch".intern()) {
+	    	 if(interfaceName == "XQuerySearch".intern()) {
 	    		 responseReader = query.XQuerySearch(inputDoc);
 	    	 }else if(interfaceName == "KeywordSearch".intern()) {
 		    	 responseReader = query.KeywordSearch(inputDoc);	    		 

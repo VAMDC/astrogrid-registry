@@ -12,17 +12,14 @@ import java.io.IOException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import org.astrogrid.registry.common.RegistryDOMHelper;
 import org.astrogrid.registry.server.xmldb.XMLDBRegistry;
 import org.astrogrid.registry.server.SOAPFaultException;
 import org.astrogrid.util.DomHelper;
 import org.astrogrid.config.Config;
-import org.astrogrid.registry.server.XSLHelper;
 import org.astrogrid.store.Ivorn;
 
 import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.modules.XMLResource;
-import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.XMLDBException;
 
 /**
@@ -47,8 +44,6 @@ public class QueryHelper {
     private static int queryLimit;
     
     private String queryWSDLNS = null;
-    
-    private String contractVersion = null;
     
     private String voResourceVersion = null;
     
@@ -95,7 +90,6 @@ public class QueryHelper {
      */
     public QueryHelper(String queryWSDLNS, String contractVersion, String voResourceVersion) {
         this.queryWSDLNS = queryWSDLNS;
-        this.contractVersion = contractVersion;
         this.voResourceVersion = voResourceVersion;
         collectionName = "astrogridv" + voResourceVersion.replace('.','_');
         xdbRegistry = new XMLDBRegistry();
@@ -159,6 +153,7 @@ public class QueryHelper {
      * @param start - Resource Number to start from.
      * @param max - how many Resources to return. 
      * @return Set of XML Resources which is normally iterated through and streamed out to the client.
+   * @throws org.astrogrid.registry.server.SOAPFaultException
      */   
     public ResourceSet keywordQuery(String keywords, boolean orKeywords, String start, String max)  throws SOAPFaultException {
         long beginQ = System.currentTimeMillis();
@@ -456,29 +451,5 @@ public class QueryHelper {
            ioe.printStackTrace();
            throw new SOAPFaultException("Server Error: " + ioe.getMessage(),ioe,queryWSDLNS, SOAPFaultException.QUERYSOAP_TYPE);
        }*/
-    }
-    
-    /**
-     * Method: getQuery
-     * Description: Transforms ADQL to XQuery, uses the namespace of ADQL to allow the
-     * transformations to handle different versions.  Transformations are done
-     * by XSL stylesheets. XSL is customizable in case you need to change the XQuery or
-     * some other type of Query for the database.
-     * 
-     * @param query ADQL DOM object 
-     * @return xquery string
-     */   
-    public String getQuery(Document query) throws Exception {                                               
-        //String adqlVersion = org.astrogrid.registry.common.RegistryDOMHelper.findADQLVersionFromNode((Node)query.getDocumentElement());
-        String adqlVersion = RegistryDOMHelper.findADQLVersionFromNode(query.getDocumentElement());
-        
-        //throw an error if no version was found.
-        if(adqlVersion == null || adqlVersion.trim().length() == 0) {
-            throw new Exception("No ADQL version found, hence do not know how to translate the adql to a xquery");           
-        }
-        
-        XSLHelper xslHelper = new XSLHelper();
-        return xslHelper.transformADQLToXQL(query, adqlVersion, 
-                         QueryConfigExtractor.getRootNodeName(voResourceVersion),contractVersion);
     }
 }

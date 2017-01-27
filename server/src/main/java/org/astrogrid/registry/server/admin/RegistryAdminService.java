@@ -113,12 +113,10 @@ public abstract class RegistryAdminService {
        alm = new AuthorityListManager(xdbRegistry);
    } */ 
    
-   private String contractVersion = null;
    private String voResourceVersion = null;
    private String adminwsdlNS = null;
    
    public RegistryAdminService(String contractVersion, String voResourceVersion, String adminwsdlNS) {
-	   this.contractVersion = contractVersion;
 	   this.voResourceVersion = voResourceVersion;
 	   this.adminwsdlNS = adminwsdlNS;
        xdbRegistry = new XMLDBRegistry();
