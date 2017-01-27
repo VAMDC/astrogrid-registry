@@ -11,6 +11,14 @@ import org.astrogrid.config.Config;
 import org.astrogrid.util.DomHelper;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -252,6 +260,27 @@ public class RegistryDOMHelper {
        //          " defaulting to config.");
        return versionNumber;
    }
+  
+   /**
+    * Prints a DOM document to a given stream.
+    * Copied from http://stackoverflow.com/questions/2325388/what-is-the-shortest-way-to-pretty-print-a-org-w3c-dom-document-to-stdout
+    * @param doc
+    * @param out
+    * @throws IOException
+    * @throws TransformerException 
+    */
+   public static void printDocument(Document doc, OutputStream out) throws IOException, TransformerException {
+    TransformerFactory tf = TransformerFactory.newInstance();
+    Transformer transformer = tf.newTransformer();
+    transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
+    transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+    transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+    transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+    transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+
+    transformer.transform(new DOMSource(doc), 
+         new StreamResult(new OutputStreamWriter(out, "UTF-8")));
+}
    
 
 }
