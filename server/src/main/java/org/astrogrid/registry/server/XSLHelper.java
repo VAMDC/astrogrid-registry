@@ -15,9 +15,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory; 
 import javax.xml.parsers.ParserConfigurationException;
 
-import net.sf.saxon.TransformerFactoryImpl;
-
-import org.astrogrid.contracts.http.filters.ContractsFilter;
 import org.astrogrid.registry.RegistryException;
 
 /** 
@@ -33,28 +30,6 @@ public class XSLHelper {
     
     private static final String XSL_DIRECTORY = "xsl/";
     
-    private static final String ASTROGRID_SCHEMA_BASE = "http://software.astrogrid.org/schema/";
-    
-    private static String schemaLocationBase;
-
-    
-    /**
-     * Static to be used on the initiatian of this class for the config
-     */   
-    static {
-          if(schemaLocationBase == null) {              
-              schemaLocationBase = ContractsFilter.getContextURL() != null ? ContractsFilter.getContextURL() + "/schema/" :
-                                   ASTROGRID_SCHEMA_BASE;
-          }//if
-    }    
-    
-   /**
-    * Empty constructor -- should delete later, this is automatic.
-    *
-    */
-   public XSLHelper() {
-      
-   }
    
    /**
     * Load a Stylesheet from the ClassLoader (usually from jars) given a particular directory and name.
@@ -65,67 +40,6 @@ public class XSLHelper {
        logger.info("Loading from Classloader = " + name);
        ClassLoader loader = this.getClass().getClassLoader();
        return loader.getResourceAsStream(name);
-   }
-      
-
-   /**
-    * Method: transformADQLToXQL
-    * Description: Transforms a particular adql version into XQL (XQuery) for use with the eXist db. Other
-    * parameters are passed in to help build the XQuery such as the root node to be queried on.  And the namespaces
-    * that need to be declared for queries. Supports multiple versions of ADQL if a stylesheet is provided.
-    * @param doc ADQL Select/Where XML Node to be processed through a XSL stylesheet
-    * @param versionNumber Version number of ADQL used as part of the adql stylesheet name.
-    * @param rootNode Actually a String of the root Resource (with prefix) to be queries on.
-    * @param namespaceDeclare A long string of all the 'declare namespace' for the XQL.
-    * @return A XQL (XQuery) String to be used for querying on the XML database.
-    */
-   public String transformADQLToXQL(Node doc, String versionNumber,String rootNode, String contractVersion) throws RegistryException {
-      
-      Source xmlSource = new DOMSource(doc);
-      logger
-            .debug("transformADQLToXQL(Node, String) - the file resource = ADQLToXQL-"
-                    + versionNumber + ".xsl");      
-      try {
-    	 
-         Source xslSource = new StreamSource(
-                  new InputStreamReader(loadStyleSheet(XSL_DIRECTORY + "ADQLToXQL-" + versionNumber + "-" + contractVersion +  ".xsl"),"UTF-8"));
-         /*
-         DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
-          
-         builderFactory.setNamespaceAware(true);
-         DocumentBuilder builder = builderFactory.newDocumentBuilder();
-         resultDoc = builder.newDocument();
-         */
-         
-         TransformerFactory transformerFactory = TransformerFactory.newInstance();
-         //DOMResult result = new DOMResult(resultDoc);
-         StringWriter sw = new StringWriter();
-         StreamResult result = new StreamResult(sw);
-         
-         Transformer transformer = transformerFactory.newTransformer(xslSource);
-         transformer.setParameter("resource_elem", rootNode);
-         //transformer.setParameter("declare_elems", namespaceDeclare);         
-         transformer.transform(xmlSource,result);
-         String xqlResult = sw.toString();
-         if (xqlResult.startsWith("<?")) {
-            xqlResult = xqlResult.substring(xqlResult.indexOf("?>")+2);
-         }
-         xqlResult = xqlResult.replaceAll("&gt;", ">").replaceAll("&lt;", "<").replaceAll("&amp;","&");
-         return xqlResult;
-      /*}catch(ParserConfigurationException pce) {
-        logger.error("transformADQLToXQL(Node, String)", pce);
-        throw new RegistryException(pce);
-      */
-      }catch(TransformerConfigurationException tce) {
-        logger.error("transformADQLToXQL(Node, String)", tce);
-        throw new RegistryException(tce);
-      }catch(TransformerException te) {
-        logger.error("transformADQLToXQL(Node, String)", te);
-        throw new RegistryException(te);
-      }catch(UnsupportedEncodingException uee) {
-          logger.error(uee);
-          throw new RegistryException(uee);
-      }
    }
       
    /**
