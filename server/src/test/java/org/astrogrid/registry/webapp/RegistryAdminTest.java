@@ -119,13 +119,16 @@ public class RegistryAdminTest {
 
     @Test
     public void testUpdateAnotherNewRegInvalidv1_0() throws Exception {
-        Document doc = askQueryFromFile("/xml/NewRegistryInvalidv1_0.xml");
-        Document resultDoc = sut.updateInternal(doc);
-        HashMap hm = alm.getManagedAuthorities("astrogridv1_0","1.0");
-        Assert.assertTrue(hm.containsKey(new AuthorityList("new.registry","1.0")));
-        Assert.assertTrue(hm.containsValue(new AuthorityList("new.registry","1.0","new.registry")));
-        Assert.assertTrue(hm.containsValue(new AuthorityList("new.registry.1","1.0","new.registry")));        
-        Assert.assertEquals("Fault", resultDoc.getDocumentElement().getLocalName());       
+      HashMap hm1 = alm.getManagedAuthorities("astrogridv1_0","1.0");
+      
+      Document queryDoc = askQueryFromFile("/xml/NewRegistryInvalidv1_0.xml");
+      Document resultDoc = sut.updateInternal(queryDoc);    
+      
+      Assert.assertEquals("Invalid registration => SOAP fault", "Fault", resultDoc.getDocumentElement().getLocalName());       
+        
+      HashMap hm2 = alm.getManagedAuthorities("astrogridv1_0","1.0");
+      
+      Assert.assertEquals("Rejected update has not changed managed authorities", hm1.entrySet(), hm2.entrySet());
     }
     
     /**
