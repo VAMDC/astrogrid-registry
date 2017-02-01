@@ -9,6 +9,8 @@
     <title>NCSA NVO Publishing Registry</title>
     <shortName>RAI registry</shortName>
     <identifier>ivo://another.registry/registry</identifier>
+    
+    <BOGUS>This element would not be present in a proper registration</BOGUS>
 
     <curation>
       <publisher ivo-id="ivo://rai.ncsa/RAI">
