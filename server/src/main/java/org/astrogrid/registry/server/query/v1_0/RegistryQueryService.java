@@ -68,9 +68,9 @@ public class RegistryQueryService extends DefaultQueryService implements ISearch
         super(wsdlNS, contractVersion, voVersion);     
     }
    
-    public String getWSDLNameSpace() {return this.QUERY_WSDL_NS;}
-    public String getContractVersion() { return this.CONTRACT_VERSION;}
-    public String getResourceVersion() { return this.VORESOURCE_VERSION;}
+    public String getWSDLNameSpace() {return QUERY_WSDL_NS;}
+    public String getContractVersion() { return CONTRACT_VERSION;}
+    public String getResourceVersion() { return VORESOURCE_VERSION;}
     public String getQueryInterfaceRoot(String wsInterfaceMethod) {return QUERYINTERFACE_ROOT;}
     
     public NodeDescriber getXQuerySearchRootResourceNode() {
