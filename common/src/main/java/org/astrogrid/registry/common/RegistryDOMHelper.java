@@ -11,8 +11,13 @@ import org.astrogrid.config.Config;
 import org.astrogrid.util.DomHelper;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.StringReader;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
@@ -22,6 +27,8 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 
 
@@ -62,6 +69,22 @@ public class RegistryDOMHelper {
          }//if
       }//if
    }
+  
+  /**
+   * A parser, set up for namespace-aware parsing. All documents created
+   * by this class should use this parser. No schema validation is applied
+   * during parsing.
+   */
+  protected static DocumentBuilder builder;
+  static {
+    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+    factory.setNamespaceAware(true);
+     try {
+       builder = factory.newDocumentBuilder();
+     } catch (ParserConfigurationException ex) {
+       throw new IllegalStateException("Failed to configure the XML parser", ex);
+     }
+  }
    
    /**
     * Method: getDefaultVersionNumber
@@ -280,7 +303,62 @@ public class RegistryDOMHelper {
 
     transformer.transform(new DOMSource(doc), 
          new StreamResult(new OutputStreamWriter(out, "UTF-8")));
-}
+  }
    
+  /**
+    * Prints a DOM tree to a given stream.
+    * Copied from http://stackoverflow.com/questions/2325388/what-is-the-shortest-way-to-pretty-print-a-org-w3c-dom-document-to-stdout
+    * @param dom
+    * @param out
+    * @throws IOException
+    * @throws TransformerException 
+    */
+   public static void printDom(Node dom, OutputStream out) throws IOException, TransformerException {
+    TransformerFactory tf = TransformerFactory.newInstance();
+    Transformer transformer = tf.newTransformer();
+    transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
+    transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+    transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+    transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+    transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+
+    transformer.transform(new DOMSource(dom), 
+         new StreamResult(new OutputStreamWriter(out, "UTF-8")));
+  }
+  
+  /**
+   * Parses a string of XML text into a document.
+   * @param xmlText XML to be parsed.
+   * @return The document.
+   * @throws IOException If the parser somehow fails to read the string (should be impossible!)
+   * @throws SAXException If the XML is not well formed.
+   */
+  public static Document documentFromString(String xmlText) throws IOException, SAXException {
+    return builder.parse(new InputSource(new StringReader(xmlText)));
+  }
+  
+  /**
+   * Creates a DOM from an XML text held in a system resource.
+   * 
+   * @param resource Name of the resource.
+   * @return The DOM.
+   * @throws javax.xml.parsers.ParserConfigurationException
+   * @throws org.xml.sax.SAXException
+   * @throws java.io.IOException
+   */
+  public static Document documentFromResource(String resource) 
+      throws ParserConfigurationException, SAXException, IOException {
+    InputStream is = RegistryDOMHelper.class.getResourceAsStream(resource);
+    if (is == null) {
+      throw new IllegalArgumentException("Resource " + resource + " was not found");
+    }
+    else {
+      return builder.parse(is);
+    }
+  }
+
+  public static Document emptyDocument() {
+    return builder.newDocument();
+  }  
 
 }
