@@ -17,10 +17,12 @@ import org.astrogrid.registry.server.admin.AuthorityList;
 import java.util.Properties;
 import org.astrogrid.registry.TestRegistry;
 import org.astrogrid.registry.common.RegistryDOMHelper;
+import org.astrogrid.registry.server.xmldb.XMLDBRegistry;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.xmldb.api.base.ResourceSet;
 
 /**
  * Class: RegistryAdminTest
@@ -64,7 +66,7 @@ public class RegistryAdminTest {
     @Test
     public void testUpdateARegv1_0() throws Exception {
     	System.out.println("start testUpdateARegv1_0");    	
-        Document doc = askQueryFromFile("/xml/ARegistryv1_0.xml");
+        Document doc = docFromFile("/xml/ARegistryv1_0.xml");
         Document resultDoc = sut.updateInternal(doc);
         RegistryDOMHelper.printDocument(resultDoc, System.out);
         HashMap hm = alm.getManagedAuthorities("astrogridv1_0","1.0");
@@ -76,7 +78,7 @@ public class RegistryAdminTest {
     
     @Test
     public void testUpdateMultipleRecordsv1_0() throws Exception {
-        Document doc = askQueryFromFile("/xml/Multiple_ResourceRecordsv1_0.xml");
+        Document doc = docFromFile("/xml/Multiple_ResourceRecordsv1_0.xml");
         Document resultDoc = sut.updateInternal(doc);
         System.out.println("here is resultDoc in multUpdatev1_0 = " + DomHelper.DocumentToString(resultDoc));
         System.out.println();
@@ -86,7 +88,7 @@ public class RegistryAdminTest {
 
     @Test
     public void testUpdateInvalidv1_0NotManaged() throws Exception {
-        Document doc = askQueryFromFile("/xml/InvalidEntryv1_0.xml");
+        Document doc = docFromFile("/xml/InvalidEntryv1_0.xml");
         Document resultDoc = sut.updateInternal(doc);
         Assert.assertEquals(1,resultDoc.getElementsByTagNameNS("*","Fault").getLength());
     }
@@ -101,7 +103,7 @@ public class RegistryAdminTest {
      */
     @Test
     public void testUpdateNewRegv1_0() throws Exception {
-        Document doc = askQueryFromFile("/xml/NewRegistryv1_0.xml");
+        Document doc = docFromFile("/xml/NewRegistryv1_0.xml");
         Document resultDoc = sut.updateInternal(doc);
         DomHelper.DocumentToStream(doc, System.out);
         
@@ -115,13 +117,36 @@ public class RegistryAdminTest {
         Assert.assertTrue(hm.containsKey(new AuthorityList("new.registry","1.0")));
         Assert.assertTrue(hm.containsValue(new AuthorityList("new.registry","1.0","new.registry")));
         Assert.assertTrue(hm.containsValue(new AuthorityList("new.registry.1","1.0","new.registry")));
+        
+        // Check that the registry can still be queried.
+        XMLDBRegistry xdbRegistry = new XMLDBRegistry();
+        ResourceSet rs = xdbRegistry.query("/", "astrogridv1_0");
+        Assert.assertNotNull(rs);
+    }
+    
+    /**
+     * Checks that a VAMDC resource can be registered.
+     * This uses the registration of the CDMS node, extracted from the VAMDC
+     * registry on 2017-01-03.
+     * 
+     * @throws Exception 
+     */
+    @Test
+    public void testUpdateCdms() throws Exception {
+      Document resultDoc1 = sut.updateInternal(docFromFile("/xml/ARegistryv1_0.xml"));
+      Assert.assertEquals("UpdateResponse", resultDoc1.getDocumentElement().getLocalName());
+      
+      Document resultDoc2 = sut.updateInternal(docFromFile("/xml/cdms.xml"));
+      Assert.assertEquals("UpdateResponse", resultDoc2.getDocumentElement().getLocalName());        
+      Assert.assertTrue(!resultDoc2.getDocumentElement().hasChildNodes());          
+        
     }
 
     @Test
     public void testUpdateAnotherNewRegInvalidv1_0() throws Exception {
       HashMap hm1 = alm.getManagedAuthorities("astrogridv1_0","1.0");
       
-      Document queryDoc = askQueryFromFile("/xml/NewRegistryInvalidv1_0.xml");
+      Document queryDoc = docFromFile("/xml/NewRegistryInvalidv1_0.xml");
       Document resultDoc = sut.updateInternal(queryDoc);    
       
       Assert.assertEquals("Invalid registration => SOAP fault", "Fault", resultDoc.getDocumentElement().getLocalName());       
@@ -132,14 +157,14 @@ public class RegistryAdminTest {
     }
     
     /**
-     * Method: askQueryFromFile
-     * Description: Obtains a File on the local system as a inputstream and feeds it into a Document DOM object to be
-     * returned.
+     * Method: docFromFile
+ Description: Obtains a File on the local system as a inputstream and feeds it into a Document DOM object to be
+ returned.
      * @param queryFile - File name of a xml resource.
      * @return Document DOM object of a XML file.
      * @throws Exception  Any IO Exceptions or DOM Parsing exceptions could be thrown.
      */           
-    protected Document askQueryFromFile(String queryFile) throws Exception {
+    protected Document docFromFile(String queryFile) throws Exception {
         Assert.assertNotNull(queryFile);
         InputStream is = this.getClass().getResourceAsStream(queryFile);
         
