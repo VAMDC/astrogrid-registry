@@ -41,9 +41,9 @@ public class AuthorityListManager {
    }
    
    
-   public AuthorityListManager() {
-       xdbRegistry = new XMLDBRegistry();
-   }
+  public AuthorityListManager() {
+    this(new XMLDBRegistry());
+  }
    
     
    public void clearManagedAuthoritiesForOwner(String owner, String versionNumber) {
@@ -95,8 +95,8 @@ public class AuthorityListManager {
         LOG.debug("end populateManagedMaps");
     }
     
-    public HashMap getManagedAuthorities(String collectionName, String regVersion) throws XMLDBException {
-        HashMap manageAuthorities = new HashMap();
+  public ManagedAuthorities getManagedAuthorities(String collectionName, String regVersion) throws XMLDBException {
+        ManagedAuthorities manageAuthorities = new ManagedAuthorities();
         String xqlQuery = QueryConfigExtractor.getXQLDeclarations(regVersion) + QueryConfigExtractor.queryForRegistries(regVersion);
         Document registries = null;
         try {
@@ -132,5 +132,7 @@ public class AuthorityListManager {
         	}//if
         }//for
         return manageAuthorities;
-    }   
+    }
+    
+  
 }

@@ -84,7 +84,7 @@ public abstract class RegistryAdminService {
     * The HashMap is normally in the form of a key being a version number + main authority id and a value
     * being the form of a version number + authority id(being managed) + main authority (the owner). 
     */   
-   public static HashMap manageAuths;
+   public static ManagedAuthorities manageAuths;
    
    protected AdminHelper adminHelper = null;
    
@@ -96,8 +96,7 @@ public abstract class RegistryAdminService {
    static {
       if(conf == null) {
          conf = org.astrogrid.config.SimpleConfig.getSingleton();
-         manageAuths = new HashMap();
-         //otherAuths = new HashMap();         
+         manageAuths = new ManagedAuthorities();
       }      
    }
    
@@ -355,8 +354,7 @@ public abstract class RegistryAdminService {
          //do we manage this authority id, if so then add the resource. Unless it is a Registry
          //type then we need to process its new managedAuthority list to make sure there is no 
          //conflict with authority id's.
-         if(manageAuths.containsValue(new AuthorityList(ident,versionNumber, authorityID)) &&
-            nodeVal.indexOf("Registry") == -1) {
+         if(manageAuths.isManaged(ident) && nodeVal.indexOf("Registry") == -1) {
             //Essentially chop off other elemens wrapping the Resource element, and put
             //our own element. Would have been nice just to store the Resource element
             //at the root level, but it seems the XQueries on the database have problems
@@ -558,13 +556,17 @@ public abstract class RegistryAdminService {
                  }//if      
                   }//elseif   
             if(addManageError) {
-               log.debug("Error authority id not managed by this registry throwing SOAPFault exception; the authority id = " + ident);
-               soapErrorMessage += "Error authority id not managed by this registry throwing SOAPFault exception; the authority id = " + ident;
-               continue;
-               //return SOAPFaultException.createAdminSOAPFaultException("AuthorityID not managed by this registry",new RegistryException("Trying to update an entry that is not managed by this Registry authority id = " + ident));
-            }//if
+              String msg = "Registration rejected: the authority "
+                         + ident
+                         + " is not in the set "
+                         + manageAuths
+                         + " managed by this registry ";
+              log.info(msg);
+              soapErrorMessage += msg;
+              continue;
+            }
          }//else
-         log.info("Time taken to update an entry = " + 
+         log.debug("Time taken to update an entry = " + 
                   (System.currentTimeMillis() - beginQ) +
                   " for ident  = " + tempIdent);
          //currentResource.getParentNode().removeChild(currentResource);         
