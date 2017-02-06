@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ri:Resource xmlns:cea="http://www.ivoa.net/xml/CEA/v1.0rc1" xmlns:ri="http://www.ivoa.net/xml/RegistryInterface/v1.0" xmlns:va="http://www.ivoa.net/xml/VOApplication/v1.0rc1" xmlns:vg="http://www.ivoa.net/xml/VORegistry/v1.0" xmlns:vr="http://www.ivoa.net/xml/VOResource/v1.0" xmlns:vs="http://www.ivoa.net/xml/VODataService/v1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" created="2000-01-01T09:00:00" status="active" updated="2015-12-02T10:32:36" xsi:type="vg:Registry">
+<title/>
+<identifier>ivo://vamdc/org.astrogrid.registry.RegistryService</identifier>
+<curation>
+<publisher/>
+<creator>
+<name/>
+</creator>
+<contact>
+<name>Nicolas Moreau</name>
+<email>nicolas.moreau@obspm.fr</email>
+</contact>
+</curation>
+<content>
+<subject>registry</subject>
+<description>Astrogrid Registry</description>
+<referenceURL>http://149.202.50.48/registry-12.07/</referenceURL>
+<type>Registry</type>
+<contentLevel>Research</contentLevel>
+</content>
+<capability standardID="ivo://ivoa.net/std/Registry" xsi:type="vg:Harvest">
+<interface role="std" xsi:type="vg:OAIHTTP">
+<accessURL>http://149.202.50.48/registry-12.07/OAIHandlerv1_0</accessURL>
+</interface>
+<interface role="std" xsi:type="vg:OAISOAP">
+<accessURL>
+http://149.202.50.48/registry-12.07/services/RegistryHarvestv1_0
+</accessURL>
+</interface>
+<!--
+ Max Records for OAI resources being returned a resumptionToken is given to the client if there are more
+       whereby the client may page through all the OAI resources 
+-->
+<maxRecords>200</maxRecords>
+</capability>
+<capability standardID="ivo://ivoa.net/std/Registry" xsi:type="vg:Search">
+<interface role="std" xsi:type="vr:WebService">
+<accessURL>
+http://149.202.50.48/registry-12.07/services/RegistryQueryv1_0
+</accessURL>
+</interface>
+<!--
+ Max Records if only for Search and KeywordSearch will return a max of this many records, but the client may still
+       constrain things with a from and to parameters to page through all records.  XQuery has no constraints. 
+-->
+<maxRecords>200</maxRecords>
+<extensionSearchSupport>full</extensionSearchSupport>
+<optionalProtocol>XQuery</optionalProtocol>
+</capability>
+<full>false</full>
+<managedAuthority>vamdc</managedAuthority>
+</ri:Resource>
