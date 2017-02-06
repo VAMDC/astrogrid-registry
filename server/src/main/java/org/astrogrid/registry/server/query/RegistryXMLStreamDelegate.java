@@ -52,7 +52,7 @@ public abstract class RegistryXMLStreamDelegate extends StreamReaderDelegate imp
             schemaLocationBase = ContractsFilter.getContextURL() != null ? ContractsFilter.getContextURL() + "/schema/" :
                                  ASTROGRID_SCHEMA_BASE;
         }
-  }  
+  }
   
   /**
    * Constructor
