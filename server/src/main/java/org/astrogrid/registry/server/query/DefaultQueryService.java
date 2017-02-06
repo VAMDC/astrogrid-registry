@@ -27,6 +27,8 @@ import org.xmldb.api.base.XMLDBException;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 /**
  * Class: RegistryQueryService
@@ -127,7 +129,8 @@ public abstract class DefaultQueryService {
          log.debug("start XQuerySearch");         
          try {
         	 NodeDescriber nd = getXQuerySearchRootResourceNode();
-             String xql = DomHelper.getNodeTextValue(query,"xquery");
+             //String xql = DomHelper.getNodeTextValue(query,"xquery");
+             String xql = extractXqueryText(query);
              int tempIndexCheck1 = 0;
              int tempIndexCheck2;
              ResourceSet rs;
@@ -237,7 +240,7 @@ public abstract class DefaultQueryService {
             		 return new ResourceStreamer(cloneResources((List)cache.get(String.valueOf(hashC))), wrapper);
             	 }
              }
-             //log.info("Query to be ran = " + xql);
+             log.info("Query to be run = " + xql);
              rs = xdbRegistry.query(xql,collectionName);
              List resSet = cloneResources(rs);
              //log.info("0.b The hashcode = " + hashC);   
@@ -459,5 +462,26 @@ public abstract class DefaultQueryService {
        }		   
    }
    
-   public abstract QueryHelper getQueryHelper();  
+   public abstract QueryHelper getQueryHelper();
+   
+   /**
+    * Extracts the XQuery text from a query request.
+    * 
+    * @param queryDoc Query request, containing the XPath /XQuerySearch/XQuery
+    * @return 
+    */
+   protected String extractXqueryText(Document queryDoc) {
+     Element xquerySearch = queryDoc.getDocumentElement();
+     if (xquerySearch == null) {
+       throw new IllegalArgumentException("Query document is empty");
+     }
+     
+     NodeList q = xquerySearch.getElementsByTagName("XQuery");
+     if (q.getLength() != 1) {
+       throw new IllegalArgumentException("Query document does not contain a unique XQuery element");
+     }
+     
+     Element xquery = (Element) q.item(0);
+     return xquery.getTextContent();
+   }
 }
