@@ -13,14 +13,15 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * Class: RegistryXMLStreamDelegate
- * Description: Main Streaming Delegate that handles streaming results
- * of a query back to the client via XFire.  This delegate will take into
- * account an XML Wrapper around a ResourceSet then cursor through a ResourceSet
- * streaming out the XML from each Resource in the set.  Finally streeaming out the ending
- * wrapper elements.
- * This class is abstract a ResultStreamer class is defined for each contract.  The ResultStreamer
- * will handle anything special for each Resource content such as adding schemaLocations. 
+ * A stream of StAX events representing a wrapped resource-set. The
+ * resource-set comes from the XML DB, with each resource representing one
+ * registration-document; there may be zero or more resources. The wrapper
+ * contains one or more levels of eclosing elements that group the resources.
+ * 
+ * This class is abstract: a ResultStreamer class is defined for each contract.  
+ * The ResultStreamer will handle anything special for each Resource content 
+ * such as adding schemaLocations. 
+ * 
  * @author kevinbenson
  *
  */
