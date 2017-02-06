@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vor:VOResources
+   xmlns:vor="http://www.ivoa.net/xml/RegistryInterface/v0.1"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+   xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+   xmlns:vr="http://www.ivoa.net/xml/VOResource/v1.0" 
+   xmlns:vs="http://www.ivoa.net/xml/VODataService/v1.1" 
+   xmlns:sia="http://www.ivoa.net/xml/SIA/v1.0"
+   xmlns="http://www.ivoa.net/xml/VOResource/v1.0">
+<vor:Resource xsi:type="sia:SimpleImageAccess"  updated="2004-11-20" status="active">
+ <title>SIAP service for the INT wide-field survey</title>
+ <identifier>ivo://org.astrogrid/INT-WFS.SIAP</identifier>
+ <curation>
+  <publisher>Cambridge Astronomical Survey Unit</publisher>
+  <creator>
+   <name>Guy Rixon</name>
+  </creator>
+  <contact>
+   <name>Guy Rixon</name>
+   <email>gtr@ast.cam.ac.uk</email>
+  </contact>
+ </curation>
+ <content>
+  <subject>SIAP</subject>
+  <description>A Simple Image Access Protocol service for the reduced images of the Isaac Newton Telescope wide-field survey.</description>
+  <referenceURL>http://wiki.astrogrid.org/bin/view/Astrogrid/IntWfsDataModel</referenceURL>
+  <type>Archive</type>
+ </content>
+    <interface xsi:type="WebBrowser">
+		<accessURL use="full">http://archive.ast.cam.ac.uk/cgi-bin/wfs-siap/queryImage</accessURL>
+    </interface>
+  <sia:capability xmlns="http://www.ivoa.net/xml/SIA/v0.7">
+       <imageServiceType>Pointed</imageServiceType>
+       <maxQueryRegionSize>
+          <long>360</long>
+          <lat>360</lat>
+       </maxQueryRegionSize>
+       <maxImageExtent>
+          <long>360</long>
+          <lat>360</lat>
+       </maxImageExtent>
+       <maxImageSize>
+          <long>4096</long>
+          <lat>4096</lat>
+       </maxImageSize>
+       <maxFileSize>100000000</maxFileSize>
+       <maxRecords>5000</maxRecords>
+  </sia:capability>
+	
+</vor:Resource>
+</vor:VOResources>
