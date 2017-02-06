@@ -169,7 +169,7 @@ public class RegistryQueryTest {
 
     XMLStreamReader reader = rqsv1_0.KeywordSearch(queryDoc);
 
-    Document resultDoc = STAXUtils.read(builder, reader, true);
+    Document resultDoc = STAXUtils.read(builder, reader, false);
     Assert.assertNotNull(resultDoc);
     RegistryDOMHelper.printDocument(resultDoc, System.out);
 
@@ -208,19 +208,7 @@ public class RegistryQueryTest {
     RegistryDOMHelper.printDocument(queryDoc, System.out);
 
     XMLStreamReader reader = rqsv1_0.XQuerySearch(queryDoc);
-    /*
-      while (reader.hasNext()) {
-        System.out.println(reader.getEventType());
-        if (reader.hasText()) {
-          System.out.println(reader.getText());
-        }
-        if (reader.hasName()) {
-          System.out.println(reader.getName());
-        }
-        reader.next();
-      }
-     */
-    Document resultDoc = STAXUtils.read(builder, reader, true);
+    Document resultDoc = STAXUtils.read(builder, reader, false);
     Assert.assertNotNull(resultDoc);
     RegistryDOMHelper.printDocument(resultDoc, System.out);
 
@@ -231,11 +219,11 @@ public class RegistryQueryTest {
     XPathExpression q1 = xpath.compile("count(/rw:XQuerySearchResponse)");
     Assert.assertEquals("1", q1.evaluate(resultDoc));
 
-    XPathExpression q2 = xpath.compile("count(/rw:SearchResponse/ri:VOResources)");
+    XPathExpression q2 = xpath.compile("count(/rw:XQuerySearchResponse/ri:Resource)");
     Assert.assertEquals("1", q2.evaluate(resultDoc));
-
-    XPathExpression q3 = xpath.compile("count(/rw:SearchResponse/ri:VOResources/ri:Resource)");
-    Assert.assertEquals("1", q3.evaluate(resultDoc));
+    
+    XPathExpression q3 = xpath.compile("/rw:XQuerySearchResponse/ri:Resource/identifier");
+    Assert.assertEquals("ivo://registry.test/cdms", q3.evaluate(resultDoc));
   }
 
   /**
@@ -244,11 +232,12 @@ public class RegistryQueryTest {
    *
    * @throws Exception standard junit exception to be thrown.
    */
+  @Test
   public void testXQuerySearchv1_0_2() throws Exception {
     System.out.println("start testXQuerySearchv1_0_2");
     Document xqueryDoc = DomHelper.newDocument("<XQuerySearch><XQuery>declare namespace ri = \"http://www.ivoa.net/xml/RegistryInterface/v1.0\";  //RootResource[identifier = 'ivo://registry.test/registry']</XQuery></XQuerySearch>");
     XMLStreamReader reader = rqsv1_0.XQuerySearch(xqueryDoc);
-    Document doc = STAXUtils.read(builder, reader, true);
+    Document doc = STAXUtils.read(builder, reader, false);
     Assert.assertNotNull(doc);
     Assert.assertTrue((doc.getElementsByTagNameNS("*", "Resource").getLength() > 0));
     System.out.println("done testXQuerySearchv1_0_2");
@@ -260,11 +249,12 @@ public class RegistryQueryTest {
    *
    * @throws Exception standard junit exception to be thrown.
    */
+  @Test
   public void testXQuerySearchv1_0_3() throws Exception {
     System.out.println("start testXQuerySearchv1_0_3");
     Document xqueryDoc = DomHelper.newDocument("<XQuerySearch><XQuery>declare namespace ri = \"http://www.ivoa.net/xml/RegistryInterface/v1.0\";  //RootResource</XQuery></XQuerySearch>");
     XMLStreamReader reader = rqsv1_0.XQuerySearch(xqueryDoc);
-    Document doc = STAXUtils.read(builder, reader, true);
+    Document doc = STAXUtils.read(builder, reader, false);
     Assert.assertNotNull(doc);
     Assert.assertTrue((doc.getElementsByTagNameNS("*", "Resource").getLength() > 0));
     System.out.println("done testXQuerySearchv1_0_3");
@@ -276,15 +266,15 @@ public class RegistryQueryTest {
    *
    * @throws Exception standard junit exception to be thrown.
    */
+  @Test
   public void testXQuerySearchv1_0_4() throws Exception {
     System.out.println("start testXQuerySearchv1_0_4");
     Document xqueryDoc = DomHelper.newDocument("<XQuerySearch><XQuery>declare namespace ri = \"http://www.ivoa.net/xml/RegistryInterface/v1.0\"; "
-        + "//RootResource[(matches(title,'Imaging','i') or matches(identifier,'Imaging','i') or matches(shortName,'Imaging','i') or matches(content/subject,'Imaging','i') or matches(content/description,'Imaging','i')) and @status='active']" + "</XQuery></XQuerySearch>");
+        + "//RootResource[(matches(title,'Spectroscopy','i') or matches(identifier,'spectroscopy','i') or matches(shortName,'Imaging','i') or matches(content/subject,'spectroscopy','i') or matches(content/description,'Imaging','i')) and @status='active']" + "</XQuery></XQuerySearch>");
     XMLStreamReader reader = rqsv1_0.XQuerySearch(xqueryDoc);
-    Document doc = STAXUtils.read(builder, reader, true);
-    if (doc == null) {
-      System.out.println("yes it was null why");
-    }
+    Document doc = STAXUtils.read(builder, reader, false);
+    RegistryDOMHelper.printDocument(doc, System.out);
+    
     Assert.assertNotNull(doc);
     Assert.assertTrue((doc.getElementsByTagNameNS("*", "Resource").getLength() > 0));
     System.out.println("done testXQuerySearchv1_0_4");
@@ -293,17 +283,31 @@ public class RegistryQueryTest {
   /**
    * Method: testXQuerySearch Description: test to perform a xquery search on
    * the registry via the use of the common web service interface method.
+   * 
+   * This search should find no resources, but should still return the 
+   * normal XML-wrapper.
    *
    * @throws Exception standard junit exception to be thrown.
    */
+  @Test
   public void testXQuerySearchv1_0_5() throws Exception {
     System.out.println("start testXQuerySearchv1_0_5");
     Document xqueryDoc = DomHelper.newDocument("<XQuerySearch><XQuery>declare namespace ri = \"http://www.ivoa.net/xml/RegistryInterface/v1.0\"; "
         + "//RootResource[(match-all(title,'Imaging') or match-all(identifier,'Imaging') or match-all(shortName,'Imaging') or match-all(content/subject,'Imaging') or match-all(content/description,'Imaging')) and @status='active']" + "</XQuery></XQuerySearch>");
     XMLStreamReader reader = rqsv1_0.XQuerySearch(xqueryDoc);
-    Document doc = STAXUtils.read(builder, reader, true);
-    Assert.assertNotNull(doc);
-    Assert.assertTrue((doc.getElementsByTagNameNS("*", "Resource").getLength() > 0));
+    Document resultDoc = STAXUtils.read(builder, reader, false);
+    Assert.assertNotNull(resultDoc);
+    
+    XPathFactory xPathfactory = XPathFactory.newInstance();
+    XPath xpath = xPathfactory.newXPath();
+    xpath.setNamespaceContext(new RegistryNamespaceContext());
+
+    XPathExpression q1 = xpath.compile("count(/rw:XQuerySearchResponse)");
+    Assert.assertEquals("1", q1.evaluate(resultDoc));
+
+    XPathExpression q2 = xpath.compile("count(/rw:XQuerySearchResponse/ri:Resource)");
+    Assert.assertEquals("0", q2.evaluate(resultDoc));
+    
     System.out.println("done testXQuerySearchv1_0_5");
   }
 
@@ -313,11 +317,12 @@ public class RegistryQueryTest {
    *
    * @throws Exception standard junit exception to be thrown.
    */
+  @Test
   public void testXQuerySearchv1_0_6() throws Exception {
     System.out.println("start testXQuerySearchv1_0_6");
     Document xqueryDoc = DomHelper.newDocument("<XQuerySearch><XQuery>declare namespace ri = \"http://www.ivoa.net/xml/RegistryInterface/v1.0\";  //RootResource[identifier = 'ivo://nottobefound']</XQuery></XQuerySearch>");
     XMLStreamReader reader = rqsv1_0.XQuerySearch(xqueryDoc);
-    Document doc = STAXUtils.read(builder, reader, true);
+    Document doc = STAXUtils.read(builder, reader, false);
     Assert.assertNotNull(doc);
     Assert.assertTrue((doc.getElementsByTagNameNS("*", "Resource").getLength() == 0));
     Assert.assertTrue(doc.getDocumentElement().getLocalName().equals("XQuerySearchResponse"));
@@ -331,11 +336,12 @@ public class RegistryQueryTest {
    * @throws Exception standard junit exception to be thrown.
    *
    */
+  @Test
   public void testGetResourcev1_0_1() throws Exception {
     System.out.println("begin testGetResourcev1_0_1");
     Document inputDoc = DomHelper.newDocument("<GetResource><identifier>ivo://registry.test/registry</identifier></GetResource>");
     XMLStreamReader reader = rqsv1_0.GetResource(inputDoc);
-    Document doc = STAXUtils.read(builder, reader, true);
+    Document doc = STAXUtils.read(builder, reader, false);
     Assert.assertNotNull(doc);
     RegistryDOMHelper.printDocument(doc, System.out);
     Assert.assertTrue((doc.getElementsByTagNameNS("*", "Resource").getLength() == 1));
@@ -348,11 +354,12 @@ public class RegistryQueryTest {
    *
    * @throws Exception standard junit exception to be thrown.
    */
+  @Test
   public void testGetResourceNotFoundv1_0_1() throws Exception {
     System.out.println("begin testGetResourceNotFoundv1_0_1");
     Document inputDoc = DomHelper.newDocument("<GetResource><identifier>ivo://nothing/helloworld</identifier></GetResource>");
     XMLStreamReader reader = rqsv1_0.GetResource(inputDoc);
-    Document doc = STAXUtils.read(builder, reader, true);
+    Document doc = STAXUtils.read(builder, reader, false);
     Assert.assertNotNull(doc);
     Assert.assertTrue((doc.getElementsByTagNameNS("*", "Resource").getLength() == 0));
     Assert.assertEquals("Fault", doc.getDocumentElement().getLocalName());
