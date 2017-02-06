@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ri:Resource xmlns:cea="http://www.ivoa.net/xml/CEA/v1.0rc1" xmlns:ri="http://www.ivoa.net/xml/RegistryInterface/v1.0" xmlns:va="http://www.ivoa.net/xml/VOApplication/v1.0rc1" xmlns:vr="http://www.ivoa.net/xml/VOResource/v1.0" xmlns:vs="http://www.ivoa.net/xml/VODataService/v1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" created="2010-04-21T10:25:19" status="active" updated="2011-06-08T10:26:53" xsi:type="vs:CatalogService">
+<title xmlns:vg="http://www.ivoa.net/xml/VORegistry/v1.0">CDMS</title>
+<identifier xmlns:vg="http://www.ivoa.net/xml/VORegistry/v1.0">ivo://registry.test/cdms</identifier>
+<curation xmlns:vg="http://www.ivoa.net/xml/VORegistry/v1.0">
+<publisher>University of Cologne</publisher>
+<creator>
+<name>University of Cologne</name>
+</creator>
+<contact>
+<name>Christian Endres</name>
+<email>endres@ph1.uni-koeln.de</email>
+</contact>
+</curation>
+<content xmlns:vg="http://www.ivoa.net/xml/VORegistry/v1.0">
+<subject>spectroscopy</subject>
+<description/>
+<referenceURL>http://www.cdms.de/</referenceURL>
+<type>Other</type>
+<contentLevel>Research</contentLevel>
+<relationship>
+<relationshipType>service-for</relationshipType>
+<relatedResource>ivo://vamdc/cdms/ceaApplication</relatedResource>
+</relationship>
+</content>
+<capability xmlns:cap="urn:astrogrid:schema:Capabilities" xmlns:cs="http://www.ivoa.net/xml/ConeSearch/v1.0" standardID="ivo://ivoa.net/std/TAP">
+<interface xsi:type="vs:ParamHTTP">
+<accessURL use="full">http://hera.ph1.uni-koeln.de:8080/DSA_cdms//TAP</accessURL>
+</interface>
+</capability>
+<capability xmlns:cap="urn:astrogrid:schema:Capabilities" xmlns:cs="http://www.ivoa.net/xml/ConeSearch/v1.0" standardID="ivo://org.astrogrid/std/CEA/v1.0" xsi:type="cea:CeaCapability">
+<description>
+Access to two applications: general ADQL query, and asynchronous cone-search where relevant/enabled.
+</description>
+<interface xsi:type="cea:CECInterface">
+<accessURL use="full">
+http://hera.ph1.uni-koeln.de:8080/DSA_cdms//services/CommonExecutionConnectorService
+</accessURL>
+</interface>
+<managedApplications>
+<ApplicationReference>ivo://uni-koeln.de/cdms-dsa-catalog/ceaApplication</ApplicationReference>
+</managedApplications>
+</capability>
+<capability xmlns:cap="urn:astrogrid:schema:Capabilities" xmlns:cs="http://www.ivoa.net/xml/ConeSearch/v1.0" standardID="ivo://org.astrogrid/std/VOSI/v0.3#capabilities">
+<interface xsi:type="vs:ParamHTTP">
+<accessURL use="full">
+http://hera.ph1.uni-koeln.de:8080/DSA_cdms//VOSI/capabilities
+</accessURL>
+<queryType>GET</queryType>
+<resultType>application/xml</resultType>
+</interface>
+</capability>
+<capability xmlns:cap="urn:astrogrid:schema:Capabilities" xmlns:cs="http://www.ivoa.net/xml/ConeSearch/v1.0" standardID="ivo://ivoa.net/std/VOSI#capabilities">
+<interface xsi:type="vs:ParamHTTP">
+<accessURL use="full">
+http://hera.ph1.uni-koeln.de:8080/DSA_cdms//VOSI/capabilities
+</accessURL>
+<queryType>GET</queryType>
+<resultType>application/xml</resultType>
+</interface>
+</capability>
+<capability xmlns:cap="urn:astrogrid:schema:Capabilities" xmlns:cs="http://www.ivoa.net/xml/ConeSearch/v1.0" standardID="ivo://org.astrogrid/std/VOSI/v0.3#availability">
+<interface xsi:type="vs:ParamHTTP">
+<accessURL use="full">
+http://hera.ph1.uni-koeln.de:8080/DSA_cdms//VOSI/availability
+</accessURL>
+<queryType>GET</queryType>
+<resultType>application/xml</resultType>
+</interface>
+</capability>
+<capability xmlns:cap="urn:astrogrid:schema:Capabilities" xmlns:cs="http://www.ivoa.net/xml/ConeSearch/v1.0" standardID="ivo://ivoa.net/std/VOSI#availability">
+<interface xsi:type="vs:ParamHTTP">
+<accessURL use="full">
+http://hera.ph1.uni-koeln.de:8080/DSA_cdms//VOSI/availability
+</accessURL>
+<queryType>GET</queryType>
+<resultType>application/xml</resultType>
+</interface>
+</capability>
+<capability xmlns:cap="urn:astrogrid:schema:Capabilities" xmlns:cs="http://www.ivoa.net/xml/ConeSearch/v1.0" standardID="ivo://org.astrogrid/std/VOSI/v0.3#tables">
+<interface xsi:type="vs:ParamHTTP">
+<accessURL use="full">
+http://hera.ph1.uni-koeln.de:8080/DSA_cdms//VOSI/tables
+</accessURL>
+<queryType>GET</queryType>
+<resultType>application/xml</resultType>
+</interface>
+</capability>
+<capability xmlns:cap="urn:astrogrid:schema:Capabilities" xmlns:cs="http://www.ivoa.net/xml/ConeSearch/v1.0" standardID="ivo://org.astrogrid/std/VOSI/v0.3#ceaApplication">
+<interface xsi:type="vs:ParamHTTP">
+<accessURL use="full">
+http://hera.ph1.uni-koeln.de:8080/DSA_cdms//VOSI/applications
+</accessURL>
+<queryType>GET</queryType>
+<resultType>application/xml</resultType>
+</interface>
+</capability>
+<capability xmlns:cap="urn:astrogrid:schema:Capabilities" xmlns:cs="http://www.ivoa.net/xml/ConeSearch/v1.0" standardID="ivo://ivoa.net/std/Delegation">
+<interface role="std" xsi:type="vs:ParamHTTP">
+<accessURL use="full">
+http://hera.ph1.uni-koeln.de:8080/DSA_cdms//delegations
+</accessURL>
+<queryType>GET</queryType>
+<resultType>application/xml</resultType>
+</interface>
+</capability>
+<table xmlns:tab="urn:astrogrid:schema:TableMetadata">
+<name>RadiativeTransitions</name>
+<description/>
+<column>
+<name>Resource</name>
+<description/>
+<dataType arraysize="*">char</dataType>
+</column>
+<column>
+<name>RadiativeTransitionID</name>
+<description/>
+<dataType>long</dataType>
+</column>
+<column>
+<name>MoleculeID</name>
+<description>Molecule ID</description>
+<dataType>int</dataType>
+</column>
+<column>
+<name>ChemicalName</name>
+<description>Trivial Name</description>
+<dataType arraysize="*">char</dataType>
+</column>
+<column>
+<name>MolecularChemicalSpecies</name>
+<description>Name of the Molecule</description>
+<dataType arraysize="*">char</dataType>
+</column>
+<column>
+<name>Isotopomer</name>
+<description/>
+<dataType arraysize="*">char</dataType>
+</column>
+<column>
+<name>EnergyWavelength</name>
+<description/>
+<dataType arraysize="*">char</dataType>
+</column>
+<column>
+<name>WavelengthWavenumber</name>
+<description/>
+<dataType arraysize="*">char</dataType>
+</column>
+<column>
+<name>FrequencyValue</name>
+<description/>
+<dataType>double</dataType>
+</column>
+<column>
+<name>FrequencyUnit</name>
+<description/>
+<dataType arraysize="*">char</dataType>
+</column>
+<column>
+<name>EnergyWavelengthAccuracy</name>
+<description/>
+<dataType>double</dataType>
+</column>
+<column>
+<name>Multipole</name>
+<description/>
+<dataType arraysize="*">char</dataType>
+</column>
+<column>
+<name>Log10WeightedOscillatorStrengthValue</name>
+<description/>
+<dataType>double</dataType>
+</column>
+<column>
+<name>Log10WeightedOscillatorStrengthUnit</name>
+<description/>
+<dataType arraysize="*">char</dataType>
+</column>
+<column>
+<name>LowerStateEnergyValue</name>
+<description/>
+<dataType>double</dataType>
+</column>
+<column>
+<name>LowerStateEnergyUnit</name>
+<description/>
+<dataType arraysize="*">char</dataType>
+</column>
+<column>
+<name>UpperStateNuclearStatisticalWeight</name>
+<description/>
+<dataType>int</dataType>
+</column>
+<column>
+<name>InitialStateRef</name>
+<description/>
+<dataType>int</dataType>
+</column>
+<column>
+<name>FinalStateRef</name>
+<description/>
+<dataType>int</dataType>
+</column>
+<column>
+<name>CaseQN</name>
+<description/>
+<dataType>int</dataType>
+</column>
+<column>
+<name>QN_Up_1</name>
+<description/>
+<dataType>int</dataType>
+</column>
+<column>
+<name>QN_Up_2</name>
+<description/>
+<dataType>int</dataType>
+</column>
+<column>
+<name>QN_Up_3</name>
+<description/>
+<dataType>int</dataType>
+</column>
+<column>
+<name>QN_Up_4</name>
+<description/>
+<dataType>int</dataType>
+</column>
+<column>
+<name>QN_Up_5</name>
+<description/>
+<dataType>int</dataType>
+</column>
+<column>
+<name>QN_Up_6</name>
+<description/>
+<dataType>int</dataType>
+</column>
+<column>
+<name>QN_Low_1</name>
+<description/>
+<dataType>int</dataType>
+</column>
+<column>
+<name>QN_Low_2</name>
+<description/>
+<dataType>int</dataType>
+</column>
+<column>
+<name>QN_Low_3</name>
+<description/>
+<dataType>int</dataType>
+</column>
+<column>
+<name>QN_Low_4</name>
+<description/>
+<dataType>int</dataType>
+</column>
+<column>
+<name>QN_Low_5</name>
+<description/>
+<dataType>int</dataType>
+</column>
+<column>
+<name>QN_Low_6</name>
+<description/>
+<dataType>int</dataType>
+</column>
+<column>
+<name>E_ID</name>
+<description/>
+<dataType>int</dataType>
+</column>
+<column>
+<name>E_Tag</name>
+<description>TAG (Species Tag of the former CATALOG)</description>
+<dataType>int</dataType>
+</column>
+<column>
+<name>E_States</name>
+<description/>
+<dataType arraysize="*">char</dataType>
+</column>
+<column>
+<name>E_Name</name>
+<description/>
+<dataType arraysize="*">char</dataType>
+</column>
+</table>
+<table xmlns:tab="urn:astrogrid:schema:TableMetadata">
+<name>StatesMolecules</name>
+<description/>
+<column>
+<name>Resource</name>
+<description/>
+<dataType arraysize="*">char</dataType>
+</column>
+<column>
+<name>StateID</name>
+<description/>
+<dataType>int</dataType>
+</column>
+<column>
+<name>MoleculeID</name>
+<description>Molecule ID</description>
+<dataType>int</dataType>
+</column>
+<column>
+<name>ChemicalName</name>
+<description>Trivial Name</description>
+<dataType arraysize="*">char</dataType>
+</column>
+<column>
+<name>MolecularChemicalSpecies</name>
+<description>Name of the Molecule</description>
+<dataType arraysize="*">char</dataType>
+</column>
+<column>
+<name>Isotopomer</name>
+<description/>
+<dataType arraysize="*">char</dataType>
+</column>
+<column>
+<name>StateEnergyValue</name>
+<description/>
+<dataType>double</dataType>
+</column>
+<column>
+<name>StateEnergyUnit</name>
+<description/>
+<dataType arraysize="*">char</dataType>
+</column>
+<column>
+<name>StateEnergyOrigin</name>
+<description/>
+<dataType arraysize="*">char</dataType>
+</column>
+<column>
+<name>StateEnergyAccuracy</name>
+<description/>
+<dataType>double</dataType>
+</column>
+<column>
+<name>MixingCoefficient</name>
+<description/>
+<dataType>double</dataType>
+</column>
+<column>
+<name>StateNuclearStatisticalWeight</name>
+<description/>
+<dataType>int</dataType>
+</column>
+<column>
+<name>QN_RotState</name>
+<description/>
+<dataType arraysize="*">char</dataType>
+</column>
+<column>
+<name>QN_VibState</name>
+<description/>
+<dataType arraysize="*">char</dataType>
+</column>
+<column>
+<name>QN_ElecState</name>
+<description/>
+<dataType arraysize="*">char</dataType>
+</column>
+<column>
+<name>QN_String</name>
+<description/>
+<dataType arraysize="*">char</dataType>
+</column>
+<column>
+<name>EGY_QN_Tag</name>
+<description/>
+<dataType>int</dataType>
+</column>
+<column>
+<name>EGY_QN1</name>
+<description/>
+<dataType>int</dataType>
+</column>
+<column>
+<name>EGY_QN2</name>
+<description/>
+<dataType>int</dataType>
+</column>
+<column>
+<name>EGY_QN3</name>
+<description/>
+<dataType>int</dataType>
+</column>
+<column>
+<name>EGY_QN4</name>
+<description/>
+<dataType>int</dataType>
+</column>
+<column>
+<name>EGY_QN5</name>
+<description/>
+<dataType>int</dataType>
+</column>
+<column>
+<name>EGY_QN6</name>
+<description/>
+<dataType>int</dataType>
+</column>
+<column>
+<name>E_ID</name>
+<description/>
+<dataType>int</dataType>
+</column>
+<column>
+<name>EGY_DAT_ID</name>
+<description/>
+<dataType>int</dataType>
+</column>
+<column>
+<name>E_Tag</name>
+<description>TAG (Species Tag of the former CATALOG)</description>
+<dataType>int</dataType>
+</column>
+</table>
+</ri:Resource>
