@@ -1,5 +1,7 @@
 package org.astrogrid.registry.server.query; 
 
+import org.astrogrid.registry.server.query.v1_0.RegistryQueryService;
+
 /**
  * Class: QueryFactory
  * Description: Factory class normally instantiated by XFire or JSP helper class to 
@@ -20,12 +22,23 @@ public class QueryFactory {
 	 * @throws InstantiationException
 	 * @throws ClassNotFoundException
 	 */
-    public static ISearch createQueryService(String contractVersion) throws IllegalAccessException, 
+  public static ISearch createQueryService(String contractVersion) throws IllegalAccessException, 
                                                                             InstantiationException, 
                                                                             ClassNotFoundException {
-       Class cl = Class.forName("org.astrogrid.registry.server.query.v" + contractVersion.replace('.','_') + ".RegistryQueryService");
-       //cl.isIstance(ISearch)
-       return (ISearch)cl.newInstance();
+    /* 
+    Class cl = Class.forName("org.astrogrid.registry.server.query.v" + contractVersion.replace('.','_') + ".RegistryQueryService");
+    return (ISearch)cl.newInstance();
+    */
+      
+    // Only contract version 1.0 is supported now.
+    if (!contractVersion.equals("1.0")) {
+      throw new IllegalArgumentException("Contract version " + contractVersion + " is no longer supported");
     }
+    return new RegistryQueryService();
+  }
+  
+  public static ISearch createQueryService() {
+    return new RegistryQueryService();
+  }
     
 }
