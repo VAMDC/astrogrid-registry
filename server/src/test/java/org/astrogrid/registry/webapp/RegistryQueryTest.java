@@ -293,7 +293,7 @@ public class RegistryQueryTest {
   public void testXQuerySearchv1_0_5() throws Exception {
     System.out.println("start testXQuerySearchv1_0_5");
     Document xqueryDoc = DomHelper.newDocument("<XQuerySearch><XQuery>declare namespace ri = \"http://www.ivoa.net/xml/RegistryInterface/v1.0\"; "
-        + "//RootResource[(match-all(title,'Imaging') or match-all(identifier,'Imaging') or match-all(shortName,'Imaging') or match-all(content/subject,'Imaging') or match-all(content/description,'Imaging')) and @status='active']" + "</XQuery></XQuerySearch>");
+        + "//RootResource[(match-all(title,'Bogus') or match-all(identifier,'Bogus') or match-all(shortName,'Bogus') or match-all(content/subject,'Bogus') or match-all(content/description,'Bogus')) and @status='active']" + "</XQuery></XQuerySearch>");
     XMLStreamReader reader = rqsv1_0.XQuerySearch(xqueryDoc);
     Document resultDoc = STAXUtils.read(builder, reader, false);
     Assert.assertNotNull(resultDoc);
