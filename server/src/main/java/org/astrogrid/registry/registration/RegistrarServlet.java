@@ -1,27 +1,27 @@
 package org.astrogrid.registry.registration;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.astrogrid.registry.server.admin.AdminHelper;
-import org.astrogrid.registry.server.xmldb.XMLDBRegistry;
 import org.w3c.dom.Node;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import org.astrogrid.registry.server.admin.IAdmin;
 import org.astrogrid.registry.server.admin.v1_0.RegistryAdminService;
 
 import org.astrogrid.util.DomHelper;
 
 import org.astrogrid.registry.common.RegistryValidator;
 import junit.framework.AssertionFailedError;
+import org.astrogrid.registry.server.SOAPFaultException;
+import org.astrogrid.registry.server.query.ISearch;
+import org.astrogrid.registry.server.query.v1_0.RegistryQueryService;
 
 /**
  * Servlet that knows how to find the URL of its containing web application.
@@ -56,6 +56,22 @@ public abstract class RegistrarServlet extends HttpServlet {
               log.error("Error invalid document = " + afe.getMessage());
               throw new ServletException("Invalid update, document not valid " + afe.getMessage());           
           }//catch
+  }
+  
+  /**
+   * Generates a resource document and enters it into the registry.
+   * @param ivorn
+   * @param resource
+   * @throws javax.servlet.ServletException
+   */
+  protected void register(String ivorn, Node resource) throws ServletException {
+    try {
+      URI ivoid = new URI(ivorn);
+      register(ivoid, resource);
+    }
+    catch (URISyntaxException e) {
+      throw new ServletException(e);
+    }
   }
   
   /**
@@ -95,5 +111,19 @@ public abstract class RegistrarServlet extends HttpServlet {
     return "http://" + 
            requestUrl.getAuthority() + 
            request.getContextPath();
+  }
+  
+  /**
+   * Raises a resource as a DOM
+   * @param ivorn IVORN identifying the resource.
+   * @return The DOM.
+   * @throws SOAPFaultException 
+   */
+  protected Document getResource(String ivorn) throws SOAPFaultException {
+    if (ivorn == null) {
+      throw new IllegalArgumentException("No resource was selected (IVORN is null)");
+    }
+    ISearch server = new RegistryQueryService();
+    return server.getQueryHelper().getResourceByIdentifier(ivorn);
   }
 }

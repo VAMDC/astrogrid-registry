@@ -1,19 +1,15 @@
 package org.astrogrid.registry.registration;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.astrogrid.registry.server.SOAPFaultException;
 
-import org.w3c.dom.Element;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.astrogrid.util.DomHelper;
 
 
 /**
@@ -43,58 +39,9 @@ public class VOSICaptureServlet extends RegistrarServlet {
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    String ivornString = request.getParameter("IVORN");
-    if (ivornString == null || ivornString.trim().length() == 0) {
-      throw new ServletException("No identifier was given for the resource; " +
-                                 "parameter IVORN is not set.");
-    }
-    String encodedIvorn = URLEncoder.encode(ivornString, "UTF-8");
-    URL resourceUrl = new URL(this.getContextUri(request) +
-            "/main/viewResourceEntry_body.jsp?IVORN=" +
-            encodedIvorn);
-    String xsiType = null;
-    NodeList urlText = null;
-    String capURL = "";
-    try {
-	    Document checkDoc = DomHelper.newDocument(resourceUrl);
-	    org.w3c.dom.NodeList nl = checkDoc.getElementsByTagNameNS("*","Resource");
-	    if(nl.getLength() == 0) {
-	    	throw new ServletException("Could not find Resource in the Registry.  Identifier given but is not correct.");
-	    }
-	    xsiType = ((Element)nl.item(0)).getAttributeNS("http://www.w3.org/2001/XMLSchema-instance","type");
-	    NodeList capList = ((Element)nl.item(0)).getElementsByTagName("capability");
-	   
-	    for(int k = 0;k < capList.getLength();k++) {
-	    	if( ((Element)capList.item(0)).getAttribute("standardID").equals("ivo://org.astrogrid/std/VOSI/v0.3#capabilities") ||
-					((Element)capList.item(0)).getAttribute("standardID").equals("ivo://org.astrogrid/std/VOSI/v0.4#capabilities")	||
-					((Element)capList.item(0)).getAttribute("standardID").equals("ivo://org.astrogrid/std/VOSI#capabilities") ||
-					((Element)capList.item(0)).getAttribute("standardID").equals("ivo://ivoa.net/std/VOSI#capabilities")) {
-	    		urlText= ((Element)capList.item(0)).getElementsByTagName("accessURL").item(0).getChildNodes();
-	    		if(capURL.length() == 0) {
-					for(int j = 0;j < urlText.getLength();j++) {
-						if(urlText.item(j).getNodeType() == Node.TEXT_NODE) {
-							//System.out.println("yes text node lets try to concat");
-							capURL += urlText.item(j).getNodeValue();
-						}//if
-					}//for
-	    		}//if
-	    		k = capList.getLength();
-	    	}//if
-	    }//for
-    }catch(javax.xml.parsers.ParserConfigurationException pc) {
-    	throw new ServletException("Parser Configuration Exception happened when trying to read the given Resource out of the registry.");    	
-    }catch(org.xml.sax.SAXException se) {
-    	throw new ServletException("SAX Exception happened when trying to read the given Resource out of the registry.");
-    }
+    String ivorn = request.getParameter("IVORN");
     String redirectUri = "/registration/ServiceMetadataForm.jsp?IVORN=" + 
-                         encodedIvorn;
-    if( xsiType != null && xsiType.endsWith("Application") ) {
-    	redirectUri += "&appResource=true";
-    }
-    if(urlText != null && capURL.trim().length() > 0) {
-    	redirectUri += "&" + URLEncoder.encode(capURL, "UTF-8");
-    	
-    }
+                         URLEncoder.encode(ivorn, "UTF-8");
     request.getRequestDispatcher(redirectUri).forward(request, response);
   }
   
@@ -114,57 +61,29 @@ public class VOSICaptureServlet extends RegistrarServlet {
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    
-    // Establish the URI from which the service metadata are to be read.
-    String vosiUri = request.getParameter("VOSI_Capabilities");
-    String vosiAppDataUri = request.getParameter("VOSI_AppData");
-    if ((vosiUri == null || vosiUri.trim().length() == 0) &&
-        (vosiAppDataUri == null || vosiAppDataUri.trim().length() == 0)) {
-      throw new ServletException("No URI was given for the  metadata; " +
-                                 "parameter VOSI is not set.");
-    }
-    
-    // Establish the IVORN of the registration document.
-    String ivornString = request.getParameter("IVORN");
-    if (ivornString == null || ivornString.trim().length() == 0) {
-      throw new ServletException("No identifier was given for the resource; " +
-                                 "parameter IVORN is not set.");
-    }
-    String encodedIvorn = URLEncoder.encode(ivornString, "UTF-8");
-    URI ivorn;
     try {
-      ivorn = new URI(ivornString);
-    } catch (URISyntaxException ex) {
-      throw new ServletException("The given IVORN is invalid.", ex);
-    }
     
-    // Locate the registration document in the database.
-    URL resourceUrl = new URL(this.getContextUri(request) +
-                  "/main/viewResourceEntry_body.jsp?IVORN=" +
-                  encodedIvorn);
+      // Raise the registration document from the database.
+      String ivorn = request.getParameter("IVORN");
+      Document resource = getResource(ivorn);
            
-    // Retrive the registration document from the database and update it in memory.
-    Node updatedRegistration = addCapabilities(resourceUrl, vosiUri);
+      // Update the registration document in memory.
+      String vosiUri = request.getParameter("VOSI_Capabilities");
+      Node updatedRegistration = addCapabilities(resource, vosiUri);
           
-    // Update the registration in the database. 
-    register(ivorn, updatedRegistration);
-      
-    // Optionally, update the CEA data.
-    if (vosiAppDataUri != null && vosiAppDataUri.trim().length() > 0) {
-    	System.out.println("transforming for CEA app data");
-      try {    	  
-        register(ivorn,vosiHarvest.harvestApplicationInfo(vosiAppDataUri,DomHelper.newDocument(resourceUrl)));
-      } catch (Exception e) {
-        throw new ServletException("Failed to update CEA data in a registration", e);
-      }
-    }
+      // Update the registration in the database. 
+      register(ivorn, updatedRegistration);
     
-    // On successful registration, send the client to a summary of the resource.
-    String redirectUri = this.getContextUri(request) + 
+    
+      // On successful registration, send the client to a summary of the resource.
+      String redirectUri = this.getContextUri(request) + 
                          "/main/browse.jsp?IvornPart=" + 
-                         encodedIvorn;
-    response.setStatus(HttpServletResponse.SC_SEE_OTHER);
-    response.setHeader("Location", redirectUri);    
+                         URLEncoder.encode(ivorn, "UTF-8");
+      response.setStatus(HttpServletResponse.SC_SEE_OTHER);
+      response.setHeader("Location", redirectUri);    
+    } catch (SOAPFaultException ex) {
+      throw new ServletException("Failed to update capabilities for a registration", ex);
+    }
   }
   
   /** 
@@ -178,18 +97,18 @@ public class VOSICaptureServlet extends RegistrarServlet {
   }
   
   /**
-   * Reads a registration document from a given URL and inserts the
-   * capabilities on a second, given URI. Any capabilities previously in the
+   * Given the DOM of a registration document, adds capability elements
+   * read from a URL. Any capabilities previously in the
    * document are discarded. The URL for the document may point directly into
    * the database.
    * 
-   * @param registrationDocument URL giving the XML text of the registration document.
+   * @param registrationDocument DOM of the registration document.
    * @param vosiUri URL giving the XML text of the capabilities document.
    * @return
    * @throws ServletException If either document cannot be read, or if the transformation fails.
    */
   protected Node addCapabilities(
-      URL     registrationDocument, 
+      Document registrationDocument, 
       String  vosiUri
   ) throws ServletException {
     try {
