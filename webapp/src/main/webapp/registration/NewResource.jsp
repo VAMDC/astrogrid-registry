@@ -48,12 +48,12 @@
           </p>
           <p>This entry describes:</p>
           <dl>
-            <dt><dd><input type="radio" name="xsiType" value="vr:Service"> A virtual observatory service.
-            <dt><dd><input type="radio" name="xsiType" value="vs:CatalogService"> Catalog service.
-            <dt><dd><input type="radio" name="xsiType" value="vs:DataCollection"> A data collection.
-            <dt><dd><input type="radio" name="xsiType" value="va:Application"> An application.
-            <dt><dd><input type="radio" name="xsiType" value="vr:Organisation"> An organization.
-            <dt><dd><input type="radio" name="xsiType" value="vr:Resource"> None of the above; just a generic resource.
+            <dt><dd><input type="radio" name="xsiType" value="vs:CatalogService"/> Catalog service (<em>use this for VAMDC data-nodes</em>)</dd>
+            <dt><dd><input type="radio" name="xsiType" value="vr:Service"/> A virtual observatory service ((<em>use this for XSAMS-consuming services</em>)</dd>
+            <dt><dd><input type="radio" name="xsiType" value="va:Application"/> An application (<em>Use this to register software associated with a node</em>)</dd>
+            <dt><dd><input type="radio" name="xsiType" value="vs:DataCollection"/> A data collection.</dd>
+            <dt><dd><input type="radio" name="xsiType" value="vr:Organisation"/> An organization.</dd>
+            <dt><dd><input type="radio" name="xsiType" value="vr:Resource"/> None of the above; just a generic resource.</dd>
 	    	<!--
 	    		User can do an applicatin and then put in a harvestvosi to turn it into cea if needed.
 	    		But normally CEA will register everything the whole resource itself.
