@@ -421,7 +421,7 @@
 	<env-entry>
 		<description>The Main Authority ID for this Registry (Authority ID used for the Registry type). The identifier of a namespace under the control of a single naming Authority.  Typically a domain name ex: uk.ac.le.star, mssl.ucl.ac.uk</description>
 		<env-entry-name>reg.amend.authorityid</env-entry-name>
-		<env-entry-value>org.changethis</env-entry-value>
+		<env-entry-value>vamdc</env-entry-value>
 		<env-entry-type>java.lang.String</env-entry-type>
 	</env-entry>
 
