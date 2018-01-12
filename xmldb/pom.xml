@@ -9,7 +9,7 @@
   <parent>
       <groupId>org.astrogrid</groupId>
       <artifactId>astrogrid-registry-base</artifactId>
-      <version>2016.1vamdc-SNAPSHOT</version>
+      <version>2018.1vamdc</version>
   </parent>
   
   <packaging>jar</packaging>

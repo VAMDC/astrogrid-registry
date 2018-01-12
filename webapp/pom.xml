@@ -8,7 +8,7 @@
     <parent>
       <artifactId>astrogrid-registry-base</artifactId>
       <groupId>org.astrogrid</groupId>
-      <version>2016.1vamdc-SNAPSHOT</version>
+      <version>2018.1vamdc</version>
   </parent>
   <description>The deployable registry web application</description>
   <build>
