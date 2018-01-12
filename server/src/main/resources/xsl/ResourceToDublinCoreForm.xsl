@@ -19,16 +19,7 @@
   <xsl:param name="vosiURL"/> 
   
     <xsl:template match="//vr:Resource|//ri:Resource">  
-    <xsl:element name="html">
-      <head>
-        <title>Core metadata: editor</title>
-        
-        <link rel="stylesheet" type="text/css" href="style/astrogrid.css"></link>
-      </head>
-      <body>
-        <div id='bodyColumn'> 
-
-        <h1>Core metadata: editor</h1>
+    
         <form action="DublinCore" method="post">
           <div>
             <input type="hidden" name="IVORN">
@@ -493,15 +484,6 @@
             <input type="submit" value="Record this information in the registry"/>
           </p>
         </form>
-        <hr/>
-        <p>You may wish to open the Resource Help (see menu) in a separate window. It has help for all core and coverage information.</p>
-        <p>
-          Items in bold must have entries; others may be left blank and
-          will not then appear in the registry entry.
-        </p>
-        </div>
-      </body>
-    </xsl:element>
   </xsl:template>
   
   <xsl:template match="text()|@*">

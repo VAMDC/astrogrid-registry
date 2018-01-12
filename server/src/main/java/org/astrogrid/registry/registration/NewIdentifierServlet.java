@@ -93,7 +93,7 @@ public class NewIdentifierServlet extends RegistrarServlet {
       
       // Delegate the success response to the DC editor.
       String uri = this.getContextUri(request) +
-                   "/registration/DublinCore?IVORN=" +
+                   "/registration/DublinCore.jsp?IVORN=" +
                     URLEncoder.encode(ivorn.toString(), "UTF-8") +
                     vosiParam;
       response.setHeader("Location", uri);
