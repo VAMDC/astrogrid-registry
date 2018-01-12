@@ -3,21 +3,11 @@
     <table border='0' width='100%' cellpadding='8' cellspacing='0'><tr>
       <td>
          <a href='http://www.vamdc.eu'>
-         <img border='0' alt='VAMDC' src='../img/vamdc_logo.png' align='left'>
+         <img border='0' alt='VAMDC logo' src='../img/vamdc-consortium-logo.png' align='left'>
          </a>
       </td>
       <td>
-        <div id="buttons">
-         <a href="#" id="alarge" class="btnicon" title="Change text size to large" onclick="setActiveStyleSheet('alarge'); return false;">
-         <font size="4">A</font>
-         </a>
-         <a href="#" id="amedium" class="btnicon" title="Change text size to normal" onclick="setActiveStyleSheet('amedium'); return false;">
-         <font size="2">A</font>
-         </a>
-         <a href="#" id="asmall" class="btnicon" title="Change text size to small" onclick="setActiveStyleSheet('asmall'); return false;">
-         <font size="1">A</font>
-         </a>
-	</div>
+        <img alt="VAMDC partners' logos" src='../img/vamdc_partners.jpg' align='right'/>
       </td>
    </tr></table>
   <div id="breadcrumbs">

@@ -135,6 +135,7 @@ div.clear hr{
 
 body, td, select, input, li{
   font-family: Verdana, Helvetica, Arial, sans-serif;
+  font-size: 13px;
 }
 a {
   text-decoration: none;
@@ -174,6 +175,7 @@ h2 {
 }
 p {
   line-height: 1.3em;
+  cont-size: small;
 }
 #breadcrumbs {
   border-top: 1px solid #aaa;
