@@ -66,6 +66,18 @@ public class XMLDBRegistry {
     }
     
     /**
+     * Extracts from an IVORN the internal name of a resource. The ivo://
+     * prefix is removed and all characters that might upset eXist are replaced 
+     * with underscores.
+     * 
+     * @param ivorn The external identifier.
+     * @return The internal identifier.
+     */
+    public String internalIdentifier(String ivorn) {
+      return ivorn.substring(6).replaceAll("[^\\w*]","_");
+    }
+    
+    /**
      * Method: query
      * Description: Queries the xml database, on the collection of the registry. This method
      * will read from properties a xql expression and fill out the expression then perform the query. This

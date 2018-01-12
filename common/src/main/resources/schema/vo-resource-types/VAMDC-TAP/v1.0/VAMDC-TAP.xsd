@@ -99,6 +99,15 @@ elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.0
                      </xs:documentation>
                   </xs:annotation>
                </xs:element>
+               
+               <xs:element name="application" type="vr:IdentifierURI" minOccurs="0" maxOccurs="unbounded">
+                  <xs:annotation>
+                     <xs:documentation>
+                        Columns that are restricted to be used as constraints to the query.  The same columns
+                        may be repeated in the returnables.
+                     </xs:documentation>
+                  </xs:annotation>
+               </xs:element>
 
 
             </xs:sequence>

@@ -89,11 +89,12 @@ public class RegistryQueryService {
   public String getResourceToText(String ivorn) throws GetResourceException  {
     System.out.println("Searching for " + ivorn);
     try {
-      // Form the internal identifier for the resource in the database.
-      String id = ivorn.substring(6).replace('.', '_').replace('/', '_');
       
       // Query the database.
-      XMLResource results = xdbRegistry.getResource(id, COLLECTION_NAME);
+      XMLResource results = xdbRegistry.getResource(
+          xdbRegistry.internalIdentifier(ivorn), 
+          COLLECTION_NAME
+      );
       if (results == null) {
         System.out.println(ivorn + "was not found");
         return null;

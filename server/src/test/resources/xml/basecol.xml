@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ri:Resource created="2012-09-12T13:55:29" status="active" updated="2017-11-10T11:46:26" xmlns:cea="http://www.ivoa.net/xml/CEA/v1.0rc1" xmlns:ri="http://www.ivoa.net/xml/RegistryInterface/v1.0" xmlns:va="http://www.ivoa.net/xml/VOApplication/v1.0rc1" xmlns:vr="http://www.ivoa.net/xml/VOResource/v1.0" xmlns:vs="http://www.ivoa.net/xml/VODataService/v1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="vs:CatalogService">
+  <title xmlns:vg="http://www.ivoa.net/xml/VORegistry/v1.0">BASECOL: VAMDC-TAP interface</title>
+  <identifier xmlns:vg="http://www.ivoa.net/xml/VORegistry/v1.0">ivo://registry.test/basecol/vamdc-tapv12.07</identifier>
+  <curation xmlns:vg="http://www.ivoa.net/xml/VORegistry/v1.0">
+    <publisher>LPMAA</publisher>
+    <creator>
+      <name/>
+    </creator>
+    <contact>
+      <name>Yaye Awa Ba</name>
+      <email>yaye-awa.ba@obspm.fr</email>
+    </contact>
+  </curation>
+  <content xmlns:vg="http://www.ivoa.net/xml/VORegistry/v1.0">
+    <subject/>
+    <description>This database, called BASECOL is devoted to collisional ro-vibrational excitation of molecules by colliders such as atom, ion, molecule or electron. It is supervised by an international working group of molecular physicists and astrophysicits involved in the calculations and use of ro-vibrational cross-sections, in order to ensure the continuity and the quality of the database.</description>
+    <referenceURL>http://basecol.vamdc.org</referenceURL>
+    <type>Other</type>
+    <contentLevel>Research</contentLevel>
+  </content>
+  <capability standardID="ivo://vamdc/std/VAMDC-TAP" xmlns:ns2="http://www.ivoa.net/xml/VOSICapabilities/v1.0" xmlns:ns4="http://www.vamdc.org/xml/VAMDC-TAP/v1.0" xsi:type="ns4:VamdcTap">
+    <interface xmlns:ns5="http://www.ivoa.net/xml/VODataService/v1.0" xsi:type="ns5:ParamHTTP">
+      <accessURL use="base">http://dev.vamdc.org/basecol/tapservice_12_07/TAP/</accessURL>
+    </interface>
+    <versionOfStandards>12.07</versionOfStandards>
+    <versionOfSoftware>Java VAMDC-TAP node implementation v.12.07r1</versionOfSoftware>
+    <sampleQuery>select species where atomsymbol like '%';</sampleQuery>
+    <sampleQuery>Select * where reactanta.MoleculeStoichiometricFormula=&quot;CO&quot; and reactantb.AtomSymbol = &quot;H&quot;;</sampleQuery>
+    <returnable>MethodCategory</returnable>
+    <returnable>MethodDescription</returnable>
+    <returnable>MethodID</returnable>
+    <returnable>CollisionComment</returnable>
+    <returnable>CollisionID</returnable>
+    <returnable>CollisionMethod</returnable>
+    <returnable>CollisionCode</returnable>
+    <returnable>CollisionRef</returnable>
+    <returnable>SourceAuthorName</returnable>
+    <returnable>SourceCategory</returnable>
+    <returnable>SourceComments</returnable>
+    <returnable>SourcePageBegin</returnable>
+    <returnable>SourcePageEnd</returnable>
+    <returnable>SourceID</returnable>
+    <returnable>SourceName</returnable>
+    <returnable>SourceTitle</returnable>
+    <returnable>SourceURI</returnable>
+    <returnable>SourceVolume</returnable>
+    <returnable>SourceYear</returnable>
+    <returnable>AtomSymbol</returnable>
+    <returnable>AtomNuclearCharge</returnable>
+    <returnable>AtomStateEnergy</returnable>
+    <returnable>AtomStateTotalAngMom</returnable>
+    <returnable>AtomStateRef</returnable>
+    <returnable>AtomStateID</returnable>
+    <returnable>AtomInchiKey</returnable>
+    <returnable>AtomIonCharge</returnable>
+    <returnable>AtomSpeciesID</returnable>
+    <returnable>AtomMassNumber</returnable>
+    <returnable>AtomMass</returnable>
+    <returnable>MoleculeChemicalName</returnable>
+    <returnable>MoleculeComment</returnable>
+    <returnable>MoleculeInchi</returnable>
+    <returnable>MoleculeInchiKey</returnable>
+    <returnable>MoleculeOrdinaryStructuralFormula</returnable>
+    <returnable>MoleculeMolecularWeight</returnable>
+    <returnable>MoleculeStoichiometricFormula</returnable>
+    <returnable>MoleculeStateAuxillary</returnable>
+    <returnable>MoleculeStateDescription</returnable>
+    <returnable>MoleculeStateNSILowestEnergyStateRef</returnable>
+    <returnable>MoleculeStateNSIName</returnable>
+    <returnable>MoleculeStateEnergyOrigin</returnable>
+    <returnable>MoleculeStateEnergy</returnable>
+    <returnable>MoleculeStateID</returnable>
+    <returnable>MoleculeSpeciesID</returnable>
+    <restrictable>AtomSymbol</restrictable>
+    <restrictable>CollisionCode</restrictable>
+    <restrictable>EnvironmentTemperature</restrictable>
+    <restrictable>InchiKey</restrictable>
+    <restrictable>IonCharge</restrictable>
+    <restrictable>MoleculeStateNuclearSpinIsomer</restrictable>
+    <restrictable>MoleculeStoichiometricFormula</restrictable>
+    <restrictable>ParticleName</restrictable>
+    <restrictable>SourceYear</restrictable>
+    <restrictable>StateEnergy</restrictable>
+    <application>ivo://vamdc/XSAMS-bibtex</application>
+    <application>ivo://vamdc/xsams-mux</application>
+    <application>ivo://vamdc/collisions2html</application>
+  </capability>
+  <capability standardID="ivo://ivoa.net/std/VOSI#capabilities" xmlns:ns2="http://www.ivoa.net/xml/VOSICapabilities/v1.0">
+    <interface xmlns:ns4="http://www.ivoa.net/xml/VODataService/v1.0" xsi:type="ns4:ParamHTTP">
+      <accessURL use="base">http://dev.vamdc.org/basecol/tapservice_12_07/VOSI/capabilities</accessURL>
+    </interface>
+  </capability>
+  <capability standardID="ivo://ivoa.net/std/VOSI#availability" xmlns:ns2="http://www.ivoa.net/xml/VOSICapabilities/v1.0">
+    <interface xmlns:ns4="http://www.ivoa.net/xml/VODataService/v1.0" xsi:type="ns4:ParamHTTP">
+      <accessURL use="base">http://dev.vamdc.org/basecol/tapservice_12_07/VOSI/availability</accessURL>
+    </interface>
+  </capability>
+</ri:Resource>

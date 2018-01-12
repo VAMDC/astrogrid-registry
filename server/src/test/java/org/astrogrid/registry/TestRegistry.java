@@ -101,7 +101,10 @@ public class TestRegistry {
     Assert.assertNotNull(rs);
     XMLResource x1 = (XMLResource) rs.getResource(1);
     System.out.println(x1.getContent());
-    XMLResource x = xdbRegistry.getResource("registry_test_cdms", COLLECTION_NAME);
+    XMLResource x = xdbRegistry.getResource(
+        xdbRegistry.internalIdentifier("ivo://registry.test/cdms"),
+        COLLECTION_NAME
+    );
     Assert.assertNotNull(x);
   }
   

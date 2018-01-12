@@ -224,15 +224,12 @@ public class QueryHelper {
         //return getResourcesByIdentifier(ivorn);
 
         
-        String queryIvorn = ivorn;
-        if(Ivorn.isIvorn(ivorn)) { 
-            queryIvorn = ivorn.substring(6);
-        }
-        
-        String id = queryIvorn.replaceAll("[^\\w*]","_");
         try {
             
-            XMLResource xmr = xdbRegistry.getResource(id, collectionName);              
+            XMLResource xmr = xdbRegistry.getResource(
+                xdbRegistry.internalIdentifier(ivorn), 
+                collectionName
+            );              
             if(xmr == null || xmr.getContentAsDOM() == null) {
                 throw new SOAPFaultException("Resource Not Found ivorn = " + ivorn,
                                                                         "Resource Not Found ivorn = " + ivorn,queryWSDLNS, SOAPFaultException.NOTFOUNDSOAP_TYPE);

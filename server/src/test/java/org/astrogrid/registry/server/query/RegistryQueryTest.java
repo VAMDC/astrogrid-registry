@@ -2,10 +2,8 @@ package org.astrogrid.registry.server.query;
 
 import java.io.File;
 import java.util.List;
-import org.astrogrid.xmldb.client.XMLDBManager;
 import org.astrogrid.util.DomHelper;
-import org.w3c.dom.Document;;
-import java.util.Properties;
+import org.w3c.dom.Document;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPath;
@@ -65,14 +63,30 @@ public class RegistryQueryTest {
     Document adilRegistration = RegistryDOMHelper.documentFromResource("/xml/cdms.xml");
     Document resultDoc2 = rasv1_0.updateInternal(adilRegistration);
     Assert.assertEquals("UpdateResponse", resultDoc2.getDocumentElement().getLocalName());
+    
+    // Add a resource with two levels in its resource path. This supports
+    // one of the getResource tests.
+    Document adilRegistration3 = RegistryDOMHelper.documentFromResource("/xml/basecol.xml");
+    Document resultDoc3 = rasv1_0.updateInternal(adilRegistration3);
+    Assert.assertEquals("UpdateResponse", resultDoc3.getDocumentElement().getLocalName());
 
     // Check that the resource went in and is accessible.
     XMLDBRegistry xdbRegistry = new XMLDBRegistry();
     ResourceSet rs = xdbRegistry.query("/", COLLECTION_NAME);
     Assert.assertNotNull(rs);
+    Assert.assertEquals(3L, rs.getSize());
     
-    Resource r = xdbRegistry.getResource("registry_test_cdms", COLLECTION_NAME);
-    Assert.assertNotNull(r);
+    Resource r2 = xdbRegistry.getResource(
+        xdbRegistry.internalIdentifier("ivo://registry.test/cdms"),
+        COLLECTION_NAME
+    );
+    Assert.assertNotNull(r2);
+    
+    Resource r3 = xdbRegistry.getResource(
+        xdbRegistry.internalIdentifier("ivo://registry.test/basecol/vamdc-tapv12.07"), 
+        COLLECTION_NAME
+    );
+    Assert.assertNotNull(r3);
 
     rqsv1_0 = new RegistryQueryService();
 
@@ -217,7 +231,7 @@ public class RegistryQueryTest {
     String xql = "declare namespace ri = 'http://www.ivoa.net/xml/RegistryInterface/v1.0'; "
         + "//RootResource";
     List<Document> docs = rqsv1_0.xQueryToDocuments(xql);
-    Assert.assertEquals(2, docs.size());
+    Assert.assertEquals(3, docs.size());
     Assert.assertTrue((docs.get(0).getElementsByTagNameNS("*", "Resource").getLength() == 1));
     Assert.assertTrue((docs.get(1).getElementsByTagNameNS("*", "Resource").getLength() == 1));
     System.out.println("done testXQuerySearchv1_0_3");
@@ -321,6 +335,16 @@ public class RegistryQueryTest {
     RegistryDOMHelper.printDocument(doc, System.out);
     Assert.assertTrue((doc.getElementsByTagNameNS("*", "Resource").getLength() == 1));
     System.out.println("done testGetResourcev1_0_2");
+  }
+  
+  @Test
+  public void testGetResourcev1_0_3() throws Exception {
+    System.out.println("begin testGetResourcev1_0_3");
+    Document doc = rqsv1_0.getResourceToDocument("ivo://registry.test/basecol/vamdc-tapv12.07");
+    Assert.assertNotNull(doc);
+    RegistryDOMHelper.printDocument(doc, System.out);
+    Assert.assertTrue((doc.getElementsByTagNameNS("*", "Resource").getLength() == 1));
+    System.out.println("done testGetResourcev1_0_3");
   }
 
   /**

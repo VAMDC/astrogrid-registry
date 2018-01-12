@@ -9,7 +9,7 @@
    xmlns="http://www.ivoa.net/xml/VOResource/v1.0">
 <vor:Resource xsi:type="sia:SimpleImageAccess"  updated="2004-11-20" status="active">
  <title>SIAP service for the INT wide-field survey</title>
- <identifier>ivo://org.astrogrid/INT-WFS.SIAP</identifier>
+ <identifier>ivo://registry.test/INT-WFS/SIAP</identifier>
  <curation>
   <publisher>Cambridge Astronomical Survey Unit</publisher>
   <creator>
