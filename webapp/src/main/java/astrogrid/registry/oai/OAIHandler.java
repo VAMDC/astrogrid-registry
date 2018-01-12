@@ -27,12 +27,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.StringReader;
-import java.io.StringWriter;
 import java.io.Writer;
-import java.lang.IllegalAccessException;
-import java.lang.NoSuchMethodException;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
@@ -41,29 +36,22 @@ import java.util.Properties;
 import java.util.Enumeration;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.GZIPOutputStream;
-import java.util.zip.ZipOutputStream;
-import java.util.zip.ZipEntry;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.SingleThreadModel;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 
-import org.astrogrid.registry.server.query.ISearch;
-import org.astrogrid.registry.server.query.QueryFactory;
-
 import ORG.oclc.oai.server.catalog.AbstractCatalog;
 import ORG.oclc.oai.server.verb.*;
 
-import org.astrogrid.registry.server.query.ISearch;
-import org.astrogrid.registry.server.query.QueryFactory;
+import org.astrogrid.registry.server.query.v1_0.RegistryQueryService;
+//import org.astrogrid.registry.server.query.QueryFactory;
 
 
 import java.net.URL;
@@ -113,13 +101,8 @@ public class OAIHandler extends HttpServlet {
 	    config.getServletContext().getInitParameter("properties");
     String contractVersion =
        config.getInitParameter("registry_contract_version");
-    ISearch rsSearch = null;
-    try {
-        rsSearch = QueryFactory.createQueryService(contractVersion);
-    }catch(Exception e) {
-        e.printStackTrace();
-   //     throw new OAIInternalServerError("Could not get Query Service" + e.toString());
-    }
+    RegistryQueryService rsSearch = new RegistryQueryService();
+    
     String versionNumber = rsSearch.getResourceVersion();    
     try {
 	    ServletContext context = getServletContext();

@@ -21,21 +21,16 @@
 
 package ORG.oclc.oai.server.verb;
 
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
-// import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpUtils;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import java.util.Properties;
-import java.util.Date;
-import java.util.Enumeration;
-import org.astrogrid.util.DomHelper;
-import org.astrogrid.registry.server.query.ISearch;
-import org.astrogrid.registry.server.query.QueryFactory;
+import org.astrogrid.registry.server.query.v1_0.RegistryQueryService;
 import org.xmldb.api.base.ResourceSet;
 // import org.xml.sax.SAXException;
 
@@ -125,10 +120,9 @@ public class Identify extends ServerVerb {
 	    }
 		//sb.append
 		String contractVersion = properties.getProperty("registry_contract_version",null);
-	    ISearch rsSearch = null;
+      RegistryQueryService rsSearch = new RegistryQueryService();
 	    sb.append("<oai:description>");
 	    try {
-	           rsSearch = QueryFactory.createQueryService(contractVersion);
 	           ResourceSet resSet = rsSearch.getQueryHelper().loadMainRegistry();
 	           //org.w3c.dom.NodeList nl = identityDoc.getElementsByTagNameNS("*","Resource");
 	          

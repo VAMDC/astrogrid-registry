@@ -7,14 +7,12 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Attr;
 import org.w3c.dom.NamedNodeMap;
 
-import org.astrogrid.config.Config;
-import org.astrogrid.util.DomHelper;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.StringReader;
+import java.io.Writer;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -39,13 +37,6 @@ import org.xml.sax.SAXException;
  * @author Kevin Benson
  */
 public class RegistryDOMHelper {
-      
-   /**
-    * conf - Config variable to access the configuration for the server normally
-    * jndi to a config file.
-    * @see org.astrogrid.config.Config
-    */      
-   public static Config conf = null;
 
    /**
     * Logging variable for writing information to the logs
@@ -55,20 +46,8 @@ public class RegistryDOMHelper {
    /**
     * Default versionNumber used in the registry.
     */
-   private static String versionNumber = null;
-   
-   /**
-    * Static to be used on the initiatian of this class for the config
-    */   
-   static {
-      if(conf == null) {        
-         conf = org.astrogrid.config.SimpleConfig.getSingleton();
-         versionNumber = conf.getString("reg.amend.defaultversion",null);
-         if(versionNumber == null) {
-             versionNumber = conf.getString("org.astrogrid.registry.version","0.10");
-         }//if
-      }//if
-   }
+   private static String versionNumber = "1.0";
+
   
   /**
    * A parser, set up for namespace-aware parsing. All documents created
@@ -303,6 +282,18 @@ public class RegistryDOMHelper {
 
     transformer.transform(new DOMSource(doc), 
          new StreamResult(new OutputStreamWriter(out, "UTF-8")));
+  }
+   
+  public static void printDocument(Document doc, Writer out) throws IOException, TransformerException {
+    TransformerFactory tf = TransformerFactory.newInstance();
+    Transformer transformer = tf.newTransformer();
+    transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
+    transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+    transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+    transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+    transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+
+    transformer.transform(new DOMSource(doc), new StreamResult(out));
   }
    
   /**

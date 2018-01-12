@@ -115,7 +115,7 @@
     
     
     <servlet>
-    	<servlet-name>XFireServlet</servlet-name>
+    	<servlet-name>SoapServlet</servlet-name>
     	<servlet-class>org.astrogrid.registry.server.http.servlets.SoapServlet</servlet-class>
   	</servlet>
   	
@@ -237,35 +237,11 @@
         <servlet-name>WebDAVServlet</servlet-name>
         <url-pattern>/webdav/*</url-pattern>
     </servlet-mapping>
-
-    <servlet-mapping>
-        <servlet-name>XFireServlet</servlet-name>
-        <url-pattern>/servlet/SoapServlet</url-pattern>
-    </servlet-mapping>
     
 	<servlet-mapping>
-        <servlet-name>XFireServlet</servlet-name>
+        <servlet-name>SoapServlet</servlet-name>
         <url-pattern>/services/*</url-pattern>
-    </servlet-mapping>    
-
-<!--
-    <servlet-mapping>
-        <servlet-name>XFireServlet</servlet-name>
-        <url-pattern>/services/RegistryQuer*</url-pattern>
-    </servlet-mapping>
-    
-    <servlet-mapping>
-        <servlet-name>XFireAdminServlet</servlet-name>
-        <url-pattern>/services/RegistryAdmi*</url-pattern>
-    </servlet-mapping>
-    
-  <servlet-mapping>
-        <servlet-name>XFireAdminServlet</servlet-name>
-        <url-pattern>/services/RegistryUpdat*</url-pattern>
-    </servlet-mapping>    
-    -->
-
-    
+    </servlet-mapping>  
 
     <servlet-mapping>
       <servlet-name>OAIHandlerv1_0</servlet-name>

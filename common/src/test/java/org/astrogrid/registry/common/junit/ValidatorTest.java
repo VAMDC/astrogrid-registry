@@ -3,7 +3,7 @@ package org.astrogrid.registry.common.junit;
 import java.io.InputStream;
 import java.util.Iterator;
 
-import org.astrogrid.util.DomHelper;
+import org.astrogrid.registry.common.DomHelper;
 import org.w3c.dom.Document;
 
 import junit.framework.*;

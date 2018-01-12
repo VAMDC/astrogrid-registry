@@ -1,7 +1,4 @@
-<%@ page import="org.astrogrid.config.SimpleConfig,
-                 org.astrogrid.registry.server.query.*,
-                 org.astrogrid.registry.server.*,
-                 org.astrogrid.registry.server.http.servlets.helper.JSPHelper"
+<%@ page import="org.astrogrid.config.SimpleConfig"
    isThreadSafe="false"
    session="false"
 %>
@@ -36,11 +33,7 @@ type managedAuthority element.
 <%
     String authID = SimpleConfig.getSingleton().getString("reg.amend.authorityid", "");
 %>
-<%
-    ISearch server = JSPHelper.getQueryService(request);
-    String currentContractVersion = server.getContractVersion();
-    if(Double.valueOf(currentContractVersion).doubleValue() >= 1.0) {
-%>
+
 <form action="newManagedAuthorityCheck.jsp" method="post">
 <p>
 <input type="hidden" name="version" value="1.0">
@@ -57,11 +50,7 @@ type managedAuthority element.
 <input name="button" value="Submit" type="submit">
 </p>
 </form>
-<%
-} else {
-    out.write("Current contract version cannot use this jsp page, please change to 1.0");
-}
-%>
+
 </div>
 <%@ include file="/style/footer.xml" %>
 </body></html>

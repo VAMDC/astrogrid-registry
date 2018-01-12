@@ -15,25 +15,10 @@
 		for a particular identifier or validating Registry Resources.  See the 'Dependencies' link for information of which libraries it depends on.
 	</description>
   
-  <build>
-    <testResources>
-      <testResource>
-        <directory>${basedir}/src/test/java</directory>
-        <includes>
-          <include>**/*.xml</include>
-        </includes>
-      </testResource>
-    </testResources>
-  </build>
-  
   <dependencies>
      <dependency>
       <groupId>commons-logging</groupId>
       <artifactId>commons-logging</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.astrogrid</groupId>
-      <artifactId>astrogrid-common</artifactId>
     </dependency>
     <dependency>
       <groupId>xerces</groupId>

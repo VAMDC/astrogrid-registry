@@ -416,23 +416,12 @@ public class RegistryHarvestAdmin extends RegistryAdminService {
           try {
         	  NodeList convertCheck = update.getDocumentElement().getElementsByTagNameNS("*","Resource");
         	  log.info("checking versions and convertCheck");
-        	  //Will factor away in the future.  Allows for a Registry to publish
-        	  //0.10 data and have it transformed to 1.0 and stored into the 1.0 table.
-        	  //To do this a Registry Type had to be stored into the 1.0 table/collection
-        	  //that had a harvesting url that produced 0.10 data.
-        	  if(versionNumber.equals("1.0") && convertCheck.getLength() > 0 &&
-        	     convertCheck.item(0).getNamespaceURI().indexOf("0.10") != -1) {
-        		  log.info("yes it needs converting to 1.0");
-       			  xsDoc = xs.transformUpdate((Node)update.getDocumentElement(),"0.10",true);
-       			  xsDoc = xs.transformVersionConversion((Node)xsDoc.getDocumentElement());
-       			  log.info("XML result After converting 0.10-1.0 = " + DomHelper.DocumentToString(xsDoc));
-        	  }
-        	  else {
+        	  
         	  	//Transform the OAI document to a typical VOResources document.
         	  	//OAI schema pretty much allows 'any' elements.  By
         	  	//transforming to VOREsources we can validate the XML.
         		  xsDoc = xs.transformUpdate((Node)update.getDocumentElement(),versionNumber,true);
-        	  }
+        	  
           }catch(RegistryException re) {
               log.error("Problem with xsl transformation of xml in the update method will try to use raw xml from web service ");
               log.error(re);
@@ -494,18 +483,13 @@ public class RegistryHarvestAdmin extends RegistryAdminService {
        //adding back the && check for 0.10 collection there is just
        //no point in validating 0.10 during harvests to many mistakes and
        //invalid to schema.
+       RegistryValidator validator = new RegistryValidator();
        if(validateResourceXML && !collectionName.equals("astrogridv0_10")) {
-           try {
-               //validate the xml, the xsl should have made it into a well-formed xml doc with a 
-        	   //wrapper(root element) valid to schema, as far as the rest of the xml the validator
-        	   //will check to see if it conforms to schema.
-               RegistryValidator.isValid(xsDoc);
-           }catch(AssertionFailedError afe) {
-               afe.printStackTrace();
-               validateSingleResources = true;
-               log.warn("Error invalid document = " + afe.getMessage());
-               log.warn("though validation error occurred, Resource Elements will be revalidated individually to better see the error.");
-           }//catch
+          if (validator.isInvalid(xsDoc.getDocumentElement())) {
+            validateSingleResources = true;
+          }
+          log.warn("Error invalid document = " + validator.getErrorMessages());
+          log.warn("though validation error occurred, Resource Elements will be revalidated individually to better see the error.");
        }
 
        
@@ -515,21 +499,16 @@ public class RegistryHarvestAdmin extends RegistryAdminService {
        if(validateSingleResources) {
        	   log.info("Number of Resources to try validating individually (invalid will be removed and logged in the status page) = " + nl.getLength());
        	   loopi = 0;
-    	   while(loopi < nl.getLength()) {
-    		   //log.info("loopi = " + loopi + " and nl.getlength = " + nl.getLength());
-    		   try {
-    			   
-    			   RegistryValidator.isValid(((Element)nl.item(loopi)),"Resource");
-    			   loopi++;
-    		   }catch(AssertionFailedError afe) {
-    			   //log.warn("Invalid Resource for Identifier: ivo://" + RegistryDOMHelper.getAuthorityID( ((Element)nl.item(loopi)) ) + "/" +  RegistryDOMHelper.getResourceKey( ((Element)nl.item(loopi)) ));
-    			   //log.warn(afe.getMessage());
-    			   returnString += "Invalid Resource that did not get updated - ivo://" + RegistryDOMHelper.getAuthorityID( ((Element)nl.item(loopi)) ) + "/" +  RegistryDOMHelper.getResourceKey( ((Element)nl.item(loopi)) ) + " \r\n Error:" + afe.getMessage() + "\r\n";
-    			   //ident = RegistryDOMHelper.getAuthorityID( currentResource);
-    		       //resKey = RegistryDOMHelper.getResourceKey( currentResource);
-    			   xsDoc.getDocumentElement().removeChild(nl.item(loopi));           
-               }//catch
-    	   }//while
+          for (loopi = 0; loopi < nl.getLength(); loopi++) {
+            Element resource = (Element) nl.item(loopi);
+            if (!validator.isInvalid(resource)) {
+              returnString += "Invalid Resource that did not get updated - ivo://" + 
+                  RegistryDOMHelper.getAuthorityID( ((Element)nl.item(loopi)) ) + 
+                  "/" +  RegistryDOMHelper.getResourceKey(resource) + ": " +
+                  validator.getErrorMessages();
+              xsDoc.getDocumentElement().removeChild(resource); 
+            }
+          }
        }
        
        log.info("Number of Resources to be updated = " + nl.getLength());

@@ -27,26 +27,6 @@ public class XSLHelper {
     private static final Log logger = LogFactory.getLog(XSLHelper.class);
     
     private static final String XSL_DIRECTORY = "xsl/";
-   
-   
-   /**
-    * Empty constructor -- should delete later, this is automatic.
-    *
-    */
-   public XSLHelper() {
-      
-   }
-   
-   /**
-    * Method: loadStyleSheet
-    * Description: Load a Stylesheet from the CLASSPath jars given a particular name.
-    * @param name A string name of the xsl stylesheet file name. Normally in the classpath or in a jar file.
-    * @return A InputStream to a xsl stylesheet.
-    */
-   private InputStream loadStyleSheet(String name) {
-       ClassLoader loader = this.getClass().getClassLoader();
-       return loader.getResourceAsStream(name);
-   }
       
    
    /**

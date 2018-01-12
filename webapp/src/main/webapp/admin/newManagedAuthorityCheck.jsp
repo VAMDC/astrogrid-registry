@@ -1,18 +1,4 @@
-<%@ page import="org.astrogrid.config.SimpleConfig,
-                 org.astrogrid.registry.server.http.servlets.helper.JSPHelper,
-                 org.w3c.dom.NodeList,
-                 org.w3c.dom.Element,
-                 org.w3c.dom.Document,
-                 org.astrogrid.util.DomHelper,
-                 org.astrogrid.registry.server.http.servlets.Log4jInit,
-                 org.astrogrid.xmldb.client.XMLDBManager,
-                 org.astrogrid.registry.common.RegistryDOMHelper,
-                 org.astrogrid.registry.server.query.*,
-                 org.astrogrid.store.Ivorn,
-                 org.apache.axis.utils.XMLUtils,
-                 java.util.*,
-                 java.io.*,
-                 javax.naming.*"
+<%@ page
    isThreadSafe="false"
    session="false"
 %>
@@ -49,11 +35,7 @@ changed correctly when updating</i>.
 <br>
 <input type="hidden" name="addFromText" value="true">
 <textarea name="Resource" cols="80" rows="24">
-<%
-String version = request.getParameter("version");
-//System.out.println("here is the version = " + version);
-if(version.equals("1.0")){
-%>
+
 <ri:VOResources
     xmlns:ri="http://www.ivoa.net/xml/RegistryInterface/v1.0"
     xmlns:vr="http://www.ivoa.net/xml/VOResource/v1.0"
@@ -61,9 +43,7 @@ if(version.equals("1.0")){
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" from="1" numberReturned="1" more="false">
 <%@ include file="makeAuthorityType1.0.jsp" %>
 </ri:VOResources>
-<%
-}
-%>
+
 </textarea>
 <p>
 <input name="button" value="Register" type="submit">

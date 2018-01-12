@@ -9,9 +9,8 @@
 // -->
 </script>
 <%
-   org.astrogrid.registry.server.query.ISearch search = org.astrogrid.registry.server.http.servlets.helper.JSPHelper.getQueryService(request);
-   String contractVersion = search.getContractVersion();
-   String voResourceVersion = search.getResourceVersion();
+   String contractVersion = "1.0";
+   String voResourceVersion = "1.0";
 %>
    </div>
    <div id='menuQuery'>
@@ -20,10 +19,8 @@
 <!--
         document.write('<ul><li class="none"><a href="'+root_url+'/main/ivornLookupForm.jsp">View Resource<\/a>');
         document.write('<li class="none"><a href="'+root_url+'/main/browse.jsp">Browse Registry<\/a>');
-        document.write('<li class="none"><a href="'+root_url+'/main/keywordquery.jsp">Keyword Search<\/a>');
         document.write('<li class="none"><a href="'+root_url+'/main/xquerysearch.jsp">Registry XQuery<\/a>');
-        document.write('<li class="none"><a href="'+root_url+'/main/tree-root.jsp">Registry Tree<\/a>');
-        document.write('<li class="none"><a href="'+root_url+'/main/harvestInfo.jsp">Harvest Status<\/a><\/ul>');
+        document.write('<li class="none"><a href="'+root_url+'/main/tree-root.jsp">Registry Tree<\/a><\/ul>');
 // -->
 </script>
    </div>
@@ -32,20 +29,14 @@
 <script LANGUAGE="JavaScript" type="text/javascript">
 <!--
         document.write('<ul><li class="none"><a href="'+root_url+'/registration/NewResource.jsp">Create Entry<\/a>');
-        document.write('<li class="none"><a href="'+root_url+'/admin/editEntry.jsp">Edit Entry<\/a>');
-        document.write('<li class="none"><a href="'+root_url+'/admin/editEntry_backdoor.jsp">Override Entry<\/a><\/ul>');
+        document.write('<li class="none"><a href="'+root_url+'/admin/editEntry.jsp">Edit Entry<\/a><\/ul>');
 // -->
 </script>
      <h5>Administration</h5>
 <script LANGUAGE="JavaScript" type="text/javascript">
 <!--
-        document.write('<ul><li class="none"><a href="'+root_url+'/admin/harvestResource.jsp">Harvest Registry<\/a>');
-        document.write('<li class="none"><a href="'+root_url+'/admin/harvestVOSI.jsp">Harvest VOSI<\/a>');
-        document.write('<li class="none"><a href="'+root_url+'/admin/getRegistryFromHarvest.jsp">External Registry<\/a>');
         document.write('<li class="none"><a href="'+root_url+'/admin/newManagedAuthority.jsp">Add Authority<\/a>');
         document.write('<li class="none"><a href="'+root_url+'/admin/removeResource.jsp">Remove Resource<\/a>');
-        document.write('<li class="none"><a href="'+root_url+'/admin/environment-main.jsp">Edit Properties<\/a>');
-        document.write('<li class="none"><a href="'+root_url+'/admin/changeStatus.jsp">Change Status<\/a>');
         document.write('<li class="none"><a href="'+root_url+'/admin/fingerprint.jsp">System Info<\/a><\/ul>');
 // -->
 </script>

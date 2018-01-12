@@ -1,0 +1,85 @@
+<ri:Resource created="2011-01-28T13:35:20" status="active" updated="2018-01-03T11:02:18" xmlns:cea="http://www.ivoa.net/xml/CEA/v1.0rc1" xmlns:ri="http://www.ivoa.net/xml/RegistryInterface/v1.0" xmlns:tx="http://www.vamdc.org/xml/VAMDC-TAP/v1.0" xmlns:va="http://www.ivoa.net/xml/VOApplication/v1.0rc1" xmlns:vr="http://www.ivoa.net/xml/VOResource/v1.0" xmlns:vs="http://www.ivoa.net/xml/VODataService/v1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="vs:CatalogService">
+        <title xmlns:vg="http://www.ivoa.net/xml/VORegistry/v1.0">Chianti</title>
+        <identifier xmlns:vg="http://www.ivoa.net/xml/VORegistry/v1.0">ivo://vamdc/chianti/django</identifier>
+        <curation xmlns:vg="http://www.ivoa.net/xml/VORegistry/v1.0">
+            <publisher>University of Cambridge</publisher>
+            <creator>
+                <name/>
+            </creator>
+            <contact>
+                <name>Guy Rixon</name>
+                <email>gtr@ast.cam.ac.uk</email>
+            </contact>
+        </curation>
+        <content xmlns:vg="http://www.ivoa.net/xml/VORegistry/v1.0">
+            <subject/>
+            <description>Chianti consists of a critically evaluated set of up-to-date atomic data, together with user-friendly programs written in Interactive Data Language (IDL), to analyse the spectra from astrophysical plasmas. The VAMDC interface presents just the data from the Chianti-v7 release.</description>
+            <referenceURL>http://www.chianti.rl.ac.uk/</referenceURL>
+            <type>Other</type>
+            <contentLevel>Research</contentLevel>
+        </content>
+        <capability standardID="ivo://vamdc/std/VAMDC-TAP" xsi:type="tx:VamdcTap">
+            <interface xsi:type="vs:ParamHTTP">
+                <accessURL use="base">http://vamdc.ast.cam.ac.uk/chianti7/tap/</accessURL>
+            </interface>
+            <versionOfStandards>12.07</versionOfStandards>
+            <versionOfSoftware>12.07r1-rc2</versionOfSoftware>
+            <sampleQuery>SELECT species</sampleQuery>
+            <sampleQuery>SELECT ALL WHERE ... something else</sampleQuery>
+            <returnable>AtomStateDescription</returnable>
+            <returnable>AtomStateShellNumberOfElectrons</returnable>
+            <returnable>AtomStateShellOrbitalAngMom</returnable>
+            <returnable>AtomStateTermLSL</returnable>
+            <returnable>RadTransID</returnable>
+            <returnable>AtomStateStatisticalWeight</returnable>
+            <returnable>AtomNuclearCharge</returnable>
+            <returnable>AtomSymbol</returnable>
+            <returnable>AtomStateTermLSS</returnable>
+            <returnable>RadTransWavelength</returnable>
+            <returnable>RadTransWavelengthUnit</returnable>
+            <returnable>AtomStateRef</returnable>
+            <returnable>AtomStateParity</returnable>
+            <returnable>RadTransUpperStateRef</returnable>
+            <returnable>AtomStateEnergy</returnable>
+            <returnable>XSAMSVersion</returnable>
+            <returnable>RadTransWavelengthMethod</returnable>
+            <returnable>AtomStateEnergyMethod</returnable>
+            <returnable>MethodCategory</returnable>
+            <returnable>MethodID</returnable>
+            <returnable>RadTransSpeciesRef</returnable>
+            <returnable>AtomSpeciesId</returnable>
+            <returnable>AtomStateTotalAngMom</returnable>
+            <returnable>RadTransProbabilityAUnit</returnable>
+            <returnable>AtomStateShellPrincipalQN</returnable>
+            <returnable>AtomStateElementCore</returnable>
+            <returnable>AtomStateId</returnable>
+            <returnable>AtomInchiKey</returnable>
+            <returnable>AtomStateEnergyUnit</returnable>
+            <returnable>RadTransProbabilityA</returnable>
+            <returnable>AtomInchi</returnable>
+            <returnable>NodeID</returnable>
+            <returnable>RadTransProbabilityWeightedOscillatorStrength</returnable>
+            <returnable>AtomIonCharge</returnable>
+            <returnable>RadTransLowerStateRef</returnable>
+            <restrictable>StateEnergy</restrictable>
+            <restrictable>AtomNuclearCharge</restrictable>
+            <restrictable>IonCharge</restrictable>
+            <restrictable>RadTransWavelength</restrictable>
+            <restrictable>AtomSymbol</restrictable>
+        </capability>
+        <capability standardID="ivo://ivoa.net/std/TAP">
+            <interface xsi:type="vs:ParamHTTP">
+                <accessURL use="base">http://vamdc.ast.cam.ac.uk/chianti7/tap/</accessURL>
+            </interface>
+        </capability>
+        <capability standardID="ivo://ivoa.net/std/VOSI#capabilities">
+            <interface xsi:type="vs:ParamHTTP">
+                <accessURL use="base">http://vamdc.ast.cam.ac.uk/chianti7/tap/capabilities</accessURL>
+            </interface>
+        </capability>
+        <capability standardID="ivo://ivoa.net/std/VOSI#availability">
+            <interface xsi:type="vs:ParamHTTP">
+                <accessURL use="base">http://vamdc.ast.cam.ac.uk/chianti7/tap/availability</accessURL>
+            </interface>
+        </capability>
+    </ri:Resource>

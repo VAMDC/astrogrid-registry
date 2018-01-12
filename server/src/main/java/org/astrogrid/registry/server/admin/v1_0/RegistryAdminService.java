@@ -1,18 +1,10 @@
 package org.astrogrid.registry.server.admin.v1_0;
 
 import org.w3c.dom.Document;
-import org.astrogrid.util.DomHelper;
-import java.io.StringReader;
 
-import org.astrogrid.registry.server.admin.IAdmin;
+//import org.codehaus.xfire.util.STAXUtils;
 
-import org.codehaus.xfire.util.STAXUtils;
-
-import org.xmldb.api.modules.XMLResource;
-
-import org.astrogrid.registry.RegistryException;
 import org.astrogrid.registry.server.SOAPFaultException;
-import org.xmldb.api.base.XMLDBException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -32,7 +24,7 @@ import javax.xml.stream.*;
  * @author Kevin Benson
  * 
  */
-public class RegistryAdminService extends org.astrogrid.registry.server.admin.RegistryAdminService implements IAdmin {
+public class RegistryAdminService extends org.astrogrid.registry.server.admin.RegistryAdminService {
                           
     /**
      * Logging variable for writing information to the logs
@@ -57,25 +49,6 @@ public class RegistryAdminService extends org.astrogrid.registry.server.admin.Re
     */
    public RegistryAdminService() {
 	   super(CONTRACT_VERSION,VORESOURCE_VERSION,ADMIN_WSDL_NS);
-   }
-   
-   
-   /**
-    * Method: Update
-    * Description: Update Web Service method, performs an update to the registry. Actually calls updateResponse.  It can
-    * handle many Resource elements if necessary to do multiple updates to the registry.  If a element
-    * is not present in the database it automatically inserts.  Only Resource elements that are managed by
-    * this registry are allowed, with the exception to Registry types(for discovering new registries)
-    * and Authority types(for inserting an authority id to be managed by this registry).
-    * 
-    * @param update XML DOM containing Resource XML elements
-    * @return XMLStreamReeader is returned normally with an empty UpdateResponse element for conforming with SOAP standards
-    * of a wrapped wsdl. Or if an error happens a Soap Fault is returned.
-    */
-   public XMLStreamReader Update(Document update) {
-      log.debug("start update");
-      Document returnDoc = updateInternal(update);
-      return STAXUtils.createXMLStreamReader(new StringReader(DomHelper.DocumentToString(returnDoc)));      
    }
    
    public Document updateInternal(Document update) {

@@ -69,7 +69,8 @@ public class VOSICaptureServlet extends RegistrarServlet {
            
       // Update the registration document in memory.
       String vosiUri = request.getParameter("VOSI_Capabilities");
-      Node updatedRegistration = addCapabilities(resource, vosiUri);
+      Document updatedRegistration = addCapabilities(resource, vosiUri);
+      System.out.println("Node type = " + updatedRegistration.getNodeType());
           
       // Update the registration in the database. 
       register(ivorn, updatedRegistration);
@@ -107,7 +108,7 @@ public class VOSICaptureServlet extends RegistrarServlet {
    * @return
    * @throws ServletException If either document cannot be read, or if the transformation fails.
    */
-  protected Node addCapabilities(
+  protected Document addCapabilities(
       Document registrationDocument, 
       String  vosiUri
   ) throws ServletException {
@@ -118,7 +119,7 @@ public class VOSICaptureServlet extends RegistrarServlet {
       transformer.setTransformationParameter("vosi-uri", vosiUri);
       transformer.setTransformationParameter("updated", new Instant().toString());
       transformer.transform();
-      return transformer.getResultAsDomNode();
+      return (Document) (transformer.getResultAsDomNode());
     }
     catch (IOException e1) {
       throw new ServletException("Failed to add capabilities to a registration document", e1);

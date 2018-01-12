@@ -1,14 +1,10 @@
-<%@ page import="org.astrogrid.registry.server.query.*,
-                 org.astrogrid.registry.server.*,
-                 org.astrogrid.registry.server.http.servlets.helper.JSPHelper,
+<%@page import="org.xmldb.api.base.ResourceSet"%>
+<%@ page import="org.astrogrid.registry.server.query.v1_0.RegistryQueryService,
                  org.astrogrid.registry.common.RegistryDOMHelper,
-                 org.astrogrid.store.Ivorn,
-                 org.xmldb.api.base.ResourceSet,
                  org.w3c.dom.Document,
                  org.w3c.dom.Element,
                  org.w3c.dom.Node,
                  org.w3c.dom.NodeList,
-                 org.astrogrid.io.Piper,
                  org.astrogrid.util.DomHelper,
                  java.net.*,
                  java.util.*,
@@ -19,7 +15,7 @@
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>Browse Registred Resources</title>
+<title>Browse Registered Resources</title>
 <meta http-equiv="Content-type" content="text/xhtml; charset=UTF-8"/>
 <style type="text/css" media="all">
    <%@ include file="/style/astrogrid.css" %>          
@@ -34,7 +30,7 @@
 
 <%
 
-   ISearch server = JSPHelper.getQueryService(request);
+   RegistryQueryService server = new RegistryQueryService();
 
    long offset = 0;
    String off = request.getParameter("Index");

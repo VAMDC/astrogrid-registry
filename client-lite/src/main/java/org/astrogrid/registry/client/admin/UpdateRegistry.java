@@ -5,27 +5,18 @@ import org.apache.commons.logging.LogFactory;
 
 
 import java.net.URL; 
-import java.util.HashMap;
 import java.util.Vector; 
-import javax.xml.parsers.DocumentBuilder; 
-import javax.xml.parsers.DocumentBuilderFactory; 
+import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException; 
+import javax.xml.rpc.ServiceException;
 import org.apache.axis.client.Call; 
 import org.apache.axis.client.Service; 
 import org.astrogrid.registry.common.RegistryValidator;
 import org.apache.axis.message.SOAPBodyElement; 
-import org.apache.axis.utils.XMLUtils; 
 import org.w3c.dom.Document; 
-import org.w3c.dom.Element; 
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Node;
+import org.w3c.dom.Element;
 
-import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
-import org.xml.sax.InputSource;
-
-import javax.xml.rpc.ServiceException;
+import java.io.IOException;;
 import org.xml.sax.SAXException;
 import java.rmi.RemoteException;
 
@@ -34,11 +25,8 @@ import org.astrogrid.registry.RegistryException;
 import java.io.*;
 import org.astrogrid.util.DomHelper;
 import org.astrogrid.config.Config;
-import junit.framework.AssertionFailedError;
 import org.astrogrid.store.Ivorn;
 import org.astrogrid.registry.common.RegistryDOMHelper;
-
-import org.astrogrid.registry.common.XSLHelper;
 
 /**
  * Class Name: RegistryAdminService
@@ -140,14 +128,13 @@ public  abstract class UpdateRegistry  {
       
       boolean validateXML = conf.getBoolean("registry.validate.onupdates",false);
       if(validateXML) {
-          try {
-              RegistryValidator.isValid(update);
-          }catch(AssertionFailedError afe) {
-              logger.error("Error invalid document still attempting to process resources = " + afe.getMessage());
-              if(conf.getBoolean("registry.quiton.invalid",false)) {
-                  throw new RegistryException("Quitting: Invalid document, Message: " + afe.getMessage());
-              }
-          }          
+        RegistryValidator validator = new RegistryValidator();
+        if (validator.isInvalid(update.getDocumentElement())) {
+          logger.error("Error invalid document still attempting to process resources = " + validator.getErrorMessages());
+          if(conf.getBoolean("registry.quiton.invalid",false)) {
+            throw new RegistryException("Quitting: Invalid document, Message: " + validator.getErrorMessages());
+          }
+        }          
       }
       
       if(cacheDir != null) {

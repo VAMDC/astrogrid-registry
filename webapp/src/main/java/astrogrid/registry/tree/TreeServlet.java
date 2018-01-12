@@ -2,9 +2,6 @@ package astrogrid.registry.tree;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import javax.servlet.ServletException;

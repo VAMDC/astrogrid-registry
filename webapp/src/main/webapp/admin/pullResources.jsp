@@ -1,4 +1,4 @@
-<%@ page import="org.astrogrid.registry.server.admin.*,
+<%@ page import="org.astrogrid.registry.server.admin.v1_0.RegistryAdminService,
                  org.w3c.dom.Document,
                  org.astrogrid.util.DomHelper,
                  java.net.*,
@@ -30,7 +30,7 @@ Adding resources at <%= resourceUrl %>
 
 <pre>
 <%
-   IAdmin server = JSPHelper.getAdminService(request);
+   RegistryAdminService server = new RegistryAdminService();
    //Document entry = server.harvestFromResource(DomHelper.newDocument(resource));
    Document result = server.updateResource(DomHelper.newDocument(resourceUrl));
    if (result != null) {

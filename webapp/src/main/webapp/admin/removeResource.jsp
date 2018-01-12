@@ -1,10 +1,5 @@
-<%@ page import="org.astrogrid.config.SimpleConfig,
-                 org.astrogrid.registry.server.admin.*,
-                 org.astrogrid.registry.server.http.servlets.helper.JSPHelper,
-                 org.astrogrid.registry.server.query.*,
-                 org.astrogrid.registry.common.RegistryDOMHelper,
-                 org.astrogrid.registry.server.*,
-                 java.util.ArrayList"
+<%@ page import="org.astrogrid.registry.server.admin.v1_0.RegistryAdminServer,
+                 org.astrogrid.registry.common.RegistryDOMHelper"
    isThreadSafe="false"
    session="false"
 %>
@@ -48,7 +43,7 @@ if("true".equals(removeRes)) {
         out.println("<font color='red'>You need to provide a Resource Identifier.</font>");
     } else {
         if(removeRes != null && removeRes.equals("true")) {
-            IAdmin server = JSPHelper.getAdminService(request);
+          RegistryAdminServer server = new RegistryAdminServer();
             server.remove(id);
             out.print("<font color='blue'>Removed resource</font>");
         }

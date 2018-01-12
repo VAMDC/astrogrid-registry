@@ -1,7 +1,5 @@
 package org.astrogrid.registry.server.query;
 
-import java.util.ArrayList;
-
 import org.w3c.dom.Document;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -54,7 +52,7 @@ public class QueryHelper {
     /**
      * Logging variable for writing information to the logs
      */
-     private static final Log log = LogFactory.getLog(DefaultQueryService.class);    
+     private static final Log log = LogFactory.getLog(QueryHelper.class);    
     
     /**
      * Static to be used on the initiatian of this class for the config
@@ -64,18 +62,6 @@ public class QueryHelper {
           conf = org.astrogrid.config.SimpleConfig.getSingleton();
           queryLimit = conf.getInt("reg.amend.returncount",100);
        }
-    }
-    
-    /**
-     * Constructor:
-     * Description: Constructor for the Helper Class takes in a ISearch interface
-     * which has the necessary information such as contract versions, namespaces to 
-     * perform the Query to the database.
-     * 
-     * @param search ISearch interface.
-     */
-    public QueryHelper(ISearch search) {
-        this(search.getWSDLNameSpace(),search.getContractVersion(),search.getResourceVersion());
     }
     
     /**
@@ -93,18 +79,6 @@ public class QueryHelper {
         this.voResourceVersion = voResourceVersion;
         collectionName = "astrogridv" + voResourceVersion.replace('.','_');
         xdbRegistry = new XMLDBRegistry();
-    }
-    
-    /**
-     * Constructor
-     * Description: old constructor that only gives the version number of the VOResource
-     * to perform xqueries.
-     * @deprecated
-     * @param voResourceVersion version number for the VOResource, commonly used for extracting an xquery from
-     * the properties file.
-     */
-    public QueryHelper(String voResourceVersion) {
-        this(null, null, voResourceVersion);        
     }
     
     
@@ -342,26 +316,6 @@ public class QueryHelper {
     }    
     
     
-    
-    
-    /**
-     * Method: getAstrogridVersions
-     * Description: Does not actually do a query, it opens the main root colleciton /db and finds all the child collections
-     * associated with astrogridv?? (??=version number) and puts them as strings in an array list to be returned.
-     * 
-     * @return an ArrayList of Strings containging the versions number supported by this registry (or in the xml db).
-     */
-    public static ArrayList getAstrogridVersions() throws XMLDBException {
-        XMLDBRegistry xdbRegistry = new XMLDBRegistry();
-        ArrayList al = new ArrayList();
-        String []childCollections = xdbRegistry.listRootCollections();
-        for(int i = 0;i < childCollections.length;i++) {
-            if(childCollections[i].startsWith("astrogridv")) {
-                al.add(((String)childCollections[i].substring(10).replace('_','.')));    
-            }
-        }
-        return al;
-    }
     
     /**
      * Method: queryRegistry

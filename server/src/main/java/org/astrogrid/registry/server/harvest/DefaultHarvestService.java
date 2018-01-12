@@ -6,7 +6,6 @@ import java.io.IOException;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.rpc.ServiceException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -16,13 +15,9 @@ import org.w3c.dom.Node;
 
 import org.astrogrid.registry.common.RegistryDOMHelper;
 import org.astrogrid.registry.server.query.QueryHelper;
-import org.astrogrid.registry.server.query.QueryFactory;
-import org.astrogrid.registry.server.query.ISearch;
-import org.astrogrid.registry.server.xmldb.XMLDBRegistry;
 import org.astrogrid.util.DomHelper;
 import org.astrogrid.config.Config;
 import org.astrogrid.registry.RegistryException;
-import org.astrogrid.xmldb.client.XMLDBFactory;
 import org.astrogrid.registry.server.InvalidStorageNodeException;
 
 import java.net.URL;
@@ -31,15 +26,14 @@ import java.text.SimpleDateFormat;
 
 import java.util.Date;
 import java.util.Vector;
+import javax.xml.rpc.ServiceException;
 
 import org.apache.axis.client.Call;
 import org.apache.axis.client.Service;
 import org.apache.axis.message.SOAPBodyElement;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import org.xmldb.api.base.Collection;
-import org.xmldb.api.base.XMLDBException;
+import org.astrogrid.registry.server.query.v1_0.RegistryQueryService;
 
 /**
  * Class: DefaultHarvestService
@@ -188,7 +182,7 @@ public abstract class DefaultHarvestService {
                  log.debug("Start processing Registry Types from version = " + contractVersion);
                  try {
                  	//Get the search service
-                     ISearch search = QueryFactory.createQueryService(contractVersion);
+                    RegistryQueryService search = new RegistryQueryService();
                      queryHelper = search.getQueryHelper();
                      //query for all registries.
                      harvestDoc = DomHelper.newDocument(queryHelper.getRegistriesQuery().getMembersAsResource().getContent().toString());

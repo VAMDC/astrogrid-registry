@@ -141,148 +141,21 @@ public class SchemaMap {
 	    return ALL.get(namespace);
     }
 
+  /**
+   * Converts the map into a comma-separated list of namespace URIs and
+   * schema locations. This list may be the value of a schemaLocation attribute.
+   * 
+   * @return The list of URI-URL pairs.
+   */
+  public static String toCommaSeparatedList() {
+    StringBuilder result = new StringBuilder();
+    for (Map.Entry<String, URL> e : ALL.entrySet()) {
+      result.append(e.getKey());
+      result.append(' ');
+      result.append(e.getValue().toString());
+      result.append(' ');
+    }
+    return result.toString();
+  }
+  
 }
-
-
-/* 
-$Log: SchemaMap.java,v $
-Revision 1.17  2011/06/08 09:53:49  gtr
-2011.2-SNAPSHOT. New VAMDC-TAP schema, taking over from TAPXSAMS.
-
-Revision 1.16  2011/06/08 09:41:45  KevinBenson
-updated to a new tapxsams v1.01 schema
-
-Revision 1.15  2011/03/24 12:21:13  KevinBenson
-New TAPXSAMS and TapRegExt schemas to go into the contracts.
-
-Revision 1.14  2009/06/03 16:57:02  pah
-correct UWS schema to 0.9.2
-
-Revision 1.13  2008/09/03 15:10:37  pah
-ASSIGNED - bug 1611: enhancements for stdization holding bug
-http://www.astrogrid.org/bugzilla/show_bug.cgi?id=1611
-
-result of merge of pah_contracts_1611 branch
-
-Revision 1.12  2008/06/06 09:21:30  KevinBenson
-added skynode v1.0 and stap v1.0 to the contracts along with the schemaMap.  Small correction on the wsdl referencing the older cea that we never used in contracts so updated that namespace.
-
-Revision 1.11.2.3  2008/08/29 07:19:58  pah
-UWS updates
-
-Revision 1.11.2.2  2008/04/11 15:44:46  pah
-added tentative UWS schema
-
-Revision 1.11.2.1  2008/03/19 12:50:09  pah
-Added latest CEA schema
-
-ASSIGNED - bug 1611: enhancements for stdization holding
-http://www.astrogrid.org/bugzilla/show_bug.cgi?id=1611
-
-Revision 1.11  2008/03/14 16:07:48  KevinBenson
-added SSA schema v0.4 official from ivoa to our contracts
-
-Revision 1.10  2007/11/06 14:35:02  KevinBenson
-Added the AstrogridResource schema to the contracts so it could be validated against via some new registration xsl/jsp pages
-
-Revision 1.9  2007/06/08 12:49:58  clq2
-*** empty log message ***
-
-Revision 1.8  2007/04/16 11:31:50  gtr
-Branch apps-gtr-2172 is merged.
-
-Revision 1.7.4.1  2007/04/05 14:17:57  gtr
-The new CEA schemata have been added;  the obsolete ones removed.
-
-Revision 1.7  2007/02/21 21:28:18  gtr
-Changes in support of the move to VOResource 1.0.
-
-<<<<<<< SchemaMap.java
-Revision 1.6  2006/10/18 09:12:52  clq2
-merged contracts-gtr-1922
-
-Revision 1.5.10.2  2006/10/16 12:48:27  gtr
-I removed duplicate entries for TableMetaDoc.
-
-Revision 1.5.10.1  2006/10/16 11:43:10  gtr
-I added TableMetaDoc v0.2 and v1.0, CEAService v0.3. I removed RegistryInterface v1.0.
-
-=======
-Revision 1.5.2.5  2007/02/21 21:08:31  gtr
-I removed StoreResources from the map.
-
-Revision 1.5.2.4  2007/02/21 16:48:50  KevinBenson
-got rid of a schema reference that is not used anymore.
-
-Revision 1.5.2.3  2006/11/17 10:26:07  KevinBenson
-Added back the correct reference to RegistryInterface.xsd
-
-Revision 1.5.2.2  2006/10/16 13:33:39  KevinBenson
-forgot to add v1.0 RegistryInterface_xml.xsd, now it is there.
-
-Revision 1.5.2.1  2006/10/02 14:52:03  KevinBenson
-New Storage schemas for the Registry.  So users can validate with xml directly
-from the database.  And know exactly how the update goes on web service calls.
-
->>>>>>> 1.5.2.5
-Revision 1.5  2006/09/27 09:53:41  KevinBenson
-commented out a line that was not needed at this moment referenced a schema fiel that did not exist.
-
-Revision 1.4  2006/09/26 15:34:24  clq2
-SLI_KEA_1794 for slinger and PAL_KEA_1974 for pal and xml, deleted slinger jar from repo, merged with pal
-
-Revision 1.3  2006/08/17 09:50:33  clq2
-PAL_KEA_1771
-
-Revision 1.2.20.1  2006/08/16 09:09:49  kea
-Added DSA metadoc schemata, and adjusted SchemaMap to include these.
-The v1.0 schema is new;  note that the namespace had been pre-defined
-(although the schema didn't exist).
-
-Revision 1.2  2006/02/07 14:45:52  clq2
-Kevin's KMB_WSDL bunch
-
-Revision 1.1.2.2  2006/01/23 17:16:09  KevinBenson
-small correction on the conesearch version number
-
-Revision 1.1.2.1  2005/11/30 11:53:00  KevinBenson
-new schemamap java class that loads the schemas into a hashmap that can be used for validation
-
-Revision 1.8  2005/03/31 17:02:55  jdt
-Merges from KMB_972
-
-Revision 1.7.6.2  2005/03/29 08:09:11  KevinBenson
-forgot needed to add TabualrDB schema infor validation.
-
-Revision 1.7.6.1  2005/03/26 15:40:08  KevinBenson
-new commenting and class name change
-
-Revision 1.7  2005/02/22 20:51:25  clq2
-merge 889 again.
-
-Revision 1.3.6.1  2005/01/19 14:37:16  KevinBenson
-changing where the xsl is, and fix some of the xsl.
-
-Revision 1.3  2005/01/07 14:14:25  jdt
-merged from Reg_KMB_787
-
-Revision 1.1.4.2.2.1  2005/01/05 10:54:15  KevinBenson
-added javadoc to it
-
-Revision 1.1.4.2  2004/11/26 21:57:05  KevinBenson
-adding more checks on validation for version 10
-
-Revision 1.1.4.1  2004/11/19 10:51:26  KevinBenson
-okay this is the result of a comparison wiht eclipse with brach Reg_KMB_605
-and then updating this branch Reg_KMB_728.  Reason for this was some new jsp pages
-in head that was not picked up on 605
-
-Revision 1.1.2.1  2004/11/16 16:49:32  KevinBenson
-new validation to the registry being added.  With some unit tests.  And a schemamap mapping all the schems to a local schema url file
-
-Revision 1.1  2004/09/02 01:31:15  nw
-added in all external schemas to jar (for testing).
-wrote static that lists all namesapces and system IDs for schemas.
- 
-*/
-

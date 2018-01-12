@@ -1,20 +1,6 @@
 <%@page contentType="text/html"%>
 <%@page pageEncoding="iso-8859-1"%>
-<%@ page import="org.astrogrid.config.SimpleConfig,
-                 org.astrogrid.registry.server.http.servlets.helper.JSPHelper,
-                 org.w3c.dom.NodeList,
-                 org.w3c.dom.Element,
-                 org.w3c.dom.Document,
-                 org.astrogrid.util.DomHelper,
-                 org.astrogrid.registry.server.http.servlets.Log4jInit,
-                 org.astrogrid.xmldb.client.XMLDBManager,
-                 org.astrogrid.registry.common.RegistryDOMHelper,
-                 org.astrogrid.registry.server.query.*,
-                 org.astrogrid.store.Ivorn,
-                 org.apache.axis.utils.XMLUtils,
-                 java.net.*,
-                 java.util.*,
-                 java.io.*"
+<%@ page import="java.net.URLEncoder"
    isThreadSafe="false"
    session="false"
 %>

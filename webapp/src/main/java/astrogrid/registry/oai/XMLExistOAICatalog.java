@@ -29,8 +29,6 @@ package astrogrid.registry.oai;
 import org.w3c.dom.Text;
 import ORG.oclc.oai.server.catalog.*;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -40,9 +38,7 @@ import org.xml.sax.InputSource;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -50,14 +46,11 @@ import java.util.NoSuchElementException;
 import java.util.Properties;
 import java.util.SortedMap;
 import java.util.StringTokenizer;
-import java.util.TreeMap;
 import java.util.Vector;
 import java.util.HashMap;
-import java.util.Set;
 
 
 import org.xmldb.api.base.ResourceSet;
-import org.xmldb.api.modules.XMLResource;
 import org.xmldb.api.base.Resource;
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.XMLDBException;
@@ -68,9 +61,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
-import org.w3c.dom.Element;
 import java.net.MalformedURLException;
 
 import ORG.oclc.oai.server.verb.BadResumptionTokenException;
@@ -88,9 +79,7 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
@@ -100,10 +89,9 @@ import org.astrogrid.registry.server.admin.AuthorityList;
 import org.astrogrid.registry.server.admin.AuthorityListManager;
 import org.astrogrid.registry.server.query.QueryConfigExtractor;
 import org.astrogrid.registry.RegistryException;
-import org.astrogrid.registry.server.query.ISearch;
-import org.astrogrid.registry.server.query.QueryFactory;
 import org.astrogrid.registry.server.XSLHelper;
 import org.astrogrid.registry.server.SOAPFaultException;
+import org.astrogrid.registry.server.query.v1_0.RegistryQueryService;
 
 /**
  * XMLFileOAICatalog is an implementation of AbstractCatalog interface
@@ -144,12 +132,7 @@ public class XMLExistOAICatalog extends AbstractCatalog {
    
    private void populateNativeMapFromIdentifier(String oaiIdentifier) throws OAIInternalServerError, IdDoesNotExistException {
        String contractVersion = props.getProperty("registry_contract_version",null);
-       ISearch rsSearch = null;
-       try {
-           rsSearch = QueryFactory.createQueryService(contractVersion);
-       }catch(Exception e) {
-           throw new OAIInternalServerError("Could not get Query Service" + e.toString());
-       }
+       RegistryQueryService rsSearch = new RegistryQueryService();
        String versionNumber = rsSearch.getResourceVersion();
        
        maxListSize = conf.getInt("XMLFileOAICatalog.maxListSize",200);
@@ -229,12 +212,7 @@ public class XMLExistOAICatalog extends AbstractCatalog {
        ResourceSet rs;
        try {
            String contractVersion = props.getProperty("registry_contract_version",null);
-           ISearch rsSearch = null;
-           try {
-               rsSearch = QueryFactory.createQueryService(contractVersion);
-           }catch(Exception e) {
-               throw new OAIInternalServerError("Could not get Query Service" + e.toString());
-           }
+           RegistryQueryService rsSearch = new RegistryQueryService();
            String versionNumber = rsSearch.getResourceVersion();
            
            //versionNumber = versionNumber.replace('.','_');

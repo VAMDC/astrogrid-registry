@@ -1,26 +1,9 @@
-<%@ page import="org.astrogrid.config.SimpleConfig,
-                 org.astrogrid.registry.server.http.servlets.helper.JSPHelper,
-                 org.w3c.dom.NodeList,
-                 org.w3c.dom.Element,
-                 org.w3c.dom.Document,
-                 org.astrogrid.util.DomHelper,
-                 org.astrogrid.registry.server.http.servlets.Log4jInit,
-                 org.astrogrid.xmldb.client.XMLDBManager,
-                 org.astrogrid.registry.common.RegistryDOMHelper,
-                 org.astrogrid.registry.server.query.*,
-                 org.astrogrid.store.Ivorn,
-                 org.apache.axis.utils.XMLUtils,
-                 java.util.*,
-                 java.io.*,
-                 javax.naming.*"
-   isThreadSafe="false"
-   session="false"
-%>
+<%@ page isThreadSafe="false" session="false"%>
 <!DOCTYPE HTML  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>AstroGrid Registry Setup Pages</title>
+<title>Registry Setup Pages</title>
 <meta http-equiv="Content-type" content="text/xhtml;charset=iso-8859-1">
 <style type="text/css" media="all">
    <%@ include file="/style/astrogrid.css" %>          
@@ -50,9 +33,7 @@ changed correctly when updating.</i>
 <input type="hidden" name="addFromText" value="true" />
 
 <textarea name="Resource" cols='80' rows='24'>
-<%
-String version = request.getParameter("version");
-if(version.equals("1.0")) { %>
+
 <ri:VOResources
           xmlns:ri="http://www.ivoa.net/xml/RegistryInterface/v1.0"
           xmlns:vr="http://www.ivoa.net/xml/VOResource/v1.0"
@@ -62,7 +43,7 @@ if(version.equals("1.0")) { %>
 <%@ include file="makeOrganisationType1.0.jsp" %>
 <%@ include file="makeAuthorityType1.0.jsp" %>
 </ri:VOResources>
-<%} %>
+
 </textarea>
 <p>
 <input name="button" value="Register" type="submit">

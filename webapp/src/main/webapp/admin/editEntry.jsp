@@ -1,18 +1,7 @@
-<%@page import=" org.astrogrid.config.SimpleConfig,
-                 org.astrogrid.registry.server.http.servlets.helper.JSPHelper,
-                 org.w3c.dom.NodeList,
-                 org.w3c.dom.Element,
-                 org.w3c.dom.Document,
-                 org.astrogrid.util.DomHelper,
-                 org.astrogrid.registry.server.http.servlets.Log4jInit,
-                 org.astrogrid.xmldb.client.XMLDBManager,
-                 org.astrogrid.registry.common.RegistryDOMHelper,
-                 org.astrogrid.registry.server.query.*,
-                 org.astrogrid.store.Ivorn,
-                 org.apache.axis.utils.XMLUtils,
-                 java.net.*,
-                 java.util.*,
-                 java.io.*"
+<%@page import="org.w3c.dom.Document,
+                org.w3c.dom.Element,
+                org.astrogrid.util.DomHelper,
+                org.astrogrid.registry.server.query.v1_0.RegistryQueryService"
    isThreadSafe="false"
    session="false"
 	   contentType="text/html; charset=UTF-8"
@@ -35,34 +24,13 @@
 <div id='bodyColumn'>
 
 <%
-   String resource = "";
-   Document resourceDoc = null;
-   if(request.getParameter("IVORN") != null && request.getParameter("IVORN").trim().length() > 0) {
-       ISearch server = JSPHelper.getQueryService(request);
-           resourceDoc = server.getQueryHelper().getResourceByIdentifier(request.getParameter("IVORN"));
+  String resource = "";
+  Document resourceDoc = null;
+  if(request.getParameter("IVORN") != null && request.getParameter("IVORN").trim().length() > 0) {
+    RegistryQueryService server = new RegistryQueryService();
+    resourceDoc = server.getQueryHelper().getResourceByIdentifier(request.getParameter("IVORN"));
            if (resourceDoc != null) {
                StringBuffer resContent = new StringBuffer(DomHelper.ElementToString(((Element)(resourceDoc.getDocumentElement().getElementsByTagNameNS("*","Resource").item(0)))));
-               if(server.getContractVersion().equals("0.1")) {    	  
-                   String temp=resContent.substring(0,resContent.indexOf(">"));
-                   int tempIndex = resContent.indexOf("created=\"");
-                   int tempIndex2;
-                   if(tempIndex != -1 && tempIndex < temp.length()) {
-                       tempIndex2 = resContent.indexOf("T",tempIndex);
-                       tempIndex = (resContent.indexOf("\"",tempIndex +  5));
-                       if(tempIndex2 != -1 && tempIndex2 < tempIndex) {
-                           resContent.replace(tempIndex2,tempIndex,"");
-                       }
-                   temp = resContent.substring(0,resContent.indexOf(">"));
-                   }//if
-                   tempIndex = resContent.indexOf("updated=\"");
-                   if(tempIndex != -1 && tempIndex < temp.length()) {
-                       tempIndex2 = resContent.indexOf("T",tempIndex);
-                       tempIndex=(resContent.indexOf("\"",tempIndex + 5));
-                       if(tempIndex2 > 0 && tempIndex2 < tempIndex) {
-                           resContent.replace(tempIndex2,tempIndex,"");
-                       }//if
-                   }//if
-               }//if
                resource = resContent.toString();
            }//if
        }//if
@@ -88,7 +56,6 @@ and the xml samples are at the bottom of this page.
 <br>
 Upload from a local file:
 <form enctype="multipart/form-data" method="post" action="addResourceEntry.jsp">
-<input type="checkbox" name="validate" value="true">Validate
 <input type="file" name="docfile">
 <input type="hidden" name="addFromFile" value="true">
 <input type="submit" name="uploadFromFile" value="upload">
@@ -96,7 +63,6 @@ Upload from a local file:
 <br>
 Upload from a url:
 <form method="post" action="addResourceEntry.jsp">
-<input type="checkbox" name="validate" value="true">Validate
 <input type="text" name="docurl">
 <input type="hidden" name="addFromURL" value="true">
 <input type="submit" name="uploadFromURL" value="upload">
@@ -104,7 +70,6 @@ Upload from a url:
 <br>
 Upload from text:<br>
 <form action="addResourceEntry.jsp" method="post">
-<input type="checkbox" name="validate" value="true">Validate
 <input type="hidden" name="addFromText" value="true">
 <p>
 <textarea name="Resource" rows="24" cols="80">

@@ -12,19 +12,7 @@
   <description>
     	Please see the "webapp" documentation for more information on the registry
   </description>
-  
-  <build>
-    <plugins>
-      <plugin>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <includes>
-            <include>**/*Test.java</include>
-          </includes>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+
   
   <!-- commented out dependencies below need to be looked at in detail -->
   <dependencies>
@@ -50,34 +38,8 @@
       <groupId>org.astrogrid</groupId>
       <artifactId>astrogrid-contracts</artifactId>
     </dependency>
-    <!-- third-party dependencies from here on down. -->
-	  <dependency>
-      <groupId>net.sf.saxon</groupId>
-      <artifactId>saxon</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>net.sf.saxon</groupId>
-      <artifactId>saxon-dom</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>net.sf.saxon</groupId>
-      <artifactId>saxon-dom4j</artifactId>
-    </dependency>    
     
-    
-    <dependency>
-      <groupId>org.codehaus.xfire</groupId>
-      <artifactId>xfire-all</artifactId>
-      <version>1.2.6</version>
-    </dependency>
-    <dependency>
-      <groupId>javax.activation</groupId>
-      <artifactId>activation</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>jdom</groupId>
-      <artifactId>jdom</artifactId>
-    </dependency>
+    <!-- thrid-party stuff. -->
     <dependency>
       <groupId>wsdl4j</groupId>
       <artifactId>wsdl4j</artifactId>
@@ -86,29 +48,17 @@
       <groupId>stax</groupId>
       <artifactId>stax-api</artifactId>
     </dependency>
-    <dependency>
-      <groupId>com.sun.xml</groupId>
-      <artifactId>saaj-impl</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>javax.xml.soap</groupId>
-      <artifactId>saaj-api</artifactId>
-      <version>1.3</version>
-    </dependency>
     
     <dependency> 
       <groupId>commons-discovery</groupId>
       <artifactId>commons-discovery</artifactId>
     </dependency>
-    
     <dependency>
-      <groupId>axis</groupId>
-      <artifactId>axis</artifactId>
+      <groupId>commons-lang</groupId>
+      <artifactId>commons-lang</artifactId>
+      <version>2.6</version>
     </dependency>
-    <dependency>
-      <groupId>axis</groupId>
-      <artifactId>axis-jaxrpc</artifactId>
-    </dependency>
+ 
     
     <dependency>
       <groupId>junit</groupId>
@@ -126,11 +76,7 @@
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
     </dependency>
-    
-    <dependency>
-      <groupId>xml-apis</groupId>
-      <artifactId>xml-apis</artifactId>
-    </dependency>
+
     <dependency>
       <groupId>xml-resolver</groupId>
       <artifactId>xml-resolver</artifactId>
@@ -144,29 +90,11 @@
     </dependency>
     
     <dependency>
-      <groupId>xmldb-api</groupId>
-      <artifactId>xmldb</artifactId>
-      <version>20040708</version>
-    </dependency> 
-    <dependency>
-      <groupId>xalan</groupId>
-      <artifactId>xalan</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>xalan</groupId>
-      <artifactId>serializer</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.codehaus.fabric3.fabric3-db-exist</groupId>
       <artifactId>sunxacml</artifactId>
       <version>1.0</version>
     </dependency>
-    <!--
-    <dependency>
-      <groupId>xerces</groupId>
-      <artifactId>xercesImpl</artifactId>
-    </dependency>
-    -->
+    
     <dependency>
       <groupId>exist</groupId>
       <artifactId>exist</artifactId>

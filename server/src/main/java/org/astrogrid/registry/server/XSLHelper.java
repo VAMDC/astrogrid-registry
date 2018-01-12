@@ -142,50 +142,6 @@ public class XSLHelper {
        }
     }   
    
-   /**
-    * Method: transformVersionConversion
-    * Description: This method will go away in the near future, a helper xsl method to
-    * transform 0.10 XML Resources to 1.0 XML Resources.
-    * 
-    * @param doc XML to be transformed.
-    * @return XML 1.0 Resource DOM.
-    */
-   public Document transformVersionConversion(Node doc) throws RegistryException {
-       
-       Source xmlSource = new DOMSource(doc);
-       Document resultDoc = null;
-       String harvestName = "";    
-       String styleSheetName = "Convert0_10-1_0.xsl";
-       logger.debug("transformUpdate(Node, String) - the stylesheet name = "
-            + styleSheetName);
-       try {
-    	  
-          Source xslSource = new StreamSource(new InputStreamReader(loadStyleSheet(XSL_DIRECTORY + styleSheetName),"UTF-8"));
-          DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();           
-          builderFactory.setNamespaceAware(true);
-          DocumentBuilder builder = builderFactory.newDocumentBuilder();
-          resultDoc = builder.newDocument();
-          //DocumentFragment df = resultDoc.createDocumentFragment();
-          net.sf.saxon.TransformerFactoryImpl transformerFactory = new net.sf.saxon.TransformerFactoryImpl();
-          
-          DOMResult result = new DOMResult(resultDoc);
-          Transformer transformer = transformerFactory.newTransformer(xslSource);
-          
-          transformer.transform(xmlSource,result);
-          return resultDoc;  
-       }catch(ParserConfigurationException pce) {
-        logger.error("transformUpdate(Node, String)", pce);
-        throw new RegistryException(pce);        
-       }catch(TransformerConfigurationException tce) {
-        logger.error("transformUpdate(Node, String)", tce);
-        throw new RegistryException(tce);        
-       }catch(TransformerException te) {
-        logger.error("transformUpdate(Node, String)", te);
-        throw new RegistryException(te);        
-       }catch(UnsupportedEncodingException uee) {
-           logger.error(uee);
-           throw new RegistryException(uee);           
-       }
-    }   
+   
    
 }

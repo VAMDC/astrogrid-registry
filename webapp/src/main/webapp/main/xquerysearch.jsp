@@ -1,18 +1,4 @@
-<%@ page import="org.astrogrid.registry.server.query.*,
-                 org.astrogrid.registry.server.*,
-                 org.astrogrid.registry.common.RegistryDOMHelper,
-                 org.astrogrid.registry.server.http.servlets.helper.JSPHelper, 
-                 org.astrogrid.store.Ivorn,
-                 org.w3c.dom.Document,
-                 org.astrogrid.io.Piper,
-                 org.astrogrid.util.DomHelper,
-                 org.astrogrid.config.SimpleConfig,
-                 org.w3c.dom.NodeList,
-                 org.w3c.dom.Element,                 
-                 java.net.*,
-                 java.util.*,
-                 org.apache.commons.fileupload.*,                  
-                 java.io.*"
+<%@ page 
     session="false"
     	contentType="text/html; charset=UTF-8"
     		   pageEncoding="UTF-8"

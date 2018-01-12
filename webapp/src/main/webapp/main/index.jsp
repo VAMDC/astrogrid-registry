@@ -1,5 +1,4 @@
 <%@ page import="org.astrogrid.config.SimpleConfig,
-                 org.astrogrid.registry.server.http.servlets.helper.JSPHelper,
                  org.w3c.dom.NodeList,
                  org.w3c.dom.Element,
                  org.w3c.dom.Document,
@@ -7,7 +6,7 @@
                  org.astrogrid.registry.server.http.servlets.Log4jInit,
                  org.astrogrid.xmldb.client.XMLDBManager,
                  org.astrogrid.registry.common.RegistryDOMHelper,
-                 org.astrogrid.registry.server.query.*,
+                 org.astrogrid.registry.server.query.v1_0.RegistryQueryService,
                  org.astrogrid.store.Ivorn,
                  org.apache.axis.utils.XMLUtils,
                  java.util.*,
@@ -39,7 +38,7 @@ are available.
 </p>
 <p>
 <%
-   ISearch server = JSPHelper.getQueryService(request);
+   RegistryQueryService server = new RegistryQueryService();
    
    Document entry = null;
    boolean dbInit = XMLDBManager.isInitialized();
@@ -75,13 +74,6 @@ are available.
       out.write("<br><br>Click <a href='viewResourceEntry.jsp?IVORN=" + ivoStr + "'>here</a> to see the main Registry type for this registry and all authority IDs managed by this registry.");
    }
    
-   if(!contractVersion.equals("1.0")) {
-	   out.write("<font color='red'>This registry is not on the official 1.0 contract and resource version you should make the switch to 1.0." +
-	   " You can change the property reg.custom.query.defaultContractVersion to 1.0 (see menu). " +
-	   " You may also read the docs on switching to 1.0 <a href='../regdocs/upgrading.jsp'>here</a>. " +
-	   " Do note if you desire you can manually switch the jsp session to see the other resources by going " + 
-	   " <a href='" + request.getContextPath() + "/main/currentContractSession.jsp'>here</a></font>");
-   }
 %>
 </div>
 

@@ -1,23 +1,15 @@
-<%@ page import="org.astrogrid.registry.server.admin.*,
-                 org.astrogrid.store.Ivorn,
-                 org.astrogrid.registry.common.RegistryValidator,
-                 org.astrogrid.registry.server.http.servlets.helper.JSPHelper,
-                 junit.framework.AssertionFailedError,
+<%@ page import="org.astrogrid.registry.server.admin.v1_0.RegistryAdminService,
                  org.w3c.dom.Document,
-                 org.astrogrid.io.Piper,
                  org.astrogrid.util.DomHelper,
-                 java.net.*,                 
-                 java.util.*,
-                 org.apache.axis.utils.XMLUtils, 
-                 org.apache.commons.fileupload.*, 
-                 java.io.*"
+                 org.apache.commons.fileupload.*,
+                 java.net.URL,
+                 java.util.List,
+                 java.util.Iterator"
    session="false"
    contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"
 %>
 <%
-  boolean validateError = false;
-  boolean doValidate = false;
   Document doc = null;
   boolean update = false;
   String errorTemp = "";
@@ -33,56 +25,18 @@
        if (!item.isFormField()) {
          doc = DomHelper.newDocument(item.getInputStream());
          update = true;
-       }else {
-         //System.out.println("FIELd name = " + item.getFieldName());
-         if("validate".equals(item.getFieldName())) {
-            if("true".equals(item.getString())) {
-               doValidate = true;
-            }
-         }
        }
    }
-   //update = true;
-   if(doValidate) {
-      try {
-         RegistryValidator.isValid(doc);
-      }catch(AssertionFailedError afe) {
-            update = false;
-            validateError = true;
-            errorTemp = afe.getMessage();
-      }
-   }//if
 
    
   } else if(request.getParameter("addFromURL") != null &&
      request.getParameter("addFromURL").trim().length() > 0) {
       doc = DomHelper.newDocument(new URL(request.getParameter("docurl")));
       update = true;
-      if(request.getParameter("validate") != null &&
-         request.getParameter("validate").equals("true")) {      
-         try {
-            RegistryValidator.isValid(doc);
-         }catch(AssertionFailedError afe) {
-            update = false;
-            validateError = true;
-            errorTemp = afe.getMessage();
-         }
-      }//if
-      
    } else if(request.getParameter("addFromText") != null &&
      request.getParameter("addFromText").trim().length() > 0) {
-    doc = DomHelper.newDocument(request.getParameter("Resource").trim());
+     doc = DomHelper.newDocument(request.getParameter("Resource").trim());
      update = true;
-      if(request.getParameter("validate") != null &&
-         request.getParameter("validate").equals("true")) {     
-         try {
-            RegistryValidator.isValid(doc);
-         }catch(AssertionFailedError afe) {
-            update = false;
-            validateError = true;
-            errorTemp = afe.getMessage();
-         }     
-      }//if
    }
 %>
 <!DOCTYPE HTML  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -111,7 +65,7 @@
 <%
    if(update) {
       Document result = null;
-      IAdmin server = JSPHelper.getAdminService(request);	  
+      RegistryAdminService server = new RegistryAdminService();	  
       out.write("<p>Attempt at updating Registry, if any errors occurred it will be printed below<br /></p>");
       result = server.updateInternal(doc);
       if (result != null) {

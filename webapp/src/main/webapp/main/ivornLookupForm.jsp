@@ -1,17 +1,4 @@
-<%@ page import="org.astrogrid.config.SimpleConfig,
-                 org.astrogrid.registry.server.http.servlets.helper.JSPHelper,
-                 org.w3c.dom.NodeList,
-                 org.w3c.dom.Element,
-                 org.w3c.dom.Document,
-                 org.astrogrid.util.DomHelper,
-                 org.astrogrid.registry.server.http.servlets.Log4jInit,
-                 org.astrogrid.xmldb.client.XMLDBManager,
-                 org.astrogrid.registry.common.RegistryDOMHelper,
-                 org.astrogrid.registry.server.query.*,
-                 org.astrogrid.store.Ivorn,
-                 org.apache.axis.utils.XMLUtils,
-                 java.util.*,
-                 java.io.*"
+<%@ page
    isThreadSafe="false"
    session="false"
 %>
@@ -40,16 +27,10 @@ Enter the Identifier for the entry you want to view.
 
 <form action="viewResourceEntry.jsp" method="post">
 <p>
-Resource Identifier
- <br>
  <input name="IVORN" type="text" value="ivo://" size="60">
  <input type="submit" name="button" value="Find">
 </p>
-<p>
-Examples:<br>
-roe.ac.uk/DSA_6dF/rdbms<br>
-nasa.heasarc/acrs
-</p>
+<p>E.g.: ivo://vamdc/cdms</p>
 </form>
 </div>
 <%@ include file="/style/footer.xml" %>
