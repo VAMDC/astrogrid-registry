@@ -32,7 +32,7 @@
 
 <h1>Welcome</h1>
 <p>
- This is VAMDC registry of resources. 
+ This is the VAMDC registry of resources. 
 These pages are primarily for providers of VAMDC resources: you can register
 your VAMDC services and look at the registrations of other services in the VAMDC
 network. End users can get a better view of the available services in the 
