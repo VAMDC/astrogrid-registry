@@ -23,17 +23,8 @@
 <h1>Reqistry XQuery</h1>
 
 <p>
-Put in your XQuery String in the text box and hit submit.
-This is 'raw' XQuery meaning you need to declare
-your own namespaces (if needed).  There is nothing given to
-you on the xquery by the server.  You may elect to use
-the special reserver word 'RootResource' to be translated
-to the root node hence vr:Resource or vor:Resource.
-<br>
-<br>
-<i>Once you hit submit it takes you to an XML page of your
-results, you will need to hit back button to get back to
-the menu or XQuery page.</i><br>
+The registry may be searched using XQuery. To try it, type an XQuery in
+the box and press submit.
 </p>
 <form action="xqueryresults.jsp" method="post">
 <p>
@@ -44,6 +35,17 @@ the menu or XQuery page.</i><br>
 <input type="submit" name="button" value="Submit"><br>
 </p>
 </form>
+<p>
+If your query uses namespaces, you will have to declare them in the query.
+</p>
+<p>
+To refer to whole registration documents (without need to know
+the formal name and namespace), use the special token <i>RootResource</i>. E.g.
+<i>RootResource</i> by itself returns every registration document in the 
+registry, <i>RootResource/identifier</i> lists all their IVORNs 
+(i.e. formal names) and <i>RootResource/title</i> lists all the titles. To find
+a resource by its formal name, try <i>RootResource[identifier='ivo://vamdc/cdms']</i>.
+</p>
 </div>
 <%@ include file="/style/footer.xml" %>
 </body>

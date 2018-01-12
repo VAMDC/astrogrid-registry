@@ -1,4 +1,4 @@
-<%@ page import="org.astrogrid.registry.server.admin.v1_0.RegistryAdminServer,
+<%@ page import="org.astrogrid.registry.server.admin.v1_0.RegistryAdminService,
                  org.w3c.dom.Document,
                  org.astrogrid.util.DomHelper"
    isThreadSafe="false"
@@ -35,7 +35,7 @@
    <font color="red"><%=errorTemp %></font>
 <%
   if(update) {
-    RegistryAdminServer server = new RegistryAdminServer();
+    RegistryAdminService server = new RegistryAdminService();
     out.write("<p>Attempt at updating Registry Indexes, if any errors occurred it will be printed below<br /></p>");
     Document result = server.updateIndex(doc);
 	  if (result != null) {

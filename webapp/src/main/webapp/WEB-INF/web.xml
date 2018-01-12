@@ -527,9 +527,9 @@
 	</env-entry>
 	
 	<env-entry>
-		<description>The user used to query Resources.</description>
+		<description>The skin for the web pages.</description>
 		<env-entry-name>reg.custom.projectname</env-entry-name>
-		<env-entry-value>ag</env-entry-value>
+		<env-entry-value>vamdc</env-entry-value>
 		<env-entry-type>java.lang.String</env-entry-type>
 	</env-entry>
 	

@@ -26,8 +26,8 @@ String encodedIvorn = URLEncoder.encode(ivorn, "iso-8859-1");
 <%@ include file="../style/navigation.xml" %>
 <div id='bodyColumn'>
 <h1>Edit Core Information for <%=ivorn%></h1>
-<iframe src="DublinCore?IVORN=<%=encodedIvorn%>" name="main" scrolling="yes" FRAMEBORDER="0" width="90%" height="700">
-</iframe>
+
+<jsp:include page="DublinCore?IVORN=<%=encodedIvorn%>"></jsp:include>
 </div>
 <%@ include file="../style/footer.xml" %>
 </body>

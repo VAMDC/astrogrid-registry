@@ -32,9 +32,15 @@
 
 <h1>Welcome</h1>
 <p>
-Welcome to Registry.  These are the direct access pages for
-Registering your resource, and/or investigating what resources
-are available.
+ This is VAMDC registry of resources. 
+These pages are primarily for providers of VAMDC resources: you can register
+your VAMDC services and look at the registrations of other services in the VAMDC
+network. End users can get a better view of the available services in the 
+<a href="http://portal.vamdc.org">VAMDC portal</a>.
+</p>
+<p>
+The VAMDC registry is a specialized form of IVOA registry, and uses software
+evolved from AstroGrid's registry-package.
 </p>
 <p>
 <%
@@ -70,7 +76,7 @@ are available.
       out.write("This Registry has not yet been configured; click <a href='../regdocs/configure.jsp'>here</a> to set it up.");
    }
    else {
-      out.write("This Registry main authority ID <b>"+SimpleConfig.getSingleton().getString("reg.amend.authorityid")+"</b>");
+      out.write("The main naming-authority for this registry is <b>"+SimpleConfig.getSingleton().getString("reg.amend.authorityid")+"</b>");
       out.write("<br><br>Click <a href='viewResourceEntry.jsp?IVORN=" + ivoStr + "'>here</a> to see the main Registry type for this registry and all authority IDs managed by this registry.");
    }
    

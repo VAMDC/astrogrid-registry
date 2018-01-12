@@ -1,4 +1,4 @@
-<%@ page import="org.astrogrid.registry.server.admin.v1_0.RegistryAdminServer,
+<%@ page import="org.astrogrid.registry.server.admin.v1_0.RegistryAdminService,
                  org.astrogrid.registry.common.RegistryDOMHelper"
    isThreadSafe="false"
    session="false"
@@ -43,7 +43,7 @@ if("true".equals(removeRes)) {
         out.println("<font color='red'>You need to provide a Resource Identifier.</font>");
     } else {
         if(removeRes != null && removeRes.equals("true")) {
-          RegistryAdminServer server = new RegistryAdminServer();
+          RegistryAdminService server = new RegistryAdminService();
             server.remove(id);
             out.print("<font color='blue'>Removed resource</font>");
         }

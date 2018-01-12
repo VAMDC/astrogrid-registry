@@ -25,7 +25,7 @@
 </script>
    </div>
    <div id="menuRegister">
-     <h5>Registry</h5>
+     <h5>Registration</h5>
 <script LANGUAGE="JavaScript" type="text/javascript">
 <!--
         document.write('<ul><li class="none"><a href="'+root_url+'/registration/NewResource.jsp">Create Entry<\/a>');
@@ -41,16 +41,9 @@
 // -->
 </script>
    </div>
-   <div id='menuDB'>
-      <h5>Database</h5>
-<script LANGUAGE="JavaScript" type="text/javascript">
-<!--
-        document.write('<ul><li class="none"><a href="'+root_url+'/main/dbclients.jsp">Client &amp; WebDav<\/a><\/ul>');
-// -->
-</script>
-   </div>   
+   
    <div id='menuDocs'>
-      <h5>Document</h5>
+      <h5>Documentation</h5>
 <script LANGUAGE="JavaScript" type="text/javascript">
 <!--
         document.write('<ul><li class="none"><a href="'+root_url+'/regdocs/installation.jsp">Installation<\/a>');
@@ -64,15 +57,6 @@
 // -->
 </script>
    </div>
-<SCRIPT LANGUAGE="JavaScript" type="text/javascript">
-      <!--
-      document.write('&nbsp;&nbsp;&nbsp;<A HREF="http://validator.w3.org/check?uri='+location.href +'">');
-      document.write('<img alt="This website passes W3C HTML 4.01 Quality Assurance" id="quality" src="<%=request.getContextPath()%>/img/valid-html401-blue.png" border="0" height="24">');
-      document.write('<\/A>');
-      // -->
-</SCRIPT>
 
-  <!-- Copyright &copy; 2009  -->
-  <br>
  </div>
 </div>
