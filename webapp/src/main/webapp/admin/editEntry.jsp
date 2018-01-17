@@ -1,7 +1,8 @@
 <%@page import="org.w3c.dom.Document,
                 org.w3c.dom.Element,
                 org.astrogrid.util.DomHelper,
-                org.astrogrid.registry.server.query.v1_0.RegistryQueryService"
+                org.astrogrid.registry.server.query.v1_0.RegistryQueryService,
+                org.apache.commons.lang.StringEscapeUtils"
    isThreadSafe="false"
    session="false"
 	   contentType="text/html; charset=UTF-8"
@@ -31,7 +32,8 @@
     resourceDoc = server.getQueryHelper().getResourceByIdentifier(request.getParameter("IVORN"));
            if (resourceDoc != null) {
                StringBuffer resContent = new StringBuffer(DomHelper.ElementToString(((Element)(resourceDoc.getDocumentElement().getElementsByTagNameNS("*","Resource").item(0)))));
-               resource = resContent.toString();
+               String xml = resContent.toString();
+               resource = StringEscapeUtils.escapeXml(xml);
            }//if
        }//if
 %>
