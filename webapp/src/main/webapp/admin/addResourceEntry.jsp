@@ -3,6 +3,7 @@
                  org.astrogrid.util.DomHelper,
                  org.apache.commons.fileupload.*,
                  java.net.URL,
+                 java.net.URLDecoder,
                  java.util.List,
                  java.util.Iterator"
    session="false"
@@ -10,6 +11,9 @@
    pageEncoding="UTF-8"
 %>
 <%
+  if (request.getCharacterEncoding() == null) {
+    request.setCharacterEncoding("UTF-8");
+  }
   Document doc = null;
   boolean update = false;
   String errorTemp = "";
@@ -35,7 +39,9 @@
       update = true;
    } else if(request.getParameter("addFromText") != null &&
      request.getParameter("addFromText").trim().length() > 0) {
-     doc = DomHelper.newDocument(request.getParameter("Resource").trim());
+     String encodedXml = request.getParameter("Resource").trim();
+     String xml = URLDecoder.decode(encodedXml, request.getCharacterEncoding());
+     doc = DomHelper.newDocument(xml);
      update = true;
    }
 %>
