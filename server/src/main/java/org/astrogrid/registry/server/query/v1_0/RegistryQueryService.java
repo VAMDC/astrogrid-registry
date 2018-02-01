@@ -1,18 +1,19 @@
 package org.astrogrid.registry.server.query.v1_0;
 
 import java.io.IOException;
-
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.parsers.ParserConfigurationException;
+import org.apache.axis.utils.XMLUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.base.XMLDBException;
-import org.astrogrid.util.DomHelper;
 import org.astrogrid.registry.server.query.QueryHelper;
 import org.astrogrid.registry.server.xmldb.XMLDBRegistry;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xmldb.api.modules.XMLResource;
 
@@ -33,7 +34,7 @@ public class RegistryQueryService {
   /**
    * Logging variable for writing information to the logs
    */
-  private static final Log log = LogFactory.getLog(RegistryQueryService.class);
+  private static final Log LOG = LogFactory.getLog(RegistryQueryService.class);
 
   public static final String QUERY_WSDL_NS = "http://www.ivoa.net/wsdl/RegistrySearch/v1.0";
 
@@ -68,7 +69,7 @@ public class RegistryQueryService {
   public Document getResourceToDocument(String ivorn) throws GetResourceException  {
     try {  
       String xml = getResourceToText(ivorn);
-      return (xml == null)? null : DomHelper.newDocument(xml);  
+      return documentFromXmlText(xml);
     } catch (ParserConfigurationException ex) {
       throw new GetResourceException(ivorn, ex);
     } catch (SAXException ex) {
@@ -87,7 +88,7 @@ public class RegistryQueryService {
    * @throws org.astrogrid.registry.server.query.v1_0.GetResourceException If the query cannot be executed.
    */
   public String getResourceToText(String ivorn) throws GetResourceException  {
-    System.out.println("Searching for " + ivorn);
+    LOG.debug("Searching for " + ivorn);
     try {
       
       // Query the database.
@@ -96,15 +97,16 @@ public class RegistryQueryService {
           COLLECTION_NAME
       );
       if (results == null) {
-        System.out.println(ivorn + "was not found");
+        LOG.info(ivorn + "was not found");
         return null;
       }
       
       // Return the results as XML text.
-      System.out.println("Found " + ivorn);
-      return results.getContent().toString();
+      LOG.info("Found " + ivorn);
+      return "<?xml version='1.0' encoding='UTF-8'?>\n" + results.getContent().toString();
       
     } catch (XMLDBException ex) {
+      LOG.error("getResource failed: " + ex);
       throw new GetResourceException(ivorn, ex);
     }
   }
@@ -115,6 +117,49 @@ public class RegistryQueryService {
         + "   where $x/identifier='" + ivorn + "'"
         + "   return string($x/capability[@standardID='ivo://ivoa.net/std/VOSI#capabilities']/interface/accessURL)";
     return xQueryToText(xql);
+  }
+  
+  public String keywordQueryToText(String keywordString) throws XQueryException {
+    
+    // Keywords are separated by white space or commas, or a mix of the two
+    String[] keywords = keywordString.trim().split("[\\s,]+");
+    if (keywords.length == 0) {
+      return "No keywords were given";
+    }
+    
+    StringBuilder result = new StringBuilder();
+    
+    // These are the xpaths below //RootResource where the keyword is sought.
+    String[] xpaths = new String[]{
+      "identifier",
+      "content/description",
+      "content/subject",
+      "content/type",
+      "title",
+      "@xsi:type",
+      "capability/@standardID"
+    };
+   
+    // For each keyword and each location where it may be found,
+    // form and execute an XQuery; concatenate the results.
+    // This is horribly inefficient, but all attempts to form a case-blind
+    // query on multiple xpaths seem to fail, possibly due to bugs in eXist.
+    for (String k : keywords) {
+      String klc = k.toLowerCase();
+      for (String p : xpaths) {
+        String xql = String.format(
+            "declare namespace xsi='http://www.w3.org/2001/XMLSchema-instance';"
+            + " RootResource[contains(%s/text()/lower-case(.),'%s')]", 
+            p, 
+            klc
+        );
+        LOG.debug("Submitting XQuery " + xql);
+        result.append(xQueryToText(xql));
+        result.append('\n');
+      }
+    }
+    
+    return result.toString();
   }
 
   /**
@@ -134,8 +179,8 @@ public class RegistryQueryService {
       List<XMLResource> resources = xQueryToXMLResources(xql);
       List<Document> results = new ArrayList<Document>(resources.size());
       for (XMLResource x : resources) {
-        String xml = x.getContent().toString();
-        results.add(DomHelper.newDocument(xml));
+        String xml = (String) x.getContent();
+        results.add(documentFromXmlText(xml));
       }
       return results;
     } catch (XMLDBException ex) {
@@ -170,6 +215,7 @@ public class RegistryQueryService {
         b.append(x.getContent().toString());
       }
     } catch (XMLDBException ex) {
+      LOG.error(ex);
       throw new XQueryException(xql, ex);
     }
     return b.toString();
@@ -185,10 +231,10 @@ public class RegistryQueryService {
    */
   protected List<XMLResource> xQueryToXMLResources(String xql) throws XMLDBException {
 
-    System.out.println("Given xql: " + xql);
-    log.debug("start XQuerySearch");
+    LOG.debug("Given xql: " + xql);
+    LOG.debug("start XQuerySearch");
 
-    System.out.println("Extracted Xquery text= " + xql);
+    LOG.debug("Extracted Xquery text= " + xql);
     int tempIndexCheck1 = 0;
     int tempIndexCheck2;
 
@@ -209,7 +255,7 @@ public class RegistryQueryService {
 
     boolean cont = true;
     String[] paramCheck;
-    String xqlTemp = null;
+    String xqlTemp;
     /*
               * Hack: Task Launcher and Resource queries will typically send a 'matches' xquery with
               * a lot of 'or' statements these tend to come back in around 6 seconds, but if I switch it to
@@ -284,13 +330,12 @@ public class RegistryQueryService {
     
     xql = "declare namespace RootResource = '" + RI_NAMESPACE + "'; " + xql;
 
-    log.info("Modified query text, to be run on the database: " + xql);
+    System.out.println("Modified query text, to be run on the database: " + xql);
 
-    // Eexecute the query and prepare the results for output.
+    // Execute the query and prepare the results for output.
     ResourceSet rs = xdbRegistry.query(xql, COLLECTION_NAME);
     for (long i = 0; i < rs.getSize(); i++) {
       XMLResource x = (XMLResource) rs.getResource(i);
-      System.out.println(x.getContent());
     }
     List<XMLResource> resSet = cloneResources(rs);
     
@@ -315,6 +360,11 @@ public class RegistryQueryService {
       queryHelper = new QueryHelper(QUERY_WSDL_NS, CONTRACT_VERSION, VORESOURCE_VERSION);
     }
     return queryHelper;
+  }
+  
+  protected Document documentFromXmlText(String xml) 
+      throws ParserConfigurationException, SAXException, IOException {
+    return (xml == null)? null : XMLUtils.newDocument(new InputSource(new StringReader(xml)));
   }
   
 }

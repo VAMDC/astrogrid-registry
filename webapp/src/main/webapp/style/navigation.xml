@@ -19,7 +19,8 @@
 <!--
         document.write('<ul><li class="none"><a href="'+root_url+'/main/ivornLookupForm.jsp">View Resource<\/a>');
         document.write('<li class="none"><a href="'+root_url+'/main/browse.jsp">Browse Registry<\/a>');
-        document.write('<li class="none"><a href="'+root_url+'/main/xquerysearch.jsp">Registry XQuery<\/a>');
+        document.write('<li class="none"><a href="'+root_url+'/main/keyword-search-form.jsp">Keyword query<\/a>');
+        document.write('<li class="none"><a href="'+root_url+'/main/xquerysearch.jsp">XQuery<\/a>');
         document.write('<li class="none"><a href="'+root_url+'/main/tree-root.jsp">Registry Tree<\/a><\/ul>');
 // -->
 </script>

@@ -321,9 +321,9 @@ public class RegistryQueryTest {
   @Test
   public void testGetResourcev1_0_1a() throws Exception {
     System.out.println("begin testGetResourcev1_0_1a");
-    Document inputDoc = DomHelper.newDocument("<GetResource><identifier>ivo://registry.test/registry</identifier></GetResource>");
     String xml = rqsv1_0.getResourceToText("ivo://registry.test/registry");
     Assert.assertNotNull(xml);
+    System.out.println(xml);
     System.out.println("done testGetResourcev1_0_1a");
   }
   

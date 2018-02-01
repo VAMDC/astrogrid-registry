@@ -24,7 +24,6 @@ import javax.servlet.ServletException;
 import javax.xml.parsers.DocumentBuilder;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.xml.sax.SAXException;
 
 /**
  * Object representation of a SOAP message. Each instance wraps a DOM tree.
@@ -47,6 +46,8 @@ public class SoapEnvelope extends Dominator {
   
   /**
    * Constructs an empty envelope.
+   * @throws java.io.IOException
+   * @throws javax.servlet.ServletException
    */
   public SoapEnvelope() throws IOException, ServletException {
     super();
@@ -61,8 +62,10 @@ public class SoapEnvelope extends Dominator {
   /**
    * Constructs an envelope, possibly containing a request, from 
    * a character stream.
+   * @param in Stream supplying the XML text for the message.
+   * @throws java.lang.Exception
    */
-  public SoapEnvelope(InputStream in) throws SAXException, IOException, Exception {
+  public SoapEnvelope(InputStream in) throws Exception {
     super();
     
     DocumentBuilder builder = getBuilder();
@@ -104,6 +107,8 @@ public class SoapEnvelope extends Dominator {
   
   /**
    * Creates a Fault structure in the body.
+   * @param isServerAtFault If true, blame the service, otherwise the client.
+   * @param msg The error message.
    */
   public void setFault(
       boolean isServerAtFault,

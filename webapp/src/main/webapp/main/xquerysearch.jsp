@@ -7,7 +7,7 @@
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>Advanced XQuery of Registry</title>
+<title>Registry XQuery</title>
 <meta http-equiv="Content-type" content="text/xhtml;charset=UTF-8">
 <style type="text/css" media="all">
    <%@ include file="/style/astrogrid.css" %>          
@@ -20,11 +20,13 @@
 
 <div id='bodyColumn'>
 
-<h1>Reqistry XQuery</h1>
+<h1>XQuery</h1>
 
 <p>
-The registry may be searched using XQuery. To try it, type an XQuery in
-the box and press submit.
+The registry may be searched using the
+<a hef="https://en.wikipedia.org/wiki/XQuery"XQuery</a> language.
+This needs some knowledge of the structure of the registration documents.
+To try it, type an XQuery in the box and press submit.
 </p>
 <form action="xqueryresults.jsp" method="post">
 <p>

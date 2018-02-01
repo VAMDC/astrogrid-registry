@@ -90,8 +90,6 @@ public class RegistrySearchSoap {
       response.setFault(false, ex.getMessage());
       return;
     }
-      
-    System.out.println("xql = " + xql);
     
     try {
       Element responseOperation = response.setOperation(RS_NS, "rs:XQuerySearchResponse");

@@ -6,7 +6,7 @@
     <parent>
       <artifactId>astrogrid-registry-base</artifactId>
       <groupId>org.astrogrid</groupId>
-      <version>2018.1vamdc</version>
+      <version>2018.2vamdc</version>
   </parent>
   <name>AstroGrid registry server</name>
   <description>
@@ -118,7 +118,7 @@
     <dependency>
       <groupId>servletapi</groupId>
       <artifactId>servletapi</artifactId>
-      <version>2.3</version>
+      <version>2.4</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>

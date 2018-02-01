@@ -29,6 +29,7 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import org.apache.axis.utils.XMLUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -52,33 +53,11 @@ public class Dominator {
   }
   
   public void print(Document doc, Writer out) throws IOException, ServletException {
-    try {
-      Transformer transformer = transformerFactory.newTransformer();
-      transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
-      transformer.setOutputProperty(OutputKeys.METHOD, "xml");
-      transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-      transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-      transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-
-      transformer.transform(new DOMSource(doc), new StreamResult(out));
-    } catch (TransformerException e) {
-      throw new ServletException(e);
-    }
+    XMLUtils.DocumentToWriter(doc, out);
   }
   
-  public void print(Document doc, OutputStream out) throws IOException, ServletException {
-    try {
-      Transformer transformer = transformerFactory.newTransformer();
-      transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
-      transformer.setOutputProperty(OutputKeys.METHOD, "xml");
-      transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-      transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-      transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-
-      transformer.transform(new DOMSource(doc), new StreamResult(out));
-    } catch (TransformerException e) {
-      throw new ServletException(e);
-    }
+  public void print(Document doc, OutputStream out) throws IOException {
+    XMLUtils.DocumentToStream(doc, out);
   }
   
   

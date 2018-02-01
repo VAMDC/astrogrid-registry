@@ -38,7 +38,7 @@ public class SoapServletTest {
     InputStream r = new FileInputStream(new File("src/test/resources/test-xquery-request.xml"));
     SoapServlet sut = new SoapServlet();
     sut.init();
-    sut.dispatch(r, new OutputStreamWriter(System.out));
+    sut.dispatch(r, System.out);
   }
   
   @Test
@@ -46,7 +46,7 @@ public class SoapServletTest {
     InputStream r = new FileInputStream(new File("src/test/resources/test-resolve-request.xml"));
     SoapServlet sut = new SoapServlet();
     sut.init();
-    sut.dispatch(r, new OutputStreamWriter(System.out));
+    sut.dispatch(r, System.out);
   }
 
 }

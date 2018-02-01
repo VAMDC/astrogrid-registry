@@ -22,12 +22,15 @@ import org.astrogrid.registry.server.soap.RegistrySearchSoap;
 import org.astrogrid.registry.server.soap.SoapEnvelope;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.Writer;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.axis.utils.XMLUtils;
 
 /**
  * Servlet to implement the search functions as a SOAP service. This class
@@ -98,12 +101,13 @@ public class SoapServlet extends HttpServlet {
       HttpServletRequest request,
       HttpServletResponse response
   ) throws IOException, ServletException {
+    response.setCharacterEncoding("UTF-8");
+    response.setContentType("text/xml");
     String query = request.getQueryString();
     if ("wsdl".equals(query) || "WSDL".equals(query)) {
-      response.setContentType("text/xml");
       emitWsdl(registryUrl, response.getWriter());
     } else {
-      dispatch(request.getInputStream(), response.getWriter());
+      dispatch(request.getInputStream(), response.getOutputStream());
     }
   }
 
@@ -114,24 +118,24 @@ public class SoapServlet extends HttpServlet {
  RegistrySearchSoap class to get the request actioned and the response message
  built. Serializes the response envelope to the given stream.
    * 
-   * @param reader Source of inbound message.
-   * @param writer Target for outbound message.
+   * @param in Source of inbound message.
+   * @param out Target for outbound message.
    * @throws IOException If the results cannot be written out.
    * @throws ServletException If a problem occurs that cannot be signalled as a SOAP fault.
    */
   protected void dispatch(
-      InputStream reader,
-      Writer      writer
+      InputStream in,
+      OutputStream out
   ) throws ServletException, IOException {
     try {
-      SoapEnvelope request = new SoapEnvelope(reader);
-      SoapEnvelope response = new SoapEnvelope();
+      SoapEnvelope request = new SoapEnvelope(in); // Contains request
+      SoapEnvelope response = new SoapEnvelope(); // Empty; filled below
 
       // Invoke the implementing method for the operation.
       RegistrySearchSoap.dispatch(request, response);
 
       // Serialize the response to the client.
-      response.print(writer);
+      response.print(out);
 
     } catch (IOException ex) {
       throw ex;
