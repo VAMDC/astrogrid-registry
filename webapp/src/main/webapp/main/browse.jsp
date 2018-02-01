@@ -33,7 +33,7 @@
   RegistryQueryService server = new RegistryQueryService();
 
   String ivornpart = request.getParameter("IvornPart");
-  ivornpart = (ivornpart == null)? "" : ivornpart.trim();
+  ivornpart = (ivornpart == null)? "" : ivornpart.trim().toLowerCase();
 %>
 
 <h1>Browse Registry</h1>
@@ -58,48 +58,19 @@ Find IVORNs including: <input name="IvornPart" type="text" value='<%= ivornpart 
   </tr>
    
 <% 
-    Document entries = null;   
-    ResourceSet resultSet;
-    if (ivornpart.length() > 0) {
-        resultSet = server.getQueryHelper().getResourcesByAnyIdentifier(ivornpart);
-        
-        if(resultSet == null || resultSet.getSize() == 0) {
-            entries = null;
-        } else {   		
-          /*
-            if(resultSet.getSize() > 50) {
-            do {
-                resultSet.removeResource(50);
-            } while(resultSet.getSize() > 50);
-          
-            }*/
-        entries = DomHelper.newDocument(resultSet.getMembersAsResource().getContent().toString());
-        }
-    } else {
-        resultSet = server.getQueryHelper().getAll();
-        if(resultSet == null || resultSet.getSize() == 0) {
-            entries = null;
-        } else {         
-            /*
-            if(resultSet.getSize() > 50) {
-                do {
-                    resultSet.removeResource(50);
-                } while(resultSet.getSize() > 50);
-           }
-           */
-           entries = DomHelper.newDocument(resultSet.getMembersAsResource().getContent().toString());
-       }
-   }
+   
+  
+  String xql = (ivornpart.length() > 0)?
+      "RootResource[contains(lower-case(identifier), '" + ivornpart + "')]" :
+      "RootResource";
+  List<Document> resources = server.xQueryToDocuments(xql);
+  
 
-   if (entries == null) {
-      out.write("<p>No entries!</p>");
-   }
-   else {
-
-    NodeList resources = entries.getElementsByTagNameNS("*","Resource");
-
-    for (int n=0;n<resources.getLength();n++) {
-      Element resourceElement = (Element) resources.item(n); 
+  if (resources.isEmpty()) {
+    out.write("<p>No entries!</p>");
+  } else {
+    for (Document d : resources) {
+      Element resourceElement = d.getDocumentElement();
        
       // Work out how to style the td elementsd such that the active
       // resources are distinguished from the rest.
