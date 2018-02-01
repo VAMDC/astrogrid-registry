@@ -60,9 +60,10 @@ Find IVORNs including: <input name="IvornPart" type="text" value='<%= ivornpart 
 <% 
    
   
-  String xql = (ivornpart.length() > 0)?
+  String xpath = (ivornpart.length() > 0)?
       "RootResource[contains(lower-case(identifier), '" + ivornpart + "')]" :
       "RootResource";
+  String xql = "for $x in " + xpath + " order by $x/title return $x";
   List<Document> resources = server.xQueryToDocuments(xql);
   
 
