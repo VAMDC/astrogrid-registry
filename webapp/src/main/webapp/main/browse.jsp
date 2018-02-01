@@ -47,11 +47,17 @@ Find IVORNs including: <input name="IvornPart" type="text" value='<%= ivornpart 
 </p>
 </form>
 
-<p>
+<table border=1>
+  <tr>
+    <th>Title</th>
+    <th>Type</th>
+    <th>Authority ID</th>
+    <th>Resource Key</th>
+    <th>Updated</th>
+    <th>Actions</th>
+  </tr>
    
-<%
-    //out.write("*"+ivornpart+"*:<br>");
-   
+<% 
     Document entries = null;   
     ResourceSet resultSet;
     if (ivornpart.length() > 0) {
@@ -90,8 +96,7 @@ Find IVORNs including: <input name="IvornPart" type="text" value='<%= ivornpart 
    }
    else {
 
-      out.write("<table border=1>");
-      out.write("<tr><th>Title</th><th>Type</th><th>Authority ID</th><th>Resource Key</th><th>Updated</th><th>Actions</th></tr>");
+      out.write("");
       
       NodeList resources = entries.getElementsByTagNameNS("*","Resource");
 
@@ -128,8 +133,8 @@ Find IVORNs including: <input name="IvornPart" type="text" value='<%= ivornpart 
             //authr
             String authority = RegistryDOMHelper.getAuthorityID(resourceElement);
             String resource = RegistryDOMHelper.getResourceKey(resourceElement);
-            String ivoStr = RegistryDOMHelper.getIdentifier(resourceElement);
-            ivoStr = ivoStr.substring(6);
+            String ivorn = RegistryDOMHelper.getIdentifier(resourceElement);
+            String ivoStr = ivorn.substring(6);
             
             if (authority == null || authority.trim().length() <= 0) {
                out.write("<td>null?!</td>");
@@ -155,10 +160,10 @@ Find IVORNs including: <input name="IvornPart" type="text" value='<%= ivornpart 
             out.write("</td>");
          out.write("</tr>\n");
       }
-      out.write("</table>");
    
    }
 %>
+</table>
 
 </div>
 <%@ include file="/style/footer.xml" %>
