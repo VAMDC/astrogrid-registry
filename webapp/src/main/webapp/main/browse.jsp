@@ -42,8 +42,8 @@
 
 <form method="get" action="browse.jsp">
 <p>
-<br>
 Find IVORNs including: <input name="IvornPart" type="text" value='<%= ivornpart %>'>
+(<input type="checkbox" name="activeonly"/> active resources only)
 <input type="submit" name="button" value='List'>
 </p>
 </form>
@@ -57,8 +57,10 @@ Find IVORNs including: <input name="IvornPart" type="text" value='<%= ivornpart 
     <th>Actions</th>
   </tr>
    
-<% 
-   
+<%
+  // See whether inactive and deleted resources should be included.
+  boolean activeOnly = (request.getParameter("activeonly") != null);
+  out.print("activeOnly = " + activeOnly);
   
   String xpath = (ivornpart.length() > 0)?
       "RootResource[contains(lower-case(identifier), '" + ivornpart + "')]" :
@@ -77,6 +79,9 @@ Find IVORNs including: <input name="IvornPart" type="text" value='<%= ivornpart 
       // resources are distinguished from the rest.
       String status = resourceElement.getAttribute("status");
       boolean notActive = (!"active".equalsIgnoreCase(status));
+      if (notActive && activeOnly) {
+        continue;
+      }
       String td = (notActive)? "<td class='notactive'>" : "<td>";
          
       out.write("<tr>\n");
