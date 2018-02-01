@@ -18,7 +18,8 @@
 <title>Browse Registered Resources</title>
 <meta http-equiv="Content-type" content="text/xhtml; charset=UTF-8"/>
 <style type="text/css" media="all">
-   <%@ include file="/style/astrogrid.css" %>          
+<%@ include file="/style/astrogrid.css" %>
+.notactive {color : gray;}
 </style>
 <%@ include file="/style/link_options.xml" %>
 </head>
@@ -51,8 +52,7 @@ Find IVORNs including: <input name="IvornPart" type="text" value='<%= ivornpart 
   <tr>
     <th>Title</th>
     <th>Type</th>
-    <th>Authority ID</th>
-    <th>Resource Key</th>
+    <th>IVORN</th>
     <th>Updated</th>
     <th>Actions</th>
   </tr>
@@ -96,70 +96,47 @@ Find IVORNs including: <input name="IvornPart" type="text" value='<%= ivornpart 
    }
    else {
 
-      out.write("");
+    NodeList resources = entries.getElementsByTagNameNS("*","Resource");
+
+    for (int n=0;n<resources.getLength();n++) {
+      Element resourceElement = (Element) resources.item(n); 
+       
+      // Work out how to style the td elementsd such that the active
+      // resources are distinguished from the rest.
+      String status = resourceElement.getAttribute("status");
+      boolean notActive = (!"active".equalsIgnoreCase(status));
+      String td = (notActive)? "<td class='notactive'>" : "<td>";
+         
+      out.write("<tr>\n");
+         
+      out.write(td);
+      out.write(DomHelper.getValue(resourceElement, "title"));
+      out.write("</td>");	         
       
-      NodeList resources = entries.getElementsByTagNameNS("*","Resource");
-
-      for (int n=0;n<resources.getLength();n++) {
-         Element resourceElement = (Element) resources.item(n);
-	     boolean deleted = false; 
-	     boolean inactive = false;
-	     if(resourceElement.getAttribute("status").length() > 0) {
-		  	deleted = resourceElement.getAttribute("status").toLowerCase().equals("deleted");         
-		  	inactive = resourceElement.getAttribute("status").toLowerCase().equals("inactive");
-		  }
-         String bgColour = "#FFFFFF";
-         String fgColour = "#000000";
+      String xsiType = resourceElement.getAttribute("xsi:type");
+      out.write(td);
+      out.write(xsiType);
+      out.write("</td>");
          
-         if (deleted) {
-            bgColour = "#FFFFFF";
-            fgColour = "#AAAAAA";
-         }
-         if (inactive) {
-            bgColour = "#FFFFFF";
-            fgColour = "#AAAAAA";
-         }         
-         String setFG = "<font color='"+fgColour+"'>";
-         String endFG = "</font>";
-         
-         out.write("<tr bgcolor='"+bgColour+"'>\n");
-         out.write("<td>"+setFG+DomHelper.getValue(resourceElement, "title")+endFG+"</td>");	         
-         //type
-         String xsiType = resourceElement.getAttribute("xsi:type");
-         out.write("<td>"+setFG+xsiType+endFG+"</td>");
-         if(xsiType.indexOf(":") != -1) {
-            xsiType = xsiType.substring(xsiType.indexOf(":")+1);
-         }
-            //authr
-            String authority = RegistryDOMHelper.getAuthorityID(resourceElement);
-            String resource = RegistryDOMHelper.getResourceKey(resourceElement);
-            String ivorn = RegistryDOMHelper.getIdentifier(resourceElement);
-            String ivoStr = ivorn.substring(6);
             
-            if (authority == null || authority.trim().length() <= 0) {
-               out.write("<td>null?!</td>");
-            } else {
-               out.write("<td><a href='browse.jsp?IvornPart="+authority+"'>"+authority+"</a></td>\n");
-            }
-   
-            if (resource == null || resource.trim().length() <= 0) {
-               
-               out.write("<td>null?!</td>");
-            } else { 
-               out.write("<td>"+setFG+resource+endFG+"</td>\n");
-            }
-            ivoStr = java.net.URLEncoder.encode(("ivo://" + ivoStr),"UTF-8");
-   
-            //last update date
-            out.write("<td>"+setFG+resourceElement.getAttribute("updated")+endFG+"</td>");
-            out.write("<td>");
-            out.write("<a href='viewResourceEntry.jsp?IVORN="+ivoStr+"'>View</a>, ");
-            out.write("<a href='viewResourceEntry_body.jsp?XML=true&amp;IVORN="+ivoStr+"'>XML</a>, ");
-            out.write("<a href='../registration/EditorLinks.jsp?IVORN="+ivoStr+"'>Edit</a>");
-
-            out.write("</td>");
-         out.write("</tr>\n");
-      }
+      String ivorn = RegistryDOMHelper.getIdentifier(resourceElement);
+      out.write(td);
+      out.write(ivorn);
+      out.write("</td>");
+            
+      out.write(td);
+      out.write(resourceElement.getAttribute("updated"));
+      out.write("</td>");
+            
+      String encodedIvorn = java.net.URLEncoder.encode(ivorn,"UTF-8");
+      out.write(td);
+      out.write("<a href='viewResourceEntry.jsp?IVORN="+encodedIvorn+"'>View</a>, ");
+      out.write("<a href='viewResourceEntry_body.jsp?XML=true&amp;IVORN="+encodedIvorn+"'>XML</a>, ");
+      out.write("<a href='../registration/EditorLinks.jsp?IVORN="+encodedIvorn+"'>Edit</a>");
+      out.write("</td>");
+            
+      out.write("</tr>\n");
+    }
    
    }
 %>
