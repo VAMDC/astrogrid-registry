@@ -29,16 +29,10 @@
 <div id='bodyColumn'>
 
 <%
+  RegistryQueryService server = new RegistryQueryService();
 
-   RegistryQueryService server = new RegistryQueryService();
-
-   long offset = 0;
-   String off = request.getParameter("Index");
-   if (off != null) {
-       offset = Long.parseLong(off);
-   }
-   String ivornpart = request.getParameter("IvornPart");
-   if (ivornpart == null) { ivornpart = ""; }
+  String ivornpart = request.getParameter("IvornPart");
+  ivornpart = (ivornpart == null)? "" : ivornpart.trim();
 %>
 
 <h1>Browse Registry</h1>
@@ -55,28 +49,24 @@ Find IVORNs including: <input name="IvornPart" type="text" value='<%= ivornpart 
 
 <p>
    
-<!--
-<form action="browse.jsp" method="get"><input type="submit" title='Prev' name="Index" value="<%= offset-25 %>"></form>
-</td>
-<td align='right'>
-<form action="browse.jsp" method="get"><input type="submit" title='Next' name="Index" value="<%= offset+25 %>"></form>
-</td>
--->
 <%
     //out.write("*"+ivornpart+"*:<br>");
    
     Document entries = null;   
     ResourceSet resultSet;
-    if ( (ivornpart != null) && (ivornpart.trim().length() > 0) ) {
+    if (ivornpart.length() > 0) {
         resultSet = server.getQueryHelper().getResourcesByAnyIdentifier(ivornpart);
+        
         if(resultSet == null || resultSet.getSize() == 0) {
             entries = null;
         } else {   		
+          /*
             if(resultSet.getSize() > 50) {
             do {
                 resultSet.removeResource(50);
             } while(resultSet.getSize() > 50);
-        }
+          
+            }*/
         entries = DomHelper.newDocument(resultSet.getMembersAsResource().getContent().toString());
         }
     } else {
@@ -84,11 +74,13 @@ Find IVORNs including: <input name="IvornPart" type="text" value='<%= ivornpart 
         if(resultSet == null || resultSet.getSize() == 0) {
             entries = null;
         } else {         
+            /*
             if(resultSet.getSize() > 50) {
                 do {
                     resultSet.removeResource(50);
                 } while(resultSet.getSize() > 50);
            }
+           */
            entries = DomHelper.newDocument(resultSet.getMembersAsResource().getContent().toString());
        }
    }
