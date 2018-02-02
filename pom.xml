@@ -3,7 +3,7 @@
   <groupId>org.astrogrid</groupId>
   <artifactId>astrogrid-registry-base</artifactId>
   <packaging>pom</packaging>
-  <version>2018.2vamdc</version>
+  <version>2018.3vamdc</version>
   <name>Astrogrid Registry</name>
   <description>The Registry modules</description>
   <modules>

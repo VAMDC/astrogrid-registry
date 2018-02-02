@@ -7,7 +7,7 @@
     <parent>
       <artifactId>astrogrid-registry-base</artifactId>
       <groupId>org.astrogrid</groupId>
-      <version>2018.2vamdc</version>
+      <version>2018.3vamdc</version>
   </parent>
   
   <description>
