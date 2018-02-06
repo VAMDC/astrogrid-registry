@@ -60,7 +60,6 @@ Find IVORNs including: <input name="IvornPart" type="text" value='<%= ivornpart 
 <%
   // See whether inactive and deleted resources should be included.
   boolean activeOnly = (request.getParameter("activeonly") != null);
-  out.print("activeOnly = " + activeOnly);
   
   String xpath = (ivornpart.length() > 0)?
       "RootResource[contains(lower-case(identifier), '" + ivornpart + "')]" :

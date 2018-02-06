@@ -23,14 +23,11 @@ import org.astrogrid.registry.server.soap.SoapEnvelope;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.io.Writer;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.axis.utils.XMLUtils;
 
 /**
  * Servlet to implement the search functions as a SOAP service. This class

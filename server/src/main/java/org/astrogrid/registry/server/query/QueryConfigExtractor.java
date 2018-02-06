@@ -19,11 +19,6 @@ public class QueryConfigExtractor extends ConfigExtractor {
      */
     private static final String AUTHORITYID_PROPERTY =
                                            "reg.amend.authorityid";    
-        
-    
-    public static String getDefaultContractVersion() {
-        return conf.getString("reg.custom.query.defaultContractVersion","1.0");
-    }
     
     /**
      * Method: getXQLDeclarations
