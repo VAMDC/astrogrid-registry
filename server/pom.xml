@@ -6,7 +6,7 @@
     <parent>
       <artifactId>astrogrid-registry-base</artifactId>
       <groupId>org.astrogrid</groupId>
-      <version>2018.3.1vamdc</version>
+      <version>2018.4vamdc</version>
   </parent>
   <name>AstroGrid registry server</name>
   <description>
@@ -33,17 +33,12 @@
       <version>${project.version}</version>
     </dependency>
     
-    <!-- AstroGrid dependencies from outside the registry project-tree -->
-    <dependency>
-      <groupId>org.astrogrid</groupId>
-      <artifactId>astrogrid-contracts</artifactId>
-    </dependency>
-    
-    <!-- thrid-party stuff. -->
+   
     <dependency>
       <groupId>wsdl4j</groupId>
       <artifactId>wsdl4j</artifactId>
     </dependency>
+    
     <dependency>
       <groupId>stax</groupId>
       <artifactId>stax-api</artifactId>
@@ -58,7 +53,6 @@
       <artifactId>commons-lang</artifactId>
       <version>2.6</version>
     </dependency>
- 
     
     <dependency>
       <groupId>junit</groupId>

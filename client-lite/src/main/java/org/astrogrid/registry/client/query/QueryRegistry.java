@@ -12,24 +12,11 @@ import java.io.*;
 import org.apache.axis.client.Call;
 import org.apache.axis.client.Service;
 import org.apache.axis.message.SOAPBodyElement;
-import org.apache.axis.utils.XMLUtils;
 import org.astrogrid.oldquery.sql.Sql2Adql;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
-import java.io.Reader;
-import java.io.StringReader;
-import org.xml.sax.InputSource;
-import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Iterator;
-import java.util.Date;
-import java.text.SimpleDateFormat;
 import java.net.MalformedURLException;
 import org.astrogrid.registry.RegistryException;
 import org.astrogrid.registry.common.XSLHelper;
@@ -37,7 +24,7 @@ import org.astrogrid.registry.common.XSLHelper;
 import org.astrogrid.registry.common.RegistryDOMHelper;
 import org.apache.commons.collections.map.ReferenceMap;
 
-import org.astrogrid.util.DomHelper;
+import org.astrogrid.registry.common.DomHelper;
 
 import javax.xml.namespace.QName;
 import javax.xml.rpc.ServiceException;
@@ -48,6 +35,7 @@ import javax.wsdl.extensions.soap.SOAPAddress;
 
 import org.xml.sax.SAXException;
 import java.rmi.RemoteException;
+import java.util.Map;
 
 import javax.wsdl.factory.WSDLFactory;
 

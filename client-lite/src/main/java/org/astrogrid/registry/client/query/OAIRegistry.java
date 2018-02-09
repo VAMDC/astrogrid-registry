@@ -35,7 +35,7 @@ import java.net.MalformedURLException;
 import org.astrogrid.registry.RegistryException;
 import org.astrogrid.registry.common.XSLHelper;
 
-import org.astrogrid.util.DomHelper;
+import org.astrogrid.registry.common.DomHelper;
 
 import javax.xml.namespace.QName;
 import javax.xml.rpc.ServiceException;

@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="UTF8"?> <!-- JobScheduler Request Template --><job name="{0}" time="{1}" jobURN="{2}" >{3}</job>

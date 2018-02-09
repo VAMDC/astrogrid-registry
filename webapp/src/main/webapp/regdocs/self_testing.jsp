@@ -1,7 +1,4 @@
-<%@ page import="org.astrogrid.config.SimpleConfig"
-   isThreadSafe="false"
-   session="false"
-%>
+<%@ page session="false" %>
 
 <html>
 <head>

@@ -27,7 +27,7 @@ import org.astrogrid.registry.RegistryException;
 
 import java.io.File;
 import java.io.IOException;
-import org.astrogrid.util.DomHelper;
+import org.astrogrid.registry.common.DomHelper;
 import org.astrogrid.config.Config;
 
 import org.astrogrid.registry.common.XSLHelper;

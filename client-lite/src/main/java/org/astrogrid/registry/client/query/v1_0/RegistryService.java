@@ -3,52 +3,11 @@ package org.astrogrid.registry.client.query.v1_0;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import java.net.URL; 
-import java.util.Vector; 
-import javax.xml.parsers.DocumentBuilder; 
-import javax.xml.parsers.DocumentBuilderFactory; 
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException; 
-import org.apache.axis.client.Call; 
-import org.apache.axis.client.Service; 
-import org.apache.axis.message.SOAPBodyElement; 
-import org.apache.axis.utils.XMLUtils; 
+import java.net.URL;
 import org.w3c.dom.Document; 
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Node;
-import org.w3c.dom.Element;
-import java.io.Reader;
-import java.io.StringReader;
-import org.xml.sax.InputSource;
-import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Iterator;
-import java.util.Date;
 
 import org.astrogrid.registry.RegistryException;
-//import org.astrogrid.registry.common.InterfaceType;
-import org.astrogrid.registry.common.XSLHelper;
 
-import javax.xml.namespace.QName;
-import javax.xml.rpc.ServiceException;
-import javax.wsdl.xml.WSDLReader;
-import javax.wsdl.*;
-import javax.wsdl.extensions.ExtensibilityElement;
-import javax.wsdl.extensions.soap.SOAPAddress;
-
-import org.xml.sax.SAXException;
-import java.rmi.RemoteException;
-
-import javax.wsdl.factory.WSDLFactory;
-
-import org.astrogrid.config.Config;
-import org.astrogrid.store.Ivorn;
-import org.astrogrid.util.DomHelper;
-import org.astrogrid.registry.client.query.ResourceData;
 
 
 /**

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <artifactId>astrogrid-registry</artifactId>
   <packaging>war</packaging>
   <name>AstroGrid Registry web application</name>
-    <parent>
-      <artifactId>astrogrid-registry-base</artifactId>
-      <groupId>org.astrogrid</groupId>
-      <version>2018.3.1vamdc</version>
+  <parent>
+    <artifactId>astrogrid-registry-base</artifactId>
+    <groupId>org.astrogrid</groupId>
+    <version>2018.4vamdc</version>
   </parent>
   <description>The deployable registry web application</description>
   <build>
@@ -24,34 +24,38 @@
         </includes>
       </testResource>
     </testResources>
- <!-- getting site generation to work for webapp
-There are some irritations
-* site.xml needs to be different to the site.xml for the documentation site - want different side links at a minimum -for webapp spscific functions
-* need to inherit differnt style
-* index.html will be automatically generated even if you have index.jsp for instance.
- -->
-<plugins>
-         <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-site-plugin</artifactId>
-            <version>2.0</version>
-            <executions>
-                <execution> <!-- normal site preparation -->
-                <id>site</id>
-                    <goals><goal>site</goal></goals>
-                    <phase>site</phase>
-                </execution>
-                <execution>
-                <id>webappsite</id>
-                <goals><goal>site</goal></goals>
-                <phase>prepare-package</phase>
-                <configuration>
-                    <siteDirectory>${basedir}/src/webappsite</siteDirectory>
-                    <outputDirectory>${project.build.directory}/${project.build.finalName}</outputDirectory>
-                </configuration>
-                </execution>
-            </executions>
-         </plugin>
+    <!-- getting site generation to work for webapp
+   There are some irritations
+   * site.xml needs to be different to the site.xml for the documentation site - want different side links at a minimum -for webapp spscific functions
+   * need to inherit differnt style
+   * index.html will be automatically generated even if you have index.jsp for instance.
+    -->
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <version>2.0</version>
+        <executions>
+          <execution> <!-- normal site preparation -->
+            <id>site</id>
+            <goals>
+              <goal>site</goal>
+            </goals>
+            <phase>site</phase>
+          </execution>
+          <execution>
+            <id>webappsite</id>
+            <goals>
+              <goal>site</goal>
+            </goals>
+            <phase>prepare-package</phase>
+            <configuration>
+              <siteDirectory>${basedir}/src/webappsite</siteDirectory>
+              <outputDirectory>${project.build.directory}/${project.build.finalName}</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
          
     </plugins>
   </build>
@@ -69,18 +73,6 @@ There are some irritations
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.astrogrid</groupId>
-      <artifactId>astrogrid-registry-client-lite</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.astrogrid</groupId>
-      <artifactId>astrogrid-xmldb-client</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    
-
-	<dependency>
       <groupId>net.sf.saxon</groupId>
       <artifactId>saxon</artifactId>
     </dependency>
@@ -93,7 +85,6 @@ There are some irritations
       <artifactId>saxon-dom4j</artifactId>
     </dependency>    
     
-
     <dependency>
       <groupId>jdom</groupId>
       <artifactId>jdom</artifactId>
@@ -145,31 +136,10 @@ There are some irritations
       <artifactId>servlet-api</artifactId>           
       <version>2.4</version>
     </dependency>
-     
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-    </dependency>
-    
-    <dependency>
-      <groupId>xmlunit</groupId>
-      <artifactId>xmlunit</artifactId>
-    </dependency>
     
     <dependency>
       <groupId>commons-logging</groupId>
-      <artifactId>commons-logging</artifactId>
-    </dependency>
-    
-    <dependency>
-      <groupId>commons-discovery</groupId>
-      <artifactId>commons-discovery</artifactId>
-    </dependency>
-    
-    <dependency>
-      <groupId>commons-lang</groupId>
-      <artifactId>commons-lang</artifactId>
-      <version>2.6</version>
+      <artifactId>commons-logging</artifactId> 
     </dependency>
     
     <dependency>
@@ -181,7 +151,6 @@ There are some irritations
       <groupId>xml-apis</groupId>
       <artifactId>xml-apis</artifactId>
     </dependency>
-    
      
     <dependency>
       <groupId>xmldb-api</groupId>
@@ -199,7 +168,6 @@ There are some irritations
       <groupId>xalan</groupId>
       <artifactId>xalan</artifactId>
     </dependency>
-    
     
     <dependency>
       <groupId>org.codehaus.fabric3.fabric3-db-exist</groupId>
@@ -242,7 +210,7 @@ There are some irritations
       <version>1.1.2</version>
     </dependency>
     
-     <dependency>
+    <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring</artifactId>
       <version>1.2.6</version>
@@ -264,11 +232,11 @@ There are some irritations
       <artifactId>axis-jaxrpc</artifactId>
     </dependency>
      
-     <dependency>
+    <dependency>
       <groupId>xalan</groupId>
       <artifactId>serializer</artifactId>
     </dependency>
     
   </dependencies>
   
- </project>
+</project>

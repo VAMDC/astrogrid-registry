@@ -1,13 +1,4 @@
-<%@ page import="org.astrogrid.registry.server.query.*,
-                 org.w3c.dom.*,
-                 org.astrogrid.util.DomHelper,
-                 org.astrogrid.config.SimpleConfig,
-                 org.astrogrid.registry.server.http.servlets.helper.JSPHelper,
-                 java.net.*,
-                 java.util.*,
-                 java.io.*"
-    session="false"
-%>
+<%@ page session="false" %>
 <!DOCTYPE HTML  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>

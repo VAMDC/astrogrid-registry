@@ -1,0 +1,29 @@
+<html>
+<body>
+Configuration package; provides a simple set of methods for application-wide
+access to properties, using both traditional key/value pairs and XPath querying.
+<p>
+<h3>Background</h3>
+The configuration package has to be able to:<p>
+<li>Provide simple, backward-compatible access to key/value properties
+<li>Run without any configuration file present, with values set by the code, for unit tests
+<li>Load from several files (eg user-entered values, plus programmer-entered values)
+<li>Provide a getproperty(XPath) returning XML nodes (implies a load from XML) for structured properties
+<p>
+
+<h3>Simple</h3>
+For the most simplest of configurations, use the static methods on the SimpleConfig class.
+These access a single (hidden) instance, and allows programmers to use the
+configuration with a minimum of code, like this:
+<p>
+<b>Using Properties:</b>
+<pre><code>
+String fruit = SimpleConfig.getProperty("GlobalFruit");
+</pre></code>
+
+<h3>Implementation</h3>
+The SimpleConfig implemenation is FailbackConfig - see the class doc for how it
+works.  To get access to all its features, use SimpleConfig.getSingleton().
+
+</body>
+</html>

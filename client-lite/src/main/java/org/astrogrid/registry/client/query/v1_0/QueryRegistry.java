@@ -37,7 +37,7 @@ import org.astrogrid.registry.common.XSLHelper;
 import org.astrogrid.registry.common.RegistryDOMHelper;
 import org.apache.commons.collections.map.ReferenceMap;
 
-import org.astrogrid.util.DomHelper;
+import org.astrogrid.registry.common.DomHelper;
 
 import javax.xml.namespace.QName;
 import javax.xml.rpc.ServiceException;

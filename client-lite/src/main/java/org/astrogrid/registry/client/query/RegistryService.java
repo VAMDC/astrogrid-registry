@@ -47,7 +47,7 @@ import javax.wsdl.factory.WSDLFactory;
 
 import org.astrogrid.config.Config;
 import org.astrogrid.store.Ivorn;
-import org.astrogrid.util.DomHelper;
+import org.astrogrid.registry.common.DomHelper;
 import org.astrogrid.registry.client.query.ResourceData;
 
 

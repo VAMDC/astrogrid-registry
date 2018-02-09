@@ -8,7 +8,6 @@ import java.net.URL;
 import java.util.Vector; 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException; 
-import javax.xml.rpc.ServiceException;
 import org.apache.axis.client.Call; 
 import org.apache.axis.client.Service; 
 import org.astrogrid.registry.common.RegistryValidator;
@@ -23,7 +22,8 @@ import java.rmi.RemoteException;
 import org.astrogrid.registry.RegistryException;
 
 import java.io.*;
-import org.astrogrid.util.DomHelper;
+import javax.xml.rpc.ServiceException;
+import org.astrogrid.registry.common.DomHelper;
 import org.astrogrid.config.Config;
 import org.astrogrid.store.Ivorn;
 import org.astrogrid.registry.common.RegistryDOMHelper;

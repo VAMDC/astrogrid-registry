@@ -11,9 +11,10 @@ import java.util.HashMap;
 
 import org.astrogrid.registry.server.admin.v1_0.RegistryAdminService;
 
-import org.astrogrid.registry.server.admin.AuthorityListManager;
-import org.astrogrid.registry.server.admin.AuthorityList;
 import java.util.Properties;
+import org.astrogrid.config.Config;
+import org.astrogrid.config.FailbackConfig;
+import org.astrogrid.config.SimpleConfig;
 import org.astrogrid.registry.TestRegistry;
 import org.astrogrid.registry.common.RegistryDOMHelper;
 import org.astrogrid.registry.server.xmldb.XMLDBRegistry;
@@ -48,6 +49,21 @@ public class RegistryAdminTest {
     @BeforeClass
     public static void installRegistry() throws IOException {
       TestRegistry.installRegistry(DATABASE_LOCATION);
+    }
+    
+    /**
+     * Sets the configuration system to load values from astrogrid.properties
+     * which it can find as a class resource in the package containing
+     * this test.
+     * 
+     * @throws IOException 
+     */
+    @BeforeClass
+    public static void defineConfigFile() throws IOException {
+      System.setProperty("org.astrogrid.config", "astrogrid.properties");
+      Config c = SimpleConfig.getSingleton();
+      Assert.assertEquals("astrogrid.properties", c.getString("org.astrogrid.config"));
+      Assert.assertEquals("registry.test", c.getString("reg.amend.authorityid"));
     }
     
     

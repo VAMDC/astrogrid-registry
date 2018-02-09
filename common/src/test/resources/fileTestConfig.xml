@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+<!-- $Id: fileTestConfig.xml,v 1.2 2004/01/20 17:23:45 jdt Exp $ -->
+<!--   An example property file  -->
+
+<properties>
+  <!-- GENERAL CATEGORY ===================================================== -->  
+  <!-- this is a mandatory category -->  
+  <category name="GENERAL">
+    <property name="VERSION" value="1.2" />
+  </category>
+  
+    <!-- this is a mandatory category -->    
+  <category name="MESSAGES">
+    <property name="INSTALLATION.BASENAME" value="dummyMessages" />
+    <property name="INSTALLATION.LANGUAGECODE" value="" />
+    <property name="INSTALLATION.COUNTRYCODE" value="" />  
+    <property name="INSTALLATION.VARIANTCODE" value="" />   
+  </category>
+  
+  <category name="FOO">
+    <property name="BAR" value="asdf"/>
+    <property name="TEMPLATE.BLURGH" value="Test.xmltemplate" /> 
+  </category>
+</properties>

@@ -1,0 +1,35 @@
+<?xml version="1.0" ?>
+
+<!--   Each datacenter is configured by setting properties within this file    -->
+
+<properties>
+
+  <!-- GENERAL CATEGORY ===================================================== -->  
+  <category name="GENERAL">
+    <property name="VERSION" value="1.2" />
+  </category>
+  
+
+  <!-- MESSAGES CATEGORY =========================================================
+   Following are the base name, language code and country code for 
+   the properties file that contains all messages for a datacenter 
+   Example. 
+   Given these values:
+   INSTALLATION.BASENAME=ASTROGRID_datacentermessages
+   INSTALLATION.LANGUAGECODE=en
+   INSTALLATION.COUNTRYCODE=US
+
+   suiteable file names would be:
+   ASTROGRID_datacentermessages.properties        // installation default messages
+   ASTROGRID_datacentermessages_en.properties     // English language default messages
+   ASTROGRID_datacentermessages_en_US.properties  // US specific English language messages
+  -->
+  <category name="MESSAGES">
+    <property name="INSTALLATION.BASENAME" value="ASTROGRID_datacentermessages" />
+    <property name="INSTALLATION.LANGUAGECODE" value="en" />
+    <property name="INSTALLATION.COUNTRYCODE" value="" />   
+    <property name="INSTALLATION.VARIANTCODE" value="" />       
+  </category>
+  
+
+</properties>

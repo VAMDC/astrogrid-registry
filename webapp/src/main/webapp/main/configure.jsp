@@ -1,13 +1,4 @@
-<%@ page import="org.astrogrid.config.SimpleConfig,
-                 org.w3c.dom.NodeList,
-                 org.w3c.dom.Element,
-                 org.w3c.dom.Document,   
-                 org.astrogrid.util.DomHelper,
-                 org.astrogrid.registry.server.RegistryServerHelper,                 
-             org.astrogrid.registry.server.query.*"
-   isThreadSafe="false"
-   session="false"
-%>
+<%@ page session="false" %>
 
 <html>
 <head>
