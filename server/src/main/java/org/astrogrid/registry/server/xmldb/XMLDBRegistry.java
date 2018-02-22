@@ -8,7 +8,7 @@ import org.astrogrid.xmldb.client.XMLDBFactory;
 import org.astrogrid.xmldb.client.XMLDBService;
 import org.astrogrid.config.Config;
 import org.astrogrid.registry.server.InvalidStorageNodeException;
-import org.astrogrid.util.DomHelper;
+import org.astrogrid.registry.common.DomHelper;
 
 import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.modules.XMLResource;

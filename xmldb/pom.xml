@@ -9,7 +9,7 @@
   <parent>
       <groupId>org.astrogrid</groupId>
       <artifactId>astrogrid-registry-base</artifactId>
-      <version>2018.4vamdc</version>
+      <version>2018.5vamdc</version>
   </parent>
   
   <packaging>jar</packaging>
@@ -19,6 +19,11 @@
   </properties>
   
   <dependencies>
+    <dependency>
+      <groupId>org.astrogrid</groupId>
+      <artifactId>astrogrid-registry-common</artifactId>
+      <version>${project.version}</version>
+    </dependency>
 
      <dependency>
         <groupId>org.apache.axis</groupId>
@@ -33,11 +38,12 @@
       <version>1.2-patched</version>
     </dependency>
      
+     <!--
     <dependency>
       <groupId>org.astrogrid</groupId>
       <artifactId>astrogrid-common</artifactId>
     </dependency>
-    
+    -->
         <dependency>
       <groupId>xmldb-api</groupId>
       <artifactId>xmldb</artifactId>

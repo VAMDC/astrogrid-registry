@@ -7,7 +7,6 @@ import org.w3c.dom.NodeList;
 import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
-import org.astrogrid.util.DomHelper;
 
 /**
  * Java bean to handle the list of authority identifiers managed in
@@ -30,6 +29,7 @@ public class PublishingAuthorities {
    * so the set of authorities returned is always up to date.
    *
    * @return The array of authority identifiers.
+   * @throws org.xmldb.api.base.XMLDBException
    */
   public String[] getAuthorities() throws XMLDBException {
     

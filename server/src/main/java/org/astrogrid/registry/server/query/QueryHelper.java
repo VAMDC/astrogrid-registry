@@ -12,7 +12,7 @@ import org.apache.commons.logging.LogFactory;
 
 import org.astrogrid.registry.server.xmldb.XMLDBRegistry;
 import org.astrogrid.registry.server.SOAPFaultException;
-import org.astrogrid.util.DomHelper;
+import org.astrogrid.registry.common.DomHelper;
 import org.astrogrid.config.Config;
 import org.astrogrid.store.Ivorn;
 

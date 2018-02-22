@@ -4,56 +4,19 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import java.net.URL;
-import java.util.Vector;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
-import org.apache.axis.client.Call;
-import org.apache.axis.client.Service;
-import org.apache.axis.message.SOAPBodyElement;
-import org.apache.axis.utils.XMLUtils;
-import org.astrogrid.oldquery.sql.Sql2Adql;
+//import org.astrogrid.oldquery.sql.Sql2Adql;
 import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Node;
 import org.w3c.dom.Element;
-import java.io.Reader;
-import java.io.StringReader;
-import org.xml.sax.InputSource;
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Iterator;
-import java.util.Date;
-import java.text.SimpleDateFormat;
-import java.net.MalformedURLException;
 import org.astrogrid.registry.RegistryException;
-import org.astrogrid.registry.common.XSLHelper;
-//import org.astrogrid.registry.common.InterfaceType;
-import org.astrogrid.registry.common.RegistryDOMHelper;
-import org.apache.commons.collections.map.ReferenceMap;
-
 import org.astrogrid.registry.common.DomHelper;
-
-import javax.xml.namespace.QName;
-import javax.xml.rpc.ServiceException;
-import javax.wsdl.xml.WSDLReader;
-import javax.wsdl.*;
-import javax.wsdl.extensions.ExtensibilityElement;
-import javax.wsdl.extensions.soap.SOAPAddress;
-
 import org.xml.sax.SAXException;
 import java.rmi.RemoteException;
-
-import javax.wsdl.factory.WSDLFactory;
-
-import org.astrogrid.config.Config;
-import org.astrogrid.store.Ivorn;
+import javax.xml.rpc.ServiceException;
 import org.astrogrid.registry.common.RegistryDOMHelper;
+import org.w3c.dom.NodeList;
 
 /** 
  * The QueryRegistry class is a delegate to a web service that submits an XML formatted
@@ -175,7 +138,7 @@ return <resources>{$idents}</resources>
 
    /**
     * To perform a query with ADQL, using adqls.
-    * @param adql string form of adqls
+    * @param adql string form of adqls; must be in ADQLS 0.7.4
     * @
     * @return XML DOM of Resources queried from the registry.
     * @todo throw registry exception until this method is implemented.
@@ -187,10 +150,10 @@ return <resources>{$idents}</resources>
            Document doc = (Document)cache.get(adql);
            if(doc != null) return doc;
            logger.debug("not in cache");
-           String adqlString = Sql2Adql.translateToAdql074(adql);
-           doc = search(DomHelper.newDocument(adqlString),from, max, identifiersOnly);
+           //String adqlString = Sql2Adql.translateToAdql074(adql);
+           doc = search(DomHelper.newDocument(adql),from, max, identifiersOnly);
            if(useRefCache)
-               cache.put(adqlString,doc);
+               cache.put(adql,doc);
            return doc;
        }catch(Exception e) {
            logger.error(e);

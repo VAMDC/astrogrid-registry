@@ -13,11 +13,9 @@ import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Node;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.astrogrid.registry.server.admin.v1_0.RegistryAdminService;
-
-import org.astrogrid.util.DomHelper;
-
+import org.astrogrid.registry.common.DomHelper;
 import org.astrogrid.registry.common.RegistryValidator;
+import org.astrogrid.registry.server.admin.v1_0.RegistryAdminService;
 import org.astrogrid.registry.server.SOAPFaultException;
 import org.astrogrid.registry.server.query.v1_0.RegistryQueryService;
 

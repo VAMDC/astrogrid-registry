@@ -3,7 +3,7 @@
   <groupId>org.astrogrid</groupId>
   <artifactId>astrogrid-registry-base</artifactId>
   <packaging>pom</packaging>
-  <version>2018.4vamdc</version>
+  <version>2018.5vamdc</version>
   <name>Astrogrid Registry</name>
   <description>The Registry modules</description>
   <modules>
@@ -29,21 +29,13 @@
         <artifactId>astrogrid-common</artifactId>
         <version>2009.1</version>
       </dependency>
-      <dependency>
-        <groupId>org.astrogrid</groupId>
-        <artifactId>astrogrid-pal-oldquery</artifactId>
-        <version>2007.2.05pl</version>
-      </dependency>
-      <dependency>
-        <groupId>org.astrogrid</groupId>
-        <artifactId>astrogrid-xml</artifactId>
-        <version>2007.2xml</version>
-      </dependency>
+      <!--
       <dependency>
         <groupId>org.astrogrid</groupId>
         <artifactId>astrogrid-utils</artifactId>
         <version>2007.2ut</version>
       </dependency>
+      -->
       <dependency>
         <groupId>xerces</groupId>
         <artifactId>xercesImpl</artifactId>

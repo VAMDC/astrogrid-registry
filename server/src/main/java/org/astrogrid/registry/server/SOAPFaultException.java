@@ -2,7 +2,7 @@ package org.astrogrid.registry.server;
 
 import org.w3c.dom.Document;
 
-import org.astrogrid.util.DomHelper;
+import org.astrogrid.registry.common.DomHelper;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

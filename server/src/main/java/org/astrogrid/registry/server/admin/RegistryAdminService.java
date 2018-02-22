@@ -20,7 +20,7 @@ import org.astrogrid.config.Config;
 import org.astrogrid.registry.server.XSLHelper;
 
 import org.astrogrid.registry.common.RegistryDOMHelper;
-import org.astrogrid.util.DomHelper;
+import org.astrogrid.registry.common.DomHelper;
 import org.astrogrid.registry.RegistryException;
 import org.astrogrid.registry.server.SOAPFaultException;
 import org.astrogrid.registry.server.xmldb.XMLDBRegistry;

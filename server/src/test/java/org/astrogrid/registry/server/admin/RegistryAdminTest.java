@@ -4,7 +4,7 @@ import java.io.InputStream;
 import java.io.File;
 import java.io.IOException;
 import org.astrogrid.xmldb.client.XMLDBManager;
-import org.astrogrid.util.DomHelper;
+import org.astrogrid.registry.common.DomHelper;
 import org.w3c.dom.Document;
 
 import java.util.HashMap;

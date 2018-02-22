@@ -3,7 +3,7 @@ package org.astrogrid.registry.server.admin;
 import org.astrogrid.registry.server.xmldb.XMLDBRegistry;
 import org.astrogrid.registry.common.RegistryDOMHelper;
 import org.astrogrid.registry.server.query.QueryConfigExtractor;
-import org.astrogrid.util.DomHelper;
+import org.astrogrid.registry.common.DomHelper;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

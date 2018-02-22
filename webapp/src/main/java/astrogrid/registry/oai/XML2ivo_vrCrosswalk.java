@@ -21,7 +21,7 @@ package astrogrid.registry.oai;
 
 import ORG.oclc.oai.server.crosswalk.*;
 import java.util.Properties;
-import org.astrogrid.util.DomHelper;
+import org.astrogrid.registry.common.DomHelper;
 import ORG.oclc.oai.server.verb.CannotDisseminateFormatException;
 import org.astrogrid.config.Config;
 import org.astrogrid.config.SimpleConfig;

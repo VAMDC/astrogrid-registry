@@ -26,7 +26,7 @@
 //package ORG.oclc.oai.server.catalog;
 package astrogrid.registry.oai;
 
-import org.w3c.dom.Text;
+
 import ORG.oclc.oai.server.catalog.*;
 
 import java.io.IOException;
@@ -84,7 +84,7 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
 import org.astrogrid.config.Config;
-import org.astrogrid.util.DomHelper;
+import org.astrogrid.registry.common.DomHelper;
 import org.astrogrid.registry.server.admin.AuthorityList;
 import org.astrogrid.registry.server.admin.AuthorityListManager;
 import org.astrogrid.registry.server.query.QueryConfigExtractor;

@@ -2,7 +2,6 @@ package org.astrogrid.registry.client.query;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import java.net.URL;
 import java.util.Vector;
 import javax.xml.parsers.DocumentBuilder;
@@ -12,7 +11,6 @@ import java.io.*;
 import org.apache.axis.client.Call;
 import org.apache.axis.client.Service;
 import org.apache.axis.message.SOAPBodyElement;
-import org.astrogrid.oldquery.sql.Sql2Adql;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
@@ -20,25 +18,13 @@ import org.w3c.dom.Element;
 import java.net.MalformedURLException;
 import org.astrogrid.registry.RegistryException;
 import org.astrogrid.registry.common.XSLHelper;
-//import org.astrogrid.registry.common.InterfaceType;
 import org.astrogrid.registry.common.RegistryDOMHelper;
 import org.apache.commons.collections.map.ReferenceMap;
-
 import org.astrogrid.registry.common.DomHelper;
-
-import javax.xml.namespace.QName;
-import javax.xml.rpc.ServiceException;
-import javax.wsdl.xml.WSDLReader;
-import javax.wsdl.*;
-import javax.wsdl.extensions.ExtensibilityElement;
-import javax.wsdl.extensions.soap.SOAPAddress;
-
 import org.xml.sax.SAXException;
 import java.rmi.RemoteException;
 import java.util.Map;
-
-import javax.wsdl.factory.WSDLFactory;
-
+import javax.xml.rpc.ServiceException;
 import org.astrogrid.config.Config;
 import org.astrogrid.store.Ivorn;
 
@@ -151,10 +137,10 @@ public abstract class QueryRegistry {
            Document doc = (Document)cache.get(adql);
            if(doc != null) return doc;
            logger.debug("not in cache");
-           String adqlString = Sql2Adql.translateToAdql074(adql);
-           doc = search(DomHelper.newDocument(adqlString));
+           //String adqlString = Sql2Adql.translateToAdql074(adql);
+           doc = search(DomHelper.newDocument(adql));
            if(useRefCache)
-               cache.put(adqlString,doc);
+               cache.put(adql,doc);
            return doc;
        }catch(Exception e) {
            logger.error(e);

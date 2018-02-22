@@ -1,47 +1,13 @@
 package org.astrogrid.xmldb.client;
 
-import org.astrogrid.config.Config;
-
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import javax.xml.parsers.ParserConfigurationException;
-import org.xml.sax.SAXException;
-import java.net.MalformedURLException;
-
-import java.net.URL;
-import java.net.HttpURLConnection;
-import java.net.URLEncoder;
-import org.astrogrid.util.DomHelper;
-import org.apache.axis.AxisFault;
-
-import java.io.DataOutputStream;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-
 import org.xmldb.api.modules.XQueryService;
 import org.xmldb.api.modules.XPathQueryService;
 import org.xmldb.api.modules.XUpdateQueryService;
-import org.xmldb.api.base.Service;
-
-import org.exist.xmldb.DatabaseInstanceManager;
-import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
-import org.xmldb.api.base.Database;
 import org.xmldb.api.base.ResourceSet;
-import org.xmldb.api.modules.XMLResource;
-import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.base.Resource;
 import org.xmldb.api.base.XMLDBException;
-import javax.xml.transform.OutputKeys;
-
-import java.util.Properties;
-import java.util.Enumeration;
 
 
 /**
@@ -57,14 +23,17 @@ public interface XMLDBService {
      * Method: openCollection
      * Purpsoe: open a basic or query type xmldb collection to the root collection "/db".  Uses standard query admin and password if any given in the properties/JNDI.
      * @return XMLDB Collection object
+   * @throws org.xmldb.api.base.XMLDBException
      */
     public Collection openCollection() throws XMLDBException;
     
     /**
      * Method: openCollection
      * Purpsoe: open a basic or query type xmldb collection to given collection.  Uses standard query admin and password if any given in the properties/JNDI.
+   * @param collection
      * @param String collection path - after the "/db" root collection.
      * @return XMLDB Collection object
+   * @throws org.xmldb.api.base.XMLDBException
      */
     public Collection openCollection(String collection) throws XMLDBException;
     
@@ -80,6 +49,7 @@ public interface XMLDBService {
     /**
      * Method: openAdminCollection
      * Purpsoe: open a admin type xmldb collection to given collection.  Uses management/admin admin and password if any given in the properties/JNDI. Use for storing or managing the database.
+   * @param collection
      * @param String collection path - after the "/db" root collection.
      * @return XMLDB Collection object
      * @throws XMLDBException if the collection cannot be open for such things as username and password needed or incorrect. 
@@ -89,6 +59,7 @@ public interface XMLDBService {
     /**
      * Method: closeCollection
      * Purpose: Close the given XMLDB collection object and releasing all its resources.
+   * @param coll
      * @param Collection the given open collection to a paticular collection (like table) in the xmldb database. 
      * @throws XMLDBException if the collection cannot be closed. 
      */
@@ -97,6 +68,7 @@ public interface XMLDBService {
     /**
      * Method: getXUpdateService
      * Purpose: give back the standard xmldb XUpdateQueryService from a given collection.
+   * @param coll
      * @param Collection the given open collection to a paticular collection (like table) in the xmldb database. 
      * @throws XMLDBException if the service cannot be found.
      * @return XUpdateQueryService for updating the xmldb.
@@ -106,6 +78,8 @@ public interface XMLDBService {
     /**
      * Method: query
      * Purpose: Query the xmldb by XQueryService.
+   * @param coll
+   * @param queryString
      * @param Collection the given open collection to a paticular collection (like table) in the xmldb database. 
      * @throws XMLDBException if the service cannot be found. 
      * @return comon QueryService to be used for Xpath or Xquery service types.

@@ -4,7 +4,7 @@ import org.astrogrid.registry.server.admin.RegistryAdminService;
 import org.astrogrid.registry.common.RegistryValidator;
 import org.astrogrid.registry.common.RegistryDOMHelper;
 import org.astrogrid.registry.server.admin.AuthorityList;
-import org.astrogrid.util.DomHelper;
+import org.astrogrid.registry.common.DomHelper;
 import org.astrogrid.registry.server.XSLHelper;
 import org.astrogrid.registry.server.InvalidStorageNodeException;
 import org.astrogrid.registry.RegistryException;

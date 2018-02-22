@@ -7,7 +7,7 @@
     <parent>
       <artifactId>astrogrid-registry-base</artifactId>
       <groupId>org.astrogrid</groupId>
-      <version>2018.4vamdc</version>
+      <version>2018.5vamdc</version>
   </parent>
   
   <description>
@@ -42,18 +42,6 @@
       <groupId>org.astrogrid</groupId>
       <artifactId>astrogrid-registry-common</artifactId>
       <version>${project.version}</version>
-    </dependency>
-    <!--<dependency>
-      <groupId>org.astrogrid</groupId>
-      <artifactId>astrogrid-common</artifactId>
-    </dependency>-->
-    <dependency>
-      <groupId>org.astrogrid</groupId>
-      <artifactId>astrogrid-pal-oldquery</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.astrogrid</groupId>
-      <artifactId>astrogrid-xml</artifactId>
     </dependency>
     <dependency>
       <groupId>axis</groupId>

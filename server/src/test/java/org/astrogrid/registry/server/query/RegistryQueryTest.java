@@ -2,7 +2,6 @@ package org.astrogrid.registry.server.query;
 
 import java.io.File;
 import java.util.List;
-import org.astrogrid.util.DomHelper;
 import org.w3c.dom.Document;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;

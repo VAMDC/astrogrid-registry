@@ -15,7 +15,7 @@ import org.w3c.dom.Node;
 
 import org.astrogrid.registry.common.RegistryDOMHelper;
 import org.astrogrid.registry.server.query.QueryHelper;
-import org.astrogrid.util.DomHelper;
+import org.astrogrid.registry.common.DomHelper;
 import org.astrogrid.config.Config;
 import org.astrogrid.registry.RegistryException;
 import org.astrogrid.registry.server.InvalidStorageNodeException;

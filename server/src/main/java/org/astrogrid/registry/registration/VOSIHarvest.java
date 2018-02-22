@@ -7,7 +7,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
-import org.astrogrid.util.DomHelper;
+import org.astrogrid.registry.common.DomHelper;
 
 /**
  * Servlet to transcribe IVOA service-metadata into an IVOA registration
