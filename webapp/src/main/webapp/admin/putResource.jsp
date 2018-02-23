@@ -1,6 +1,6 @@
 <%@ page import="org.astrogrid.registry.server.admin.*,
                  org.w3c.dom.Document,
-                 org.astrogrid.util.DomHelper,
+                 org.astrogrid.registry.common.DomHelper,
                  java.io.*"
     session="false" %>
 

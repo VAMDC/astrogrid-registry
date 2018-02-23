@@ -5,7 +5,7 @@
                  org.w3c.dom.Element,
                  org.w3c.dom.Node,
                  org.w3c.dom.NodeList,
-                 org.astrogrid.util.DomHelper,
+                 org.astrogrid.registry.common.DomHelper,
                  java.net.*,
                  java.util.*,
                  java.io.*"

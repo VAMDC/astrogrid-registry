@@ -1,6 +1,6 @@
 <%@page import="org.w3c.dom.Document,
                 org.w3c.dom.Element,
-                org.astrogrid.util.DomHelper,
+                org.astrogrid.registry.common.DomHelper,
                 org.astrogrid.registry.server.query.v1_0.RegistryQueryService,
                 org.apache.commons.lang.StringEscapeUtils"
    isThreadSafe="false"

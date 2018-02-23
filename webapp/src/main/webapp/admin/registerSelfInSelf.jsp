@@ -1,13 +1,4 @@
-<%@ page import="org.astrogrid.registry.server.admin.*,
-                 org.astrogrid.store.Ivorn,
-                 org.w3c.dom.Document,
-                 org.astrogrid.io.Piper,
-                 org.astrogrid.util.DomHelper,
-                 java.net.*,
-                 java.util.*,
-                  org.apache.axis.utils.XMLUtils,                 
-                 java.io.*"
-    session="false" %>
+<%@ page session="false" %>
 
 <html>
 <head>

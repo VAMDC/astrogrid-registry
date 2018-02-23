@@ -2,7 +2,7 @@
                  org.w3c.dom.NodeList,
                  org.w3c.dom.Element,
                  org.w3c.dom.Document,
-                 org.astrogrid.util.DomHelper,
+                 org.astrogrid.registry.common.DomHelper,
                  org.astrogrid.registry.server.http.servlets.Log4jInit,
                  org.astrogrid.xmldb.client.XMLDBManager,
                  org.astrogrid.registry.common.RegistryDOMHelper,

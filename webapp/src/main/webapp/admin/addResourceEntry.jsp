@@ -1,6 +1,6 @@
 <%@ page import="org.astrogrid.registry.server.admin.v1_0.RegistryAdminService,
                  org.w3c.dom.Document,
-                 org.astrogrid.util.DomHelper,
+                 org.astrogrid.registry.common.DomHelper,
                  org.apache.commons.fileupload.*,
                  java.net.URL,
                  java.net.URLDecoder,
