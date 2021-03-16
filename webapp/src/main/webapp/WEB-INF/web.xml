@@ -457,4 +457,11 @@
     <env-entry-type>java.lang.String</env-entry-type>
   </env-entry>
 
+  <env-entry>
+    <description>Stem of serviuce URL, to be used in WSDL</description>
+    <env-entry-name>org.vamdc.registry.url</env-entry-name>
+    <env-entry-value>http://registry.vamdc.eu/registry-12.07</env-entry-value>
+    <env-entry-type>java.lang.String</env-entry-type>
+  </env-entry>
+
 </web-app>
